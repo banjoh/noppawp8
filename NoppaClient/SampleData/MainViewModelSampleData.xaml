@@ -13,4 +13,25 @@
         <vm:ItemViewModel LineOne="design six" LineTwo="Torquent ultrices vehicula volutpat" LineThree="Senectus sociosqu suscipit torquent ultrices vehicula volutpat maecenas praesent accumsan bibendum dictumst eleifend"/>
     </vm:MainViewModel.Items>
 
+
+    <vm:MainViewModel.Departments>
+        <vm:DepartmentGroup Organization="School of Assorted Magicks">
+            <vm:DepartmentViewModel Organization="School of Assorted Magicks" Name="Department of Spirit Conjuring" Id="conj" />
+            <vm:DepartmentViewModel Organization="School of Assorted Magicks" Name="Department of Illusion and Charms" Id="illusion" />
+            <vm:DepartmentViewModel Organization="School of Assorted Magicks" Name="Department of Black Arts" Id="black" />
+        </vm:DepartmentGroup>
+
+        <vm:DepartmentGroup Organization="School of Arcane Alchemy">
+            <vm:DepartmentViewModel Organization="School of Arcane Alchemy" Name="Department of Transmutation" Id="trans" />
+            <vm:DepartmentViewModel Organization="School of Arcane Alchemy" Name="Department of Good and Bad Air" Id="air" />
+            <vm:DepartmentViewModel Organization="School of Arcane Alchemy" Name="Department of Love Potions" Id="potions" />
+        </vm:DepartmentGroup>
+
+        <vm:DepartmentGroup Organization="School of Witchcraft">
+            <vm:DepartmentViewModel Organization="School of Witchcraft" Name="Department of Flying on Broomsticks" Id="broom" />
+            <vm:DepartmentViewModel Organization="School of Witchcraft" Name="Department of Cauldron Maintenance" Id="cauldron" />
+            <vm:DepartmentViewModel Organization="School of Witchcraft" Name="Department of Familiar Pacts" Id="familiar" />
+        </vm:DepartmentGroup>
+    </vm:MainViewModel.Departments>
+
 </vm:MainViewModel>

@@ -7,6 +7,8 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using NoppaClient.DataModel;
+using NoppaClient.ViewModels;
 
 namespace NoppaClient
 {
@@ -26,8 +28,23 @@ namespace NoppaClient
         {
             if (!App.ViewModel.IsDataLoaded)
             {
-                App.ViewModel.LoadData();
+                App.ViewModel.LoadDataAsync();
             }
+        }
+
+        private void DepartmentListSelected(object sender, SelectionChangedEventArgs e)
+        {
+            var list = sender as LongListSelector;
+            if (list == null)
+            {
+                return;
+            }
+            var selection = list.SelectedItem as DepartmentViewModel;
+            if(selection==null) 
+            {
+                return;
+            }
+            NavigationService.Navigate(new Uri("/CourseListPage.xaml?content=department&id=" + HttpUtility.UrlEncode(selection.Id), UriKind.Relative));
         }
     }
 }

@@ -5,17 +5,25 @@ using NoppaClient.Resources;
 
 namespace NoppaClient.ViewModels
 {
-    public class MainViewModel : INotifyPropertyChanged
+    public class MainViewModel : BindableBase
     {
-        public MainViewModel()
-        {
-            this.Items = new ObservableCollection<ItemViewModel>();
-        }
-
         /// <summary>
         /// A collection for ItemViewModel objects.
         /// </summary>
-        public ObservableCollection<ItemViewModel> Items { get; private set; }
+        private ObservableCollection<ItemViewModel> _items = new ObservableCollection<ItemViewModel>();
+        public ObservableCollection<ItemViewModel> Items { get { return _items; } }
+
+        private ObservableCollection<ItemViewModel> _events = new ObservableCollection<ItemViewModel>();
+        public ObservableCollection<ItemViewModel> Events { get { return _events; } }
+
+        private CourseListViewModel _myCourses = new CourseListViewModel();
+        public CourseListViewModel MyCourses { get { return _myCourses; } }
+
+        private ObservableCollection<ItemViewModel> _news = new ObservableCollection<ItemViewModel>();
+        public ObservableCollection<ItemViewModel> News { get { return _news; } }
+
+        private ObservableCollection<DepartmentGroup> _departments;
+        public ObservableCollection<DepartmentGroup> Departments { get { return _departments; } }
 
         private string _sampleProperty = "Sample Runtime Property Value";
         /// <summary>
@@ -24,18 +32,8 @@ namespace NoppaClient.ViewModels
         /// <returns></returns>
         public string SampleProperty
         {
-            get
-            {
-                return _sampleProperty;
-            }
-            set
-            {
-                if (value != _sampleProperty)
-                {
-                    _sampleProperty = value;
-                    NotifyPropertyChanged("SampleProperty");
-                }
-            }
+            get { return _sampleProperty; }
+            set { SetProperty(ref _sampleProperty, value); }
         }
 
         /// <summary>
@@ -49,16 +47,28 @@ namespace NoppaClient.ViewModels
             }
         }
 
+        public string Title
+        {
+            get { return AppResources.ApplicationTitle; }
+        }
+
+        private bool _isDataLoaded = false;
         public bool IsDataLoaded
         {
-            get;
-            private set;
+            get { return _isDataLoaded; }
+            private set { SetProperty(ref _isDataLoaded, value); }
+        }
+
+        public MainViewModel()
+        {
+            // Here, make a model instance or something, and start filling in the 
+            // view model data
         }
 
         /// <summary>
         /// Creates and adds a few ItemViewModel objects into the Items collection.
         /// </summary>
-        public void LoadData()
+        public async void LoadDataAsync()
         {
             // Sample data; replace with real data
             this.Items.Add(new ItemViewModel() { LineOne = "runtime one", LineTwo = "Maecenas praesent accumsan bibendum", LineThree = "Facilisi faucibus habitant inceptos interdum lobortis nascetur pharetra placerat pulvinar sagittis senectus sociosqu" });
@@ -78,17 +88,33 @@ namespace NoppaClient.ViewModels
             this.Items.Add(new ItemViewModel() { LineOne = "runtime fifteen", LineTwo = "Habitant inceptos interdum lobortis", LineThree = "Accumsan bibendum dictumst eleifend facilisi faucibus habitant inceptos interdum lobortis nascetur pharetra placerat" });
             this.Items.Add(new ItemViewModel() { LineOne = "runtime sixteen", LineTwo = "Nascetur pharetra placerat pulvinar", LineThree = "Pulvinar sagittis senectus sociosqu suscipit torquent ultrices vehicula volutpat maecenas praesent accumsan bibendum" });
 
-            this.IsDataLoaded = true;
-        }
+            Events.Add(new ItemViewModel() { LineOne = "Assignment", LineTwo = "Maecenas praesent accumsan bibendum", LineThree = "Maecenas praesent accumsan bibendum dictumst eleifend facilisi faucibus habitant inceptos interdum lobortis nascetur" });
+            Events.Add(new ItemViewModel() { LineOne = "Deadline", LineTwo = "Dictumst eleifend facilisi faucibus", LineThree = "Pharetra placerat pulvinar sagittis senectus sociosqu suscipit torquent ultrices vehicula volutpat maecenas praesent" });
+            Events.Add(new ItemViewModel() { LineOne = "Guest lecture", LineTwo = "Habitant inceptos interdum lobortis", LineThree = "Accumsan bibendum dictumst eleifend facilisi faucibus habitant inceptos interdum lobortis nascetur pharetra placerat" });
+            Events.Add(new ItemViewModel() { LineOne = "Exam", LineTwo = "Nascetur pharetra placerat pulvinar", LineThree = "Pulvinar sagittis senectus sociosqu suscipit torquent ultrices vehicula volutpat maecenas praesent accumsan bibendum" });
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void NotifyPropertyChanged(String propertyName)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (null != handler)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
-            }
+            News.Add(new ItemViewModel() { LineOne = "No lecture today", LineTwo = "Maecenas praesent accumsan bibendum", LineThree = "Maecenas praesent accumsan bibendum dictumst eleifend facilisi faucibus habitant inceptos interdum lobortis nascetur" });
+            News.Add(new ItemViewModel() { LineOne = "Results for January exam", LineTwo = "Dictumst eleifend facilisi faucibus", LineThree = "Pharetra placerat pulvinar sagittis senectus sociosqu suscipit torquent ultrices vehicula volutpat maecenas praesent" });
+            News.Add(new ItemViewModel() { LineOne = "Homeworks graded", LineTwo = "Habitant inceptos interdum lobortis", LineThree = "Accumsan bibendum dictumst eleifend facilisi faucibus habitant inceptos interdum lobortis nascetur pharetra placerat" });
+
+            _departments = DepartmentGroup.CreateDepartmentGroups(new DepartmentViewModel[] {
+                // This is now the same data as in the sample data, but this should be taken from the data model
+                new DepartmentViewModel("School of Assorted Magicks", "Department of Spirit Conjuring", "conj"),
+                new DepartmentViewModel("School of Assorted Magicks", "Department of Illusion and Charms", "illusion"), 
+                new DepartmentViewModel("School of Assorted Magicks", "Department of Black Arts", "black"),
+    
+                new DepartmentViewModel("School of Arcane Alchemy", "Department of Transmutation", "trans"),
+                new DepartmentViewModel("School of Arcane Alchemy", "Department of Good and Bad Air", "air"),
+                new DepartmentViewModel("School of Arcane Alchemy", "Department of Love Potions", "potions"),
+
+                new DepartmentViewModel ("School of Witchcraft", "Department of Flying on Broomsticks", "broom"),
+                new DepartmentViewModel ("School of Witchcraft", "Department of Cauldron Maintenance", "cauldron"),
+                new DepartmentViewModel ("School of Witchcraft", "Department of Familiar Pacts", "familiar"),
+            });
+
+            await _myCourses.LoadMyCoursesAsync();
+
+            this.IsDataLoaded = true;
         }
     }
 }

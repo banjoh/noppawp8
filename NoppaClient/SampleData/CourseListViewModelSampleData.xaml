@@ -1,0 +1,16 @@
+﻿<vm:CourseListViewModel
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:vm="clr-namespace:NoppaClient.ViewModels"
+    xmlns:m="clr-namespace:NoppaClient.DataModel"
+    IsLoading="True"
+    Title="Courses">
+
+    <vm:CourseListViewModel.Courses>
+        <m:Course Name="T-123.4567 Foobar" />
+        <m:Course Name="T-123.4567 Foobar" />
+        <m:Course Name="T-123.4567 Foobar" />
+        <m:Course Name="T-123.4567 Foobar" />
+        <m:Course Name="T-123.4567 Foobar" />
+    </vm:CourseListViewModel.Courses>
+</vm:CourseListViewModel>
