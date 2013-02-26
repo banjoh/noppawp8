@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoppaClient", "NoppaClient\NoppaClient.csproj", "{1D209C3F-D419-4FFD-ACFD-62A01BECD488}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{56531B46-2B95-4563-BAC5-9D7E1CC053C3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,24 @@ Global
 		{1D209C3F-D419-4FFD-ACFD-62A01BECD488}.Release|x86.ActiveCfg = Release|x86
 		{1D209C3F-D419-4FFD-ACFD-62A01BECD488}.Release|x86.Build.0 = Release|x86
 		{1D209C3F-D419-4FFD-ACFD-62A01BECD488}.Release|x86.Deploy.0 = Release|x86
+		{56531B46-2B95-4563-BAC5-9D7E1CC053C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56531B46-2B95-4563-BAC5-9D7E1CC053C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56531B46-2B95-4563-BAC5-9D7E1CC053C3}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{56531B46-2B95-4563-BAC5-9D7E1CC053C3}.Debug|ARM.ActiveCfg = Debug|ARM
+		{56531B46-2B95-4563-BAC5-9D7E1CC053C3}.Debug|ARM.Build.0 = Debug|ARM
+		{56531B46-2B95-4563-BAC5-9D7E1CC053C3}.Debug|ARM.Deploy.0 = Debug|ARM
+		{56531B46-2B95-4563-BAC5-9D7E1CC053C3}.Debug|x86.ActiveCfg = Debug|x86
+		{56531B46-2B95-4563-BAC5-9D7E1CC053C3}.Debug|x86.Build.0 = Debug|x86
+		{56531B46-2B95-4563-BAC5-9D7E1CC053C3}.Debug|x86.Deploy.0 = Debug|x86
+		{56531B46-2B95-4563-BAC5-9D7E1CC053C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56531B46-2B95-4563-BAC5-9D7E1CC053C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56531B46-2B95-4563-BAC5-9D7E1CC053C3}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{56531B46-2B95-4563-BAC5-9D7E1CC053C3}.Release|ARM.ActiveCfg = Release|ARM
+		{56531B46-2B95-4563-BAC5-9D7E1CC053C3}.Release|ARM.Build.0 = Release|ARM
+		{56531B46-2B95-4563-BAC5-9D7E1CC053C3}.Release|ARM.Deploy.0 = Release|ARM
+		{56531B46-2B95-4563-BAC5-9D7E1CC053C3}.Release|x86.ActiveCfg = Release|x86
+		{56531B46-2B95-4563-BAC5-9D7E1CC053C3}.Release|x86.Build.0 = Release|x86
+		{56531B46-2B95-4563-BAC5-9D7E1CC053C3}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

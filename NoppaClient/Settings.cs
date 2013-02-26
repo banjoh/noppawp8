@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NoppaClient
 {
-    class Settings
+    public class Settings
     {
         /**
          * This will be set on startup.

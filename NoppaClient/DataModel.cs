@@ -10,36 +10,106 @@ namespace NoppaClient
     {
         public enum Language
         {
-            Finnish, // = "fi",
-            Swedish, // = "sv",
-            English //= "en"
+            Finnish,
+            Swedish,
+            English
         }
 
-        class Link
+        public class Link
         {
-            public enum Relation
+            public enum Rel
             {
-                Self, // = "self",
-                Up, // = "up",
-                Related // = "related"
+                Self,
+                Up,
+                Related
             }
 
-            public enum TitleType
+            public enum Title
             {
-                Overview, // = "overview",
-                Pages, // = "pages",
-                Results, // = "results",
-                Lectures, // = "lectures",
-                Exercises, // = "exercises",
-                Assignments, // = "assignments",
-                Schedule, // = "schedule",
-                Material, // = "material",
-                ExerciseMaterial, // = "exercise_material"
+                Overview,
+                Pages,
+                Results,
+                Lectures,
+                Exercises,
+                Assignments,
+                Schedule,
+                Material,
+                ExerciseMaterial
             }
 
-            public TitleType Title;
-            public Relation Rel;
-            public Uri      Uri;
+            public Title    title;
+            public Rel      rel;
+            public Uri      uri;
         }
+
+        public class Organization
+        {
+            private string id;
+            private Dictionary<Language, string> names;
+
+            public string Name
+            {
+                get { return names[Settings.Language]; }
+            }
+
+            public string Id
+            {
+                get { return id; }
+            }
+
+            public Organization(string id, Dictionary<Language, string> names)
+            {
+                this.id = id;
+                this.names = names;
+            }
+        }
+
+        public class Department
+        {
+            private string id;
+            private string orgId;
+            private Dictionary<Language, string> names;
+
+            public string Name
+            {
+                get { return names[Settings.Language]; }
+            }
+
+            public string Id
+            {
+                get { return id; }
+            }
+
+            public string OrgId
+            {
+                get { return orgId; }
+            }
+
+            public Department(string id, string orgId, Dictionary<Language, string> names)
+            {
+                this.id = id;
+                this.orgId = orgId;
+                this.names = names;
+            }
+        }
+
+        public class Course
+        {
+            private string id;
+            private string depId;
+            private string name;
+            private Uri courseUrl;
+            private Uri oodiUrl;
+            private Language language;
+
+            List<Link> links;
+
+            public string Name
+            {
+                get { return name; }
+                set { name = value; }
+            }
+        }
+
     }
 }

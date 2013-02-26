@@ -96,9 +96,6 @@
     <Compile Include="CourseListPage.xaml.cs">
       <DependentUpon>CourseListPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\Course.cs" />
-    <Compile Include="DataModel\Department.cs" />
-    <Compile Include="DataModel\Organization.cs" />
     <Compile Include="LocalizedStrings.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
