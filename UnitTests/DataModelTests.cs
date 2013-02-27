@@ -12,50 +12,109 @@ namespace UnitTests
     public class DataModelTests
     {
         [TestMethod]
-        public void TestInitClasses()
+        public void TestOrganisationParsing()
         {
-            // Dictionary class
-            Dictionary<NoppaClient.DataModel.Language, string> dict = 
-                new Dictionary<NoppaClient.DataModel.Language, string>();
-            dict.Add(NoppaClient.DataModel.Language.English, "english name");
-            dict.Add(NoppaClient.DataModel.Language.Finnish, "finnish name");
-            dict.Add(NoppaClient.DataModel.Language.Swedish, "swedish name");
+            string json = @"{
+                'org_id': 'CHEM',
+                'name_fi': 'Kemian tekniikan korkeakoulu',
+                'name_sv': 'Högskolan för kemiteknik',
+                'name_en': 'School of Chemical Technology',
+                'links': [
+                    {
+                        'rel': 'self',
+                        'title': 'self',
+                        'uri': 'http://noppa-api-dev.aalto.fi/api/v1/organizations/CHEM'
+                    },
+                    {
+                        'rel': 'related',
+                        'title': 'departments',
+                        'uri': 'http://noppa-api-dev.aalto.fi/api/v1/departments?org_id=CHEM'
+                    }
+                ]
 
-            NoppaClient.DataModel.Department dip = new NoppaClient.DataModel.Department("DEPART", "T1234", dict);
+            }";
 
-            Assert.IsTrue("DEPART" == dip.Id);
-            Assert.IsTrue("T1234" == dip.OrgId);
-
-            NoppaClient.Settings.Language = NoppaClient.DataModel.Language.English;
-            Assert.IsTrue("english name" == dip.Name);
-
-            NoppaClient.Settings.Language = NoppaClient.DataModel.Language.Finnish;
-            Assert.IsTrue("finnish name" == dip.Name);
-
-            NoppaClient.Settings.Language = NoppaClient.DataModel.Language.Swedish;
-            Assert.IsTrue("swedish name" == dip.Name);
-
-            // Organiszation class
-            Dictionary<NoppaClient.DataModel.Language, string> dict1 =
-                new Dictionary<NoppaClient.DataModel.Language, string>();
-            dict1.Add(NoppaClient.DataModel.Language.English, "english name");
-            dict1.Add(NoppaClient.DataModel.Language.Finnish, "finnish name");
-            dict1.Add(NoppaClient.DataModel.Language.Swedish, "swedish name");
-
-            NoppaClient.DataModel.Organization org = new NoppaClient.DataModel.Organization("CHEM", dict1);
+            NoppaClient.DataModel.Organization org = new NoppaClient.DataModel.Organization(json);
 
             Assert.IsTrue("CHEM" == org.Id);
 
             NoppaClient.Settings.Language = NoppaClient.DataModel.Language.English;
-            Assert.IsTrue("english name" == org.Name);
+            Assert.IsTrue("School of Chemical Technology" == org.Name);
 
             NoppaClient.Settings.Language = NoppaClient.DataModel.Language.Finnish;
-            Assert.IsTrue("finnish name" == org.Name);
+            Assert.IsTrue("Kemian tekniikan korkeakoulu" == org.Name);
 
             NoppaClient.Settings.Language = NoppaClient.DataModel.Language.Swedish;
-            Assert.IsTrue("swedish name" == org.Name);
+            Assert.IsTrue("Högskolan för kemiteknik" == org.Name);
+        }
 
-            // Course class
+        [TestMethod]
+        public void TestDepartmentParsing()
+        {
+            string json = @"{
+                'dept_id': 'T2020',
+                'org_id': 'ENG',
+                'name_fi': 'Energiatekniikan laitos',
+                'name_sv': 'Institutionen för energiteknik',
+                'name_en': 'Department of Energy Technology',
+                'links': [
+                    {
+                        'rel': 'self',
+                        'title': 'self',
+                        'uri': 'http://noppa-api-dev.aalto.fi/api/v1/departments/T2020'
+                    },
+                    {
+                        'rel': 'related',
+                        'title': 'courses',
+                        'uri': 'http://noppa-api-dev.aalto.fi/api/v1/courses?dept_id=T2020'
+                    }
+                ]
+
+            }";
+
+            NoppaClient.DataModel.Department dip = new NoppaClient.DataModel.Department(json);
+
+            Assert.IsTrue("T2020" == dip.Id);
+            Assert.IsTrue("ENG" == dip.OrgId);
+
+            NoppaClient.Settings.Language = NoppaClient.DataModel.Language.English;
+            Assert.IsTrue("Department of Energy Technology" == dip.Name);
+
+            NoppaClient.Settings.Language = NoppaClient.DataModel.Language.Finnish;
+            Assert.IsTrue("Energiatekniikan laitos" == dip.Name);
+
+            NoppaClient.Settings.Language = NoppaClient.DataModel.Language.Swedish;
+            Assert.IsTrue("Institutionen för energiteknik" == dip.Name);
+        }
+
+        [TestMethod]
+        public void TestCourseParsing()
+        {
+            string json = @"{
+                'course_id': 'ENE.kand',
+                'dept_id': 'T2020',
+                'name': 'Kandidaatintyö ja seminaari',
+                'course_url': 'http://noppa-api-dev.aalto.fi/noppa/kurssi/ENE.kand',
+                'course_url_oodi': 'https://oodi.aalto.fi/a/opintjakstied.jsp?Kieli=1&Tunniste=ENE.kand&html=1',
+                'noppa_language': 'fi',
+                'links': [
+                    {
+                        'rel': 'self',
+                        'title': 'self',
+                        'uri': 'http://noppa-api-dev.aalto.fi/api/v1/courses/ENE.kand'
+                    }
+                ]
+
+            }";
+
+            NoppaClient.DataModel.Course c = new NoppaClient.DataModel.Course(json);
+
+            Assert.IsTrue("ENE.kand" == c.Id);
+            Assert.IsTrue("T2020" == c.DepId);
+            Assert.IsTrue("Kandidaatintyö ja seminaari" == c.Name);
+            Assert.IsTrue(new Uri("http://noppa-api-dev.aalto.fi/noppa/kurssi/ENE.kand") == c.CourseUrl);
+            Assert.IsTrue(new Uri("https://oodi.aalto.fi/a/opintjakstied.jsp?Kieli=1&Tunniste=ENE.kand&html=1") == c.OodiUrl);
+            Assert.IsTrue(NoppaClient.DataModel.Language.Finnish == c.Language);
         }
     }
 }
