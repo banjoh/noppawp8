@@ -38,6 +38,8 @@ namespace NoppaClient
             this._apiKey = apiKey;
         }
 
+        #region API Call methods
+
         public Task<HttpWebResponse> CallAPIAsync(string query)
         {
             var taskComplete = new TaskCompletionSource<HttpWebResponse>();
@@ -81,6 +83,22 @@ namespace NoppaClient
             return list;
         }
 
+        private async Task<T> GetObject<T>(string query)
+        {
+            HttpWebResponse response = await CallAPIAsync(query);
+
+            using (var sr = new StreamReader(response.GetResponseStream())
+            using (JsonReader reader = new JsonTextReader(sr))
+            {
+                JObject obj = (JObject)JToken.ReadFrom(reader);
+                return (T)Activator.CreateInstance(typeof(T), obj.ToString());
+            }
+        }
+
+        #endregion
+
+        #region Organization getters
+
         public async Task<List<Organization>> GetAllOrganizations()
         {
             string query = String.Format("{0}/organizations?key={1}", _apiURL, _apiKey);
@@ -89,9 +107,20 @@ namespace NoppaClient
            
         }
 
-        public async Task<List<Department>> GetDepartments(Organization org)
+        public async Task<Organization> GetOrganization(string organization_id)
         {
-            string query = String.Format("{0}/departments?key={1}&org_id={2}", _apiURL, _apiKey, org.Id);
+            string query = String.Format("{0}/organizations/{1}?key={2}", _apiURL, organization_id, _apiKey);
+
+            return await GetObject<Organization>(query);
+        }
+
+        #endregion
+
+        #region Department getters
+
+        public async Task<List<Department>> GetDepartments(string organization_id)
+        {
+            string query = String.Format("{0}/departments?key={1}&org_id={2}", _apiURL, _apiKey, organization_id);
 
             return await GetList<Department>(query);
         }
@@ -102,5 +131,41 @@ namespace NoppaClient
 
             return await GetList<Department>(query);
         }
+
+        public async Task<Department> GetDepartment(string department_id)
+        {
+            string query = String.Format("{0}/departments/{1}?key={2}", _apiURL, department_id, _apiKey);
+
+            return await GetObject<Department>(query);
+        }
+
+        #endregion
+
+        #region Course getters
+
+        public async Task<List<Course>> GetCourses(string search_pattern, string org_id = "", string dept_id = "")
+        {
+            string query = String.Format("{0}/courses?key={1}&search={2}{3}{4}",
+                _apiURL, _apiKey, search_pattern,
+                org_id != "" ? "&org_id=" + org_id : "",
+                dept_id != "" ? "&dept_id=" + dept_id : "");
+
+            return await GetList<Course>(query);
+        }
+
+        public async Task<Course> GetCourse(string course_id)
+        {
+            string query = String.Format("{0}/courses/{1}?key={2}", _apiURL, course_id, _apiKey);
+
+            return await GetObject<Course>(query);
+        }
+
+        #endregion
+
+        #region Course Content getters
+
+        /* TODO */
+
+        #endregion
     }
 }
