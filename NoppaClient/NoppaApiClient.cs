@@ -72,13 +72,10 @@ namespace NoppaClient
             {
                 JArray orgs = (JArray)JArray.ReadFrom(reader);
 
-                foreach (var item in orgs)
+                foreach (JObject item in orgs)
                 {
-                    Dictionary<Language, string> names = new Dictionary<Language, string>();
-                    names[Language.English] = (string)item["name_en"];
-                    names[Language.Finnish] = (string)item["name_fi"];
-                    names[Language.Swedish] = (string)item["name_sv"];
-                    organizations.Add(new Organization((string)item["org_id"], names));
+                    /* Fix this madness! */
+                    organizations.Add(new Organization(item.ToString()));
                 }
             }
 
