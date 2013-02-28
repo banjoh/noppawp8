@@ -11,6 +11,6 @@ namespace NoppaClient
         /**
          * This will be set on startup.
          */
-        public static DataModel.Language Language;
+        public static DataModel.Language Language = DataModel.Language.Undefined;
     }
 }

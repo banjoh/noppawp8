@@ -39,7 +39,9 @@ namespace NoppaClient.ViewModels
                     var index = i;
                     var randomSource = new Random();
                     await Task.Delay(randomSource.Next(1000));
-                    return new Course { Name = String.Format("X-{0}.{1} Course name {2}", 100 + randomSource.Next(900), 1000 + randomSource.Next(9000), index) };
+                    //TODO: Use real data
+                    string json = @"{'name': '" + String.Format("X-{0}.{1} My course name {2}", 100 + randomSource.Next(900), 1000 + randomSource.Next(9000), index) + "'}";
+                    return new Course("");
                 });
 
                 _courses.Add(course);
@@ -64,7 +66,9 @@ namespace NoppaClient.ViewModels
                     var index = i;
                     var randomSource = new Random();
                     await Task.Delay(randomSource.Next(1000));
-                    return new Course { Name = String.Format("X-{0}.{1} Department course name {2}", 100 + randomSource.Next(900), 1000 + randomSource.Next(9000), index) };
+                    //TODO: Use real data
+                    string json = @"{'name': '" + String.Format("X-{0}.{1} My course name {2}", 100 + randomSource.Next(900), 1000 + randomSource.Next(9000), index) + "'}";
+                    return new Course("");
                 });
 
                 _courses.Add(course);
@@ -89,7 +93,9 @@ namespace NoppaClient.ViewModels
                     var index = i;
                     var randomSource = new Random();
                     await Task.Delay(randomSource.Next(1000));
-                    return new Course { Name = String.Format("X-{0}.{1} My course name {2}", 100 + randomSource.Next(900), 1000 + randomSource.Next(9000), index) };
+                    //TODO: Use real data
+                    string json = @"{'name': '" + String.Format("X-{0}.{1} My course name {2}", 100 + randomSource.Next(900), 1000 + randomSource.Next(9000), index) + "'}";
+                    return new Course("");
                 });
 
                 _courses.Add(course);
