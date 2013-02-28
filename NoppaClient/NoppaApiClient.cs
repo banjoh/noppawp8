@@ -60,26 +60,47 @@ namespace NoppaClient
             return taskComplete.Task;
         }
 
+        /**
+         * This probably looks hairy. Call the API and create
+         * a list of DataModel objects. Utility function for
+         * certain kinds of calls.
+         */
+        private async Task<List<T>> GetList<T>(string query)
+        {
+            HttpWebResponse response = await CallAPIAsync(query);
+            
+            List<T> list = new List<T>();
+
+            using (var sr = new StreamReader(response.GetResponseStream()))
+            using (JsonReader reader = new JsonTextReader(sr))
+            {
+                var array = (JArray)JArray.ReadFrom(reader);
+                foreach (JObject item in array)
+                    list.Add((T)Activator.CreateInstance(typeof(T), item.ToString()));
+            }
+            return list;
+        }
+
         public async Task<List<Organization>> GetAllOrganizations()
         {
             string query = String.Format("{0}/organizations?key={1}", _apiURL, _apiKey);
             
-            HttpWebResponse response = await CallAPIAsync(query);
-            List<Organization> organizations = new List<Organization>();
-            
-            using (var sr = new StreamReader(response.GetResponseStream()))
-            using (JsonReader reader = new JsonTextReader(sr))
-            {
-                JArray orgs = (JArray)JArray.ReadFrom(reader);
+            return await GetList<Organization>(query);
+           
+        }
 
-                foreach (JObject item in orgs)
-                {
-                    /* Fix this madness! */
-                    organizations.Add(new Organization(item.ToString()));
-                }
-            }
+        public async Task<List<Department>> GetDepartments(Organization org)
+        {
+            string query = String.Format("{0}/departments?key={1}&org_id={2}", _apiURL, _apiKey, org.Id);
 
-            return organizations;
+            return await GetList<Department>(query);
+        }
+
+        public async Task<List<Department>> GetDepartments()
+        {
+            string query = String.Format("{0}/departments?key={1}", _apiURL, _apiKey);
+
+            return await GetList<Department>(query);
         }
     }
 }
