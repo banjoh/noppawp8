@@ -26,14 +26,13 @@ namespace UnitTests
 
             List<Organization> organizations = await client.GetAllOrganizations();
 
-            foreach (var org in organizations)
-            {
-                foreach (Language lang in Enum.GetValues(typeof(Language)))
-                {
-                    Settings.Language = lang;
-                    System.Diagnostics.Debug.WriteLine(String.Format("{0}: {1}", org.Id, org.Name));
-                }
-            }
+            Assert.IsTrue(organizations.Exists( (item) => item.Id == "CHEM" ));
+            Assert.IsTrue(organizations.Exists( (item) => item.Id == "ECON" ));
+            Assert.IsTrue(organizations.Exists( (item) => item.Id == "ELEC" ));
+            Assert.IsTrue(organizations.Exists( (item) => item.Id == "ENG" ));
+            Assert.IsTrue(organizations.Exists( (item) => item.Id == "ERI" ));
+            Assert.IsTrue(organizations.Exists( (item) => item.Id == "SCI" ));
+            Assert.IsTrue(organizations.Exists( (item) => item.Id == "TaiK" ));
 
             EnqueueTestComplete();
         }
