@@ -161,5 +161,7 @@ pip-log.txt
 
 # Mac crap
 .DS_Store
-APIClient.cs  
- 
+
+# Project files
+APIClient.cs
+APIKey.cs 
