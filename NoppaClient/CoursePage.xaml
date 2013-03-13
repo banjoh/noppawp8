@@ -1,0 +1,102 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="NoppaClient.CoursePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:view="clr-namespace:NoppaClient.View"
+    d:DataContext="{d:DesignData SampleData/CourseViewModelSampleData.xaml}"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait"  Orientation="Portrait"
+    shell:SystemTray.IsVisible="True">
+
+    <phone:PhoneApplicationPage.Resources>
+
+        <DataTemplate x:Key="OverviewPivotTemplate">
+            <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <StackPanel>
+                    <TextBlock Text="Overview this overview" />
+                    <TextBlock Text="{Binding CourseId}" />
+                    <TextBlock Text="{Binding Credits}" />
+                    <TextBlock Text="{Binding Status}" />
+                    <TextBlock Text="{Binding Level}" />
+                    <TextBlock Text="{Binding TeachingPeriod}" />
+                    <TextBlock Text="{Binding Workload}" />
+                    <TextBlock Text="{Binding LearningOutcomes}" />
+                    <TextBlock Text="{Binding Content}" />
+                    <TextBlock Text="{Binding Assessment}" />
+                    <TextBlock Text="{Binding StudyMaterial}" />
+                    <TextBlock Text="{Binding GradingScale}" />
+                    <TextBlock Text="{Binding InstructionLanguage}" />
+                    <TextBlock Text="{Binding Details}" />
+                    <TextBlock Text="{Binding OodiUrl}" />
+                    <TextBlock Text="{Binding Substitutes}" />
+                    <TextBlock Text="{Binding CEFRLevel}" />
+                    <TextBlock Text="{Binding Registration}" />
+                    <TextBlock Text="{Binding Staff}" />
+                    <TextBlock Text="{Binding OfficeHours}" />
+                    <Button Content="Open in Oodi"  Command="{Binding OpenOodiPage}" />
+                </StackPanel>
+            </ScrollViewer>
+        </DataTemplate>
+
+        <DataTemplate x:Key="LecturesPivotTemplate">
+            <TextBlock Text="Lectures" />
+        </DataTemplate>
+
+        <DataTemplate x:Key="ExerciesPivotTemplate">
+            <TextBlock Text="Exercies" />
+        </DataTemplate>
+
+        <view:ViewModelToTemplateConverter 
+            x:Key="ViewModelToTemplateConverter"
+            OverviewTemplate="{StaticResource OverviewPivotTemplate}"
+            LecturesTemplate="{StaticResource LecturesPivotTemplate}"
+            ExercisesTemplate="{StaticResource ExerciesPivotTemplate}"/>
+    </phone:PhoneApplicationPage.Resources>
+    
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <!--Pivot Control-->
+        <phone:Pivot Title="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}"
+                     ItemsSource="{Binding Contents}">
+            <!--
+                     ItemTemplate="{Binding Contents, Converter={StaticResource ViewModelToTemplateConverter}}"> -->
+            <phone:Pivot.HeaderTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Title}" />
+                </DataTemplate>
+            </phone:Pivot.HeaderTemplate>
+            <phone:Pivot.ItemTemplate>
+                <DataTemplate>
+                    <ContentControl Content="{Binding}"
+                                    ContentTemplate="{Binding Converter={StaticResource ViewModelToTemplateConverter}}" />
+                </DataTemplate>
+            </phone:Pivot.ItemTemplate>
+            <!--<phone:Pivot.HeaderTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <TextBlock TextWrapping="Wrap"
+                            Text="{Binding Title}"
+                            d:LayoutOverrides="Width, Height" />
+                    </Grid>
+                </DataTemplate>
+            </phone:Pivot.HeaderTemplate> -->  
+            <!--Pivot item one- ->
+            <phone:PivotItem Header="item1">
+                <Grid/>
+            </phone:PivotItem>
+
+            <!- -Pivot item two- ->
+            <phone:PivotItem Header="item2">
+                <Grid/>
+            </phone:PivotItem> -->
+        </phone:Pivot>
+    </Grid>
+    
+</phone:PhoneApplicationPage>

@@ -41,7 +41,7 @@ namespace NoppaClient.ViewModels
                     await Task.Delay(randomSource.Next(1000));
                     //TODO: Use real data
                     string json = @"{'name': '" + String.Format("X-{0}.{1} My course name {2}", 100 + randomSource.Next(900), 1000 + randomSource.Next(9000), index) + "'}";
-                    return new Course("");
+                    return new Course(json);
                 });
 
                 _courses.Add(course);
@@ -68,7 +68,7 @@ namespace NoppaClient.ViewModels
                     await Task.Delay(randomSource.Next(1000));
                     //TODO: Use real data
                     string json = @"{'name': '" + String.Format("X-{0}.{1} My course name {2}", 100 + randomSource.Next(900), 1000 + randomSource.Next(9000), index) + "'}";
-                    return new Course("");
+                    return new Course(json);
                 });
 
                 _courses.Add(course);
@@ -95,7 +95,7 @@ namespace NoppaClient.ViewModels
                     await Task.Delay(randomSource.Next(1000));
                     //TODO: Use real data
                     string json = @"{'name': '" + String.Format("X-{0}.{1} My course name {2}", 100 + randomSource.Next(900), 1000 + randomSource.Next(9000), index) + "'}";
-                    return new Course("");
+                    return new Course(json);
                 });
 
                 _courses.Add(course);

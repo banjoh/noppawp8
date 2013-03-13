@@ -49,5 +49,10 @@ namespace NoppaClient
                     break;
             }
         }
+
+        private void LongListSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/CoursePage.xaml", UriKind.Relative));
+        }
     }
 }

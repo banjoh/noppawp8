@@ -87,7 +87,7 @@ namespace NoppaClient
         {
             HttpWebResponse response = await CallAPIAsync(query);
 
-            using (var sr = new StreamReader(response.GetResponseStream())
+            using (var sr = new StreamReader(response.GetResponseStream()))
             using (JsonReader reader = new JsonTextReader(sr))
             {
                 JObject obj = (JObject)JToken.ReadFrom(reader);

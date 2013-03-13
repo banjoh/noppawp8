@@ -1,0 +1,12 @@
+﻿<vm:CourseViewModel
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:vm="clr-namespace:NoppaClient.ViewModels"
+    xmlns:m="clr-namespace:NoppaClient.DataModel">
+
+    <vm:CourseViewModel.Contents>
+        <vm:OverviewViewModel Title="Overview" />
+        <vm:LecturesViewModel Title="Lectures" />
+        <vm:ExercisesViewModel Title="Exercises" />
+    </vm:CourseViewModel.Contents>
+</vm:CourseViewModel>

@@ -112,7 +112,7 @@ namespace NoppaClient.ViewModels
                 new DepartmentViewModel ("School of Witchcraft", "Department of Familiar Pacts", "familiar"),
             });
 
-            await _myCourses.LoadMyCoursesAsync();
+            //await _myCourses.LoadMyCoursesAsync();
 
             this.IsDataLoaded = true;
         }

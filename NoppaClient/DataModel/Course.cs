@@ -55,32 +55,40 @@ namespace NoppaClient.DataModel
 
         public Course(string json)
         {
-            JObject obj = JObject.Parse(json);
-            this.id = (string)obj["course_id"];
-            this.depId = (string)obj["dept_id"];
-            this.name = (string)obj["name"];
-            this.courseUrl = new Uri((string)obj["course_url"]);
-            this.oodiUrl = new Uri((string)obj["course_url_oodi"]);
-
-            switch ((string)obj["noppa_language"])
+            try
             {
-                case "fi":
-                    language = DataModel.Language.Finnish;
-                    break;
-                case "en":
-                    language = DataModel.Language.English;
-                    break;
-                case "sv":
-                    language = DataModel.Language.Swedish;
-                    break;
-                default:
-                    language = DataModel.Language.Undefined;
-                    break;
+                JToken token;
+
+                JObject obj = JObject.Parse(json);
+                this.id = obj.TryGetValue("course_id", out token) ? token.ToString() : "N/A";
+                this.depId = obj.TryGetValue("dept_id", out token) ? token.ToString() : "N/A";
+                this.name = obj.TryGetValue("name", out token) ? token.ToString() : "N/A";
+                this.courseUrl = new Uri(obj.TryGetValue("course_url", out token) ? token.ToString() : "");
+                this.oodiUrl = new Uri(obj.TryGetValue("course_url_oodi", out token) ? token.ToString() : "");
+
+                switch ((string)obj["noppa_language"])
+                {
+                    case "fi":
+                        language = DataModel.Language.Finnish;
+                        break;
+                    case "en":
+                        language = DataModel.Language.English;
+                        break;
+                    case "sv":
+                        language = DataModel.Language.Swedish;
+                        break;
+                    default:
+                        language = DataModel.Language.Undefined;
+                        break;
+                }
+
+                foreach (var item in obj["links"])
+                {
+
+                }
             }
-
-            foreach (var item in obj["links"])
+            catch (Exception e)
             {
-
             }
         }
     }
