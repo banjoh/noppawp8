@@ -35,16 +35,19 @@ namespace NoppaClient
         private void DepartmentListSelected(object sender, SelectionChangedEventArgs e)
         {
             var list = sender as LongListSelector;
-            if (list == null)
+            if (list != null)
             {
-                return;
+                var selection = list.SelectedItem as DepartmentViewModel;
+                if (selection != null)
+                {
+                    NavigationService.Navigate(new Uri("/CourseListPage.xaml?content=department&id=" + HttpUtility.UrlEncode(selection.Id), UriKind.Relative));
+                }
             }
-            var selection = list.SelectedItem as DepartmentViewModel;
-            if(selection==null) 
-            {
-                return;
-            }
-            NavigationService.Navigate(new Uri("/CourseListPage.xaml?content=department&id=" + HttpUtility.UrlEncode(selection.Id), UriKind.Relative));
+        }
+
+        private void ApplicationBarIconButton_SearchClick(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/CourseSearchPage.xaml", UriKind.Relative));
         }
     }
 }

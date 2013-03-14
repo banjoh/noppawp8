@@ -63,8 +63,8 @@ namespace NoppaClient.DataModel
                 this.id = obj.TryGetValue("course_id", out token) ? token.ToString() : "N/A";
                 this.depId = obj.TryGetValue("dept_id", out token) ? token.ToString() : "N/A";
                 this.name = obj.TryGetValue("name", out token) ? token.ToString() : "N/A";
-                this.courseUrl = new Uri(obj.TryGetValue("course_url", out token) ? token.ToString() : "");
-                this.oodiUrl = new Uri(obj.TryGetValue("course_url_oodi", out token) ? token.ToString() : "");
+                this.courseUrl = obj.TryGetValue("course_url", out token) ? new Uri(token.ToString()) : new Uri("www.example.com");
+                this.oodiUrl = obj.TryGetValue("course_url_oodi", out token) ? new Uri(token.ToString()) : new Uri("www.example.com");
 
                 switch ((string)obj["noppa_language"])
                 {

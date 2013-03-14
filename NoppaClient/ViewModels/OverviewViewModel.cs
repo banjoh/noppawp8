@@ -53,6 +53,7 @@ namespace NoppaClient.ViewModels
             _openOodiPage = new DelegateCommand(async delegate { await Launcher.LaunchUriAsync(url); });
 
             Title = "Overview";
+            Index = 1;
         }
     }
 }

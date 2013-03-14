@@ -25,7 +25,7 @@
         <DataTemplate x:Key="DepartmentGroupHeaderTemplate">
             <Border Background="Transparent" Padding="5">
                 <TextBlock Text="{Binding Organization}" Foreground="{StaticResource PhoneForegroundBrush}" 
-                           FontSize="48" Padding="6" 
+                           FontSize="24" Padding="6,20,6,6" 
                            FontFamily="{StaticResource PhoneFontFamilySemiLight}" 
                            HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 </Border>
@@ -217,4 +217,10 @@
         <!--<Image Source="/Assets/AlignmentGrid.png" VerticalAlignment="Top" Height="800" Width="480" Margin="0" Grid.Row="0" Grid.RowSpan="2" IsHitTestVisible="False" />-->
 
     </Grid>
+
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar Mode="Default" Opacity="1.0" IsMenuEnabled="False" IsVisible="True">
+            <shell:ApplicationBarIconButton Click="ApplicationBarIconButton_SearchClick" IconUri="/Assets/feature.search.png" Text="search" />
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
 </phone:PhoneApplicationPage>

@@ -17,6 +17,12 @@
         </Style>
         
         <local:LocalizedStrings xmlns:local="clr-namespace:NoppaClient" x:Key="LocalizedStrings"/>
+
+        <DataTemplate x:Key="CourseItemTemplate">
+            <StackPanel Margin="0,-6,0,12">
+                <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeExtraLarge}"/>
+            </StackPanel>
+        </DataTemplate>
     </Application.Resources>
 
     <Application.ApplicationLifetimeObjects>

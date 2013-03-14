@@ -24,12 +24,16 @@ namespace NoppaClient
         {
             base.OnNavigatedTo(e);
 
-            DataContext = _viewModel = new CourseViewModel();
-        }
+            _viewModel = new CourseViewModel();
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
+            var id = "";
+            if (NavigationContext.QueryString.ContainsKey("id"))
+            {
+                id = NavigationContext.QueryString["id"];
+            }
 
+            _viewModel.Code = id;
+            DataContext = _viewModel;
         }
     }
 }

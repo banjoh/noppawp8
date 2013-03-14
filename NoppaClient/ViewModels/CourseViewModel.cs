@@ -10,15 +10,52 @@ namespace NoppaClient.ViewModels
     public class CourseViewModel : BindableBase
     {
         private ObservableCollection<CourseContentViewModel> _contents = new ObservableCollection<CourseContentViewModel>();
-        public ObservableCollection<CourseContentViewModel> Contents { get { return _contents; } } 
+        public ObservableCollection<CourseContentViewModel> Contents { get { return _contents; } }
 
+        private bool _isLoading;
+        public bool IsLoading { get { return _isLoading; } private set { SetProperty(ref _isLoading, value); } }
+
+        private string _code = "";
+        public string Code { get { return _code; } set { SetProperty(ref _code, value); } }
 
         public CourseViewModel()
         {
+            _contents.Add(new FrontPageViewModel(this)); // Always add this
+
             /* Add all that exist dynamically, depending on the course model. */
-            _contents.Add(new OverviewViewModel());
-            _contents.Add(new LecturesViewModel());
-            _contents.Add(new ExercisesViewModel());
+            LoadContentAsync();
+        }
+
+        private async void LoadContentAsync()
+        {
+            var tasks = new List<Task<CourseContentViewModel>>();
+
+            tasks.Add(Task.Run(async delegate () {
+                    await Task.Delay(500); // Imagine this took some time to load
+                    return new OverviewViewModel() as CourseContentViewModel;
+                })
+            );
+
+            tasks.Add(Task.Run(async delegate () {
+                    await Task.Delay(250); // Imagine this took some time to load
+                    return new LecturesViewModel() as CourseContentViewModel;
+                })
+            );
+
+            tasks.Add(Task.Run(async delegate () {
+                    await Task.Delay(750); // Imagine this took some time to load
+                    return new ExercisesViewModel() as CourseContentViewModel;
+                })
+            );
+
+            /* Add items in the order they are finished. */
+            while (tasks.Count > 0)
+            {
+                var task = await Task.WhenAny(tasks);
+                var content = task.Result;
+                _contents.Insert(Math.Min(content.Index, _contents.Count), content);
+                tasks.Remove(task);
+            }
         }
     }
 }

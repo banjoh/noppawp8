@@ -11,6 +11,7 @@ namespace NoppaClient.ViewModels
         public LecturesViewModel()
         {
             Title = "Lectures";
+            Index = 4;
         }
     }
 }

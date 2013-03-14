@@ -1,5 +1,5 @@
 ﻿<phone:PhoneApplicationPage
-    x:Class="NoppaClient.CourseListPage"
+    x:Class="NoppaClient.CourseSearchPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
@@ -7,14 +7,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:view="clr-namespace:NoppaClient.View"
-    d:DataContext="{d:DesignData SampleData/CourseListViewModelSampleData.xaml}"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d"
     shell:SystemTray.IsVisible="True">
-
+    
     <phone:PhoneApplicationPage.Resources>
         <view:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </phone:PhoneApplicationPage.Resources>
@@ -27,18 +26,26 @@
         </Grid.RowDefinitions>
 
         <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock Text="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}" TextWrapping="NoWrap" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeExtraLarge}" />
-            <TextBlock Text="{Binding Title}" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
-            <ProgressBar IsEnabled="True" IsIndeterminate="True" VerticalAlignment="Stretch" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        <StackPanel Grid.Row="0" Margin="12,17,12,28">
+            <TextBlock Text="COURSE SEARCH" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBox x:Name="SearchBox" AcceptsReturn="False" Margin="0,5,0,0" 
+                     Text="" HorizontalAlignment="Stretch" 
+                     view:SearchCommand.Command="{Binding SearchCommand}" 
+                     view:SearchCommand.Parameter="{Binding Text, ElementName=SearchBox}" /> 
         </StackPanel>
+
+        <ProgressBar IsIndeterminate="True" 
+                     Grid.Row="0" 
+                     Margin="0,0,0,16" 
+                     VerticalAlignment="Bottom" 
+                     HorizontalAlignment="Stretch" 
+                     Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"  />
 
         <phone:LongListSelector
             Margin="12,0,12,0"
             Grid.Row="1"
+            SelectionChanged="LongListSelector_SelectionChanged"
             ItemTemplate="{StaticResource CourseItemTemplate}"
-            ItemsSource="{Binding Courses}"
-            SelectionChanged="LongListSelector_SelectionChanged"/>
+            ItemsSource="{Binding Courses}"/>
     </Grid>
-
 </phone:PhoneApplicationPage>

@@ -12,46 +12,20 @@ using NoppaClient.DataModel;
 
 namespace NoppaClient
 {
-    public partial class CourseListPage : PhoneApplicationPage
+    public partial class CourseSearchPage : PhoneApplicationPage
     {
         CourseListViewModel _viewModel;
 
-        public CourseListPage()
+        public CourseSearchPage()
         {
             InitializeComponent();
         }
 
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-
             _viewModel = new CourseListViewModel();
             DataContext = _viewModel;
-
-            var content = "";
-            if (NavigationContext.QueryString.ContainsKey("content")) {
-                content = NavigationContext.QueryString["content"];
-            }
-
-            switch (content) 
-            {
-                case "department":
-                    string id = NavigationContext.QueryString["id"];
-                    await _viewModel.LoadDepartmentAsync(id);
-                    break;
-
-                default:
-                    await _viewModel.LoadMyCoursesAsync();
-                    break;
-            }
-        }
-
-
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            base.OnNavigatedFrom(e);
-
-            _viewModel.StopLoading();
         }
 
         private void LongListSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
