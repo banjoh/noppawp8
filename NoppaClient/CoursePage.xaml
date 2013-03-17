@@ -18,6 +18,16 @@
 
     <phone:PhoneApplicationPage.Resources>
         <ResourceDictionary>
+            <DataTemplate x:Key="LectureTemplate">
+                    <StackPanel>
+                        <TextBlock Text="Lectures" />
+                        <TextBlock Text="{Binding Date}" />
+                        <TextBlock Text="{Binding StartTime}" />
+                        <TextBlock Text="{Binding EndTime}" />
+                        <TextBlock Text="{Binding Location}" />
+                        <TextBlock Text="{Binding LectureTitle}" />
+                    </StackPanel>
+            </DataTemplate>
             <ResourceDictionary x:Key="ViewModelTemplates">
                 <DataTemplate x:Key="NoppaClient.ViewModels.FrontPageViewModel">
                     <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -56,7 +66,12 @@
                 </DataTemplate>
 
                 <DataTemplate x:Key="NoppaClient.ViewModels.LecturesViewModel">
-                    <TextBlock Text="Lectures" />
+                    <ListBox x:Name="LectureList"
+                    Margin="0,0,-22,0"
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                    ItemTemplate="{StaticResource LectureTemplate}"
+                    ItemsSource="{Binding Lectures}">
+                    </ListBox>
                 </DataTemplate>
 
                 <DataTemplate x:Key="NoppaClient.ViewModels.ExercisesViewModel">

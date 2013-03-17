@@ -103,6 +103,7 @@
     <Compile Include="CourseSearchPage.xaml.cs">
       <DependentUpon>CourseSearchPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\Lecture.cs" />
     <Compile Include="DataModel\Department.cs" />
     <Compile Include="DataModel\Organisation.cs" />
     <Compile Include="DataModel\Course.cs" />
