@@ -18,7 +18,7 @@ namespace NoppaClient.View
         {
             if (TemplateDictionary != null)
             {
-                var key = newContent.GetType().FullName;
+                var key = newContent.GetType().Name;
                 Debug.WriteLine("Looking for " + key);
 
                 if (TemplateDictionary.Contains(key))

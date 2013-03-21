@@ -25,6 +25,8 @@ namespace NoppaClient.DataModel
         public string LectureTitle { get { return _lectureTitle;}  }
         public string Content { get { return _content; }  }
 
+        public Lecture() { }
+
         public Lecture(string json)
         {
             try
@@ -40,7 +42,7 @@ namespace NoppaClient.DataModel
                 this._lectureTitle = obj.TryGetValue("title", out token) ? token.ToString() : "N/A";
                 this._content = obj.TryGetValue("content", out token) ? token.ToString() : "N/A";
             }
-            catch (Exception e)
+            catch (Exception)
             {
             }
         }

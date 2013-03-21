@@ -103,8 +103,10 @@
     <Compile Include="CourseSearchPage.xaml.cs">
       <DependentUpon>CourseSearchPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\Event.cs" />
     <Compile Include="DataModel\Lecture.cs" />
     <Compile Include="DataModel\Department.cs" />
+    <Compile Include="DataModel\NewsItem.cs" />
     <Compile Include="DataModel\Organisation.cs" />
     <Compile Include="DataModel\Course.cs" />
     <Compile Include="LocalizedStrings.cs" />
@@ -129,13 +131,18 @@
     <Compile Include="ViewModels\EventViewModel.cs" />
     <Compile Include="ViewModels\ExercisesViewModel.cs" />
     <Compile Include="ViewModels\FrontPageViewModel.cs" />
-    <Compile Include="ViewModels\ItemViewModel.cs" />
     <Compile Include="ViewModels\LecturesViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\NewsViewModel.cs" />
     <Compile Include="ViewModels\OverviewViewModel.cs" />
     <Compile Include="View\BooleanToVisibilityConverter.cs" />
+    <Compile Include="View\EnumerableIndexConverter.cs" />
     <Compile Include="View\DataTemplateSelector.cs" />
+    <Compile Include="View\DesignModeChecker.cs" />
+    <Compile Include="View\HtmlTextBox.cs" />
+    <Compile Include="View\OpenBrowserCommand.cs" />
     <Compile Include="View\SearchCommand.cs" />
+    <Compile Include="View\TypeNameToDataTemplateConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using NoppaClient.Resources;
+using NoppaClient.DataModel;
 
 namespace NoppaClient.ViewModels
 {
@@ -10,17 +11,14 @@ namespace NoppaClient.ViewModels
         /// <summary>
         /// A collection for ItemViewModel objects.
         /// </summary>
-        private ObservableCollection<ItemViewModel> _items = new ObservableCollection<ItemViewModel>();
-        public ObservableCollection<ItemViewModel> Items { get { return _items; } }
-
-        private ObservableCollection<ItemViewModel> _events = new ObservableCollection<ItemViewModel>();
-        public ObservableCollection<ItemViewModel> Events { get { return _events; } }
+        private ObservableCollection<Event> _events = new ObservableCollection<Event>();
+        public ObservableCollection<Event> Events { get { return _events; } }
 
         private CourseListViewModel _myCourses = new CourseListViewModel();
         public CourseListViewModel MyCourses { get { return _myCourses; } }
 
-        private ObservableCollection<ItemViewModel> _news = new ObservableCollection<ItemViewModel>();
-        public ObservableCollection<ItemViewModel> News { get { return _news; } }
+        private ObservableCollection<NewsItem> _news = new ObservableCollection<NewsItem>();
+        public ObservableCollection<NewsItem> News { get { return _news; } }
 
         private ObservableCollection<DepartmentGroup> _departments;
         public ObservableCollection<DepartmentGroup> Departments { get { return _departments; } }
@@ -68,9 +66,10 @@ namespace NoppaClient.ViewModels
         /// <summary>
         /// Creates and adds a few ItemViewModel objects into the Items collection.
         /// </summary>
-        public async void LoadDataAsync()
+        public /* async */ void LoadDataAsync()
         {
             // Sample data; replace with real data
+            /*
             this.Items.Add(new ItemViewModel() { LineOne = "runtime one", LineTwo = "Maecenas praesent accumsan bibendum", LineThree = "Facilisi faucibus habitant inceptos interdum lobortis nascetur pharetra placerat pulvinar sagittis senectus sociosqu" });
             this.Items.Add(new ItemViewModel() { LineOne = "runtime two", LineTwo = "Dictumst eleifend facilisi faucibus", LineThree = "Suscipit torquent ultrices vehicula volutpat maecenas praesent accumsan bibendum dictumst eleifend facilisi faucibus" });
             this.Items.Add(new ItemViewModel() { LineOne = "runtime three", LineTwo = "Habitant inceptos interdum lobortis", LineThree = "Habitant inceptos interdum lobortis nascetur pharetra placerat pulvinar sagittis senectus sociosqu suscipit torquent" });
@@ -96,6 +95,7 @@ namespace NoppaClient.ViewModels
             News.Add(new ItemViewModel() { LineOne = "No lecture today", LineTwo = "Maecenas praesent accumsan bibendum", LineThree = "Maecenas praesent accumsan bibendum dictumst eleifend facilisi faucibus habitant inceptos interdum lobortis nascetur" });
             News.Add(new ItemViewModel() { LineOne = "Results for January exam", LineTwo = "Dictumst eleifend facilisi faucibus", LineThree = "Pharetra placerat pulvinar sagittis senectus sociosqu suscipit torquent ultrices vehicula volutpat maecenas praesent" });
             News.Add(new ItemViewModel() { LineOne = "Homeworks graded", LineTwo = "Habitant inceptos interdum lobortis", LineThree = "Accumsan bibendum dictumst eleifend facilisi faucibus habitant inceptos interdum lobortis nascetur pharetra placerat" });
+            */
 
             _departments = DepartmentGroup.CreateDepartmentGroups(new DepartmentViewModel[] {
                 // This is now the same data as in the sample data, but this should be taken from the data model

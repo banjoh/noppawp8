@@ -25,7 +25,7 @@ namespace NoppaClient
             base.OnNavigatedTo(e);
 
             _viewModel = new CourseViewModel();
-
+            
             var id = "";
             if (NavigationContext.QueryString.ContainsKey("id"))
             {

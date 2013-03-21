@@ -11,15 +11,21 @@ namespace NoppaClient.ViewModels
     {
         private CourseViewModel _courseViewModel;
 
-        public string Code { get { return _courseViewModel.Code; } }
+        public string Code { get; set; }
+
+        public FrontPageViewModel()
+        {
+            // Needed for design time data initialization
+        }
 
         public FrontPageViewModel(CourseViewModel courseViewModel)
         {
             // Pick interesting things from the courseViewModel to show
 
             _courseViewModel = courseViewModel;
+            Code = _courseViewModel.Code;
             
-            Title = "Front Page " + courseViewModel.Code;
+            Title = "Front Page";
             Index = 0;
         }
     }

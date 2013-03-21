@@ -21,6 +21,9 @@ namespace NoppaClient.ViewModels
         private int _index = 100;
         public int Index { get { return _index; } protected set { SetProperty(ref _index, value); } }
 
+        private bool _isEmpty = false;
+        public bool IsEmpty { get { return _isEmpty; } protected set { SetProperty(ref _isEmpty, value); } }
+
         // Top and bottom text meant to be this: Additional texts in pages (/courses/<course_id>/texts)
         private string _topText = "";
         public string TopText { get { return _topText; } protected set { SetProperty(ref _topText, value); } }

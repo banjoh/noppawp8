@@ -30,6 +30,9 @@ namespace NoppaClient.ViewModels
         public string Staff { get; private set; }
         public string OfficeHours { get; private set; }
 
+        private ICommand _openNoppaPage;
+        public ICommand OpenNoppaPage { get { return _openNoppaPage; } }
+
         private ICommand _openOodiPage;
         public ICommand OpenOodiPage { get { return _openOodiPage; } }
 
@@ -48,9 +51,11 @@ namespace NoppaClient.ViewModels
             InstructionLanguage = "FI. Primarily Finnish. The assessed work may be completed in English or upon request.";
             Details = "Kurssikirja: Christopher D. Manning, Prabhakar Raghavan and Hinrich Schütze, Introduction to Information Retrieval, Cambridge University Press. 2008.  ISBN: 0521865719. Saatavissa osoitteesta: http://nlp.stanford.edu/ IR-book/";
 
-            string oodiUrl = "https://oodi.aalto.fi/a/opintjakstied.jsp?Kieli=6&Tunniste=T-75.4400&html=1";
-            var url = new Uri(oodiUrl);
-            _openOodiPage = new DelegateCommand(async delegate { await Launcher.LaunchUriAsync(url); });
+            var noppaUrl = new Uri("https://noppa.aalto.fi/noppa/kurssi/t-75.4400/etusivu");
+            var oodiUrl = new Uri("https://oodi.aalto.fi/a/opintjakstied.jsp?Kieli=6&Tunniste=T-75.4400&html=1");
+            
+            _openOodiPage = new DelegateCommand(async delegate { await Launcher.LaunchUriAsync(oodiUrl); });
+            _openNoppaPage = new DelegateCommand(async delegate { await Launcher.LaunchUriAsync(noppaUrl); });
 
             Title = "Overview";
             Index = 1;

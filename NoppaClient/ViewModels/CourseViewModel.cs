@@ -48,13 +48,34 @@ namespace NoppaClient.ViewModels
                 })
             );
 
+            tasks.Add(Task.Run(async delegate () {
+                    await Task.Delay(200); // Imagine this took some time to load
+                    return new NewsViewModel(null) as CourseContentViewModel;
+                })
+            );
+
             /* Add items in the order they are finished. */
             while (tasks.Count > 0)
             {
                 var task = await Task.WhenAny(tasks);
-                var content = task.Result;
-                _contents.Insert(Math.Min(content.Index, _contents.Count), content);
                 tasks.Remove(task);
+
+                var content = task.Result;
+                if (!content.IsEmpty)
+                {
+                    int index = _contents.Count;
+
+                    // Find the correct position
+                    for (int i = 0; i < _contents.Count; i++)
+                    {
+                        if (_contents[i].Index > content.Index)
+                        {
+                            index = i;
+                            break;
+                        }
+                    }
+                    _contents.Insert(index, content);
+                }
             }
         }
     }
