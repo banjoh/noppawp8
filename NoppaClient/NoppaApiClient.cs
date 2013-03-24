@@ -35,7 +35,7 @@ namespace NoppaClient
 
         public NoppaApiClient(string apiKey)
         {
-            this._apiKey = apiKey;
+            this._apiKey = apiKey; 
         }
 
         #region API Call methods

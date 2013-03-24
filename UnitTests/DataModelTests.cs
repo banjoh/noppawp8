@@ -11,6 +11,14 @@ namespace UnitTests
     [TestClass]
     public class DataModelTests
     {
+        NoppaClient.Settings Settings { get; set; }
+
+        [TestInitialize]
+        public void Setup()
+        {
+            Settings = new NoppaClient.Settings();
+        }
+
         [TestMethod]
         public void TestOrganisationParsing()
         {
@@ -34,17 +42,17 @@ namespace UnitTests
 
             }";
 
-            NoppaClient.DataModel.Organization org = new NoppaClient.DataModel.Organization(json);
+            Organization org = new NoppaClient.DataModel.Organization(json);
 
             Assert.IsTrue("CHEM" == org.Id);
 
-            NoppaClient.Settings.Language = NoppaClient.DataModel.Language.English;
+            Settings.Language = Language.English;
             Assert.IsTrue("School of Chemical Technology" == org.Name);
 
-            NoppaClient.Settings.Language = NoppaClient.DataModel.Language.Finnish;
+            Settings.Language = Language.Finnish;
             Assert.IsTrue("Kemian tekniikan korkeakoulu" == org.Name);
 
-            NoppaClient.Settings.Language = NoppaClient.DataModel.Language.Swedish;
+            Settings.Language = Language.Swedish;
             Assert.IsTrue("Högskolan för kemiteknik" == org.Name);
         }
 
@@ -77,13 +85,13 @@ namespace UnitTests
             Assert.IsTrue("T2020" == dip.Id);
             Assert.IsTrue("ENG" == dip.OrgId);
 
-            NoppaClient.Settings.Language = NoppaClient.DataModel.Language.English;
+            Settings.Language = Language.English;
             Assert.IsTrue("Department of Energy Technology" == dip.Name);
 
-            NoppaClient.Settings.Language = NoppaClient.DataModel.Language.Finnish;
+            Settings.Language = Language.Finnish;
             Assert.IsTrue("Energiatekniikan laitos" == dip.Name);
 
-            NoppaClient.Settings.Language = NoppaClient.DataModel.Language.Swedish;
+            Settings.Language = Language.Swedish;
             Assert.IsTrue("Institutionen för energiteknik" == dip.Name);
         }
 

@@ -27,13 +27,13 @@ namespace NoppaClient.DataModel
 
         public Lecture() { }
 
-        public Lecture(string json)
+        public Lecture(string json) : this(JObject.Parse(json)) {}
+        public Lecture(JObject obj)
         {
             try
             {
                 JToken token;
 
-                JObject obj = JObject.Parse(json);
                 this._lectureId = obj.TryGetValue("lecture_id", out token) ? token.ToString() : "N/A";
                 this._date = obj.TryGetValue("date", out token) ? token.ToString() : "N/A";
                 this._startTime = obj.TryGetValue("start_time", out token) ? token.ToString() : "N/A";

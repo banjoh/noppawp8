@@ -28,9 +28,10 @@ namespace NoppaClient.DataModel
             get { return orgId; }
         }
 
-        public Department(string json)
+
+        public Department(string json) : this(JObject.Parse(json)) {}
+        public Department(JObject obj)
         {
-            JObject obj = JObject.Parse(json);
             this.id = (string)obj["dept_id"];
             this.orgId = (string)obj["org_id"];
 

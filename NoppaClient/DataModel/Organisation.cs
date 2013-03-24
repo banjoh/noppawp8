@@ -23,9 +23,9 @@ namespace NoppaClient.DataModel
             get { return id; }
         }
 
-        public Organization(string json)
+        public Organization(string json) : this(JObject.Parse(json)) {}
+        public Organization(JObject obj)
         {
-            JObject obj = JObject.Parse(json);
             this.id = (string)obj["org_id"];
 
             this.names = new Dictionary<Language, string>();            
