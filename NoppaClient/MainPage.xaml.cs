@@ -49,5 +49,10 @@ namespace NoppaClient
         {
             NavigationService.Navigate(new Uri("/CourseSearchPage.xaml", UriKind.Relative));
         }
+
+        private void ApplicationBarMenuItem_Settings(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/SettingsPage.xaml", UriKind.Relative));
+        }
     }
 }

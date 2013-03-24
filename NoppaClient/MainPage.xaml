@@ -70,7 +70,7 @@
          -->
 
          <!--Panorama control-->
-        <phone:Panorama Title="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}">
+        <phone:Panorama Title="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}" Margin="0,-1,0,1">
             <phone:Panorama.Background>
                 <ImageBrush ImageSource="/NoppaClient;component/Assets/PanoramaBackground.png"/>
             </phone:Panorama.Background>
@@ -219,8 +219,12 @@
     </Grid>
 
     <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar Mode="Default" Opacity="1.0" IsMenuEnabled="False" IsVisible="True">
+        <shell:ApplicationBar Mode="Default" Opacity="1.0" IsMenuEnabled="True" IsVisible="True">
             <shell:ApplicationBarIconButton Click="ApplicationBarIconButton_SearchClick" IconUri="/Assets/feature.search.png" Text="search" />
+            
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem Text="settings" Click="ApplicationBarMenuItem_Settings" />
+            </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
 </phone:PhoneApplicationPage>

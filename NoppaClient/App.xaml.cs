@@ -16,6 +16,7 @@ namespace NoppaClient
     public partial class App : Application
     {
         private static MainViewModel viewModel = null;
+        private static Settings _settings;
 
         /// <summary>
         /// A static ViewModel used by the views to bind against.
@@ -30,6 +31,19 @@ namespace NoppaClient
                     viewModel = new MainViewModel();
 
                 return viewModel;
+            }
+        }
+
+        public static Settings Settings
+        {
+            get
+            {
+                if (_settings == null)
+                {
+                    _settings = new Settings();
+                }
+
+                return _settings;
             }
         }
 

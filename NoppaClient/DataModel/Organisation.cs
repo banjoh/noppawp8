@@ -15,7 +15,7 @@ namespace NoppaClient.DataModel
 
         public string Name
         {
-            get { return names[Settings.Language]; }
+            get { return names[App.Settings.Language]; }
         }
 
         public string Id

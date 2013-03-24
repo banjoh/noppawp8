@@ -61,7 +61,7 @@ namespace NoppaClient.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Noppa Client.
+        ///   Looks up a localized string similar to noppa client.
         /// </summary>
         public static string ApplicationTitle {
             get {
@@ -93,6 +93,33 @@ namespace NoppaClient.Resources {
         public static string DepartmentTitle {
             get {
                 return ResourceManager.GetString("DepartmentTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to english.
+        /// </summary>
+        public static string EnglishLanguage {
+            get {
+                return ResourceManager.GetString("EnglishLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to suomi.
+        /// </summary>
+        public static string FinnishLanguage {
+            get {
+                return ResourceManager.GetString("FinnishLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to language.
+        /// </summary>
+        public static string LanguageTitle {
+            get {
+                return ResourceManager.GetString("LanguageTitle", resourceCulture);
             }
         }
         
@@ -147,6 +174,24 @@ namespace NoppaClient.Resources {
         public static string SearchResultsPageTitle {
             get {
                 return ResourceManager.GetString("SearchResultsPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to settings.
+        /// </summary>
+        public static string SettingsTitle {
+            get {
+                return ResourceManager.GetString("SettingsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to svenska.
+        /// </summary>
+        public static string SwedishLanguage {
+            get {
+                return ResourceManager.GetString("SwedishLanguage", resourceCulture);
             }
         }
     }
