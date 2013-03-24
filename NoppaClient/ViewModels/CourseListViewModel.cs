@@ -57,24 +57,15 @@ namespace NoppaClient.ViewModels
             IsLoading = true;
             _courses.Clear();
 
-            var random = new Random();
             try
             {
-                for (int i = 0, end = 10 + random.Next(10); i < end; i++)
+                using (var client = new NoppaApiClient())
                 {
-                    // When await returns, we're back in the UI thread
-                    var course = await Task.Run(async () =>
+                    List<Course> courses = await client.GetCourses(query);
+                    foreach (var course in courses)
                     {
-                        // Long running background code that is done in another thread
-                        var index = i;
-                        var randomSource = new Random();
-                        await Task.Delay(randomSource.Next(1000));
-                        //TODO: Use real data
-                        string json = @"{'name': '" + String.Format("X-{0}.{1} My course name {2}", 100 + randomSource.Next(900), 1000 + randomSource.Next(9000), index) + "'}";
-                        return new Course(json);
-                    }, cancellationToken);
-                    
-                    _courses.Add(course);
+                        _courses.Add(course);
+                    }
                 }
             }
             catch (TaskCanceledException)
@@ -92,22 +83,20 @@ namespace NoppaClient.ViewModels
             IsLoading = true;
             _courses.Clear();
 
-            var random = new Random();
-            for (int i = 0, end = 20 + random.Next(20); i < end; i++)
+            try
             {
-                // When await returns, we're back in the UI thread
-                var course = await Task.Run(async () =>
+                using (var client = new NoppaApiClient())
                 {
-                    // Long running background code that is done in another thread
-                    var index = i;
-                    var randomSource = new Random();
-                    await Task.Delay(randomSource.Next(1000));
-                    //TODO: Use real data
-                    string json = @"{'name': '" + String.Format("X-{0}.{1} My course name {2}", 100 + randomSource.Next(900), 1000 + randomSource.Next(9000), index) + "'}";
-                    return new Course(json);
-                });
-
-                _courses.Add(course);
+                    List<Course> courses = await client.GetCourses("", "", departmentId);
+                    foreach (var course in courses)
+                    {
+                        _courses.Add(course);
+                    }
+                }
+            }
+            catch (TaskCanceledException)
+            {
+                Debug.WriteLine("Task cancelled.");
             }
 
             IsLoading = false;
