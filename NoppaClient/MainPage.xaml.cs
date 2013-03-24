@@ -9,6 +9,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using NoppaClient.DataModel;
 using NoppaClient.ViewModels;
+using System.Threading.Tasks;
 
 namespace NoppaClient
 {
@@ -24,11 +25,18 @@ namespace NoppaClient
         }
 
         // Load data for the ViewModel Items
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (!App.ViewModel.IsDataLoaded)
+            try
             {
-                App.ViewModel.LoadDataAsync();
+                if (!App.ViewModel.IsDataLoaded)
+                {
+                    await App.ViewModel.LoadDataAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Couldn't load data: {0}", ex.Message);
             }
         }
 

@@ -3,6 +3,8 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using NoppaClient.Resources;
 using NoppaClient.DataModel;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace NoppaClient.ViewModels
 {
@@ -21,7 +23,10 @@ namespace NoppaClient.ViewModels
         public ObservableCollection<NewsItem> News { get { return _news; } }
 
         private ObservableCollection<DepartmentGroup> _departments;
-        public ObservableCollection<DepartmentGroup> Departments { get { return _departments; } }
+        public ObservableCollection<DepartmentGroup> Departments {
+            get { return _departments; }
+            set { SetProperty(ref _departments, value); }
+        }
 
         private string _sampleProperty = "Sample Runtime Property Value";
         /// <summary>
@@ -66,53 +71,33 @@ namespace NoppaClient.ViewModels
         /// <summary>
         /// Creates and adds a few ItemViewModel objects into the Items collection.
         /// </summary>
-        public /* async */ void LoadDataAsync()
+        public async Task LoadDataAsync()
         {
-            // Sample data; replace with real data
-            /*
-            this.Items.Add(new ItemViewModel() { LineOne = "runtime one", LineTwo = "Maecenas praesent accumsan bibendum", LineThree = "Facilisi faucibus habitant inceptos interdum lobortis nascetur pharetra placerat pulvinar sagittis senectus sociosqu" });
-            this.Items.Add(new ItemViewModel() { LineOne = "runtime two", LineTwo = "Dictumst eleifend facilisi faucibus", LineThree = "Suscipit torquent ultrices vehicula volutpat maecenas praesent accumsan bibendum dictumst eleifend facilisi faucibus" });
-            this.Items.Add(new ItemViewModel() { LineOne = "runtime three", LineTwo = "Habitant inceptos interdum lobortis", LineThree = "Habitant inceptos interdum lobortis nascetur pharetra placerat pulvinar sagittis senectus sociosqu suscipit torquent" });
-            this.Items.Add(new ItemViewModel() { LineOne = "runtime four", LineTwo = "Nascetur pharetra placerat pulvinar", LineThree = "Ultrices vehicula volutpat maecenas praesent accumsan bibendum dictumst eleifend facilisi faucibus habitant inceptos" });
-            this.Items.Add(new ItemViewModel() { LineOne = "runtime five", LineTwo = "Maecenas praesent accumsan bibendum", LineThree = "Maecenas praesent accumsan bibendum dictumst eleifend facilisi faucibus habitant inceptos interdum lobortis nascetur" });
-            this.Items.Add(new ItemViewModel() { LineOne = "runtime six", LineTwo = "Dictumst eleifend facilisi faucibus", LineThree = "Pharetra placerat pulvinar sagittis senectus sociosqu suscipit torquent ultrices vehicula volutpat maecenas praesent" });
-            this.Items.Add(new ItemViewModel() { LineOne = "runtime seven", LineTwo = "Habitant inceptos interdum lobortis", LineThree = "Accumsan bibendum dictumst eleifend facilisi faucibus habitant inceptos interdum lobortis nascetur pharetra placerat" });
-            this.Items.Add(new ItemViewModel() { LineOne = "runtime eight", LineTwo = "Nascetur pharetra placerat pulvinar", LineThree = "Pulvinar sagittis senectus sociosqu suscipit torquent ultrices vehicula volutpat maecenas praesent accumsan bibendum" });
-            this.Items.Add(new ItemViewModel() { LineOne = "runtime nine", LineTwo = "Maecenas praesent accumsan bibendum", LineThree = "Facilisi faucibus habitant inceptos interdum lobortis nascetur pharetra placerat pulvinar sagittis senectus sociosqu" });
-            this.Items.Add(new ItemViewModel() { LineOne = "runtime ten", LineTwo = "Dictumst eleifend facilisi faucibus", LineThree = "Suscipit torquent ultrices vehicula volutpat maecenas praesent accumsan bibendum dictumst eleifend facilisi faucibus" });
-            this.Items.Add(new ItemViewModel() { LineOne = "runtime eleven", LineTwo = "Habitant inceptos interdum lobortis", LineThree = "Habitant inceptos interdum lobortis nascetur pharetra placerat pulvinar sagittis senectus sociosqu suscipit torquent" });
-            this.Items.Add(new ItemViewModel() { LineOne = "runtime twelve", LineTwo = "Nascetur pharetra placerat pulvinar", LineThree = "Ultrices vehicula volutpat maecenas praesent accumsan bibendum dictumst eleifend facilisi faucibus habitant inceptos" });
-            this.Items.Add(new ItemViewModel() { LineOne = "runtime thirteen", LineTwo = "Maecenas praesent accumsan bibendum", LineThree = "Maecenas praesent accumsan bibendum dictumst eleifend facilisi faucibus habitant inceptos interdum lobortis nascetur" });
-            this.Items.Add(new ItemViewModel() { LineOne = "runtime fourteen", LineTwo = "Dictumst eleifend facilisi faucibus", LineThree = "Pharetra placerat pulvinar sagittis senectus sociosqu suscipit torquent ultrices vehicula volutpat maecenas praesent" });
-            this.Items.Add(new ItemViewModel() { LineOne = "runtime fifteen", LineTwo = "Habitant inceptos interdum lobortis", LineThree = "Accumsan bibendum dictumst eleifend facilisi faucibus habitant inceptos interdum lobortis nascetur pharetra placerat" });
-            this.Items.Add(new ItemViewModel() { LineOne = "runtime sixteen", LineTwo = "Nascetur pharetra placerat pulvinar", LineThree = "Pulvinar sagittis senectus sociosqu suscipit torquent ultrices vehicula volutpat maecenas praesent accumsan bibendum" });
 
-            Events.Add(new ItemViewModel() { LineOne = "Assignment", LineTwo = "Maecenas praesent accumsan bibendum", LineThree = "Maecenas praesent accumsan bibendum dictumst eleifend facilisi faucibus habitant inceptos interdum lobortis nascetur" });
-            Events.Add(new ItemViewModel() { LineOne = "Deadline", LineTwo = "Dictumst eleifend facilisi faucibus", LineThree = "Pharetra placerat pulvinar sagittis senectus sociosqu suscipit torquent ultrices vehicula volutpat maecenas praesent" });
-            Events.Add(new ItemViewModel() { LineOne = "Guest lecture", LineTwo = "Habitant inceptos interdum lobortis", LineThree = "Accumsan bibendum dictumst eleifend facilisi faucibus habitant inceptos interdum lobortis nascetur pharetra placerat" });
-            Events.Add(new ItemViewModel() { LineOne = "Exam", LineTwo = "Nascetur pharetra placerat pulvinar", LineThree = "Pulvinar sagittis senectus sociosqu suscipit torquent ultrices vehicula volutpat maecenas praesent accumsan bibendum" });
+            using (var client = new NoppaApiClient())
+            {
+                List<DepartmentViewModel> models = new List<DepartmentViewModel>();
 
-            News.Add(new ItemViewModel() { LineOne = "No lecture today", LineTwo = "Maecenas praesent accumsan bibendum", LineThree = "Maecenas praesent accumsan bibendum dictumst eleifend facilisi faucibus habitant inceptos interdum lobortis nascetur" });
-            News.Add(new ItemViewModel() { LineOne = "Results for January exam", LineTwo = "Dictumst eleifend facilisi faucibus", LineThree = "Pharetra placerat pulvinar sagittis senectus sociosqu suscipit torquent ultrices vehicula volutpat maecenas praesent" });
-            News.Add(new ItemViewModel() { LineOne = "Homeworks graded", LineTwo = "Habitant inceptos interdum lobortis", LineThree = "Accumsan bibendum dictumst eleifend facilisi faucibus habitant inceptos interdum lobortis nascetur pharetra placerat" });
-            */
+                try
+                {
+                    List<Organization> orgs = await client.GetAllOrganizations();
+                    foreach (var org in orgs)
+                    {
+                        var depts = await client.GetDepartments(org.Id);
 
-            _departments = DepartmentGroup.CreateDepartmentGroups(new DepartmentViewModel[] {
-                // This is now the same data as in the sample data, but this should be taken from the data model
-                new DepartmentViewModel("School of Assorted Magicks", "Department of Spirit Conjuring", "conj"),
-                new DepartmentViewModel("School of Assorted Magicks", "Department of Illusion and Charms", "illusion"), 
-                new DepartmentViewModel("School of Assorted Magicks", "Department of Black Arts", "black"),
-    
-                new DepartmentViewModel("School of Arcane Alchemy", "Department of Transmutation", "trans"),
-                new DepartmentViewModel("School of Arcane Alchemy", "Department of Good and Bad Air", "air"),
-                new DepartmentViewModel("School of Arcane Alchemy", "Department of Love Potions", "potions"),
+                        foreach (var dept in depts)
+                        {
+                            models.Add(new DepartmentViewModel(dept.OrgId, dept.Name, dept.Id));   
+                        }
+                    }
 
-                new DepartmentViewModel ("School of Witchcraft", "Department of Flying on Broomsticks", "broom"),
-                new DepartmentViewModel ("School of Witchcraft", "Department of Cauldron Maintenance", "cauldron"),
-                new DepartmentViewModel ("School of Witchcraft", "Department of Familiar Pacts", "familiar"),
-            });
-
-            //await _myCourses.LoadMyCoursesAsync();
+                    Departments = DepartmentGroup.CreateDepartmentGroups(models);
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("Caught exception: {0}", ex.Message);
+                }
+            }
 
             this.IsDataLoaded = true;
         }

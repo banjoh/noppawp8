@@ -28,7 +28,7 @@ namespace NoppaClient
         }
     }
 
-    public class NoppaApiClient
+    public class NoppaApiClient : IDisposable
     {
         private const string _apiURL = "http://noppa-api-dev.aalto.fi/api/v1";
         private string _apiKey;
@@ -36,6 +36,14 @@ namespace NoppaClient
         public NoppaApiClient(string apiKey)
         {
             this._apiKey = apiKey; 
+        }
+        public NoppaApiClient()
+        {
+            this._apiKey = APIKeyHolder.Key;
+        }
+
+        public void Dispose()
+        {
         }
 
         #region API Call methods
@@ -69,7 +77,7 @@ namespace NoppaClient
          */
         private async Task<List<T>> GetList<T>(string query)
         {
-            HttpWebResponse response = await CallAPIAsync(query);
+            HttpWebResponse response = await CallAPIAsync(query).ConfigureAwait(false);
             
             List<T> list = new List<T>();
 
@@ -85,13 +93,25 @@ namespace NoppaClient
 
         private async Task<T> GetObject<T>(string query)
         {
-            HttpWebResponse response = await CallAPIAsync(query);
+            HttpWebResponse response = await CallAPIAsync(query).ConfigureAwait(false);
 
             using (var sr = new StreamReader(response.GetResponseStream()))
             using (JsonReader reader = new JsonTextReader(sr))
             {
                 JObject obj = (JObject)JToken.ReadFrom(reader);
                 return (T)Activator.CreateInstance(typeof(T), obj.ToString());
+            }
+        }
+
+
+        private async Task<JObject> GetJObject(string query)
+        {
+            HttpWebResponse response = await CallAPIAsync(query);
+
+            using (var sr = new StreamReader(response.GetResponseStream()))
+            using (JsonReader reader = new JsonTextReader(sr))
+            {
+                return (JObject)JObject.ReadFrom(reader);
             }
         }
 
