@@ -15,6 +15,8 @@ namespace NoppaClient
 {
     public partial class MainPage : PhoneApplicationPage
     {
+        Language _loadedLanguage;
+
         // Constructor
         public MainPage()
         {
@@ -22,6 +24,7 @@ namespace NoppaClient
 
             // Set the data context of the listbox control to the sample data
             DataContext = App.ViewModel;
+            _loadedLanguage = App.Settings.Language;
         }
 
         // Load data for the ViewModel Items
@@ -29,9 +32,10 @@ namespace NoppaClient
         {
             try
             {
-                if (!App.ViewModel.IsDataLoaded)
+                if (!App.ViewModel.IsDataLoaded || _loadedLanguage != App.Settings.Language)
                 {
                     await App.ViewModel.LoadDataAsync();
+                    _loadedLanguage = App.Settings.Language;
                 }
             }
             catch (Exception ex)
