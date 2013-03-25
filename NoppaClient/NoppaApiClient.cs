@@ -104,9 +104,9 @@ namespace NoppaClient
         }
 
 
-        private async Task<JObject> GetJObject(string query)
+        private async Task<JObject> GetJObject(string format, params object[] args)
         {
-            HttpWebResponse response = await CallAPIAsync(query);
+            HttpWebResponse response = await CallAPIAsync(String.Format(format, args)).ConfigureAwait(false);
 
             using (var sr = new StreamReader(response.GetResponseStream()))
             using (JsonReader reader = new JsonTextReader(sr))
@@ -166,7 +166,7 @@ namespace NoppaClient
         public async Task<List<Course>> GetCourses(string search_pattern, string org_id = "", string dept_id = "")
         {
             string query = String.Format("{0}/courses?key={1}&search={2}{3}{4}",
-                _apiURL, _apiKey, search_pattern,
+                _apiURL, _apiKey,  HttpUtility.UrlEncode(search_pattern),
                 org_id != "" ? "&org_id=" + org_id : "",
                 dept_id != "" ? "&dept_id=" + dept_id : "");
 
@@ -184,7 +184,60 @@ namespace NoppaClient
 
         #region Course Content getters
 
-        /* TODO */
+        public async Task<JObject> GetCourseOverview(string course_id)
+        {
+            return await GetJObject("{0}/courses/{1}/overview?key={2}", _apiURL, course_id, _apiKey);
+        }
+
+        public async Task<JObject> GetCourseAdditionalPages(string course_id)
+        {
+            return await GetJObject("{0}/courses/{1}/pages?key={2}", _apiURL, course_id, _apiKey);
+        }
+
+        public async Task<JObject> GetCourseNews(string course_id)
+        {
+            return await GetJObject("{0}/courses/{1}/news?key={2}", _apiURL, course_id, _apiKey);
+        }
+
+        public async Task<JObject> GetCourseResults(string course_id)
+        {
+            return await GetJObject("{0}/courses/{1}/results?key={2}", _apiURL, course_id, _apiKey);
+        }
+
+        public async Task<JObject> GetCourseLectures(string course_id)
+        {
+            return await GetJObject("{0}/courses/{1}/lectures?key={2}", _apiURL, course_id, _apiKey);
+        }
+
+        public async Task<JObject> GetCourseExercises(string course_id)
+        {
+            return await GetJObject("{0}/courses/{1}/exercises?key={2}", _apiURL, course_id, _apiKey);
+        }
+
+        public async Task<JObject> GetCourseAssignments(string course_id)
+        {
+            return await GetJObject("{0}/courses/{1}/assignments?key={2}", _apiURL, course_id, _apiKey);
+        }
+
+        public async Task<JObject> GetCourseEvents(string course_id)
+        {
+            return await GetJObject("{0}/courses/{1}/events?key={2}", _apiURL, course_id, _apiKey);
+        }
+
+        public async Task<JObject> GetCourseMaterial(string course_id)
+        {
+            return await GetJObject("{0}/courses/{1}/material?key={2}", _apiURL, course_id, _apiKey);
+        }
+
+        public async Task<JObject> GetCourseExerciseMaterial(string course_id)
+        {
+            return await GetJObject("{0}/courses/{1}/exercise_material?key={2}", _apiURL, course_id, _apiKey);
+        }
+
+        public async Task<JObject> GetCourseAdditionalTexts(string course_id)
+        {
+            return await GetJObject("{0}/courses/{1}/texts?key={2}", _apiURL, course_id, _apiKey);
+        }
 
         #endregion
     }
