@@ -59,13 +59,10 @@ namespace NoppaClient.ViewModels
 
             try
             {
-                using (var client = new NoppaApiClient())
+                List<Course> courses = await NoppaApiClient.GetCourses(query);
+                foreach (var course in courses)
                 {
-                    List<Course> courses = await client.GetCourses(query);
-                    foreach (var course in courses)
-                    {
-                        _courses.Add(course);
-                    }
+                    _courses.Add(course);
                 }
             }
             catch (TaskCanceledException)
@@ -85,13 +82,10 @@ namespace NoppaClient.ViewModels
 
             try
             {
-                using (var client = new NoppaApiClient())
+                List<Course> courses = await NoppaApiClient.GetCourses("", "", departmentId);
+                foreach (var course in courses)
                 {
-                    List<Course> courses = await client.GetCourses("", "", departmentId);
-                    foreach (var course in courses)
-                    {
-                        _courses.Add(course);
-                    }
+                    _courses.Add(course);
                 }
             }
             catch (TaskCanceledException)

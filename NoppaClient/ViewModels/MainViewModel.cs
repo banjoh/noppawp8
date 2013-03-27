@@ -74,29 +74,26 @@ namespace NoppaClient.ViewModels
         public async Task LoadDataAsync()
         {
 
-            using (var client = new NoppaApiClient())
+            List<DepartmentViewModel> models = new List<DepartmentViewModel>();
+
+            try
             {
-                List<DepartmentViewModel> models = new List<DepartmentViewModel>();
-
-                try
+                List<Organization> orgs = await NoppaApiClient.GetAllOrganizations();
+                foreach (var org in orgs)
                 {
-                    List<Organization> orgs = await client.GetAllOrganizations();
-                    foreach (var org in orgs)
+                    var depts = await NoppaApiClient.GetDepartments(org.Id);
+
+                    foreach (var dept in depts)
                     {
-                        var depts = await client.GetDepartments(org.Id);
-
-                        foreach (var dept in depts)
-                        {
-                            models.Add(new DepartmentViewModel(org.Name, dept.Name, dept.Id));   
-                        }
+                        models.Add(new DepartmentViewModel(org.Name, dept.Name, dept.Id));   
                     }
+                }
 
-                    Departments = DepartmentGroup.CreateDepartmentGroups(models);
-                }
-                catch (Exception ex)
-                {
-                    System.Diagnostics.Debug.WriteLine("Caught exception: {0}", ex.Message);
-                }
+                Departments = DepartmentGroup.CreateDepartmentGroups(models);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Caught exception: {0}", ex.Message);
             }
 
             this.IsDataLoaded = true;
