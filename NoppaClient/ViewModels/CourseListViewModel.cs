@@ -60,9 +60,13 @@ namespace NoppaClient.ViewModels
             try
             {
                 List<Course> courses = await NoppaApiClient.GetCourses(query);
-                foreach (var course in courses)
+
+                if (courses != null)
                 {
-                    _courses.Add(course);
+                    foreach (var course in courses)
+                    {
+                        _courses.Add(course);
+                    }
                 }
             }
             catch (TaskCanceledException)
@@ -83,9 +87,12 @@ namespace NoppaClient.ViewModels
             try
             {
                 List<Course> courses = await NoppaApiClient.GetCourses("", "", departmentId);
-                foreach (var course in courses)
+                if (courses != null)
                 {
-                    _courses.Add(course);
+                    foreach (var course in courses)
+                    {
+                        _courses.Add(course);
+                    }
                 }
             }
             catch (TaskCanceledException)

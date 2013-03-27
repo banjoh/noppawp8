@@ -17,8 +17,9 @@ namespace NoppaClient
     public class NoppaApiClient
     {
         private const string _apiURL = "http://noppa-api-dev.aalto.fi/api/v1";
+        private static readonly int _timeout = 15000; /* 5secs */
         private static string _apiKey;
-        private static NoppaApiClient _client;
+        private static NoppaApiClient _instance;
 
         private NoppaApiClient()
         {
@@ -27,10 +28,10 @@ namespace NoppaClient
 
         public static NoppaApiClient GetInstance()
         {
-            if (_client == null)
-                _client = new NoppaApiClient();
+            if (_instance == null)
+                _instance = new NoppaApiClient();
 
-            return _client;
+            return _instance;
         }
 
         #region API Call methods
@@ -52,17 +53,37 @@ namespace NoppaClient
                 }
                 catch (WebException webExc)
                 {
-                    System.Diagnostics.Debug.WriteLine("Caught exception: {0}, response: {1}", webExc.Message, webExc.Response);
-                    HttpWebResponse failedResponse = webExc.Response as HttpWebResponse;
-                    taskComplete.TrySetResult(failedResponse);
+                    taskComplete.TrySetException(webExc);
                 }
             }, request);
             return taskComplete.Task;
         }
 
-        private async Task<T> GetObject<T>(string format, params object[] args)
+        private async Task<T> GetObject<T>(string format, params object[] args) where T : class
         {
-            HttpWebResponse response = await CallAPIAsync(String.Format(format, args)).ConfigureAwait(false);
+            HttpWebResponse response;
+
+            try
+            {
+                Task<HttpWebResponse> responseTask = CallAPIAsync(String.Format(format, args));
+
+                /* Handle the timeout */
+                var completeTask = await Task.WhenAny(responseTask, Task.Delay(_timeout));
+                if (completeTask == responseTask)
+                    response = await responseTask;
+                else
+                {
+                    /* Timeout */
+                    System.Diagnostics.Debug.WriteLine("NoppaApiClient: Timed out ({0} ms)", _timeout);
+                    return null;
+                }
+            }
+            catch (WebException webExc)
+            {
+                /* Caught exception */
+                System.Diagnostics.Debug.WriteLine("NoppaApiClient: Caught exception: {0}", webExc.Message);
+                return null;
+            }
 
             using (var sr = new StreamReader(response.GetResponseStream()))
             {
