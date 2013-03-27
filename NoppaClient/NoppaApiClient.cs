@@ -17,7 +17,7 @@ namespace NoppaClient
     public class NoppaApiClient
     {
         private const string _apiURL = "http://noppa-api-dev.aalto.fi/api/v1";
-        private static readonly int _timeout = 15000; /* 5secs */
+        private static readonly int _timeout = 35000; /* 5secs */
         private static string _apiKey;
         private static NoppaApiClient _instance;
 
