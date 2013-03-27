@@ -20,7 +20,10 @@
 
         <DataTemplate x:Key="CourseItemTemplate">
             <StackPanel Margin="0,-6,0,12">
-                <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeExtraLarge}"/>
+                <TextBlock Text="{Binding Name}"
+                           TextWrapping="Wrap"
+                           Style="{StaticResource PhoneTextExtraLargeStyle}"
+                           FontSize="{StaticResource PhoneFontSizeExtraLarge}"/>
             </StackPanel>
         </DataTemplate>
     </Application.Resources>

@@ -1,95 +1,146 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace NoppaClient.DataModel
 {
     public class Course
     {
-        private string id;
-        private string depId;
-        private string name;
-        private Uri courseUrl;
-        private Uri oodiUrl;
-        private Language language;
+        [JsonProperty("course_id")]             public string Id { get; set; }
+        [JsonProperty("dept_id")]               public string DepartmentId { get; set; }
+        [JsonProperty("name")]                  public string Name { get; set; }
+        [JsonProperty("course_url")]            public string Url { get; set; }
+        [JsonProperty("course_oodi_url")]       public string OodiUrl { get; set; }
+        [JsonProperty("noppa_language")]        public string Language { get; set; }
+        [JsonProperty("links")]                 public List<Link> Links { get; set; }
+    }
 
-        List<Link> links;
+    public class CourseOverview
+    {
+        [JsonProperty("course_id")]             public string Id { get; set; }
+        [JsonProperty("credits")]               public string Credits { get; set; }
+        [JsonProperty("status")]                public string Status { get; set; }
+        [JsonProperty("level")]                 public string Level { get; set; }
+        [JsonProperty("teaching_period")]       public string TeachingPeriod { get; set; }
+        [JsonProperty("workload")]              public string Workload { get; set; }
+        [JsonProperty("learning_outcomes")]     public string LearningOutcomes { get; set; }
+        [JsonProperty("content")]               public string Content { get; set; }
+        [JsonProperty("assessment")]            public string Assessment { get; set; }
+        [JsonProperty("study_material")]        public string StudyMaterial { get; set; }
+        [JsonProperty("substitutes")]           public string substitutes { get; set; }
+        [JsonProperty("CEFR_level")]            public string CefrLevel { get; set; }
+        [JsonProperty("prerequisites")]         public string Prerequisites { get; set; }
+        [JsonProperty("grading_scale")]         public string GradingScale { get; set; }
+        [JsonProperty("registration")]          public string Registration { get; set; }
+        [JsonProperty("instruction_language")]  public string InstructionLanguage { get; set; }
+        [JsonProperty("staff")]                 public string Staff { get; set; }
+        [JsonProperty("office_hours")]          public string OfficeHours { get; set; }
+        [JsonProperty("details")]               public string Details { get; set; }
+        [JsonProperty("oodi_url")]              public string OodiUrl { get; set; }
+    }
 
-        public string Id
-        {
-            get { return id; }
-        }
+    public class CourseAdditionalPage
+    {
+        [JsonProperty("title")]                 public string Title { get; set; }
+        [JsonProperty("url")]                   public string Url { get; set; }
+        [JsonProperty("text")]                  public string Text { get; set; }  
+        [JsonProperty("authentication_required")] public string AuthenticationRequired { get; set; }
+    }
 
-        public string Name
-        {
-            get { return name; }
-        }
+    public class CourseNews
+    {
+        [JsonProperty("date")]                  public string Date { get; set; }
+        [JsonProperty("title")]                 public string Title { get; set; }
+        [JsonProperty("content")]               public string Content { get; set; }
+        [JsonProperty("link")]                  public List<Link> Links { get; set; }
+    }
 
-        public string DepId
-        {
-            get { return depId; }
-        }
+    public class CourseResult
+    {
+        [JsonProperty("course_id")]             public string CourseId { get; set; }
+        [JsonProperty("date")]                  public string Date { get; set; }
+        [JsonProperty("grade_name")]            public string GradeName { get; set; }
+        [JsonProperty("url")]                   public string Url { get; set; }
+        [JsonProperty("published")]             public string Published { get; set; }
+        [JsonProperty("grade_review")]          public string GradeReview { get; set; }
+        [JsonProperty("grade_scale")]           public string GradeScale { get; set; }
+    }
 
-        public Uri CourseUrl
-        {
-            get { return courseUrl; }
-        }
+    public class CourseLecture
+    {
+        [JsonProperty("lecture_id")]            public string LectureId { get; set; }
+        [JsonProperty("date")]                  public string Date { get; set; }
+        [JsonProperty("start_time")]            public string StartTime { get; set; }
+        [JsonProperty("end_time")]              public string EndTime { get; set; }
+        [JsonProperty("location")]              public string Location { get; set; }
+        [JsonProperty("title")]                 public string Title { get; set; }
+        [JsonProperty("materials")]             public List<Material> Materials { get; set; }
+        [JsonProperty("authentication_required")] public bool authentication_required { get; set; }
+    }
 
-        public Uri OodiUrl
-        {
-            get { return oodiUrl; }
-        }
+    public class CourseExercise
+    {
+        [JsonProperty("course_id")]             public string CourseId { get; set; }
+        [JsonProperty("group")]                 public string Group { get; set; }
+        [JsonProperty("weekday")]               public string Weekday { get; set; }
+        [JsonProperty("start_time")]            public string StartTime { get; set; }
+        [JsonProperty("end_time")]              public string EndTime { get; set; }
+        [JsonProperty("location")]              public string Location { get; set; }
+        [JsonProperty("start_date")]            public string StartDate { get; set; }
+        [JsonProperty("end_date")]              public string end_date { get; set; }
+    }
 
-        public Language Language
-        {
-            get { return language; }
-        }
+    public class CourseAssignment
+    {
+        [JsonProperty("deadline")]              public string Deadline { get; set; }
+        [JsonProperty("title")]                 public string Title { get; set; }
+        [JsonProperty("content")]               public string Content { get; set; }
+        [JsonProperty("material")]              public List<Material> Material { get; set; }
+        [JsonProperty("authentication_required")] public bool AuthenticationRequired { get; set; }
+    }
 
-        public List<Link> Links
-        {
-            get { return links; }
-        }
+    public class CourseEvent
+    {
+        [JsonProperty("course_id")]             public string CourseId { get; set; }
+        [JsonProperty("type")]                  public string Type { get; set; }
+        [JsonProperty("title")]                 public string Title { get; set; }
+        [JsonProperty("weekday")]               public string Weekday { get; set; }
+        [JsonProperty("location")]              public string Location { get; set; }
+        [JsonProperty("start_time")]            public string StartTime { get; set; }
+        [JsonProperty("end_time")]              public string EndTime { get; set; }
+        [JsonProperty("start_date")]            public string StartDate { get; set; }
+        [JsonProperty("end_date")]              public string EndDate { get; set; }
+    }
 
-        public Course(string json)
-        {
-            try
-            {
-                JToken token;
+    public class CourseMaterial
+    {
+        [JsonProperty("course_id")]             public string CourseId { get; set; }
+        [JsonProperty("title")]                 public string Title { get; set; }
+        [JsonProperty("description")]           public string Description { get; set; }
+        [JsonProperty("url")]                   public string Url { get; set; }
+        [JsonProperty("authentication_required")] public string AuthenticationRequired { get; set; }
+    }
 
-                JObject obj = JObject.Parse(json);
-                this.id = obj.TryGetValue("course_id", out token) ? token.ToString() : "N/A";
-                this.depId = obj.TryGetValue("dept_id", out token) ? token.ToString() : "N/A";
-                this.name = obj.TryGetValue("name", out token) ? token.ToString() : "N/A";
-                this.courseUrl = obj.TryGetValue("course_url", out token) ? new Uri(token.ToString()) : new Uri("www.example.com");
-                this.oodiUrl = obj.TryGetValue("course_url_oodi", out token) ? new Uri(token.ToString()) : new Uri("www.example.com");
+    public class CourseExerciseMaterial
+    {
+        [JsonProperty("course_id")]             public string CourseId { get; set; }
+        [JsonProperty("number")]                public string Number { get; set; }
+        [JsonProperty("topic")]                 public string topic { get; set; }
+        [JsonProperty("material")]              public List<Material> Material { get; set; }
+    }
 
-                switch ((string)obj["noppa_language"])
-                {
-                    case "fi":
-                        language = DataModel.Language.Finnish;
-                        break;
-                    case "en":
-                        language = DataModel.Language.English;
-                        break;
-                    case "sv":
-                        language = DataModel.Language.Swedish;
-                        break;
-                    default:
-                        language = DataModel.Language.Undefined;
-                        break;
-                }
+    public class Content
+    {
+        [JsonProperty("text_location")]
+        public string TextLocation { get; set; }
+        [JsonProperty("text_content")]
+        public string TextContent { get; set; }
+    }
 
-                foreach (var item in obj["links"])
-                {
-
-                }
-            }
-            catch (Exception e)
-            {
-            }
-        }
+    public class CourseText
+    {
+        [JsonProperty("page")]
+        public string Page { get; set; }
+        [JsonProperty("content")]
+        public List<Content> Content { get; set; }
     }
 }

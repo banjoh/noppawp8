@@ -36,29 +36,37 @@ namespace NoppaClient.ViewModels
         private ICommand _openOodiPage;
         public ICommand OpenOodiPage { get { return _openOodiPage; } }
 
-        public OverviewViewModel()
+        public OverviewViewModel(string id)
         {
-            CourseId = "T-75.4400";
-            Credits = "4 cr";
-            Level = "<p>The course is only for students who have completed their general studies.</p>";
-            TeachingPeriod = "III - IV";
-            Workload = "Lectures 24 h, exercises 42 h, self-study 36 h. HTML";
-            LearningOutcomes = "Upon completion of the course the student knows the basic concepts and methods of information retrieval.";
-            Content = "Classic information retrieval (Boolean method, vector space model, probability models), [...]";
-            Assessment = "Exam and exercises.";
-            StudyMaterial = "To be announced later.";
-            GradingScale = "0-5";
-            InstructionLanguage = "FI. Primarily Finnish. The assessed work may be completed in English or upon request.";
-            Details = "Kurssikirja: Christopher D. Manning, Prabhakar Raghavan and Hinrich Schütze, Introduction to Information Retrieval, Cambridge University Press. 2008.  ISBN: 0521865719. Saatavissa osoitteesta: http://nlp.stanford.edu/ IR-book/";
-
-            var noppaUrl = new Uri("https://noppa.aalto.fi/noppa/kurssi/t-75.4400/etusivu");
-            var oodiUrl = new Uri("https://oodi.aalto.fi/a/opintjakstied.jsp?Kieli=6&Tunniste=T-75.4400&html=1");
-            
-            _openOodiPage = new DelegateCommand(async delegate { await Launcher.LaunchUriAsync(oodiUrl); });
-            _openNoppaPage = new DelegateCommand(async delegate { await Launcher.LaunchUriAsync(noppaUrl); });
-
+            CourseId = id;
             Title = "Overview";
             Index = 1;
+        }
+
+        public async Task LoadDataAsync()
+        {
+            DataModel.CourseOverview overview;
+            using (var client = new NoppaApiClient())
+            {
+                overview = await client.GetCourseOverview(CourseId);
+            }
+
+            Credits = overview.Credits;
+            Level = overview.Level;
+            TeachingPeriod = overview.TeachingPeriod;
+            Workload = overview.Workload;
+            LearningOutcomes = overview.LearningOutcomes;
+            Assessment = overview.Assessment;
+            StudyMaterial = overview.StudyMaterial;
+            GradingScale = overview.GradingScale;
+            InstructionLanguage = overview.InstructionLanguage;
+            Details = overview.Details;
+
+            var noppaUrl = new Uri(String.Format("https://noppa.aalto.fi/noppa/kurssi/{0}/etusivu", CourseId));
+            var oodiUrl = new Uri(overview.OodiUrl);
+
+            _openOodiPage = new DelegateCommand(async delegate { await Launcher.LaunchUriAsync(oodiUrl); });
+            _openNoppaPage = new DelegateCommand(async delegate { await Launcher.LaunchUriAsync(noppaUrl); });
         }
     }
 }

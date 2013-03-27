@@ -14,20 +14,6 @@ using NoppaClient.DataModel;
 
 namespace NoppaClient
 {
-    public static class HttpExtension
-    {
-        public static Task<Stream> GetRequestStreamAsync(this HttpWebRequest request)
-        {
-            var taskComplete = new TaskCompletionSource<Stream>();
-            request.BeginGetRequestStream(ar =>
-            {
-                Stream requestStream = request.EndGetRequestStream(ar);
-                taskComplete.TrySetResult(requestStream);
-            }, request);
-            return taskComplete.Task;
-        }
-    }
-
     public class NoppaApiClient : IDisposable
     {
         private const string _apiURL = "http://noppa-api-dev.aalto.fi/api/v1";
@@ -48,70 +34,38 @@ namespace NoppaClient
 
         #region API Call methods
 
-        public Task<HttpWebResponse> CallAPIAsync(string query)
+        private Task<HttpWebResponse> CallAPIAsync(string query)
         {
             var taskComplete = new TaskCompletionSource<HttpWebResponse>();
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(query);
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_apiURL + query);
+            System.Diagnostics.Debug.WriteLine("Query: {0}", request.RequestUri.ToString());
             request.Method = "GET";
             request.BeginGetResponse(asyncResponse =>
             {
                 try
                 {
                     HttpWebRequest responseRequest = (HttpWebRequest)asyncResponse.AsyncState;
-                    HttpWebResponse response = (HttpWebResponse)responseRequest.EndGetResponse(asyncResponse);
+                    HttpWebResponse response = responseRequest.EndGetResponse(asyncResponse) as HttpWebResponse;
                     taskComplete.TrySetResult(response);
                 }
                 catch (WebException webExc)
                 {
-                    HttpWebResponse failedResponse = (HttpWebResponse)webExc.Response;
+                    System.Diagnostics.Debug.WriteLine("Caught exception: {0}, response: {1}", webExc.Message, webExc.Response);
+                    HttpWebResponse failedResponse = webExc.Response as HttpWebResponse;
                     taskComplete.TrySetResult(failedResponse);
                 }
             }, request);
             return taskComplete.Task;
         }
 
-        /**
-         * This probably looks hairy. Call the API and create
-         * a list of DataModel objects. Utility function for
-         * certain kinds of calls.
-         */
-        private async Task<List<T>> GetList<T>(string query)
-        {
-            HttpWebResponse response = await CallAPIAsync(query).ConfigureAwait(false);
-            
-            List<T> list = new List<T>();
-
-            using (var sr = new StreamReader(response.GetResponseStream()))
-            using (JsonReader reader = new JsonTextReader(sr))
-            {
-                var array = (JArray)JArray.ReadFrom(reader);
-                foreach (JObject item in array)
-                    list.Add((T)Activator.CreateInstance(typeof(T), item.ToString()));
-            }
-            return list;
-        }
-
-        private async Task<T> GetObject<T>(string query)
-        {
-            HttpWebResponse response = await CallAPIAsync(query).ConfigureAwait(false);
-
-            using (var sr = new StreamReader(response.GetResponseStream()))
-            using (JsonReader reader = new JsonTextReader(sr))
-            {
-                JObject obj = (JObject)JToken.ReadFrom(reader);
-                return (T)Activator.CreateInstance(typeof(T), obj.ToString());
-            }
-        }
-
-
-        private async Task<JObject> GetJObject(string format, params object[] args)
+        private async Task<T> GetObject<T>(string format, params object[] args)
         {
             HttpWebResponse response = await CallAPIAsync(String.Format(format, args)).ConfigureAwait(false);
 
             using (var sr = new StreamReader(response.GetResponseStream()))
-            using (JsonReader reader = new JsonTextReader(sr))
             {
-                return (JObject)JObject.ReadFrom(reader);
+                return JsonConvert.DeserializeObject<T>(await sr.ReadToEndAsync());
             }
         }
 
@@ -121,17 +75,13 @@ namespace NoppaClient
 
         public async Task<List<Organization>> GetAllOrganizations()
         {
-            string query = String.Format("{0}/organizations?key={1}", _apiURL, _apiKey);
-            
-            return await GetList<Organization>(query);
+            return await GetObject<List<Organization>>("/organizations?key={0}", _apiKey);
            
         }
 
         public async Task<Organization> GetOrganization(string organization_id)
         {
-            string query = String.Format("{0}/organizations/{1}?key={2}", _apiURL, organization_id, _apiKey);
-
-            return await GetObject<Organization>(query);
+            return await GetObject<Organization>("/organizations/{0}?key={1}", organization_id, _apiKey);
         }
 
         #endregion
@@ -140,23 +90,17 @@ namespace NoppaClient
 
         public async Task<List<Department>> GetDepartments(string organization_id)
         {
-            string query = String.Format("{0}/departments?key={1}&org_id={2}", _apiURL, _apiKey, organization_id);
-
-            return await GetList<Department>(query);
+            return await GetObject<List<Department>>("/departments?key={0}&org_id={1}", _apiKey, organization_id);
         }
 
         public async Task<List<Department>> GetDepartments()
         {
-            string query = String.Format("{0}/departments?key={1}", _apiURL, _apiKey);
-
-            return await GetList<Department>(query);
+            return await GetObject<List<Department>>("/departments?key={0}", _apiKey);
         }
 
         public async Task<Department> GetDepartment(string department_id)
         {
-            string query = String.Format("{0}/departments/{1}?key={2}", _apiURL, department_id, _apiKey);
-
-            return await GetObject<Department>(query);
+            return await GetObject<Department>("/departments/{0}?key={1}", department_id, _apiKey);
         }
 
         #endregion
@@ -165,78 +109,74 @@ namespace NoppaClient
 
         public async Task<List<Course>> GetCourses(string search_pattern, string org_id = "", string dept_id = "")
         {
-            string query = String.Format("{0}/courses?key={1}&search={2}{3}{4}",
-                _apiURL, _apiKey,  HttpUtility.UrlEncode(search_pattern),
+            return await GetObject<List<Course>>("/courses?key={0}{1}{2}{3}", _apiKey,
+                search_pattern != "" ? "&search=" + HttpUtility.UrlEncode(search_pattern) : "",
                 org_id != "" ? "&org_id=" + org_id : "",
                 dept_id != "" ? "&dept_id=" + dept_id : "");
-
-            return await GetList<Course>(query);
         }
 
         public async Task<Course> GetCourse(string course_id)
         {
-            string query = String.Format("{0}/courses/{1}?key={2}", _apiURL, course_id, _apiKey);
-
-            return await GetObject<Course>(query);
+            return await GetObject<Course>("/courses/{0}?key={1}", course_id, _apiKey);
         }
 
         #endregion
 
         #region Course Content getters
 
-        public async Task<JObject> GetCourseOverview(string course_id)
+        public async Task<CourseOverview> GetCourseOverview(string course_id)
         {
-            return await GetJObject("{0}/courses/{1}/overview?key={2}", _apiURL, course_id, _apiKey);
+            return await GetObject<CourseOverview>("/courses/{0}/overview?key={1}", course_id, _apiKey);
         }
 
-        public async Task<JObject> GetCourseAdditionalPages(string course_id)
+        public async Task<CourseAdditionalPage> GetCourseAdditionalPages(string course_id)
         {
-            return await GetJObject("{0}/courses/{1}/pages?key={2}", _apiURL, course_id, _apiKey);
+            return await GetObject<CourseAdditionalPage>("/courses/{0}/pages?key={1}", course_id, _apiKey);
         }
 
-        public async Task<JObject> GetCourseNews(string course_id)
+        public async Task<List<CourseNews>> GetCourseNews(string course_id)
         {
-            return await GetJObject("{0}/courses/{1}/news?key={2}", _apiURL, course_id, _apiKey);
+            return await GetObject<List<CourseNews>>("/courses/{0}/news?key={1}", course_id, _apiKey);
         }
 
-        public async Task<JObject> GetCourseResults(string course_id)
+        public async Task<List<CourseResult>> GetCourseResults(string course_id)
         {
-            return await GetJObject("{0}/courses/{1}/results?key={2}", _apiURL, course_id, _apiKey);
+            return await GetObject<List<CourseResult>>("/courses/{0}/results?key={1}", course_id, _apiKey);
         }
 
-        public async Task<JObject> GetCourseLectures(string course_id)
+        public async Task<List<CourseLecture>> GetCourseLectures(string course_id)
         {
-            return await GetJObject("{0}/courses/{1}/lectures?key={2}", _apiURL, course_id, _apiKey);
+            return await GetObject<List<CourseLecture>>("/courses/{0}/lectures?key={1}", course_id, _apiKey);
         }
 
-        public async Task<JObject> GetCourseExercises(string course_id)
+        public async Task<List<CourseExercise>> GetCourseExercises(string course_id)
         {
-            return await GetJObject("{0}/courses/{1}/exercises?key={2}", _apiURL, course_id, _apiKey);
+            return await GetObject<List<CourseExercise>>("/courses/{0}/exercises?key={1}", course_id, _apiKey);
         }
 
-        public async Task<JObject> GetCourseAssignments(string course_id)
+        public async Task<List<CourseAssignment>> GetCourseAssignments(string course_id)
         {
-            return await GetJObject("{0}/courses/{1}/assignments?key={2}", _apiURL, course_id, _apiKey);
+            return await GetObject<List<CourseAssignment>>("/courses/{0}/assignments?key={1}", course_id, _apiKey);
         }
 
-        public async Task<JObject> GetCourseEvents(string course_id)
+        public async Task<List<CourseEvent>> GetCourseEvents(string course_id)
         {
-            return await GetJObject("{0}/courses/{1}/events?key={2}", _apiURL, course_id, _apiKey);
+            return await GetObject<List<CourseEvent>>("/courses/{0}/events?key={1}", course_id, _apiKey);
         }
 
-        public async Task<JObject> GetCourseMaterial(string course_id)
+        public async Task<List<CourseMaterial>> GetCourseMaterial(string course_id)
         {
-            return await GetJObject("{0}/courses/{1}/material?key={2}", _apiURL, course_id, _apiKey);
+            return await GetObject<List<CourseMaterial>>("/courses/{0}/material?key={1}", course_id, _apiKey);
         }
 
-        public async Task<JObject> GetCourseExerciseMaterial(string course_id)
+        public async Task<List<CourseExerciseMaterial>> GetCourseExerciseMaterial(string course_id)
         {
-            return await GetJObject("{0}/courses/{1}/exercise_material?key={2}", _apiURL, course_id, _apiKey);
+            return await GetObject<List<CourseExerciseMaterial>>("/courses/{0}/exercise_material?key={1}", course_id, _apiKey);
         }
 
-        public async Task<JObject> GetCourseAdditionalTexts(string course_id)
+        public async Task<List<CourseText>> GetCourseAdditionalTexts(string course_id)
         {
-            return await GetJObject("{0}/courses/{1}/texts?key={2}", _apiURL, course_id, _apiKey);
+            return await GetObject<List<CourseText>>("/courses/{0}/texts?key={1}", course_id, _apiKey);
         }
 
         #endregion

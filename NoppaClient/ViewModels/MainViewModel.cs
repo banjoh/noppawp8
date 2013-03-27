@@ -13,14 +13,14 @@ namespace NoppaClient.ViewModels
         /// <summary>
         /// A collection for ItemViewModel objects.
         /// </summary>
-        private ObservableCollection<Event> _events = new ObservableCollection<Event>();
-        public ObservableCollection<Event> Events { get { return _events; } }
+        private ObservableCollection<CourseEvent> _events = new ObservableCollection<CourseEvent>();
+        public ObservableCollection<CourseEvent> Events { get { return _events; } }
 
         private CourseListViewModel _myCourses = new CourseListViewModel();
         public CourseListViewModel MyCourses { get { return _myCourses; } }
 
-        private ObservableCollection<NewsItem> _news = new ObservableCollection<NewsItem>();
-        public ObservableCollection<NewsItem> News { get { return _news; } }
+        private ObservableCollection<CourseNews> _news = new ObservableCollection<CourseNews>();
+        public ObservableCollection<CourseNews> News { get { return _news; } }
 
         private ObservableCollection<DepartmentGroup> _departments;
         public ObservableCollection<DepartmentGroup> Departments {
@@ -87,7 +87,7 @@ namespace NoppaClient.ViewModels
 
                         foreach (var dept in depts)
                         {
-                            models.Add(new DepartmentViewModel(dept.OrgId, dept.Name, dept.Id));   
+                            models.Add(new DepartmentViewModel(org.Name, dept.Name, dept.Id));   
                         }
                     }
 

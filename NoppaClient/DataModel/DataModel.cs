@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
 
 namespace NoppaClient.DataModel
 {
@@ -16,14 +12,14 @@ namespace NoppaClient.DataModel
 
     public class Link
     {
-        public enum Rel
+        public enum RelType
         {
             Self,
             Up,
             Related
         }
 
-        public enum Title
+        public enum TitleType
         {
             Overview,
             Pages,
@@ -36,8 +32,21 @@ namespace NoppaClient.DataModel
             ExerciseMaterial
         }
 
-        public Title    title;
-        public Rel      rel;
-        public Uri      uri;
+        [JsonProperty("title")]
+        public string Title { get; set; }
+        [JsonProperty("description")]
+        public string Description { get; set; }
+        [JsonProperty("url")]
+        public string Url { get; set; }
+        [JsonProperty("rel")]
+        public string Rel { get; set; }
+    }
+
+    public class Material
+    {
+        [JsonProperty("title")]
+        public string Title { get; set; }
+        [JsonProperty("url")]
+        public string Url { get; set; }
     }
 }

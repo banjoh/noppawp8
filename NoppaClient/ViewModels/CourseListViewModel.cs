@@ -120,8 +120,10 @@ namespace NoppaClient.ViewModels
                     var randomSource = new Random();
                     await Task.Delay(randomSource.Next(1000));
                     //TODO: Use real data
-                    string json = @"{'name': '" + String.Format("X-{0}.{1} My course name {2}", 100 + randomSource.Next(900), 1000 + randomSource.Next(9000), index) + "'}";
-                    return new Course(json);
+                    return new Course
+                    {
+                        Name = String.Format("X-{0}.{1} My course name {2}", 100 + randomSource.Next(900), 1000 + randomSource.Next(9000), index)
+                    };
                 });
 
                 _courses.Add(course);

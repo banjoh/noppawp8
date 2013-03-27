@@ -11,8 +11,8 @@ namespace NoppaClient.ViewModels
 {
     public class LecturesViewModel : CourseContentViewModel
     {
-        private ObservableCollection<Lecture> _lectures = new ObservableCollection<Lecture>();
-        public ObservableCollection<Lecture> Lectures { get { return _lectures; } }
+        private ObservableCollection<CourseLecture> _lectures = new ObservableCollection<CourseLecture>();
+        public ObservableCollection<CourseLecture> Lectures { get { return _lectures; } }
 
         public LecturesViewModel()
         {
@@ -21,15 +21,14 @@ namespace NoppaClient.ViewModels
 
             for (int i = 0; i < 10; i++)
             {
-
-                string json = @"{'lecture_id': '5601', 
-                                'date': '2012-01-18',
-                                'start_time':'14:15',
-                                'end_time':'16:00',
-                                'location':'AS1',
-                                'title': 'Introduction: contents,practicalities, assignments.',
-                                'content':''}";
-                _lectures.Add(new Lecture(json));
+                _lectures.Add(new CourseLecture {
+                    LectureId = "5601",
+                    Date = "2012-01-18",
+                    StartTime = "14:15",
+                    EndTime = "16:00",
+                    Location = "AS1",
+                    Title = "Introduction: contents,practicalities, assignments."
+                });
             }
 
  

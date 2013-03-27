@@ -24,7 +24,7 @@ namespace NoppaClient
         {
             base.OnNavigatedTo(e);
 
-            _viewModel = new CourseViewModel();
+            
             
             var id = "";
             if (NavigationContext.QueryString.ContainsKey("id"))
@@ -32,7 +32,7 @@ namespace NoppaClient
                 id = NavigationContext.QueryString["id"];
             }
 
-            _viewModel.Code = id;
+            _viewModel = new CourseViewModel(id);
             DataContext = _viewModel;
         }
     }

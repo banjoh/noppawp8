@@ -25,7 +25,7 @@
                 <TextBlock Text="{Binding StartTime}" />
                 <TextBlock Text="{Binding EndTime}" />
                 <TextBlock Text="{Binding Location}" />
-                <TextBlock Text="{Binding LectureTitle}" />
+                <TextBlock Text="{Binding Title}" />
             </StackPanel>
         </DataTemplate>
         

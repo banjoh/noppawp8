@@ -18,8 +18,9 @@ namespace NoppaClient.ViewModels
         private string _code = "";
         public string Code { get { return _code; } set { SetProperty(ref _code, value); } }
 
-        public CourseViewModel()
+        public CourseViewModel(string courseCode)
         {
+            Code = courseCode;
             _contents.Add(new FrontPageViewModel(this)); // Always add this
 
             /* Add all that exist dynamically, depending on the course model. */
@@ -31,8 +32,9 @@ namespace NoppaClient.ViewModels
             var tasks = new List<Task<CourseContentViewModel>>();
 
             tasks.Add(Task.Run(async delegate () {
-                    await Task.Delay(500); // Imagine this took some time to load
-                    return new OverviewViewModel() as CourseContentViewModel;
+                    OverviewViewModel model = new OverviewViewModel(Code);
+                    await model.LoadDataAsync(); // Imagine this took some time to load
+                    return model as CourseContentViewModel;
                 })
             );
 
@@ -60,7 +62,7 @@ namespace NoppaClient.ViewModels
                 var task = await Task.WhenAny(tasks);
                 tasks.Remove(task);
 
-                var content = task.Result;
+                var content = await task;
                 if (!content.IsEmpty)
                 {
                     int index = _contents.Count;
