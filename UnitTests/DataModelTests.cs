@@ -6,17 +6,20 @@ using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NoppaClient.DataModel;
 
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
 namespace UnitTests
 {
     [TestClass]
     public class DataModelTests
     {
-        NoppaClient.Settings Settings { get; set; }
+        NoppaClient.Settings settings { get; set; }
 
         [TestInitialize]
         public void Setup()
         {
-            Settings = new NoppaClient.Settings();
+            settings = new NoppaClient.Settings();
         }
 
         [TestMethod]
@@ -42,17 +45,17 @@ namespace UnitTests
 
             }";
 
-            Organization org = new NoppaClient.DataModel.Organization(json);
+            Organization org = JsonConvert.DeserializeObject<Organization>(json);
 
             Assert.IsTrue("CHEM" == org.Id);
 
-            Settings.Language = Language.English;
+            settings.Language = Language.English;
             Assert.IsTrue("School of Chemical Technology" == org.Name);
 
-            Settings.Language = Language.Finnish;
+            settings.Language = Language.Finnish;
             Assert.IsTrue("Kemian tekniikan korkeakoulu" == org.Name);
 
-            Settings.Language = Language.Swedish;
+            settings.Language = Language.Swedish;
             Assert.IsTrue("Högskolan för kemiteknik" == org.Name);
         }
 
@@ -80,18 +83,18 @@ namespace UnitTests
 
             }";
 
-            NoppaClient.DataModel.Department dip = new NoppaClient.DataModel.Department(json);
+            Department dip = JsonConvert.DeserializeObject<Department>(json);
 
             Assert.IsTrue("T2020" == dip.Id);
             Assert.IsTrue("ENG" == dip.OrgId);
 
-            Settings.Language = Language.English;
+            settings.Language = Language.English;
             Assert.IsTrue("Department of Energy Technology" == dip.Name);
 
-            Settings.Language = Language.Finnish;
+            settings.Language = Language.Finnish;
             Assert.IsTrue("Energiatekniikan laitos" == dip.Name);
 
-            Settings.Language = Language.Swedish;
+            settings.Language = Language.Swedish;
             Assert.IsTrue("Institutionen för energiteknik" == dip.Name);
         }
 
@@ -115,14 +118,14 @@ namespace UnitTests
 
             }";
 
-            NoppaClient.DataModel.Course c = new NoppaClient.DataModel.Course(json);
+            Course c = JsonConvert.DeserializeObject<Course>(json);
 
             Assert.IsTrue("ENE.kand" == c.Id);
-            Assert.IsTrue("T2020" == c.DepId);
+            Assert.IsTrue("T2020" == c.DepartmentId);
             Assert.IsTrue("Kandidaatintyö ja seminaari" == c.Name);
-            Assert.IsTrue(new Uri("http://noppa-api-dev.aalto.fi/noppa/kurssi/ENE.kand") == c.CourseUrl);
-            Assert.IsTrue(new Uri("https://oodi.aalto.fi/a/opintjakstied.jsp?Kieli=1&Tunniste=ENE.kand&html=1") == c.OodiUrl);
-            Assert.IsTrue(NoppaClient.DataModel.Language.Finnish == c.Language);
+            Assert.IsTrue("http://noppa-api-dev.aalto.fi/noppa/kurssi/ENE.kand" == c.Url);
+            Assert.IsTrue("fi" == c.Language);
+            Assert.IsTrue("https://oodi.aalto.fi/a/opintjakstied.jsp?Kieli=1&Tunniste=ENE.kand&html=1" == c.OodiUrl);
         }
     }
 }

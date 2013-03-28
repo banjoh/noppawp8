@@ -59,7 +59,7 @@ namespace NoppaClient.ViewModels
 
             try
             {
-                List<Course> courses = await NoppaApiClient.GetCourses(query);
+                List<Course> courses = await NoppaAPI.GetCourses(query);
                 foreach (var course in courses)
                 {
                     _courses.Add(course);
@@ -82,7 +82,7 @@ namespace NoppaClient.ViewModels
 
             try
             {
-                List<Course> courses = await NoppaApiClient.GetCourses("", "", departmentId);
+                List<Course> courses = await NoppaAPI.GetCourses("", "", departmentId);
                 foreach (var course in courses)
                 {
                     _courses.Add(course);

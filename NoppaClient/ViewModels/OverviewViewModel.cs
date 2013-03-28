@@ -45,7 +45,7 @@ namespace NoppaClient.ViewModels
 
         public async Task LoadDataAsync()
         {
-            DataModel.CourseOverview overview = await NoppaApiClient.GetCourseOverview(CourseId);
+            DataModel.CourseOverview overview = await NoppaAPI.GetCourseOverview(CourseId);
 
             Credits = overview.Credits;
             Level = overview.Level;

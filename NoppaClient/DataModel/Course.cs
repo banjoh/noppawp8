@@ -9,7 +9,7 @@ namespace NoppaClient.DataModel
         [JsonProperty("dept_id")]               public string DepartmentId { get; set; }
         [JsonProperty("name")]                  public string Name { get; set; }
         [JsonProperty("course_url")]            public string Url { get; set; }
-        [JsonProperty("course_oodi_url")]       public string OodiUrl { get; set; }
+        [JsonProperty("course_url_oodi")]       public string OodiUrl { get; set; }
         [JsonProperty("noppa_language")]        public string Language { get; set; }
         [JsonProperty("links")]                 public List<Link> Links { get; set; }
     }

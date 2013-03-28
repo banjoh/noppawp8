@@ -78,10 +78,10 @@ namespace NoppaClient.ViewModels
 
             try
             {
-                List<Organization> orgs = await NoppaApiClient.GetAllOrganizations();
+                List<Organization> orgs = await NoppaAPI.GetAllOrganizations();
                 foreach (var org in orgs)
                 {
-                    var depts = await NoppaApiClient.GetDepartments(org.Id);
+                    var depts = await NoppaAPI.GetDepartments(org.Id);
 
                     foreach (var dept in depts)
                     {

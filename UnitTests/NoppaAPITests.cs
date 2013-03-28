@@ -12,7 +12,7 @@ using NoppaClient.DataModel;
 namespace UnitTests
 {
     [TestClass]
-    public class NoppaApiClientTest : WorkItemTest
+    public class NoppaAPITests : WorkItemTest
     {
         /**
          * Integration tests to see that our API calls works as expected
@@ -22,9 +22,7 @@ namespace UnitTests
         [Asynchronous]
         public async Task TestGetAllOrganizations()
         {
-            NoppaApiClient client = new NoppaApiClient(APIKeyHolder.Key);
-
-            List<Organization> organizations = await client.GetAllOrganizations();
+            List<Organization> organizations = await NoppaAPI.GetAllOrganizations();
 
             Assert.IsTrue(organizations.Exists( (item) => item.Id == "CHEM" ));
             Assert.IsTrue(organizations.Exists( (item) => item.Id == "ECON" ));
