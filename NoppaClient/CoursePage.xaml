@@ -18,20 +18,35 @@
 
     <phone:PhoneApplicationPage.Resources>
         <ResourceDictionary x:Name="Resources">
-        <DataTemplate x:Key="LectureTemplate">
-            <StackPanel>
-                <TextBlock Text="Lectures" />
-                <TextBlock Text="{Binding Date}" />
-                <TextBlock Text="{Binding StartTime}" />
-                <TextBlock Text="{Binding EndTime}" />
-                <TextBlock Text="{Binding Location}" />
-                <TextBlock Text="{Binding Title}" />
-            </StackPanel>
-        </DataTemplate>
-        
-        <view:OpenBrowserCommand x:Key="OpenBrowserCommand" />
-        
-        <DataTemplate x:Key="NewsItemTemplate">
+            
+            <view:OpenBrowserCommand x:Key="OpenBrowserCommand" />
+
+            <DataTemplate x:Key="LectureTemplate">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Date}"/>
+                        <TextBlock Text=" " />
+                        <TextBlock Text="{Binding StartTime}" />
+                        <TextBlock Text="-" />
+                        <TextBlock Text="{Binding EndTime}" />
+                        <TextBlock Text=" " />
+                        <TextBlock Text="{Binding Location}" />
+                        <TextBlock Text=" " />
+                    </StackPanel>
+                    <TextBlock Text="{Binding Title}" />
+                    <ItemsControl ItemsSource="{Binding Materials}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="22,0,22,10">
+                                    <Button Content="{Binding Title}" Command="{StaticResource OpenBrowserCommand}" CommandParameter="{Binding Url}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </DataTemplate>
+
+            <DataTemplate x:Key="NewsItemTemplate">
             <StackPanel Margin="0,0,0,0">
                 <TextBlock Text="{Binding Title}" Style="{StaticResource PhoneTextTitle2Style}" TextWrapping="Wrap" />
                 <TextBlock Text="{Binding Date}" Style="{StaticResource PhoneTextSubtleStyle}" />

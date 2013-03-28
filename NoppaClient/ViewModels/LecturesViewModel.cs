@@ -18,22 +18,19 @@ namespace NoppaClient.ViewModels
         {
             Title = "Lectures";
             Index = 4;
+        }
 
-            for (int i = 0; i < 10; i++)
+        public async Task LoadDataAsync(string id)
+        {
+            List<CourseLecture> lectures = await NoppaAPI.GetCourseLectures(id);
+            if (lectures != null)
             {
-                _lectures.Add(new CourseLecture {
-                    LectureId = "5601",
-                    Date = "2012-01-18",
-                    StartTime = "14:15",
-                    EndTime = "16:00",
-                    Location = "AS1",
-                    Title = "Introduction: contents,practicalities, assignments."
-                });
+                foreach (var lecture in lectures)
+                {
+                    _lectures.Add(lecture);
+                }
             }
-
- 
-            
-
         }
     }
 }
+

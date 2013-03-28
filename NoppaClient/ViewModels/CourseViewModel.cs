@@ -38,9 +38,11 @@ namespace NoppaClient.ViewModels
                 })
             );
 
-            tasks.Add(Task.Run(async delegate () {
-                    await Task.Delay(250); // Imagine this took some time to load
-                    return new LecturesViewModel() as CourseContentViewModel;
+            tasks.Add(Task.Run(async delegate(){
+                LecturesViewModel model = new LecturesViewModel();
+                await model.LoadDataAsync(Code);
+                return model as CourseContentViewModel;
+
                 })
             );
 
