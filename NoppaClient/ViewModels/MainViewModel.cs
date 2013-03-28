@@ -79,13 +79,20 @@ namespace NoppaClient.ViewModels
             try
             {
                 List<Organization> orgs = await NoppaAPI.GetAllOrganizations();
-                foreach (var org in orgs)
-                {
-                    var depts = await NoppaAPI.GetDepartments(org.Id);
 
-                    foreach (var dept in depts)
+                if (orgs != null)
+                {
+                    foreach (var org in orgs)
                     {
-                        models.Add(new DepartmentViewModel(org.Name, dept.Name, dept.Id));   
+                        var depts = await NoppaAPI.GetDepartments(org.Id);
+
+                        if (depts != null)
+                        {
+                            foreach (var dept in depts)
+                            {
+                                models.Add(new DepartmentViewModel(org.Name, dept.Name, dept.Id));
+                            }
+                        }
                     }
                 }
 

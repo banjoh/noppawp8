@@ -47,22 +47,25 @@ namespace NoppaClient.ViewModels
         {
             DataModel.CourseOverview overview = await NoppaAPI.GetCourseOverview(CourseId);
 
-            Credits = overview.Credits;
-            Level = overview.Level;
-            TeachingPeriod = overview.TeachingPeriod;
-            Workload = overview.Workload;
-            LearningOutcomes = overview.LearningOutcomes;
-            Assessment = overview.Assessment;
-            StudyMaterial = overview.StudyMaterial;
-            GradingScale = overview.GradingScale;
-            InstructionLanguage = overview.InstructionLanguage;
-            Details = overview.Details;
+            if (overview != null)
+            {
+                Credits = overview.Credits;
+                Level = overview.Level;
+                TeachingPeriod = overview.TeachingPeriod;
+                Workload = overview.Workload;
+                LearningOutcomes = overview.LearningOutcomes;
+                Assessment = overview.Assessment;
+                StudyMaterial = overview.StudyMaterial;
+                GradingScale = overview.GradingScale;
+                InstructionLanguage = overview.InstructionLanguage;
+                Details = overview.Details;
 
-            var noppaUrl = new Uri(String.Format("https://noppa.aalto.fi/noppa/kurssi/{0}/etusivu", CourseId));
-            var oodiUrl = new Uri(overview.OodiUrl);
+                var noppaUrl = new Uri(String.Format("https://noppa.aalto.fi/noppa/kurssi/{0}/etusivu", CourseId));
+                var oodiUrl = new Uri(overview.OodiUrl);
 
-            _openOodiPage = new DelegateCommand(async delegate { await Launcher.LaunchUriAsync(oodiUrl); });
-            _openNoppaPage = new DelegateCommand(async delegate { await Launcher.LaunchUriAsync(noppaUrl); });
+                _openOodiPage = new DelegateCommand(async delegate { await Launcher.LaunchUriAsync(oodiUrl); });
+                _openNoppaPage = new DelegateCommand(async delegate { await Launcher.LaunchUriAsync(noppaUrl); });
+            }
         }
     }
 }
