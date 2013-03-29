@@ -45,6 +45,24 @@
                     </ItemsControl>
                 </StackPanel>
             </DataTemplate>
+            
+            <DataTemplate x:Key="ExerciseItemTemplate">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding Group}"/>
+                    <TextBlock Text=" " />
+                    <TextBlock Text="{Binding Weekday}" />
+                    <TextBlock Text=" " />
+                    <TextBlock Text="{Binding StartTime}" />
+                    <TextBlock Text="-" />
+                    <TextBlock Text="{Binding EndTime}" />
+                    <TextBlock Text=" " />
+                    <TextBlock Text="{Binding Location}" />
+                    <TextBlock Text=" " />
+                    <TextBlock Text="{Binding StartDate}" />
+                    <TextBlock Text=" - " />
+                    <TextBlock Text="{Binding EndDate}" />
+                </StackPanel>
+            </DataTemplate>
 
             <DataTemplate x:Key="NewsItemTemplate">
             <StackPanel Margin="0,0,0,0">
@@ -127,7 +145,12 @@
             </DataTemplate>
 
             <DataTemplate x:Key="ExercisesViewModel">
-                <TextBlock Text="Exercies" />
+                    <ListBox
+                    Margin="0,0,-22,0"
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                    ItemTemplate="{StaticResource ExerciseItemTemplate}"
+                    ItemsSource="{Binding Exercises}">
+                    </ListBox>
             </DataTemplate>
         </ResourceDictionary>
             

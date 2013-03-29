@@ -86,7 +86,7 @@ namespace NoppaClient.DataModel
         [JsonProperty("end_time")]              public string EndTime { get; set; }
         [JsonProperty("location")]              public string Location { get; set; }
         [JsonProperty("start_date")]            public string StartDate { get; set; }
-        [JsonProperty("end_date")]              public string end_date { get; set; }
+        [JsonProperty("end_date")]              public string EndDate { get; set; }
     }
 
     public class CourseAssignment
