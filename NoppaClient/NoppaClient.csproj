@@ -94,6 +94,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Cache.cs" />
     <Compile Include="CourseListPage.xaml.cs">
       <DependentUpon>CourseListPage.xaml</DependentUpon>
     </Compile>

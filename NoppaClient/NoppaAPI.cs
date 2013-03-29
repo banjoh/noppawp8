@@ -26,7 +26,7 @@ namespace NoppaClient
             _apiKey = APIKeyHolder.Key;
         }
 
-        public static NoppaAPI GetInstance()
+        private static NoppaAPI GetInstance()
         {
             if (_instance == null)
                 _instance = new NoppaAPI();
