@@ -31,18 +31,19 @@ namespace NoppaClient.ViewModels
         {
             var tasks = new List<Task<CourseContentViewModel>>();
 
+            /* Load Overview */
             tasks.Add(Task.Run(async delegate () {
                     OverviewViewModel model = new OverviewViewModel(Code);
-                    await model.LoadDataAsync(); // Imagine this took some time to load
+                    await model.LoadDataAsync(); 
                     return model as CourseContentViewModel;
                 })
             );
 
+            /* Load Lectures */
             tasks.Add(Task.Run(async delegate(){
                 LecturesViewModel model = new LecturesViewModel();
                 await model.LoadDataAsync(Code);
                 return model as CourseContentViewModel;
-
                 })
             );
 
@@ -52,9 +53,11 @@ namespace NoppaClient.ViewModels
                 })
             );
 
+            /* Load News */
             tasks.Add(Task.Run(async delegate () {
-                    await Task.Delay(200); // Imagine this took some time to load
-                    return new NewsViewModel(null) as CourseContentViewModel;
+                    NewsViewModel model = new NewsViewModel();
+                    await model.LoadDataAsync(Code);
+                    return model as CourseContentViewModel;
                 })
             );
 
