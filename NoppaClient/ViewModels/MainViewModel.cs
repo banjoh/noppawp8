@@ -73,26 +73,19 @@ namespace NoppaClient.ViewModels
         /// </summary>
         public async Task LoadDataAsync()
         {
-
             List<DepartmentViewModel> models = new List<DepartmentViewModel>();
 
             try
             {
                 List<Organization> orgs = await NoppaAPI.GetAllOrganizations();
+                List<Department> depts = await NoppaAPI.GetDepartments();
 
-                if (orgs != null)
+                if (depts != null && orgs != null)
                 {
-                    foreach (var org in orgs)
+                    foreach (var dept in depts)
                     {
-                        var depts = await NoppaAPI.GetDepartments(org.Id);
-
-                        if (depts != null)
-                        {
-                            foreach (var dept in depts)
-                            {
-                                models.Add(new DepartmentViewModel(org.Name, dept.Name, dept.Id));
-                            }
-                        }
+                        Organization org = orgs.Find((o) => o.Id == dept.OrgId);
+                        models.Add(new DepartmentViewModel(org.Name, dept.Name, dept.Id));
                     }
                 }
 
