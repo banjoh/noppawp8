@@ -2,12 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.System;
 
 namespace NoppaClient.ViewModels
 {
+    public class Detail
+    {
+        public static string StripHtml(string html)
+        {
+            return System.Net.HttpUtility.HtmlDecode(Regex.Replace(html, "<.+?>", string.Empty));
+        }
+    }
+
     public class OverviewViewModel : CourseContentViewModel
     {
         public string CourseId { get; private set; }
@@ -49,16 +58,16 @@ namespace NoppaClient.ViewModels
 
             if (overview != null)
             {
-                Credits = overview.Credits;
-                Level = overview.Level;
-                TeachingPeriod = overview.TeachingPeriod;
-                Workload = overview.Workload;
-                LearningOutcomes = overview.LearningOutcomes;
-                Assessment = overview.Assessment;
-                StudyMaterial = overview.StudyMaterial;
-                GradingScale = overview.GradingScale;
-                InstructionLanguage = overview.InstructionLanguage;
-                Details = overview.Details;
+                Credits = Detail.StripHtml(overview.Credits);
+                Level = Detail.StripHtml(overview.Level);
+                TeachingPeriod = Detail.StripHtml(overview.TeachingPeriod);
+                Workload = Detail.StripHtml(overview.Workload);
+                LearningOutcomes = Detail.StripHtml(overview.LearningOutcomes);
+                Assessment = Detail.StripHtml(overview.Assessment);
+                StudyMaterial = Detail.StripHtml(overview.StudyMaterial);
+                GradingScale = Detail.StripHtml(overview.GradingScale);
+                InstructionLanguage = Detail.StripHtml(overview.InstructionLanguage);
+                Details = Detail.StripHtml(overview.Details);
 
                 var noppaUrl = new Uri(String.Format("https://noppa.aalto.fi/noppa/kurssi/{0}/etusivu", CourseId));
                 var oodiUrl = new Uri(overview.OodiUrl);
