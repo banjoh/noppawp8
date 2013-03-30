@@ -79,7 +79,8 @@ namespace NoppaClient.ViewModels
 
         public async Task LoadDepartmentAsync(string departmentId)
         {
-            Title = String.Format(AppResources.DepartmentCourseListTitle, departmentId);
+            Department dept = await NoppaAPI.GetDepartment(departmentId);
+            Title = String.Format(AppResources.DepartmentCourseListTitle, dept != null ? dept.Name : departmentId);
 
             IsLoading = true;
             _courses.Clear();
