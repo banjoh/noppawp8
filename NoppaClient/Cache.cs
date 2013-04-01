@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace NoppaClient
 {
-    public class Cache
+    public static class Cache
     {
         #region Member varaibles and helper methods
         public enum PolicyType
@@ -16,155 +17,226 @@ namespace NoppaClient
         public class CacheItem
         {
             public string Item { get; private set; }
-            public PolicyType Policy { get; private set; }
             public DateTime TTL { get; private set; }
 
-            public CacheItem(string i, PolicyType p)
+            public CacheItem(string i, DateTime d)
             {
                 Item = i;
-                Policy = p;
-
-                if (p == PolicyType.Temporary)
-                {
-                    // Store item for 1 day
-                    // TODO: Have it configurable
-                    DateTime dt = DateTime.Now;
-                    dt.AddDays(1);
-                    TTL = dt;
-                }
+                TTL = d;
             }
-        }
 
-        private readonly Dictionary<string, CacheItem> _cache = new Dictionary<string, CacheItem>();
-        private readonly object _lock = new Object();
-        private bool _initialized = false;
-        private static Cache _instance;
-
-        // Not thread safe
-        private static Cache Instance
-        {
-            get
+            public static byte[] ToBinary(string key, CacheItem item)
             {
-                if (_instance == null)
-                    _instance = new Cache();
+                List<byte> l = new List<byte>();
 
-                return _instance;
-            }
-        }
-
-        private static bool Initialized
-        { 
-            get
-            {
-                lock (Instance._lock)
+                // DateTime (Int64)
+                byte[] date = BitConverter.GetBytes(item.TTL.ToBinary());
+                foreach (byte b in date)
                 {
-                    return Instance._initialized;
+                    l.Add(b);
                 }
-            }
-            set
-            {
-                lock (Instance._lock)
+
+                // Key length (Int32)
+                byte[] keyLen = BitConverter.GetBytes(key.Length);
+                foreach (byte b in keyLen)
                 {
-                    Instance._initialized = value;
+                    l.Add(b);
                 }
+
+                // Key
+                foreach (char b in key)
+                {
+                    l.Add((byte)b);
+                }
+
+                // Data
+                foreach (byte b in item.Item)
+                {
+                    l.Add((byte)b);
+                }
+
+                return l.ToArray();
+            }
+
+            public static Tuple<string, CacheItem> FromBinary(byte[] b)
+            {
+                int currentIdx = 0;
+                // DateTime (Int64)
+                DateTime dt = DateTime.FromBinary(BitConverter.ToInt64(b, 0));
+                currentIdx += 8;
+
+                // Key length (Int32)
+                int keyLen = BitConverter.ToInt32(b, 8);
+                currentIdx += 4;
+
+                // Key
+                char[] arr = new char[keyLen];
+                for (int i = 0; i < keyLen; i++)
+                {
+                    arr[i] = (char)b[currentIdx++];
+                }
+                string key = new string(arr);
+
+                // Data
+                int remainder = b.Length - currentIdx;
+                arr = new char[remainder];
+                for (int i = 0; i < remainder; i++)
+                {
+                    arr[i] = (char)b[currentIdx++];
+                }
+                string data = new string(arr);
+
+                return Tuple.Create(key, new CacheItem(data, dt));
             }
         }
 
-        ~Cache()
-        {
-            // Extra check just incase this function is not called before destruction
-            Deinit();
-        }
+        private static readonly Dictionary<string, CacheItem> _cache = new Dictionary<string, CacheItem>();
+        private static readonly object _lock = new Object();
 
-        private static void TestInitialized()
+        public static void Serialize(Stream s)
         {
-            if (Initialized == false)
-                throw new ApplicationException("Cache has not been initialized. Call Cache::Init() first");
-        }
+            if (s.Length <= 0)
+                return;
 
-        public static void Init()
-        {
             // Deserialize stored cached items
-            Initialized = true;
+            byte[] bytes = new byte[s.Length];
+            int numBytesToRead = (int)s.Length;
+            int numBytesRead = 0;
+            while (numBytesToRead > 0)
+            {
+                // Read may return anything from 0 to 10. 
+                int n = s.Read(bytes, numBytesRead, numBytesToRead - numBytesRead);
+                // The end of the file is reached. 
+                if (n == 0)
+                {
+                    break;
+                }
+                numBytesRead += n;
+                numBytesToRead -= n;
+            }
+
+            //Parse the array of bytes
+            int fullLength = bytes.Length;
+            int currentIdx = 0;
+            DateTime now = DateTime.Now;
+            while (currentIdx < fullLength - 1)
+            {
+                // Data length (Int23)
+                int dataLen = BitConverter.ToInt32(bytes, currentIdx);
+                currentIdx += 4;
+ 
+                byte[] data = new byte[dataLen];
+                for (int i = 0; i < dataLen; i++)
+                {
+                    data[i] = bytes[currentIdx++];
+                }
+
+                Tuple<string, CacheItem> t = CacheItem.FromBinary(data);
+
+                // Only add cache items that are not older that NOW
+                if (t.Item2.TTL > now)
+                    _cache.Add(t.Item1, t.Item2);
+            }
         }
 
-        public static void Deinit()
+        public static void Deserialize(Stream s)
         {
             // Serialize cached items to filesystem
-            Initialized = false;
+            s.Flush();
+            DateTime now = DateTime.Now;
+
+            foreach (string key in _cache.Keys)
+            {
+                // Old items should not be persisted
+                CacheItem c = _cache[key];
+                if (c.TTL < now)
+                    continue;
+
+                byte[] data = CacheItem.ToBinary(key, c);
+
+                // Data length (Int23)
+                byte[] len = BitConverter.GetBytes(data.Length);
+
+                s.Write(len, 0, 4);
+                s.Write(data, 0, data.Length);
+            }
+        }
+
+        private static DateTime TimeToLive(PolicyType p)
+        {
+            DateTime dt = default(DateTime);
+
+            if (p == PolicyType.Temporary)
+            {
+                // Store item for 1 day
+                // TODO: Have it configurable
+                dt = DateTime.Now;
+                dt.AddDays(1);
+            }
+            return dt;
         }
         #endregion
 
         #region Accessor methods
         public static void EmptyCache()
         {
-            TestInitialized();
-
-            lock (Instance._lock)
+            lock (_lock)
             {
-                Instance._cache.Clear();
+                _cache.Clear();
             }
         }
 
         public static bool Exists(string key)
         {
-            TestInitialized();
-
-            lock (Instance._lock)
+            lock (_lock)
             {
-                return Instance._cache.ContainsKey(key);
+                return _cache.ContainsKey(key);
             }
         }
 
         public static string Get(string key)
         {
-            TestInitialized();
-
             if (Exists(key) == false)
                 throw new ApplicationException(String.Format("An object with key '{0}' does not exists", key));
 
-            lock (Instance._lock)
+            lock (_lock)
             {
-                return Instance._cache[key].Item;
+                return _cache[key].Item;
             }
         }
 
         public static void Add(string key, string value, PolicyType policy = PolicyType.None)
         {
-            TestInitialized();
-
             if (Exists(key) == true)
                 throw new ApplicationException(String.Format("An object with key '{0}' already exists", key));
 
-            lock (Instance._lock)
+            lock (_lock)
             {
-                Instance._cache.Add(key, new CacheItem(value, policy));
+                if (policy != PolicyType.None)
+                    _cache.Add(key, new CacheItem(value, TimeToLive(policy)));
             }
         }
 
         public static void Remove(string key)
         {
-            TestInitialized();
-
             if (Exists(key) == false)
                 throw new ApplicationException(String.Format("An object with key '{0}' does not exist in cache", key));
 
-            lock (Instance._lock)
+            lock (_lock)
             {
-                Instance._cache.Remove(key);
+                _cache.Remove(key);
             }
         }
 
         public static void Replace(string key, string value, PolicyType policy = PolicyType.None)
         {
-            TestInitialized();
-
-            lock (Instance._lock)
+            lock (_lock)
             {
-                if (Instance._cache.ContainsKey(key) == true)
-                    Instance._cache.Remove(key);
+                if (_cache.ContainsKey(key) == true)
+                    _cache.Remove(key);
 
-                Instance._cache.Add(key, new CacheItem(value, policy));
+                if (policy != PolicyType.None)
+                    _cache.Add(key, new CacheItem(value, TimeToLive(policy)));
             }
         }
         #endregion
