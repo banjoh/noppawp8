@@ -220,8 +220,7 @@ namespace UnitTests
 
             string req = "http://noppa-api-dev.aalto.fi/api/v1/courses?key=cdda4ae4833c0114005de5b5c4371bb8&org_id=eng";
 
-            DateTime dt = DateTime.Now;
-            dt.AddDays(1);
+            DateTime dt = DateTime.Now.AddDays(1);
 
             List<byte> l = new List<byte>();
 
@@ -251,11 +250,11 @@ namespace UnitTests
                 l.Add((byte)b);
             }
 
-            // Data length (Int23)
+            // Data length (Int23). Always the first value
             byte[] len = BitConverter.GetBytes(l.ToArray().Length);
-            foreach (char b in len)
+            for (int i = 0; i < 4; i++)
             {
-                l.Add((byte)b);
+                l.Insert(i, len[i]);
             }
 
             byte[] byteArr = l.ToArray();
@@ -291,8 +290,7 @@ namespace UnitTests
 
             string req = "http://noppa-api-dev.aalto.fi/api/v1/courses?key=cdda4ae4833c0114005de5b5c4371bb8&org_id=eng";
 
-            DateTime dt = DateTime.Now;
-            dt.AddDays(1);
+            DateTime dt = DateTime.Now.AddDays(1);
 
             List<byte> l = new List<byte>();
 
@@ -322,6 +320,13 @@ namespace UnitTests
                 l.Add((byte)b);
             }
 
+            // Data length (Int23). Always the first value
+            byte[] len = BitConverter.GetBytes(l.ToArray().Length);
+            for (int i = 0; i < 4; i++)
+            {
+                l.Insert(i, len[i]);
+            }
+
             byte[] byteArr = l.ToArray();
 
             Cache.Add(req, json, Cache.PolicyType.Temporary);
@@ -329,7 +334,7 @@ namespace UnitTests
             MemoryStream s = new MemoryStream();
             Cache.Deserialize(s);
 
-            byte[] arr = s.GetBuffer();
+            byte[] arr = s.ToArray();
 
             Assert.IsTrue(arr.Length == byteArr.Length);
             for (int i = 0; i < arr.Length; i++)

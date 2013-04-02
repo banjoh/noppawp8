@@ -154,7 +154,7 @@ namespace NoppaClient
 
                 byte[] data = CacheItem.ToBinary(key, c);
 
-                // Data length (Int23)
+                // Data length (Int23). Always the first value
                 byte[] len = BitConverter.GetBytes(data.Length);
 
                 s.Write(len, 0, 4);
@@ -170,8 +170,7 @@ namespace NoppaClient
             {
                 // Store item for 1 day
                 // TODO: Have it configurable
-                dt = DateTime.Now;
-                dt.AddDays(1);
+                dt = DateTime.Now.AddDays(1);
             }
             return dt;
         }
