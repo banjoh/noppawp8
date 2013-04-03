@@ -263,6 +263,7 @@ namespace UnitTests
             Assert.IsFalse(Cache.Exists(req));
 
             Cache.Serialize(s);
+            s.Dispose();
 
             Assert.IsTrue(Cache.Exists(req));
             Assert.IsTrue(Cache.Get(req) == json);
@@ -332,7 +333,9 @@ namespace UnitTests
             Cache.Add(req, json, Cache.PolicyType.Temporary);
 
             MemoryStream s = new MemoryStream();
+
             Cache.Deserialize(s);
+            s.Dispose();
 
             byte[] arr = s.ToArray();
 

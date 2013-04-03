@@ -1,12 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.IsolatedStorage;
 
 namespace NoppaClient
 {
     public static class Cache
     {
         #region Member varaibles and helper methods
+        public enum StreamMode
+        { 
+            Read,
+            Write
+        }
+
         public enum PolicyType
         {
             None,
@@ -92,6 +99,7 @@ namespace NoppaClient
 
         private static readonly Dictionary<string, CacheItem> _cache = new Dictionary<string, CacheItem>();
         private static readonly object _lock = new Object();
+        private static readonly string CACHEFILE = "cachefile.cache";
 
         public static void Serialize(Stream s)
         {
@@ -141,8 +149,7 @@ namespace NoppaClient
 
         public static void Deserialize(Stream s)
         {
-            // Serialize cached items to filesystem
-            s.Flush();
+            // Serialize cached items to stream
             DateTime now = DateTime.Now;
 
             foreach (string key in _cache.Keys)
@@ -173,6 +180,27 @@ namespace NoppaClient
                 dt = DateTime.Now.AddDays(1);
             }
             return dt;
+        }
+
+        public static Stream CacheFileStream(Cache.StreamMode mode)
+        {
+            IsolatedStorageFile fileStorage = IsolatedStorageFile.GetUserStoreForApplication();
+            if (mode == Cache.StreamMode.Write)
+            {
+                // Delete a file.
+                try
+                {
+                    if (fileStorage.FileExists(Cache.CACHEFILE))
+                    {
+                        fileStorage.DeleteFile(Cache.CACHEFILE);
+                    }
+                }
+                catch (IsolatedStorageException)
+                {
+                }
+            }
+
+            return new IsolatedStorageFileStream(Cache.CACHEFILE, FileMode.OpenOrCreate, FileAccess.ReadWrite, fileStorage);
         }
         #endregion
 
