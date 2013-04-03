@@ -40,7 +40,7 @@ namespace NoppaClient
         {
             var taskComplete = new TaskCompletionSource<HttpWebResponse>();
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_apiURL + query);
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(query);
             System.Diagnostics.Debug.WriteLine("Query: {0}", request.RequestUri.ToString());
             request.Method = "GET";
             request.BeginGetResponse(asyncResponse =>
@@ -63,9 +63,17 @@ namespace NoppaClient
         {
             HttpWebResponse response;
 
+            string query = _apiURL + String.Format(format, args);
+
+            // Check to see if the cache contains the requested query.
+            if (Cache.Exists(query))
+            {
+                return JsonConvert.DeserializeObject<T>(Cache.Get(query));
+            }
+
             try
             {
-                Task<HttpWebResponse> responseTask = CallAPIAsync(String.Format(format, args));
+                Task<HttpWebResponse> responseTask = CallAPIAsync(query);
 
                 /* Handle the timeout */
                 var completeTask = await Task.WhenAny(responseTask, Task.Delay(_timeout));
@@ -87,7 +95,10 @@ namespace NoppaClient
 
             using (var sr = new StreamReader(response.GetResponseStream()))
             {
-                return JsonConvert.DeserializeObject<T>(await sr.ReadToEndAsync());
+                string json = await sr.ReadToEndAsync();
+                // TODO: Use the policy provided by the API caller
+                Cache.Add(query, json, Cache.PolicyLevel.Short);
+                return JsonConvert.DeserializeObject<T>(json);
             }
         }
 

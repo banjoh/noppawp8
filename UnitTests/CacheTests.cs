@@ -27,22 +27,34 @@ namespace UnitTests
             string k = "http//some.address.com/item1";
             string d = "my data";
 
-            Cache.Add(k, d, Cache.PolicyType.Temporary);
+            Cache.Add(k, d, Cache.PolicyLevel.Short);
 
             Assert.IsTrue(Cache.Exists(k));
             Assert.IsTrue(d == Cache.Get(k));
 
             string k2 = "http//some.address.com/itemforever";
             string d2 = "my forever data";
-            Cache.Add(k2, d2, Cache.PolicyType.Forever);
+            Cache.Add(k2, d2, Cache.PolicyLevel.Long);
 
             Assert.IsTrue(Cache.Exists(k2));
             Assert.IsTrue(d2 == Cache.Get(k2));
 
             string k3 = "http//some.address.com/item-none";
-            Cache.Add(k3, d, Cache.PolicyType.None);
+            Cache.Add(k3, d, Cache.PolicyLevel.BypassCache);
 
             Assert.IsFalse(Cache.Exists(k3));
+
+            bool caughtException = false;
+            try
+            {
+                string d4 = "text";
+                Cache.Add(k2, d4, Cache.PolicyLevel.Long);
+            }
+            catch
+            {
+                caughtException = true;
+            }
+            Assert.IsTrue(caughtException);
         }
 
         [TestMethod]
@@ -51,24 +63,35 @@ namespace UnitTests
             string k = "http//some.address.com/item1";
             string d = "my data";
 
-            Cache.Add(k, d, Cache.PolicyType.Temporary);
+            Cache.Add(k, d, Cache.PolicyLevel.Short);
             Assert.IsTrue(Cache.Exists(k));
 
             Cache.Remove(k);
             Assert.IsFalse(Cache.Exists(k));
+
+            bool caughtException = false;
+            try
+            {
+                Cache.Remove(k);
+            }
+            catch
+            {
+                caughtException = true;
+            }
+            Assert.IsTrue(caughtException);
         }
 
         [TestMethod]
-        public void TestReplaceItem()
+        public void TestReloadItem()
         {
             string k = "http//some.address.com/item1";
             string d = "my data";
 
-            Cache.Add(k, d, Cache.PolicyType.Temporary);
+            Cache.Add(k, d, Cache.PolicyLevel.Short);
             Assert.IsTrue(d == Cache.Get(k));
             
             string d2 = "my other data to replace previous data";
-            Cache.Replace(k, d2, Cache.PolicyType.Temporary);
+            Cache.Add(k, d2, Cache.PolicyLevel.Reload);
             Assert.IsTrue(Cache.Exists(k));
             Assert.IsTrue(Cache.Get(k) == d2);
         }
@@ -98,7 +121,7 @@ namespace UnitTests
             DateTime dt = DateTime.Now;
             dt.AddDays(1);
 
-            byte[] itemArr = Cache.CacheItem.ToBinary(req, new Cache.CacheItem(json, dt));
+            byte[] itemArr = Cache.CacheItem.ToBinary(req, new Cache.CacheItem(json, dt, Cache.PolicyLevel.Short));
 
             List<byte> l = new List<byte>();
 
@@ -108,7 +131,14 @@ namespace UnitTests
             {
                 l.Add(b);
             }
-            
+
+            // Policy (Int32)
+            byte[] p = BitConverter.GetBytes((int)Cache.PolicyLevel.Short);
+            foreach (byte b in p)
+            {
+                l.Add(b);
+            }
+
             // Key length (Int32)
             byte[] keyLen = BitConverter.GetBytes(req.Length);
             foreach (byte b in keyLen)
@@ -170,6 +200,13 @@ namespace UnitTests
                 l.Add(b);
             }
 
+            // Policy (Int32)
+            byte[] p = BitConverter.GetBytes((int)Cache.PolicyLevel.Short);
+            foreach (byte b in p)
+            {
+                l.Add(b);
+            }
+
             // Key length (Int32)
             byte[] keyLen = BitConverter.GetBytes(req.Length);
             foreach (byte b in keyLen)
@@ -227,6 +264,13 @@ namespace UnitTests
             // DateTime (Int64)
             byte[] date = BitConverter.GetBytes(dt.ToBinary());
             foreach (byte b in date)
+            {
+                l.Add(b);
+            }
+
+            // Policy (Int32)
+            byte[] p = BitConverter.GetBytes((int)Cache.PolicyLevel.Short);
+            foreach (byte b in p)
             {
                 l.Add(b);
             }
@@ -302,6 +346,13 @@ namespace UnitTests
                 l.Add(b);
             }
 
+            // Policy (Int32)
+            byte[] p = BitConverter.GetBytes((int)Cache.PolicyLevel.Short);
+            foreach (byte b in p)
+            {
+                l.Add(b);
+            }
+
             // Key length (Int32)
             byte[] keyLen = BitConverter.GetBytes(req.Length);
             foreach (byte b in keyLen)
@@ -330,7 +381,7 @@ namespace UnitTests
 
             byte[] byteArr = l.ToArray();
 
-            Cache.Add(req, json, Cache.PolicyType.Temporary);
+            Cache.Add(req, json, Cache.PolicyLevel.Short);
 
             MemoryStream s = new MemoryStream();
 

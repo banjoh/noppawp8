@@ -14,22 +14,25 @@ namespace NoppaClient
             Write
         }
 
-        public enum PolicyType
+        public enum PolicyLevel
         {
-            None,
-            Forever,
-            Temporary
+            BypassCache,
+            Long,
+            Short,
+            Reload
         }
 
         public class CacheItem
         {
             public string Item { get; private set; }
             public DateTime TTL { get; private set; }
+            public PolicyLevel Policy { get; private set; }
 
-            public CacheItem(string i, DateTime d)
+            public CacheItem(string i, DateTime d, PolicyLevel p)
             {
                 Item = i;
                 TTL = d;
+                Policy = p;
             }
 
             public static byte[] ToBinary(string key, CacheItem item)
@@ -39,6 +42,13 @@ namespace NoppaClient
                 // DateTime (Int64)
                 byte[] date = BitConverter.GetBytes(item.TTL.ToBinary());
                 foreach (byte b in date)
+                {
+                    l.Add(b);
+                }
+
+                // Policy (Int32)
+                byte[] p = BitConverter.GetBytes((int)item.Policy);
+                foreach (byte b in p)
                 {
                     l.Add(b);
                 }
@@ -72,8 +82,12 @@ namespace NoppaClient
                 DateTime dt = DateTime.FromBinary(BitConverter.ToInt64(b, 0));
                 currentIdx += 8;
 
+                // Policy (Int32)
+                Cache.PolicyLevel policy = (Cache.PolicyLevel)BitConverter.ToInt32(b, 8);
+                currentIdx += 4;
+
                 // Key length (Int32)
-                int keyLen = BitConverter.ToInt32(b, 8);
+                int keyLen = BitConverter.ToInt32(b, 12);
                 currentIdx += 4;
 
                 // Key
@@ -93,7 +107,7 @@ namespace NoppaClient
                 }
                 string data = new string(arr);
 
-                return Tuple.Create(key, new CacheItem(data, dt));
+                return Tuple.Create(key, new CacheItem(data, dt, policy));
             }
         }
 
@@ -143,7 +157,10 @@ namespace NoppaClient
 
                 // Only add cache items that are not older that NOW
                 if (t.Item2.TTL > now)
-                    _cache.Add(t.Item1, t.Item2);
+                    lock (_lock)
+                    {
+                        _cache.Add(t.Item1, t.Item2);
+                    }
             }
         }
 
@@ -152,11 +169,24 @@ namespace NoppaClient
             // Serialize cached items to stream
             DateTime now = DateTime.Now;
 
-            foreach (string key in _cache.Keys)
+            Dictionary<string, CacheItem>.KeyCollection keys;
+            lock (_lock)
+            {
+                keys = _cache.Keys;
+            }
+
+            foreach (string key in keys)
             {
                 // Old items should not be persisted
-                CacheItem c = _cache[key];
-                if (c.TTL < now)
+                CacheItem c = null;
+                lock (_lock)
+                {
+                    // Another thread may remove a cache item
+                    // so check its existence first before accessing
+                    if (_cache.ContainsKey(key))
+                        c = _cache[key];
+                }                
+                if (c == null || c.TTL < now)
                     continue;
 
                 byte[] data = CacheItem.ToBinary(key, c);
@@ -169,15 +199,22 @@ namespace NoppaClient
             }
         }
 
-        private static DateTime TimeToLive(PolicyType p)
+        private static DateTime TimeToLive(PolicyLevel p)
         {
             DateTime dt = default(DateTime);
 
-            if (p == PolicyType.Temporary)
+            if (p == PolicyLevel.Short)
             {
                 // Store item for 1 day
                 // TODO: Have it configurable
                 dt = DateTime.Now.AddDays(1);
+            }
+
+            if (p == PolicyLevel.Long)
+            {
+                // Store item for 1 month
+                // TODO: Have it configurable
+                dt = DateTime.Now.AddMonths(1);
             }
             return dt;
         }
@@ -196,7 +233,11 @@ namespace NoppaClient
         {
             lock (_lock)
             {
-                return _cache.ContainsKey(key);
+                if (_cache.ContainsKey(key))
+                {
+                    return _cache[key].TTL >= DateTime.Now;
+                }
+                return false;
             }
         }
 
@@ -211,15 +252,21 @@ namespace NoppaClient
             }
         }
 
-        public static void Add(string key, string value, PolicyType policy)
+        public static void Add(string key, string value, PolicyLevel policy)
         {
-            if (Exists(key) == true)
+            if (Exists(key) == true && policy != PolicyLevel.Reload)
                 throw new ApplicationException(String.Format("An object with key '{0}' already exists", key));
 
             lock (_lock)
             {
-                if (policy != PolicyType.None)
-                    _cache.Add(key, new CacheItem(value, TimeToLive(policy)));
+                if (policy == PolicyLevel.Reload)
+                {
+                    Cache.PolicyLevel oldPolicy = _cache[key].Policy;
+                    _cache.Remove(key);
+                    _cache.Add(key, new CacheItem(value, TimeToLive(oldPolicy), oldPolicy));
+                }
+                else if (policy != PolicyLevel.BypassCache)
+                    _cache.Add(key, new CacheItem(value, TimeToLive(policy), policy));
             }
         }
 
@@ -231,18 +278,6 @@ namespace NoppaClient
             lock (_lock)
             {
                 _cache.Remove(key);
-            }
-        }
-
-        public static void Replace(string key, string value, PolicyType policy)
-        {
-            lock (_lock)
-            {
-                if (_cache.ContainsKey(key) == true)
-                    _cache.Remove(key);
-
-                if (policy != PolicyType.None)
-                    _cache.Add(key, new CacheItem(value, TimeToLive(policy)));
             }
         }
         #endregion
