@@ -79,11 +79,11 @@ namespace NoppaClient.ViewModels
 
         public async Task LoadDepartmentAsync(string departmentId)
         {
-            Department dept = await NoppaAPI.GetDepartment(departmentId);
-            Title = String.Format(AppResources.DepartmentCourseListTitle, dept != null ? dept.Name : departmentId);
-
             IsLoading = true;
             _courses.Clear();
+
+            Department dept = await NoppaAPI.GetDepartment(departmentId);
+            Title = String.Format(AppResources.DepartmentCourseListTitle, dept != null ? dept.Name : departmentId);
 
             try
             {

@@ -25,7 +25,7 @@ namespace NoppaClient.ViewModels
         private ObservableCollection<DepartmentGroup> _departments;
         public ObservableCollection<DepartmentGroup> Departments {
             get { return _departments; }
-            set { SetProperty(ref _departments, value); }
+            private set { SetProperty(ref _departments, value); }
         }
 
         private string _sampleProperty = "Sample Runtime Property Value";
@@ -73,8 +73,6 @@ namespace NoppaClient.ViewModels
         /// </summary>
         public async Task LoadDataAsync()
         {
-            List<DepartmentViewModel> models = new List<DepartmentViewModel>();
-
             try
             {
                 List<Organization> orgs = await NoppaAPI.GetAllOrganizations();
@@ -82,14 +80,14 @@ namespace NoppaClient.ViewModels
 
                 if (depts != null && orgs != null)
                 {
-                    foreach (var dept in depts)
+                    var orgMap = new Dictionary<string, Organization>();
+                    foreach (var org in orgs)
                     {
-                        Organization org = orgs.Find((o) => o.Id == dept.OrgId);
-                        models.Add(new DepartmentViewModel(org.Name, dept.Name, dept.Id));
+                        orgMap.Add(org.Id, org);
                     }
-                }
 
-                Departments = DepartmentGroup.CreateDepartmentGroups(models);
+                    Departments = DepartmentGroup.CreateDepartmentGroups(orgMap, depts);
+                }
             }
             catch (Exception ex)
             {

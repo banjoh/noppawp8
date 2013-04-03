@@ -49,7 +49,7 @@ namespace NoppaClient
             var list = sender as LongListSelector;
             if (list != null)
             {
-                var selection = list.SelectedItem as DepartmentViewModel;
+                var selection = list.SelectedItem as Department;
                 if (selection != null)
                 {
                     NavigationService.Navigate(new Uri("/CourseListPage.xaml?content=department&id=" + HttpUtility.UrlEncode(selection.Id), UriKind.Relative));
