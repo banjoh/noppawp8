@@ -11,6 +11,10 @@ using Microsoft.Phone.Shell;
 using NoppaClient.Resources;
 using NoppaClient.ViewModels;
 
+using NoppaClient;
+using System.IO;
+using System.IO.IsolatedStorage;
+
 namespace NoppaClient
 {
     public partial class App : Application
@@ -96,6 +100,23 @@ namespace NoppaClient
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
+            // Catch all exceptions. The application can do without stored cache data
+            try
+            {
+                IsolatedStorageFile fileStorage = IsolatedStorageFile.GetUserStoreForApplication();
+                if (fileStorage.FileExists(Cache.CACHEFILE))
+                {
+                    IsolatedStorageFileStream stream = new IsolatedStorageFileStream(Cache.CACHEFILE, FileMode.Open, FileAccess.Read, fileStorage);
+                    Cache.Deserialize(stream);
+                    stream.Dispose();
+                }
+
+                fileStorage.Dispose();
+            }
+            catch
+            {
+                System.Diagnostics.Debug.WriteLine("Application_Launching: Error accessing the cache file in the IsolatedStorage");
+            }
         }
 
         // Code to execute when the application is activated (brought to foreground)
@@ -120,6 +141,23 @@ namespace NoppaClient
         // This code will not execute when the application is deactivated
         private void Application_Closing(object sender, ClosingEventArgs e)
         {
+            // Catch all exceptions. The application can do without persisting cache data
+            try
+            {
+                IsolatedStorageFile fileStorage = IsolatedStorageFile.GetUserStoreForApplication();
+                if (fileStorage.FileExists(Cache.CACHEFILE))
+                {
+                    fileStorage.DeleteFile(Cache.CACHEFILE);
+                }
+                IsolatedStorageFileStream stream = new IsolatedStorageFileStream(Cache.CACHEFILE, FileMode.OpenOrCreate, FileAccess.Write, fileStorage);
+                Cache.Serialize(stream);
+                stream.Dispose();
+                fileStorage.Dispose();
+            }
+            catch
+            {
+                System.Diagnostics.Debug.WriteLine("Application_Closing: Error accessing the cache file in the IsolatedStorage");
+            }
         }
 
         // Code to execute if a navigation fails

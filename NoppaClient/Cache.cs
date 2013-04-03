@@ -99,9 +99,9 @@ namespace NoppaClient
 
         private static readonly Dictionary<string, CacheItem> _cache = new Dictionary<string, CacheItem>();
         private static readonly object _lock = new Object();
-        private static readonly string CACHEFILE = "cachefile.cache";
+        public static readonly string CACHEFILE = "cachefile.cache";
 
-        public static void Serialize(Stream s)
+        public static void Deserialize(Stream s)
         {
             if (s.Length <= 0)
                 return;
@@ -147,7 +147,7 @@ namespace NoppaClient
             }
         }
 
-        public static void Deserialize(Stream s)
+        public static void Serialize(Stream s)
         {
             // Serialize cached items to stream
             DateTime now = DateTime.Now;
@@ -181,27 +181,6 @@ namespace NoppaClient
             }
             return dt;
         }
-
-        public static Stream CacheFileStream(Cache.StreamMode mode)
-        {
-            IsolatedStorageFile fileStorage = IsolatedStorageFile.GetUserStoreForApplication();
-            if (mode == Cache.StreamMode.Write)
-            {
-                // Delete a file.
-                try
-                {
-                    if (fileStorage.FileExists(Cache.CACHEFILE))
-                    {
-                        fileStorage.DeleteFile(Cache.CACHEFILE);
-                    }
-                }
-                catch (IsolatedStorageException)
-                {
-                }
-            }
-
-            return new IsolatedStorageFileStream(Cache.CACHEFILE, FileMode.OpenOrCreate, FileAccess.ReadWrite, fileStorage);
-        }
         #endregion
 
         #region Accessor methods
@@ -232,7 +211,7 @@ namespace NoppaClient
             }
         }
 
-        public static void Add(string key, string value, PolicyType policy = PolicyType.None)
+        public static void Add(string key, string value, PolicyType policy)
         {
             if (Exists(key) == true)
                 throw new ApplicationException(String.Format("An object with key '{0}' already exists", key));
@@ -255,7 +234,7 @@ namespace NoppaClient
             }
         }
 
-        public static void Replace(string key, string value, PolicyType policy = PolicyType.None)
+        public static void Replace(string key, string value, PolicyType policy)
         {
             lock (_lock)
             {

@@ -199,7 +199,7 @@ namespace UnitTests
         }
 
         [TestMethod]
-        public void TestSerializeCache()
+        public void TestDeserializeCache()
         {
             string json = @"{
                 'course_id': 'ENE.kand',
@@ -261,8 +261,8 @@ namespace UnitTests
 
             MemoryStream s = new MemoryStream(byteArr);
             Assert.IsFalse(Cache.Exists(req));
-
-            Cache.Serialize(s);
+            
+            Cache.Deserialize(s);
             s.Dispose();
 
             Assert.IsTrue(Cache.Exists(req));
@@ -270,7 +270,7 @@ namespace UnitTests
         }
 
         [TestMethod]
-        public void TestDeserializeCache()
+        public void TestSerializeCache()
         {
             string json = @"{
                 'course_id': 'ENE.kand',
@@ -334,7 +334,7 @@ namespace UnitTests
 
             MemoryStream s = new MemoryStream();
 
-            Cache.Deserialize(s);
+            Cache.Serialize(s);
             s.Dispose();
 
             byte[] arr = s.ToArray();
