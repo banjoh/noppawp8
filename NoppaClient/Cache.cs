@@ -2,40 +2,67 @@
 using System.Collections.Generic;
 using System.IO;
 using System.IO.IsolatedStorage;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("UnitTests")]
 namespace NoppaClient
 {
     public static class Cache
     {
-        #region Member varaibles and helper methods
-        public enum StreamMode
-        { 
-            Read,
-            Write
-        }
-
+        #region Policy level definition
         public enum PolicyLevel
         {
+            /// <summary>
+            /// Do not cache item
+            /// </summary>
             BypassCache,
-            Long,
+            /// <summary>
+            /// Cache for 1 hour
+            /// </summary>
             Short,
+            /// <summary>
+            /// Cache for 1 week
+            /// </summary>
+            Long,
+            /// <summary>
+            /// Replace an existing item with the reloaded on.
+            /// </summary>
             Reload
         }
 
-        public class CacheItem
+        internal static DateTime TimeToLive(PolicyLevel p)
+        {
+            switch (p)
+            {
+                case PolicyLevel.Long:
+                    return DateTime.Now.AddMonths(1);
+                case PolicyLevel.Short:
+                    return DateTime.Now.AddHours(1);
+                case PolicyLevel.BypassCache:
+                    throw new ApplicationException("BypassCache policy level should not request for a TTL object");
+                case PolicyLevel.Reload:
+                    throw new ApplicationException("Reload policy level should not request for a TTL object");
+                default:
+                    return default(DateTime);
+            }
+        }
+        #endregion
+
+        #region Cache item defintion
+        internal class CacheItem
         {
             public string Item { get; private set; }
             public DateTime TTL { get; private set; }
             public PolicyLevel Policy { get; private set; }
 
-            public CacheItem(string i, DateTime d, PolicyLevel p)
+            internal CacheItem(string i, DateTime d, PolicyLevel p)
             {
                 Item = i;
                 TTL = d;
                 Policy = p;
             }
 
-            public static byte[] ToBinary(string key, CacheItem item)
+            internal static byte[] ToBinary(string key, CacheItem item)
             {
                 List<byte> l = new List<byte>();
 
@@ -75,7 +102,7 @@ namespace NoppaClient
                 return l.ToArray();
             }
 
-            public static Tuple<string, CacheItem> FromBinary(byte[] b)
+            internal static Tuple<string, CacheItem> FromBinary(byte[] b)
             {
                 int currentIdx = 0;
                 // DateTime (Int64)
@@ -110,7 +137,9 @@ namespace NoppaClient
                 return Tuple.Create(key, new CacheItem(data, dt, policy));
             }
         }
-
+        #endregion
+        
+        #region Member varaibles and helper methods
         private static readonly Dictionary<string, CacheItem> _cache = new Dictionary<string, CacheItem>();
         private static readonly object _lock = new Object();
         public static readonly string CACHEFILE = "cachefile.cache";
@@ -199,25 +228,6 @@ namespace NoppaClient
             }
         }
 
-        private static DateTime TimeToLive(PolicyLevel p)
-        {
-            DateTime dt = default(DateTime);
-
-            if (p == PolicyLevel.Short)
-            {
-                // Store item for 1 day
-                // TODO: Have it configurable
-                dt = DateTime.Now.AddDays(1);
-            }
-
-            if (p == PolicyLevel.Long)
-            {
-                // Store item for 1 month
-                // TODO: Have it configurable
-                dt = DateTime.Now.AddMonths(1);
-            }
-            return dt;
-        }
         #endregion
 
         #region Accessor methods
@@ -235,7 +245,7 @@ namespace NoppaClient
             {
                 if (_cache.ContainsKey(key))
                 {
-                    return _cache[key].TTL >= DateTime.Now;
+                    return _cache[key].TTL > DateTime.Now;
                 }
                 return false;
             }
@@ -261,12 +271,22 @@ namespace NoppaClient
             {
                 if (policy == PolicyLevel.Reload)
                 {
-                    Cache.PolicyLevel oldPolicy = _cache[key].Policy;
-                    _cache.Remove(key);
+                    // Default to Short policy
+                    Cache.PolicyLevel oldPolicy = Cache.PolicyLevel.Short;
+
+                    // If the item exists, remove it first and use it's policy
+                    if (_cache.ContainsKey(key))
+                    {
+                        oldPolicy = _cache[key].Policy;
+                        _cache.Remove(key);
+                        
+                    }
                     _cache.Add(key, new CacheItem(value, TimeToLive(oldPolicy), oldPolicy));
                 }
                 else if (policy != PolicyLevel.BypassCache)
+                {
                     _cache.Add(key, new CacheItem(value, TimeToLive(policy), policy));
+                }
             }
         }
 

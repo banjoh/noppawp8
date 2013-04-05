@@ -94,6 +94,12 @@ namespace UnitTests
             Cache.Add(k, d2, Cache.PolicyLevel.Reload);
             Assert.IsTrue(Cache.Exists(k));
             Assert.IsTrue(Cache.Get(k) == d2);
+
+            string k3 = "http//some.address.com/anotheritem";
+            Cache.Add(k3, d2, Cache.PolicyLevel.Reload);
+            // If it did not exist before it should still be cached.
+            // It defaults to PolicyLevel.Short
+            Assert.IsTrue(Cache.Exists(k3));
         }
 
         [TestMethod]
@@ -118,10 +124,10 @@ namespace UnitTests
 
             string req = "http://noppa-api-dev.aalto.fi/api/v1/courses?key=cdda4ae4833c0114005de5b5c4371bb8&org_id=eng";
 
-            DateTime dt = DateTime.Now;
-            dt.AddDays(1);
+            Cache.PolicyLevel policy = Cache.PolicyLevel.Short;
+            DateTime dt = Cache.TimeToLive(policy);
 
-            byte[] itemArr = Cache.CacheItem.ToBinary(req, new Cache.CacheItem(json, dt, Cache.PolicyLevel.Short));
+            byte[] itemArr = Cache.CacheItem.ToBinary(req, new Cache.CacheItem(json, dt, policy));
 
             List<byte> l = new List<byte>();
 
@@ -133,7 +139,7 @@ namespace UnitTests
             }
 
             // Policy (Int32)
-            byte[] p = BitConverter.GetBytes((int)Cache.PolicyLevel.Short);
+            byte[] p = BitConverter.GetBytes((int)policy);
             foreach (byte b in p)
             {
                 l.Add(b);
@@ -188,8 +194,8 @@ namespace UnitTests
 
             string req = "http://noppa-api-dev.aalto.fi/api/v1/courses?key=cdda4ae4833c0114005de5b5c4371bb8&org_id=eng";
 
-            DateTime dt = DateTime.Now;
-            dt.AddDays(1);
+            Cache.PolicyLevel policy = Cache.PolicyLevel.Short;
+            DateTime dt = Cache.TimeToLive(policy);
 
             List<byte> l = new List<byte>();
 
@@ -201,7 +207,7 @@ namespace UnitTests
             }
 
             // Policy (Int32)
-            byte[] p = BitConverter.GetBytes((int)Cache.PolicyLevel.Short);
+            byte[] p = BitConverter.GetBytes((int)policy);
             foreach (byte b in p)
             {
                 l.Add(b);
@@ -257,7 +263,8 @@ namespace UnitTests
 
             string req = "http://noppa-api-dev.aalto.fi/api/v1/courses?key=cdda4ae4833c0114005de5b5c4371bb8&org_id=eng";
 
-            DateTime dt = DateTime.Now.AddDays(1);
+            Cache.PolicyLevel policy = Cache.PolicyLevel.Short;
+            DateTime dt = Cache.TimeToLive(policy);
 
             List<byte> l = new List<byte>();
 
@@ -269,7 +276,7 @@ namespace UnitTests
             }
 
             // Policy (Int32)
-            byte[] p = BitConverter.GetBytes((int)Cache.PolicyLevel.Short);
+            byte[] p = BitConverter.GetBytes((int)policy);
             foreach (byte b in p)
             {
                 l.Add(b);
@@ -335,7 +342,8 @@ namespace UnitTests
 
             string req = "http://noppa-api-dev.aalto.fi/api/v1/courses?key=cdda4ae4833c0114005de5b5c4371bb8&org_id=eng";
 
-            DateTime dt = DateTime.Now.AddDays(1);
+            Cache.PolicyLevel policy = Cache.PolicyLevel.Short;
+            DateTime dt = Cache.TimeToLive(policy);
 
             List<byte> l = new List<byte>();
 
@@ -347,7 +355,7 @@ namespace UnitTests
             }
 
             // Policy (Int32)
-            byte[] p = BitConverter.GetBytes((int)Cache.PolicyLevel.Short);
+            byte[] p = BitConverter.GetBytes((int)policy);
             foreach (byte b in p)
             {
                 l.Add(b);
@@ -391,6 +399,8 @@ namespace UnitTests
             byte[] arr = s.ToArray();
 
             Assert.IsTrue(arr.Length == byteArr.Length);
+            System.Diagnostics.Debug.WriteLine(String.Format("Arr: {0}", BitConverter.ToString(arr)));
+            System.Diagnostics.Debug.WriteLine(String.Format("ByteArr: {0}", BitConverter.ToString(byteArr)));
             for (int i = 0; i < arr.Length; i++)
             {
                 Assert.IsTrue(arr[i] == byteArr[i]);
