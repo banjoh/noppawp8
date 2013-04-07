@@ -20,12 +20,10 @@ namespace NoppaClient
             InitializeComponent();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
-            
-            
             var id = "";
             if (NavigationContext.QueryString.ContainsKey("id"))
             {
@@ -33,6 +31,8 @@ namespace NoppaClient
             }
 
             _viewModel = new CourseViewModel(id);
+
+            await _viewModel.LoadContentAsync();
             DataContext = _viewModel;
         }
     }

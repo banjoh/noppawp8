@@ -45,19 +45,19 @@ namespace NoppaClient.ViewModels
         private ICommand _openOodiPage;
         public ICommand OpenOodiPage { get { return _openOodiPage; } }
 
-        public OverviewViewModel(string id)
+        public OverviewViewModel()
         {
-            CourseId = id;
             Title = "Overview";
             Index = 1;
         }
 
-        public async Task LoadDataAsync()
+        public async Task LoadDataAsync(string id)
         {
-            DataModel.CourseOverview overview = await NoppaAPI.GetCourseOverview(CourseId);
+            DataModel.CourseOverview overview = await NoppaAPI.GetCourseOverview(id);
 
             if (overview != null)
             {
+                CourseId = id;
                 Credits = Detail.StripHtml(overview.Credits);
                 Level = Detail.StripHtml(overview.Level);
                 TeachingPeriod = Detail.StripHtml(overview.TeachingPeriod);

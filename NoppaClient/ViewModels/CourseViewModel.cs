@@ -22,36 +22,33 @@ namespace NoppaClient.ViewModels
         {
             Code = courseCode;
             _contents.Add(new FrontPageViewModel(this)); // Always add this
-
-            /* Add all that exist dynamically, depending on the course model. */
-            LoadContentAsync();
         }
 
-        private async void LoadContentAsync()
+        public async Task LoadContentAsync()
         {
             var tasks = new List<Task<CourseContentViewModel>>();
 
             /* Load Overview */
             tasks.Add(Task.Run(async delegate () {
-                    OverviewViewModel model = new OverviewViewModel(Code);
-                    await model.LoadDataAsync(); 
+                    OverviewViewModel model = new OverviewViewModel();
+                    await model.LoadDataAsync(Code); 
                     return model as CourseContentViewModel;
                 })
             );
 
             /* Load Lectures */
             tasks.Add(Task.Run(async delegate(){
-                LecturesViewModel model = new LecturesViewModel();
-                await model.LoadDataAsync(Code);
-                return model as CourseContentViewModel;
+                    LecturesViewModel model = new LecturesViewModel();
+                    await model.LoadDataAsync(Code);
+                    return model as CourseContentViewModel;
                 })
             );
 
             /* Load Exercises */
             tasks.Add(Task.Run(async delegate(){
-                ExercisesViewModel model = new ExercisesViewModel();
-                await model.LoadDataAsync(Code);
-                return model as CourseContentViewModel;
+                    ExercisesViewModel model = new ExercisesViewModel();
+                    await model.LoadDataAsync(Code);
+                    return model as CourseContentViewModel;
                 })
             );
 
@@ -65,18 +62,18 @@ namespace NoppaClient.ViewModels
 
             /* Load Results */
             tasks.Add(Task.Run(async delegate(){
-                ResultsViewModel model = new ResultsViewModel();
-                await model.LoadDataAsync(Code);
-                return model as CourseContentViewModel;
+                    ResultsViewModel model = new ResultsViewModel();
+                    await model.LoadDataAsync(Code);
+                    return model as CourseContentViewModel;
                 })
             );
 
 
             /* Load Assignments */
             tasks.Add(Task.Run(async delegate(){
-                AssignmentsViewModel model = new AssignmentsViewModel();
-                await model.LoadDataAsync(Code);
-                return model as CourseContentViewModel;
+                    AssignmentsViewModel model = new AssignmentsViewModel();
+                    await model.LoadDataAsync(Code);
+                    return model as CourseContentViewModel;
                 })
             );
 
