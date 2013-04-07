@@ -44,7 +44,7 @@ namespace NoppaClient
             }
         }
 
-        private void DepartmentListSelected(object sender, SelectionChangedEventArgs e)
+        private void DepartmentListSelected(object sender, System.Windows.Input.GestureEventArgs e)
         {
             var list = sender as LongListSelector;
             if (list != null)

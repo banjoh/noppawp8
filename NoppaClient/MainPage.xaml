@@ -79,7 +79,7 @@
             <!--Panorama item one-->
             <phone:PanoramaItem Header="{Binding Path=LocalizedResources.DepartmentsTitle, Source={StaticResource LocalizedStrings}}">
                 <!--Single line list with text wrapping and grouping -->
-                <phone:LongListSelector 
+                <phone:LongListSelector
                     x:Name="DepartmentList"
                     Margin="0,0,-22,0" 
                     JumpListStyle="{StaticResource DepartmentJumpListStyle}"
@@ -89,7 +89,7 @@
                     IsGroupingEnabled="True"
                     Background="Transparent"
                     HideEmptyGroups="True"
-                    SelectionChanged="DepartmentListSelected"
+                    Tap="DepartmentListSelected"
                     ItemsSource="{Binding Departments}" />
             </phone:PanoramaItem>
 
