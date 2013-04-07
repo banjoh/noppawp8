@@ -6,11 +6,11 @@ using System.Resources;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("NoppaClient")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Noppa")]
+[assembly: AssemblyDescription("Client for Noppa Webservice used in Aalto University.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("NoppaClient")]
+[assembly: AssemblyProduct("Noppa")]
 [assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
