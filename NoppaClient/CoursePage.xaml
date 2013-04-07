@@ -20,8 +20,31 @@
         <ResourceDictionary x:Name="Resources">
             
             <view:OpenBrowserCommand x:Key="OpenBrowserCommand" />
+ 
+            <DataTemplate x:Key="NewsItemTemplate">
+                <StackPanel Margin="0,0,0,0">
+                    <TextBlock Text="{Binding Title}" Style="{StaticResource PhoneTextTitle2Style}" TextWrapping="Wrap" />
+                    <TextBlock Text="{Binding Date}" Style="{StaticResource PhoneTextSubtleStyle}" />
+                    <TextBlock Text="{Binding Content}" Style="{StaticResource PhoneTextNormalStyle}" TextWrapping="Wrap" />
+                    <!-- Use ItemsControl here so that items are laid out inline, and not in a scroll area -->
+                    <ItemsControl ItemsSource="{Binding Links}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="22,0,22,10">
+                                    <Button Content="{Binding Title}" Command="{StaticResource OpenBrowserCommand}" CommandParameter="{Binding Url}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </StackPanel>
+            </DataTemplate>
 
-            <DataTemplate x:Key="LectureTemplate">
+            <DataTemplate x:Key="LectureItemTemplate">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding Date}"/>
@@ -45,7 +68,7 @@
                     </ItemsControl>
                 </StackPanel>
             </DataTemplate>
-            
+
             <DataTemplate x:Key="ExerciseItemTemplate">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="{Binding Group}"/>
@@ -64,30 +87,54 @@
                 </StackPanel>
             </DataTemplate>
 
-            <DataTemplate x:Key="NewsItemTemplate">
-            <StackPanel Margin="0,0,0,0">
-                <TextBlock Text="{Binding Title}" Style="{StaticResource PhoneTextTitle2Style}" TextWrapping="Wrap" />
-                <TextBlock Text="{Binding Date}" Style="{StaticResource PhoneTextSubtleStyle}" />
-                <TextBlock Text="{Binding Content}" Style="{StaticResource PhoneTextNormalStyle}" TextWrapping="Wrap" />
-                <!-- Use ItemsControl here so that items are laid out inline, and not in a scroll area -->
-                <ItemsControl ItemsSource="{Binding Links}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Margin="22,0,22,10">
-                                <Button Content="{Binding Title}" Command="{StaticResource OpenBrowserCommand}" CommandParameter="{Binding Url}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Vertical" />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                </ItemsControl>
-            </StackPanel>
-        </DataTemplate>
+           <DataTemplate x:Key="ResultItemTemplate">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Date}"/>
+                        <TextBlock Text=" " />
+                        <TextBlock Text="{Binding GradeName}" />
+                    </StackPanel>
+                        <TextBlock Text="Results:" />
+                        <Button Content="Results" Command="{StaticResource OpenBrowserCommand}" CommandParameter="{Binding Url}" />
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Grade review:" />
+                        <TextBlock Text="    " />
+                        <TextBlock Text="{Binding GradeReview}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Grade scale:" />
+                        <TextBlock Text="    " />
+                        <TextBlock Text="{Binding GradeScale}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Result published:" />
+                        <TextBlock Text="    " />
+                        <TextBlock Text="{Binding Published}" />
+                    </StackPanel>
+                </StackPanel>
+            </DataTemplate>
 
-        <!-- Templates for the Pivot view models -->
+            <DataTemplate x:Key="AssignmentItemTemplate">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Deadline}"/>
+                        <TextBlock Text=" " />
+                        <TextBlock Text="{Binding Title}" />
+                    </StackPanel>
+                    <TextBlock Text="{Binding Content}" />
+                    <ItemsControl ItemsSource="{Binding Material}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="22,0,22,10">
+                                    <Button Content="{Binding Title}" Command="{StaticResource OpenBrowserCommand}" CommandParameter="{Binding Url}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </DataTemplate>
+
+            <!-- Templates for the Pivot view models -->
         <ResourceDictionary x:Key="ViewModelTemplates">
             <DataTemplate x:Key="FrontPageViewModel">
                 <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -139,20 +186,40 @@
                 <ListBox x:Name="LectureList"
                     Margin="0,0,-22,0"
                     HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                    ItemTemplate="{StaticResource LectureTemplate}"
+                    ItemTemplate="{StaticResource LectureItemTemplate}"
                     ItemsSource="{Binding Lectures}">
                 </ListBox>
             </DataTemplate>
 
-            <DataTemplate x:Key="ExercisesViewModel">
+                <DataTemplate x:Key="ExercisesViewModel">
                     <ListBox
                     Margin="0,0,-22,0"
                     HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                     ItemTemplate="{StaticResource ExerciseItemTemplate}"
                     ItemsSource="{Binding Exercises}">
                     </ListBox>
-            </DataTemplate>
-        </ResourceDictionary>
+                </DataTemplate>
+
+                <DataTemplate x:Key="ResultsViewModel">
+                    <ListBox
+                    Margin="0,0,-22,0"
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                    ItemTemplate="{StaticResource ResultItemTemplate}"
+                    ItemsSource="{Binding Results}">
+                    </ListBox>
+                </DataTemplate>
+
+                <DataTemplate x:Key="AssignmentsViewModel">
+                    <ListBox x:Name="AssignmentList"
+                    Margin="0,0,-22,0"
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                    ItemTemplate="{StaticResource AssignmentItemTemplate}"
+                    ItemsSource="{Binding Assignments}">
+                    </ListBox>
+                </DataTemplate>
+
+
+            </ResourceDictionary>
             
         <!-- Misc. content -->
         <view:TypeNameToDataTemplateConverter x:Key="TypeNameToDataTemplateConverter" />

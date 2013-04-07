@@ -63,6 +63,24 @@ namespace NoppaClient.ViewModels
                 })
             );
 
+            /* Load Results */
+            tasks.Add(Task.Run(async delegate(){
+                ResultsViewModel model = new ResultsViewModel();
+                await model.LoadDataAsync(Code);
+                return model as CourseContentViewModel;
+                })
+            );
+
+
+            /* Load Assignments */
+            tasks.Add(Task.Run(async delegate(){
+                AssignmentsViewModel model = new AssignmentsViewModel();
+                await model.LoadDataAsync(Code);
+                return model as CourseContentViewModel;
+                })
+            );
+
+
             /* Add items in the order they are finished. */
             while (tasks.Count > 0)
             {
