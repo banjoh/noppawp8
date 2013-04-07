@@ -19,7 +19,7 @@ namespace NoppaClient
         private const string _apiURL = "http://noppa-api-dev.aalto.fi/api/v1";
         private static readonly int _timeout = 35000; /* 5secs */
         private static string _apiKey;
-        private static NoppaAPI _instance;
+        private static Lazy<NoppaAPI> _instance = new Lazy<NoppaAPI>( () => new NoppaAPI() );
 
         private NoppaAPI()
         {
@@ -28,10 +28,7 @@ namespace NoppaClient
 
         private static NoppaAPI GetInstance()
         {
-            if (_instance == null)
-                _instance = new NoppaAPI();
-
-            return _instance;
+            return _instance.Value;
         }
 
         #region API Call methods
@@ -78,7 +75,7 @@ namespace NoppaClient
                 /* Handle the timeout */
                 var completeTask = await Task.WhenAny(responseTask, Task.Delay(_timeout));
                 if (completeTask == responseTask)
-                    response = await responseTask;
+                    response = await responseTask.ConfigureAwait(false);
                 else
                 {
                     /* Timeout */
