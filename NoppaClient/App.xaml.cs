@@ -103,15 +103,16 @@ namespace NoppaClient
             // Catch all exceptions. The application can do without stored cache data
             try
             {
-                IsolatedStorageFile fileStorage = IsolatedStorageFile.GetUserStoreForApplication();
-                if (fileStorage.FileExists(Cache.CACHEFILE))
+                using (var fileStorage = IsolatedStorageFile.GetUserStoreForApplication())
                 {
-                    IsolatedStorageFileStream stream = new IsolatedStorageFileStream(Cache.CACHEFILE, FileMode.Open, FileAccess.Read, fileStorage);
-                    Cache.Deserialize(stream);
-                    stream.Dispose();
+                    if (fileStorage.FileExists(Cache.CACHEFILE))
+                    {
+                        using (var stream = new IsolatedStorageFileStream(Cache.CACHEFILE, FileMode.Open, FileAccess.Read, fileStorage))
+                        {
+                            Cache.Deserialize(stream);
+                        }
+                    }
                 }
-
-                fileStorage.Dispose();
             }
             catch
             {
@@ -144,15 +145,18 @@ namespace NoppaClient
             // Catch all exceptions. The application can do without persisting cache data
             try
             {
-                IsolatedStorageFile fileStorage = IsolatedStorageFile.GetUserStoreForApplication();
-                if (fileStorage.FileExists(Cache.CACHEFILE))
+                using (var fileStorage = IsolatedStorageFile.GetUserStoreForApplication())
                 {
-                    fileStorage.DeleteFile(Cache.CACHEFILE);
+                    if (fileStorage.FileExists(Cache.CACHEFILE))
+                    {
+                        fileStorage.DeleteFile(Cache.CACHEFILE);
+                    }
+
+                    using (var stream = new IsolatedStorageFileStream(Cache.CACHEFILE, FileMode.OpenOrCreate, FileAccess.Write, fileStorage))
+                    {
+                        Cache.Serialize(stream);
+                    }
                 }
-                IsolatedStorageFileStream stream = new IsolatedStorageFileStream(Cache.CACHEFILE, FileMode.OpenOrCreate, FileAccess.Write, fileStorage);
-                Cache.Serialize(stream);
-                stream.Dispose();
-                fileStorage.Dispose();
             }
             catch
             {
