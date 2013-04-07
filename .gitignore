@@ -163,5 +163,4 @@ pip-log.txt
 .DS_Store
 
 # Project files
-APIClient.cs
-APIKey.cs 
+NoppaClient/APIKey.cs 
