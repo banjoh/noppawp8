@@ -32,7 +32,7 @@ namespace NoppaClient
             {
                 // Delay creation of the view model until necessary
                 if (viewModel == null)
-                    viewModel = new MainViewModel();
+                    viewModel = new MainViewModel(new PhoneNavigationController());
 
                 return viewModel;
             }

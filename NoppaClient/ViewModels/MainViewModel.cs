@@ -5,18 +5,16 @@ using NoppaClient.Resources;
 using NoppaClient.DataModel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace NoppaClient.ViewModels
 {
     public class MainViewModel : BindableBase
     {
-        /// <summary>
-        /// A collection for ItemViewModel objects.
-        /// </summary>
         private ObservableCollection<CourseEvent> _events = new ObservableCollection<CourseEvent>();
         public ObservableCollection<CourseEvent> Events { get { return _events; } }
 
-        private CourseListViewModel _myCourses = new CourseListViewModel();
+        private CourseListViewModel _myCourses = new CourseListViewModel(new PhoneNavigationController());
         public CourseListViewModel MyCourses { get { return _myCourses; } }
 
         private ObservableCollection<CourseNews> _news = new ObservableCollection<CourseNews>();
@@ -27,6 +25,8 @@ namespace NoppaClient.ViewModels
             get { return _departments; }
             private set { SetProperty(ref _departments, value); }
         }
+
+        public ICommand DepartmentActivatedCommand { get; private set; }
 
         private string _sampleProperty = "Sample Runtime Property Value";
         /// <summary>
@@ -62,8 +62,10 @@ namespace NoppaClient.ViewModels
             private set { SetProperty(ref _isDataLoaded, value); }
         }
 
-        public MainViewModel()
+        public MainViewModel(INavigationController navigationController)
         {
+            DepartmentActivatedCommand = ControllerUtil.MakeShowDepartmentCommand(navigationController);
+
             // Here, make a model instance or something, and start filling in the 
             // view model data
         }

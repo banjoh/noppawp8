@@ -24,7 +24,7 @@ namespace NoppaClient
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            _viewModel = new CourseListViewModel();
+            _viewModel = new CourseListViewModel(new PhoneNavigationController());
             DataContext = _viewModel;
         }
 

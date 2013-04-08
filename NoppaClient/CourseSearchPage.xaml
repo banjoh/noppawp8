@@ -44,7 +44,7 @@
         <phone:LongListSelector
             Margin="12,0,12,0"
             Grid.Row="1"
-            SelectionChanged="LongListSelector_SelectionChanged"
+            view:ItemClickCommand.Command="{Binding ActivateCourseCommand}"
             ItemTemplate="{StaticResource CourseItemTemplate}"
             ItemsSource="{Binding Courses}"/>
     </Grid>

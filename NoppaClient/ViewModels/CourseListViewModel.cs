@@ -31,13 +31,17 @@ namespace NoppaClient.ViewModels
         private ICommand _searchCommand;
         public ICommand SearchCommand { get { return _searchCommand; } }
 
-        public CourseListViewModel()
+        public ICommand ActivateCourseCommand { get; private set; }
+
+        public CourseListViewModel(INavigationController navigationController)
         {
             _searchCommand = new DelegateCommand<string>(query => {
                 StopLoading();
                 _cts = new CancellationTokenSource();
                 _loaderTask = LoadSearchResultsAsync(query, _cts.Token);
             });
+
+            ActivateCourseCommand = ControllerUtil.MakeShowCourseCommand(navigationController);
         }
 
         public void StopLoading()

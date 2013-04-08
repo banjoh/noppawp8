@@ -25,7 +25,7 @@ namespace NoppaClient
         {
             base.OnNavigatedTo(e);
 
-            _viewModel = new CourseListViewModel();
+            _viewModel = new CourseListViewModel(new PhoneNavigationController());
             DataContext = _viewModel;
 
             var content = "";
@@ -45,26 +45,12 @@ namespace NoppaClient
                     break;
             }
         }
-
-
+        
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
 
             _viewModel.StopLoading();
-        }
-
-        private void LongListSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var list = sender as LongListSelector;
-            if (list != null)
-            {
-                var selection = list.SelectedItem as Course;
-                if (selection != null)
-                {
-                    NavigationService.Navigate(new Uri("/CoursePage.xaml?id=" + HttpUtility.UrlEncode(selection.Id), UriKind.Relative));
-                }
-            }
         }
     }
 }

@@ -26,7 +26,10 @@ namespace NoppaClient.ViewModels
 
         public void Execute(object parameter)
         {
-            _execute();
+            if (CanExecute(parameter))
+            {
+                _execute();
+            }
         }
 
         public void NotifyCanExecuteChanged()
@@ -50,12 +53,12 @@ namespace NoppaClient.ViewModels
 
         public bool CanExecute(object parameter)
         {
-            return _canExecute == null || (parameter is T && _canExecute((T)parameter));
+            return parameter is T && (_canExecute == null || _canExecute((T)parameter));
         }
 
         public void Execute(object parameter)
         {
-            if (parameter is T)
+            if (CanExecute(parameter))
             {
                 _execute((T)parameter);
             }

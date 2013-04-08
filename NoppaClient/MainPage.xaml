@@ -6,6 +6,7 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:view="clr-namespace:NoppaClient.View"
     mc:Ignorable="d"
     d:DataContext="{d:DesignData SampleData/MainViewModelSampleData.xaml}"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
@@ -89,7 +90,7 @@
                     IsGroupingEnabled="True"
                     Background="Transparent"
                     HideEmptyGroups="True"
-                    Tap="DepartmentListSelected"
+                    view:ItemClickCommand.Command="{Binding DepartmentActivatedCommand}"
                     ItemsSource="{Binding Departments}" />
             </phone:PanoramaItem>
 

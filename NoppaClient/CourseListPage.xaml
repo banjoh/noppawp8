@@ -38,7 +38,7 @@
             Grid.Row="1"
             ItemTemplate="{StaticResource CourseItemTemplate}"
             ItemsSource="{Binding Courses}"
-            SelectionChanged="LongListSelector_SelectionChanged"/>
+            view:ItemClickCommand.Command="{Binding ActivateCourseCommand}"/>
     </Grid>
 
 </phone:PhoneApplicationPage>

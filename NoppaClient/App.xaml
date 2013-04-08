@@ -4,7 +4,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:view="clr-namespace:NoppaClient.View">
 
     <!--Application Resources-->
     <Application.Resources>
@@ -18,6 +19,7 @@
         
         <local:LocalizedStrings xmlns:local="clr-namespace:NoppaClient" x:Key="LocalizedStrings"/>
 
+        <!-- Template for lists that contain items of type DataModel.Course -->
         <DataTemplate x:Key="CourseItemTemplate">
             <StackPanel Margin="0,-6,0,12">
                 <TextBlock Text="{Binding Name}"

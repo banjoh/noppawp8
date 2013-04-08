@@ -44,19 +44,6 @@ namespace NoppaClient
             }
         }
 
-        private void DepartmentListSelected(object sender, System.Windows.Input.GestureEventArgs e)
-        {
-            var list = sender as LongListSelector;
-            if (list != null)
-            {
-                var selection = list.SelectedItem as Department;
-                if (selection != null)
-                {
-                    NavigationService.Navigate(new Uri("/CourseListPage.xaml?content=department&id=" + HttpUtility.UrlEncode(selection.Id), UriKind.Relative));
-                }
-            }
-        }
-
         private void ApplicationBarIconButton_SearchClick(object sender, EventArgs e)
         {
             NavigationService.Navigate(new Uri("/CourseSearchPage.xaml", UriKind.Relative));
