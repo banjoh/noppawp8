@@ -16,6 +16,7 @@ namespace NoppaClient
     public partial class MainPage : PhoneApplicationPage
     {
         Language _loadedLanguage;
+        MainViewModel _viewModel;
 
         // Constructor
         public MainPage()
@@ -23,7 +24,8 @@ namespace NoppaClient
             InitializeComponent();
 
             // Set the data context of the listbox control to the sample data
-            DataContext = App.ViewModel;
+            _viewModel = App.ViewModel;
+            DataContext = _viewModel;
             _loadedLanguage = App.Settings.Language;
         }
 
@@ -46,12 +48,14 @@ namespace NoppaClient
 
         private void ApplicationBarIconButton_SearchClick(object sender, EventArgs e)
         {
-            NavigationService.Navigate(new Uri("/CourseSearchPage.xaml", UriKind.Relative));
+            if (_viewModel.ShowSearchCommand.CanExecute(null))
+                _viewModel.ShowSearchCommand.Execute(null);
         }
 
         private void ApplicationBarMenuItem_Settings(object sender, EventArgs e)
         {
-            NavigationService.Navigate(new Uri("/SettingsPage.xaml", UriKind.Relative));
+            if (_viewModel.ShowSettingsCommand.CanExecute(null))
+                _viewModel.ShowSettingsCommand.Execute(null);
         }
     }
 }

@@ -33,7 +33,7 @@ namespace NoppaClient
 
         public void ShowCourseSearch()
         {
-            _frame.Navigate(MakeUri("/SearchPage.xaml"));
+            _frame.Navigate(MakeUri("/CourseSearchPage.xaml"));
         }
 
         public void ShowSettings()
