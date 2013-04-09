@@ -21,6 +21,7 @@ namespace NoppaClient
     {
         private static MainViewModel viewModel = null;
         private static Settings _settings;
+        private static PinnedCourses _pinnedCourses;
 
         /// <summary>
         /// A static ViewModel used by the views to bind against.
@@ -50,6 +51,19 @@ namespace NoppaClient
                 return _settings;
             }
         }
+
+        public static PinnedCourses PinnedCourses
+        {
+            get
+            {
+                if (_pinnedCourses == null)
+                {
+                    _pinnedCourses = new PinnedCourses();
+                }
+                return _pinnedCourses;
+            }
+        }
+
 
         /// <summary>
         /// Provides easy access to the root frame of the Phone Application.
@@ -129,6 +143,7 @@ namespace NoppaClient
             {
                 await App.ViewModel.LoadDataAsync();
             }
+            await App.PinnedCourses.ReadCodesFromFile();
         }
 
         // Code to execute when the application is deactivated (sent to background)

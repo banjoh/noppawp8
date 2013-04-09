@@ -39,6 +39,9 @@ namespace NoppaClient
                     await App.ViewModel.LoadDataAsync();
                     _loadedLanguage = App.Settings.Language;
                 }
+                //This loads MyCourses to MainPage, needs to be loaded every time in case changes in pinned courses
+                await App.ViewModel.MyCourses.LoadMyCoursesAsync();
+
             }
             catch (Exception ex)
             {

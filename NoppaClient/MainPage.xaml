@@ -95,6 +95,21 @@
             </phone:PanoramaItem>
 
             <!--Panorama item one-->
+            <phone:PanoramaItem Header="MyCourses">
+                <!--Single line list with text wrapping-->
+                <phone:LongListSelector Margin="0,0,-22,0" ItemsSource="{Binding MyCourses.Courses}" view:ItemClickCommand.Command="{Binding ActivateCourseCommand}">
+                    <phone:LongListSelector.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="0,-6,0,12">
+                                <TextBlock Text="{Binding Id}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeExtraLarge}"/>
+                                <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeExtraLarge}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </phone:LongListSelector.ItemTemplate>
+                </phone:LongListSelector>
+            </phone:PanoramaItem>
+
+            <!--Panorama item one-->
             <phone:PanoramaItem Header="Events">
                 <!--Single line list with text wrapping-->
                 <phone:LongListSelector Margin="0,0,-22,0" ItemsSource="{Binding Events}">
@@ -218,6 +233,8 @@
         <!--<Image Source="/Assets/AlignmentGrid.png" VerticalAlignment="Top" Height="800" Width="480" Margin="0" Grid.Row="0" Grid.RowSpan="2" IsHitTestVisible="False" />-->
 
     </Grid>
+    
+
 
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar Mode="Default" Opacity="1.0" IsMenuEnabled="True" IsVisible="True">

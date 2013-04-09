@@ -261,5 +261,11 @@
             <phone:PivotItem Header="Lectures" Content="{Binding Contents,Converter={StaticResource EnumerableIndexConverter},ConverterParameter=3}" ContentTemplate="{Binding Source={StaticResource ViewModelTemplates},Path=Values[1]}" />
             <phone:PivotItem Header="Exercises" Content="{Binding Contents,Converter={StaticResource EnumerableIndexConverter},ConverterParameter=4}" ContentTemplate="{Binding Source={StaticResource ViewModelTemplates},Path=Values[0]}" />
         </phone:Pivot>
-    </Grid>    
+    </Grid>
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar Mode="Default" Opacity="1.0" IsMenuEnabled="True" IsVisible="True">
+            <shell:ApplicationBarIconButton x:Name="btn" Click="btn_Click" IconUri = "/Assets/pin.png" Text="pin"  />
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
 </phone:PhoneApplicationPage>

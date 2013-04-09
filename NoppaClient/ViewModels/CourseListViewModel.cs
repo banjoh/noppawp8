@@ -108,33 +108,14 @@ namespace NoppaClient.ViewModels
             IsLoading = false;
         }
 
+
         public async Task LoadMyCoursesAsync()
         {
-            Title = AppResources.MyCoursesTitle;
-
-            IsLoading = true;
             _courses.Clear();
-
-            var random = new Random();
-            for (int i = 0, end = 4 + random.Next(3); i < end; i++)
-            {
-                // When await returns, we're back in the UI thread
-                var course = await Task.Run(async () =>
-                {
-                    // Long running background code that is done in another thread
-                    var index = i;
-                    var randomSource = new Random();
-                    await Task.Delay(randomSource.Next(1000));
-                    //TODO: Use real data
-                    return new Course
-                    {
-                        Name = String.Format("X-{0}.{1} My course name {2}", 100 + randomSource.Next(900), 1000 + randomSource.Next(9000), index)
-                    };
-                });
-
+            foreach (string c in App.PinnedCourses.Codes){
+                Course course = await NoppaAPI.GetCourse(c);
                 _courses.Add(course);
             }
-
             IsLoading = false;
         }
     }

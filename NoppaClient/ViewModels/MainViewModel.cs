@@ -29,6 +29,7 @@ namespace NoppaClient.ViewModels
         public ICommand DepartmentActivatedCommand { get; private set; }
         public ICommand ShowSettingsCommand { get; private set; }
         public ICommand ShowSearchCommand { get; private set; }
+        public ICommand ActivateCourseCommand { get; private set; }
 
         private string _sampleProperty = "Sample Runtime Property Value";
         /// <summary>
@@ -69,9 +70,10 @@ namespace NoppaClient.ViewModels
             DepartmentActivatedCommand = ControllerUtil.MakeShowDepartmentCommand(navigationController);
             ShowSettingsCommand = ControllerUtil.MakeShowSettingsCommand(navigationController);
             ShowSearchCommand = ControllerUtil.MakeShowCourseSearchCommand(navigationController);
+            ActivateCourseCommand = ControllerUtil.MakeShowCourseCommand(navigationController);
             // Here, make a model instance or something, and start filling in the 
             // view model data
-        }
+         }
 
         /// <summary>
         /// Creates and adds a few ItemViewModel objects into the Items collection.
