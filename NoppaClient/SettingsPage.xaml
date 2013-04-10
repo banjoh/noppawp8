@@ -36,7 +36,8 @@
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
           
             <toolkit:ListPicker
@@ -44,6 +45,13 @@
                 Header="{Binding Path=LocalizedResources.LanguageTitle, Source={StaticResource LocalizedStrings}}"
                 ItemsSource="{Binding Languages}"
                 SelectedItem="{Binding Language, Mode=TwoWay}" />
+            
+            <toolkit:ToggleSwitch
+                Grid.Row="1"
+                Name="updateTile"
+                IsEnabled="False"
+                Header="{Binding Path=LocalizedResources.UpdateTile, Source={StaticResource LocalizedStrings}}"
+                Checked="updateTile_Checked"/>
         </Grid>
     </Grid>
 

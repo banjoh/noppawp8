@@ -15,6 +15,13 @@ namespace NoppaClient
         public SettingsPage()
         {
             InitializeComponent();
+            
+            // Logic to check whether the noppa background agent is running or not
+        }
+
+        private void updateTile_Checked(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

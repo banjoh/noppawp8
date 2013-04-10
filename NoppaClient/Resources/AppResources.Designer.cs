@@ -194,5 +194,14 @@ namespace NoppaClient.Resources {
                 return ResourceManager.GetString("SwedishLanguage", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Automatically update primary tile.
+        /// </summary>
+        public static string UpdateTile {
+            get {
+                return ResourceManager.GetString("UpdateTile", resourceCulture);
+            }
+        }
     }
 }

@@ -168,4 +168,7 @@
     <value>svenska</value>
     <comment>This probably shouldn't be translated</comment>
   </data>
+  <data name="UpdateTile" xml:space="preserve">
+    <value>Automatically update primary tile</value>
+  </data>
 </root>
