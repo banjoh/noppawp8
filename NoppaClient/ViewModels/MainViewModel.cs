@@ -12,13 +12,19 @@ namespace NoppaClient.ViewModels
     public class MainViewModel : BindableBase
     {
         private ObservableCollection<CourseEvent> _events = new ObservableCollection<CourseEvent>();
-        public ObservableCollection<CourseEvent> Events { get { return _events; } }
+        public ObservableCollection<CourseEvent> Events {
+            get { return _events; }
+            private set { SetProperty(ref _events, value);  }
+        }
 
         private CourseListViewModel _myCourses = new CourseListViewModel(new PhoneNavigationController());
         public CourseListViewModel MyCourses { get { return _myCourses; } }
 
         private ObservableCollection<CourseNews> _news = new ObservableCollection<CourseNews>();
-        public ObservableCollection<CourseNews> News { get { return _news; } }
+        public ObservableCollection<CourseNews> News {
+            get { return _news; }
+            private set { SetProperty(ref _news, value); }
+        }
 
         private ObservableCollection<DepartmentGroup> _departments;
         public ObservableCollection<DepartmentGroup> Departments {
@@ -95,6 +101,27 @@ namespace NoppaClient.ViewModels
 
                     Departments = DepartmentGroup.CreateDepartmentGroups(orgMap, depts);
                 }
+
+                List<CourseNews> news = new List<CourseNews>();
+                List<CourseEvent> events = new List<CourseEvent>();
+
+                foreach (var courseId in App.PinnedCourses.Codes)
+                {
+                    List<CourseNews> courseNews = await NoppaAPI.GetCourseNews(courseId);
+                    if (courseNews != null)
+                        news.AddRange(courseNews);
+
+                    List<CourseEvent> courseEvents = await NoppaAPI.GetCourseEvents(courseId);
+                    if (courseEvents != null)
+                        events.AddRange(courseEvents);
+                }
+
+                /* Figure out a better sorting strategy */
+                news.Sort( (a,b) => string.Compare(a.Date, b.Date) );
+                events.Sort( (a, b) => string.Compare(a.StartDate, b.StartDate) );
+
+                News = new ObservableCollection<CourseNews>(news);
+                Events = new ObservableCollection<CourseEvent>(events);
             }
             catch (Exception ex)
             {
