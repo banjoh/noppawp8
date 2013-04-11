@@ -45,17 +45,17 @@ namespace NoppaClient.ViewModels
             }
         }
 
-        private async void PinCourseAsync(bool toggle)
+        private void PinCourseAsync(bool toggle)
         {
             _isPinningActive = true;
             NotifyPropertyChanged("IsPinned");
             if (toggle)
             {
-                await App.PinnedCourses.Add(_code);
+                App.PinnedCourses.Add(_code);
             }
             else
             {
-                await App.PinnedCourses.Remove(_code);
+                App.PinnedCourses.Remove(_code);
             }
             _isPinningActive = false;
             NotifyPropertyChanged("IsPinned");
