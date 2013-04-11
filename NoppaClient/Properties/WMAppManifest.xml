@@ -12,6 +12,9 @@
     </Capabilities>
     <Tasks>
       <DefaultTask Name="_default" NavigationPage="MainPage.xaml" />
+      <ExtendedTask Name="BackgroundTask">
+        <BackgroundServiceAgent Name="NoppaTaskAgent" Type="NoppaTaskAgent.NoppaTaskAgent" Source="NoppaTaskAgent" Specifier="ScheduledTaskAgent"/>
+      </ExtendedTask>
     </Tasks>
     <Tokens>
       <PrimaryToken TokenID="NoppaClientToken" TaskName="_default">

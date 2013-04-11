@@ -61,7 +61,7 @@ namespace NoppaClient.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to noppa client.
+        ///   Looks up a localized string similar to Noppa.
         /// </summary>
         public static string ApplicationTitle {
             get {
@@ -198,9 +198,9 @@ namespace NoppaClient.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Automatically update primary tile.
         /// </summary>
-        public static string UpdateTile {
+        public static string UpdateTileLocalSettings {
             get {
-                return ResourceManager.GetString("UpdateTile", resourceCulture);
+                return ResourceManager.GetString("UpdateTileLocalSettings", resourceCulture);
             }
         }
     }

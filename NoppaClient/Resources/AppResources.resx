@@ -126,7 +126,7 @@
     <comment>Controls the Language and ensures that the font for all elements in the RootFrame aligns with the app's language. Set to the language code of this resource file's language.</comment>
   </data>
   <data name="ApplicationTitle" xml:space="preserve">
-    <value>noppa client</value>
+    <value>Noppa</value>
   </data>
   <data name="SampleProperty" xml:space="preserve">
     <value>Sample Runtime Property Value</value>
@@ -168,7 +168,7 @@
     <value>svenska</value>
     <comment>This probably shouldn't be translated</comment>
   </data>
-  <data name="UpdateTile" xml:space="preserve">
+  <data name="UpdateTileLocalSettings" xml:space="preserve">
     <value>Automatically update primary tile</value>
   </data>
 </root>

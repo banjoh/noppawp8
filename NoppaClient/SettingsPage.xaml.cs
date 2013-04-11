@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
-using Microsoft.Phone.Shell;
 
 namespace NoppaClient
 {
@@ -15,13 +13,35 @@ namespace NoppaClient
         public SettingsPage()
         {
             InitializeComponent();
-            
-            // Logic to check whether the noppa background agent is running or not
+
+            SetToggleValue(App.Settings.BackgroundAgentEnabled);
         }
 
-        private void updateTile_Checked(object sender, RoutedEventArgs e)
+        private void updateTile_Toggle(object sender, RoutedEventArgs e)
         {
+            var toggleSwitch = sender as ToggleSwitch;
+            if (toggleSwitch != null)
+            {
+                App.Settings.BackgroundAgentEnabled = (bool)toggleSwitch.IsChecked.Value;
+                
+                // Update value once the background agent has been started.
+                // It may fail so the ToggleSwitch may need to be updated
+                SetToggleValue(App.Settings.BackgroundAgentEnabled);
+            }
+        }
 
+        private void SetToggleValue(bool value)
+        {
+            EventHandler<RoutedEventArgs> h = new EventHandler<RoutedEventArgs>(updateTile_Toggle);
+            // Temporarily unhook the event handler
+            updateTile.Checked -= h;
+            updateTile.Unchecked -= h;
+
+            updateTile.IsChecked = value;
+            
+            // Reconnect the event handler
+            updateTile.Checked += h; // DOES NOT SEEM TO SUPPRESS THIS EVENT
+            updateTile.Unchecked += h;  
         }
     }
 }

@@ -30,6 +30,16 @@ namespace NoppaClient.ViewModels
             }
         }
 
+        public bool BackgroundAgentStatus
+        {
+            get { return Settings.BackgroundAgentEnabled; }
+            set 
+            { 
+                Settings.BackgroundAgentEnabled = value;
+                NotifyPropertyChanged("BackgroundAgentStatus");
+            }
+        }
+
         public SettingsViewModel()
         {
             // if we start adding more languages, this will become quite unwieldy

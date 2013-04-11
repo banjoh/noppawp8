@@ -49,9 +49,11 @@
             <toolkit:ToggleSwitch
                 Grid.Row="1"
                 Name="updateTile"
-                IsEnabled="False"
-                Header="{Binding Path=LocalizedResources.UpdateTile, Source={StaticResource LocalizedStrings}}"
-                Checked="updateTile_Checked"/>
+                Header="{Binding Path=LocalizedResources.UpdateTileLocalSettings, Source={StaticResource LocalizedStrings}}"
+                Unchecked="updateTile_Toggle"
+                Checked="updateTile_Toggle"/>
+                <!--Unchecked="updateTile_Toggle{Binding BackgroundAgentStatus, Mode=TwoWay}"-->
+                <!--Checked="{Binding BackgroundAgentStatus, Mode=TwoWay}"/>-->
         </Grid>
     </Grid>
 

@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoppaClient", "NoppaClient\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{56531B46-2B95-4563-BAC5-9D7E1CC053C3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoppaTaskAgent", "NoppaTaskAgent\NoppaTaskAgent.csproj", "{FB26AC72-CDD0-4FA1-AF8A-3454C6F31C54}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,18 @@ Global
 		{56531B46-2B95-4563-BAC5-9D7E1CC053C3}.Release|x86.ActiveCfg = Release|x86
 		{56531B46-2B95-4563-BAC5-9D7E1CC053C3}.Release|x86.Build.0 = Release|x86
 		{56531B46-2B95-4563-BAC5-9D7E1CC053C3}.Release|x86.Deploy.0 = Release|x86
+		{FB26AC72-CDD0-4FA1-AF8A-3454C6F31C54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB26AC72-CDD0-4FA1-AF8A-3454C6F31C54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB26AC72-CDD0-4FA1-AF8A-3454C6F31C54}.Debug|ARM.ActiveCfg = Debug|ARM
+		{FB26AC72-CDD0-4FA1-AF8A-3454C6F31C54}.Debug|ARM.Build.0 = Debug|ARM
+		{FB26AC72-CDD0-4FA1-AF8A-3454C6F31C54}.Debug|x86.ActiveCfg = Debug|x86
+		{FB26AC72-CDD0-4FA1-AF8A-3454C6F31C54}.Debug|x86.Build.0 = Debug|x86
+		{FB26AC72-CDD0-4FA1-AF8A-3454C6F31C54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB26AC72-CDD0-4FA1-AF8A-3454C6F31C54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB26AC72-CDD0-4FA1-AF8A-3454C6F31C54}.Release|ARM.ActiveCfg = Release|ARM
+		{FB26AC72-CDD0-4FA1-AF8A-3454C6F31C54}.Release|ARM.Build.0 = Release|ARM
+		{FB26AC72-CDD0-4FA1-AF8A-3454C6F31C54}.Release|x86.ActiveCfg = Release|x86
+		{FB26AC72-CDD0-4FA1-AF8A-3454C6F31C54}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

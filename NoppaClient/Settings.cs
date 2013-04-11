@@ -5,14 +5,28 @@ using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Phone.Shell;
+using Microsoft.Phone.Scheduler;
+using NoppaClient.Resources;
+using System.Windows;
 
 namespace NoppaClient
 {
     public class Settings
     {
         public const string LanguageSettingKeyName = "LanguageSetting";
-                
+        private const string BackgroundAgentKeyName = "BackgroundAgent";
+        private const string _taskName = "NoppaBackgroundAgentUniqueID";
+        
         private IsolatedStorageSettings _settings;
+
+        public Settings()
+        {
+            _settings = IsolatedStorageSettings.ApplicationSettings;
+
+            // Check if there is a background agent and update the status
+            //BackgroundAgentEnabled = ScheduledActionService.Find(_taskName) as PeriodicTask != null;
+        }
 
         /*
          * Application properties.
@@ -29,9 +43,103 @@ namespace NoppaClient
             }
         }
 
-        public Settings()
+        public bool BackgroundAgentEnabled
         {
-            _settings = IsolatedStorageSettings.ApplicationSettings;
+            get
+            {
+                bool ret = GetValueOrDefault(BackgroundAgentKeyName, false);
+                System.Diagnostics.Debug.WriteLine("get BackgroundAgentEnabled: {0}", ret);
+                return ret;
+            }
+            set
+            {
+                bool v = value;
+                if (v == true)
+                {
+                    v = StartTaskAgent();
+                }
+                else
+                {
+                    RemoveTaskAgent();
+                }
+                System.Diagnostics.Debug.WriteLine("set BackgroundAgentEnabled: {0}", v);
+                SetValue(BackgroundAgentKeyName, v);
+            }
+        }
+
+        /**
+         * Background agent
+         */
+        private bool StartTaskAgent()
+        {
+            // If the task already exists and background agents are enabled for the
+            // application, you must remove the task and then add it again to update 
+            // the schedule
+            RemoveTaskAgent();
+
+            PeriodicTask periodicTask = new PeriodicTask(_taskName);
+
+            // The description is required for periodic agents. This is the string that the user
+            // will see in the background services Settings page on the device.
+            //TODO: Verify if background agents get to see the resource files
+            periodicTask.Description = AppResources.ApplicationTitle;
+
+            // Place the call to Add in a try block in case the user has disabled agents.
+            try
+            {
+                ScheduledActionService.Add(periodicTask);
+                // If debugging is enabled, use LaunchForTest to launch the agent in one minute.
+#if(DEBUG)
+                ScheduledActionService.LaunchForTest(_taskName, TimeSpan.FromSeconds(10));
+#endif
+            }
+            catch (InvalidOperationException exception)
+            {
+                if (exception.Message.Contains("BNS Error: The action is disabled"))
+                {
+                    //TODO: Localize
+                    MessageBox.Show("Background agents for this application have been disabled by the user.");
+                }
+                else if (exception.Message.Contains("BNS Error: The maximum number of ScheduledActions of this type have already been added."))
+                {
+                    // No user action required. The system prompts the user when the hard limit of periodic tasks has been reached.
+                }
+                System.Diagnostics.Debug.WriteLine("Noppa Agent InvalidOperationException: {0}", exception.Message);
+                return false;
+            }
+            catch (SchedulerServiceException e)
+            {
+                // No user action required.
+                System.Diagnostics.Debug.WriteLine("Noppa Agent SchedulerServiceException: {0}", e.Message);
+                return false;
+            }
+            catch (Exception e)
+            {
+                // No user action required.
+                System.Diagnostics.Debug.WriteLine("Noppa Agent Exception: {0}", e.Message);
+                return false;
+            }
+            System.Diagnostics.Debug.WriteLine("Noppa agent scheduled successfully :)");
+            return true;
+        }
+
+        private void RemoveTaskAgent()
+        {
+            // Obtain a reference to the period task, if one exists
+            PeriodicTask periodicTask = ScheduledActionService.Find(_taskName) as PeriodicTask;
+
+            // Remove agent
+            if (periodicTask != null)
+            {
+                try
+                {
+                    ScheduledActionService.Remove(_taskName);
+                }
+                catch (Exception e)
+                {
+                    System.Diagnostics.Debug.WriteLine("Exception removing the Noppa Task Agent: {0}", e.Message);
+                }
+            }
         }
 
         public bool SetValue(string key, Object value)
