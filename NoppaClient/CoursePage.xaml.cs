@@ -16,7 +16,6 @@ namespace NoppaClient
     public partial class CoursePage : PhoneApplicationPage
     {
         CourseViewModel _viewModel;
-        string _courseCode;
         List<Action> _unbindActions = new List<Action>();
 
         public CoursePage()
@@ -27,23 +26,12 @@ namespace NoppaClient
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-
+            string courseCode = "";
             
             if (NavigationContext.QueryString.ContainsKey("id"))
             {
-                _courseCode = NavigationContext.QueryString["id"];
+                courseCode = NavigationContext.QueryString["id"];
             }
-
-            /*if (App.PinnedCourses.Codes.Contains(_courseCode))
-            {
-                btn.IconUri = new Uri("/Assets/pin.remove.png", UriKind.Relative);
-                btn.Text = "unpin";
-            }
-            else
-            {
-                btn.IconUri = new Uri("/Assets/pin.png", UriKind.Relative);
-                btn.Text = "pin";
-            }*/
 
             // Find menu objects
             var toggleFavoriteButton = (ApplicationBarIconButton)ApplicationBar.Buttons[0];
@@ -52,7 +40,7 @@ namespace NoppaClient
             var removeUri = new Uri("/Assets/pin.remove.png", UriKind.Relative);
             var addUri = new Uri("/Assets/pin.png", UriKind.Relative);
 
-            _viewModel = new CourseViewModel(_courseCode);
+            _viewModel = new CourseViewModel(courseCode);
 
             // Pin toggle button
             _unbindActions.Add(AppBar.BindToggleButtonToBoolean(toggleFavoriteButton, removeUri, addUri, _viewModel, "IsPinned"));
@@ -76,24 +64,6 @@ namespace NoppaClient
                 action();
             }
             _unbindActions.Clear();
-        }
-
-        private void btn_Click(object sender, EventArgs e)
-        {
-            ApplicationBarIconButton btn = (ApplicationBarIconButton)ApplicationBar.Buttons[0];
-
-            if (btn.Text == "pin")
-            {
-                btn.Text = "unpin";
-                btn.IconUri = new Uri("/Assets/pin.remove.png", UriKind.Relative);
-                App.PinnedCourses.Add(_courseCode);
-            }
-            else if (btn.Text == "unpin")
-            {
-                btn.Text = "pin";
-                btn.IconUri = new Uri("/Assets/pin.png", UriKind.Relative);
-                App.PinnedCourses.Remove(_courseCode);
-            }
         }
     }
 }
