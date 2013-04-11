@@ -171,4 +171,19 @@
   <data name="UpdateTileLocalSettings" xml:space="preserve">
     <value>Automatically update primary tile</value>
   </data>
+  <data name="AddCourseTileLabel" xml:space="preserve">
+    <value>add course tile</value>
+  </data>
+  <data name="RemoveCourseTileLabel" xml:space="preserve">
+    <value>remove course tile</value>
+  </data>
+  <data name="PinCourseTitle" xml:space="preserve">
+    <value>pin</value>
+  </data>
+  <data name="SearchTitle" xml:space="preserve">
+    <value>search</value>
+  </data>
+  <data name="UnpinCourseTitle" xml:space="preserve">
+    <value>unpin</value>
+  </data>
 </root>

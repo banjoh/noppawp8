@@ -104,6 +104,7 @@
     <Compile Include="CourseSearchPage.xaml.cs">
       <DependentUpon>CourseSearchPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CourseTile.cs" />
     <Compile Include="DataModel\Department.cs" />
     <Compile Include="DataModel\Organisation.cs" />
     <Compile Include="DataModel\Course.cs" />
@@ -143,6 +144,7 @@
     <Compile Include="ViewModels\OverviewViewModel.cs" />
     <Compile Include="ViewModels\ResultsViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="View\AppBar.cs" />
     <Compile Include="View\BooleanToVisibilityConverter.cs" />
     <Compile Include="View\EnumerableIndexConverter.cs" />
     <Compile Include="View\DataTemplateSelector.cs" />

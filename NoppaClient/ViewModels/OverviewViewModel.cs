@@ -13,7 +13,10 @@ namespace NoppaClient.ViewModels
     {
         public static string StripHtml(string html)
         {
-            return System.Net.HttpUtility.HtmlDecode(Regex.Replace(html, "<.+?>", string.Empty));
+            if (html != null)
+                return System.Net.HttpUtility.HtmlDecode(Regex.Replace(html, "<.+?>", string.Empty));
+            else
+                return String.Empty;
         }
     }
 

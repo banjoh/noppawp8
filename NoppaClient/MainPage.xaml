@@ -225,10 +225,10 @@
 
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar Mode="Default" Opacity="1.0" IsMenuEnabled="True" IsVisible="True">
-            <shell:ApplicationBarIconButton Click="ApplicationBarIconButton_SearchClick" IconUri="/Assets/feature.search.png" Text="search" />
+            <shell:ApplicationBarIconButton IconUri="/Assets/feature.search.png" Text="search" />
             
             <shell:ApplicationBar.MenuItems>
-                <shell:ApplicationBarMenuItem Text="settings" Click="ApplicationBarMenuItem_Settings" />
+                <shell:ApplicationBarMenuItem Text="settings" />
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>

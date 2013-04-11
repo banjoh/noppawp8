@@ -10,6 +10,8 @@ using Microsoft.Phone.Shell;
 using NoppaClient.DataModel;
 using NoppaClient.ViewModels;
 using System.Threading.Tasks;
+using NoppaClient.View;
+using NoppaClient.Resources;
 
 namespace NoppaClient
 {
@@ -17,6 +19,7 @@ namespace NoppaClient
     {
         Language _loadedLanguage;
         MainViewModel _viewModel;
+        List<Action> _unbindActions = new List<Action>();
 
         // Constructor
         public MainPage()
@@ -42,6 +45,14 @@ namespace NoppaClient
                 //This loads MyCourses to MainPage, needs to be loaded every time in case changes in pinned courses
                 await App.ViewModel.MyCourses.LoadMyCoursesAsync();
 
+                var searchButton = (ApplicationBarIconButton)ApplicationBar.Buttons[0];
+                var settingsMenu = (ApplicationBarMenuItem)ApplicationBar.MenuItems[0];
+
+                searchButton.Text = AppResources.SearchTitle;
+                settingsMenu.Text = AppResources.SettingsTitle;
+
+                _unbindActions.Add(AppBar.BindCommand(searchButton, _viewModel.ShowSearchCommand));
+                _unbindActions.Add(AppBar.BindCommand(settingsMenu, _viewModel.ShowSettingsCommand));
             }
             catch (Exception ex)
             {
@@ -49,16 +60,16 @@ namespace NoppaClient
             }
         }
 
-        private void ApplicationBarIconButton_SearchClick(object sender, EventArgs e)
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            if (_viewModel.ShowSearchCommand.CanExecute(null))
-                _viewModel.ShowSearchCommand.Execute(null);
-        }
+            base.OnNavigatedFrom(e);
 
-        private void ApplicationBarMenuItem_Settings(object sender, EventArgs e)
-        {
-            if (_viewModel.ShowSettingsCommand.CanExecute(null))
-                _viewModel.ShowSettingsCommand.Execute(null);
+            /* Unbind every app bar menu event manually. */
+            foreach (var action in _unbindActions)
+            {
+                action();
+            }
+            _unbindActions.Clear();
         }
     }
 }

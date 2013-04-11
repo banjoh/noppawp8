@@ -111,10 +111,10 @@ namespace NoppaClient.ViewModels
 
         public async Task LoadMyCoursesAsync()
         {
-            _courses.Clear();
+            Courses.Clear();
             foreach (string c in App.PinnedCourses.Codes){
                 Course course = await NoppaAPI.GetCourse(c);
-                _courses.Add(course);
+                Courses.Add(course);
             }
             IsLoading = false;
         }

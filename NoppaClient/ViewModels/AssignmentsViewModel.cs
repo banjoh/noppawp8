@@ -23,13 +23,14 @@ namespace NoppaClient.ViewModels
         public async Task LoadDataAsync(string id)
         {
             List<CourseAssignment> assignments = await NoppaAPI.GetCourseAssignments(id);
-            if  (assignments != null)
+            if (assignments != null)
             {
                 foreach (var a in assignments)
                 {
                     _assignments.Add(a);
                 }
             }
+            IsEmpty = assignments == null || assignments.Count == 0;
         }
     }
 }

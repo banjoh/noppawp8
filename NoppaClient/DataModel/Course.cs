@@ -12,6 +12,8 @@ namespace NoppaClient.DataModel
         [JsonProperty("course_url_oodi")]       public string OodiUrl { get; set; }
         [JsonProperty("noppa_language")]        public string Language { get; set; }
         [JsonProperty("links")]                 public List<Link> Links { get; set; }
+
+                                                public string LongName { get { return Id + " " + Name; } }
     }
 
     public class CourseOverview

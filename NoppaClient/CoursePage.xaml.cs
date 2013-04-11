@@ -9,13 +9,14 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using NoppaClient.ViewModels;
 using System.Threading.Tasks;
+using NoppaClient.View;
 
 namespace NoppaClient
 {
     public partial class CoursePage : PhoneApplicationPage
     {
         CourseViewModel _viewModel;
-        string _courseCode;
+        List<Action> _unbindActions = new List<Action>();
 
         public CoursePage()
         {
@@ -25,47 +26,44 @@ namespace NoppaClient
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-
-
+            string courseCode = "";
+            
             if (NavigationContext.QueryString.ContainsKey("id"))
             {
-                _courseCode = NavigationContext.QueryString["id"];
+                courseCode = NavigationContext.QueryString["id"];
             }
 
-            ApplicationBarIconButton btn = (ApplicationBarIconButton)ApplicationBar.Buttons[0];
-            if (App.PinnedCourses.Codes.Contains(_courseCode))
-            {
-                btn.IconUri = new Uri("/Assets/pin.remove.png", UriKind.Relative);
-                btn.Text = "unpin";
-            }
-            else
-            {
-                btn.IconUri = new Uri("/Assets/pin.png", UriKind.Relative);
-                btn.Text = "pin";
-            }
+            // Find menu objects
+            var toggleFavoriteButton = (ApplicationBarIconButton)ApplicationBar.Buttons[0];
+            var toggleTileMenuItem = (ApplicationBarMenuItem)ApplicationBar.MenuItems[0];            
+            
+            var removeUri = new Uri("/Assets/pin.remove.png", UriKind.Relative);
+            var addUri = new Uri("/Assets/pin.png", UriKind.Relative);
 
-            _viewModel = new CourseViewModel(_courseCode);
+            _viewModel = new CourseViewModel(courseCode);
+
+            // Pin toggle button
+            _unbindActions.Add(AppBar.BindToggleButtonToBoolean(toggleFavoriteButton, removeUri, addUri, _viewModel, "IsPinned"));
+            _unbindActions.Add(AppBar.BindText(toggleFavoriteButton, _viewModel, "IsPinnedText"));
+
+            // Add/remove 
+            _unbindActions.Add(AppBar.BindCommand(toggleTileMenuItem, _viewModel.ToggleSecondaryTileCommand));
+            _unbindActions.Add(AppBar.BindText(toggleTileMenuItem, _viewModel, "ToggleSecondaryTileText"));
 
             await _viewModel.LoadContentAsync();
             DataContext = _viewModel;
         }
 
-        private void btn_Click(object sender, EventArgs e)
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            ApplicationBarIconButton btn = (ApplicationBarIconButton)ApplicationBar.Buttons[0];
+            base.OnNavigatedFrom(e);
 
-            if (btn.Text == "pin")
+            /* Unbind every app bar menu event manually. */
+            foreach (var action in _unbindActions)
             {
-                btn.Text = "unpin";
-                btn.IconUri = new Uri("/Assets/pin.remove.png", UriKind.Relative);
-                Task add = App.PinnedCourses.Add(_courseCode);
+                action();
             }
-            else if (btn.Text == "unpin")
-            {
-                btn.Text = "pin";
-                btn.IconUri = new Uri("/Assets/pin.png", UriKind.Relative);
-                Task remove = App.PinnedCourses.Remove(_courseCode);
-            }
+            _unbindActions.Clear();
         }
     }
 }

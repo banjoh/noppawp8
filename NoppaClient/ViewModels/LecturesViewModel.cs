@@ -30,6 +30,7 @@ namespace NoppaClient.ViewModels
                     _lectures.Add(lecture);
                 }
             }
+            IsEmpty = lectures == null || lectures.Count == 0;
         }
     }
 }

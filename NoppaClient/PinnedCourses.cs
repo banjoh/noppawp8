@@ -12,53 +12,43 @@ namespace NoppaClient
 {
     public class PinnedCourses
     {
-
+        public static readonly string CourseFile = "MyCourses.txt";
         private List<string> _codes = new  List<string>();
         public List<string> Codes { get { return _codes; } }
 
-        public async Task Add(string CourseCode)
+        public void Add(string CourseCode)
         {
             if (_codes.Contains(CourseCode) == false)
             {
                 _codes.Add(CourseCode);
-                await SaveCodesToFile();
             }
         }
 
-        public async Task Remove(string CourseCode)
+        public void Remove(string CourseCode)
         {
             if (_codes.Contains(CourseCode))
             {
                 _codes.Remove(CourseCode);
-                await SaveCodesToFile();
             }
         }
 
-        private async Task SaveCodesToFile()
+        public void Serialize(Stream s)
         {
             try{
-                // Get the local folder.
-                StorageFolder local = Windows.Storage.ApplicationData.Current.LocalFolder;
-
-                // Create MyCourses file, delete old file if exist.
-                var file = await local.CreateFileAsync("MyCourses.txt", CreationCollisionOption.ReplaceExisting);
-
-                // Save codes only if there is any
-                if (_codes.Count > 0)
+                using (var writer = new StreamWriter(s))
                 {
-                    string codes = "";
-
-                    foreach (string c in _codes)
+                    // Save codes only if there is any
+                    if (_codes.Count > 0)
                     {
-                        codes += c + ";";
-                    }
-                    codes = codes.Substring(0, codes.Length - 1);
-                    byte[] fileBytes = System.Text.Encoding.UTF8.GetBytes(codes.ToCharArray());
+                        string codes = "";
 
-                    // Write codes to file
-                    using (var s = await file.OpenStreamForWriteAsync())
-                    {
-                        s.Write(fileBytes, 0, fileBytes.Length);
+                        foreach (string c in _codes)
+                        {
+                            codes += c + ";";
+                        }
+                        codes = codes.Substring(0, codes.Length - 1);
+
+                        writer.Write(codes);
                     }
                 }
             }catch(Exception e){
@@ -67,35 +57,25 @@ namespace NoppaClient
         }
 
 
-        public async Task ReadCodesFromFile()
+        public void Deserialize(Stream s)
         {
-            // Get the local folder.
-            StorageFolder local = Windows.Storage.ApplicationData.Current.LocalFolder;
-
-            if (local != null)
-            {
-                try
+            try {
+                using (var reader = new StreamReader(s))
                 {
-                    // Get MyCourses file.
-                    var file = await local.OpenStreamForReadAsync("MyCourses.txt");
-
-                    // Read MyCourses.
-                    using (StreamReader streamReader = new StreamReader(file))
+                    string fileContent = reader.ReadToEnd();
+                    if (fileContent != "")
                     {
-                        string fileContent = streamReader.ReadToEnd();
-                        if (fileContent != "")
+                        string[] codes = fileContent.Split(';');
+                        _codes.Clear();
+                        foreach (string c in codes)
                         {
-                            string[] codes = fileContent.Split(';');
-                            _codes.Clear();
-                            foreach (string c in codes)
-                            {
-                                _codes.Add(c);
-                            }
+                            _codes.Add(c);
                         }
                     }
-                }catch(Exception e){
-                    System.Diagnostics.Debug.WriteLine("PinnedCourse::ReadCodesFromFile::{0}",e);
                 }
+            }
+            catch (Exception e) {
+                System.Diagnostics.Debug.WriteLine("PinnedCourse::ReadCodesFromFile::{0}",e);
             }
         }
     }

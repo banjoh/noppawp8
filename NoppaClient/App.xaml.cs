@@ -126,6 +126,14 @@ namespace NoppaClient
                             Cache.Deserialize(stream);
                         }
                     }
+
+                    if (fileStorage.FileExists(PinnedCourses.CourseFile))
+                    {
+                        using (var stream = new IsolatedStorageFileStream(PinnedCourses.CourseFile, FileMode.Open, FileAccess.Read, fileStorage))
+                        {
+                            PinnedCourses.Deserialize(stream);
+                        }
+                    }
                 }
             }
             catch
@@ -143,7 +151,6 @@ namespace NoppaClient
             {
                 await App.ViewModel.LoadDataAsync();
             }
-            await App.PinnedCourses.ReadCodesFromFile();
         }
 
         // Code to execute when the application is deactivated (sent to background)
@@ -170,6 +177,16 @@ namespace NoppaClient
                     using (var stream = new IsolatedStorageFileStream(Cache.CACHEFILE, FileMode.OpenOrCreate, FileAccess.Write, fileStorage))
                     {
                         Cache.Serialize(stream);
+                    }
+
+                    if (fileStorage.FileExists(PinnedCourses.CourseFile))
+                    {
+                        fileStorage.DeleteFile(PinnedCourses.CourseFile);
+                    }
+
+                    using (var stream = new IsolatedStorageFileStream(PinnedCourses.CourseFile, FileMode.OpenOrCreate, FileAccess.Write, fileStorage))
+                    {
+                        PinnedCourses.Serialize(stream);
                     }
                 }
             }
