@@ -15,7 +15,7 @@ namespace NoppaClient
     public class Settings
     {
         public const string LanguageSettingKeyName = "LanguageSetting";
-        private const string BackgroundAgentKeyName = "BackgroundAgent";
+        private const string PrimaryTileKeyName = "ActivePrimaryTile";
         private const string _taskName = "NoppaBackgroundAgentUniqueID";
         
         private IsolatedStorageSettings _settings;
@@ -43,12 +43,13 @@ namespace NoppaClient
             }
         }
 
-        public bool BackgroundAgentEnabled
+        public bool PrimaryTileIsActive
         {
+            // TODO: Clear and set the primary tile depending on agent status
             get
             {
-                bool ret = GetValueOrDefault(BackgroundAgentKeyName, false);
-                System.Diagnostics.Debug.WriteLine("get BackgroundAgentEnabled: {0}", ret);
+                bool ret = GetValueOrDefault(PrimaryTileKeyName, false);
+                System.Diagnostics.Debug.WriteLine("get PrimaryTileIsActive: {0}", ret);
                 return ret;
             }
             set
@@ -62,8 +63,8 @@ namespace NoppaClient
                 {
                     RemoveTaskAgent();
                 }
-                System.Diagnostics.Debug.WriteLine("set BackgroundAgentEnabled: {0}", v);
-                SetValue(BackgroundAgentKeyName, v);
+                System.Diagnostics.Debug.WriteLine("set PrimaryTileIsActive: {0}", v);
+                SetValue(PrimaryTileKeyName, v);
             }
         }
 

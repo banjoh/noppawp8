@@ -14,7 +14,7 @@ namespace NoppaClient
         {
             InitializeComponent();
 
-            SetToggleValue(App.Settings.BackgroundAgentEnabled);
+            SetToggleValue(App.Settings.PrimaryTileIsActive);
         }
 
         private void updateTile_Toggle(object sender, RoutedEventArgs e)
@@ -22,11 +22,11 @@ namespace NoppaClient
             var toggleSwitch = sender as ToggleSwitch;
             if (toggleSwitch != null)
             {
-                App.Settings.BackgroundAgentEnabled = (bool)toggleSwitch.IsChecked.Value;
+                App.Settings.PrimaryTileIsActive = (bool)toggleSwitch.IsChecked.Value;
                 
                 // Update value once the background agent has been started.
                 // It may fail so the ToggleSwitch may need to be updated
-                SetToggleValue(App.Settings.BackgroundAgentEnabled);
+                SetToggleValue(App.Settings.PrimaryTileIsActive);
             }
         }
 

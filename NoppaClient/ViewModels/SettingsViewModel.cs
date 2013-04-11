@@ -30,13 +30,13 @@ namespace NoppaClient.ViewModels
             }
         }
 
-        public bool BackgroundAgentStatus
+        public bool PrimaryTileIsActive
         {
-            get { return Settings.BackgroundAgentEnabled; }
+            get { return Settings.PrimaryTileIsActive; }
             set 
-            { 
-                Settings.BackgroundAgentEnabled = value;
-                NotifyPropertyChanged("BackgroundAgentStatus");
+            {
+                Settings.PrimaryTileIsActive = value;
+                NotifyPropertyChanged("PrimaryTileIsActive");
             }
         }
 
