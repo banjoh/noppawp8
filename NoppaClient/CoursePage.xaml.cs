@@ -58,13 +58,13 @@ namespace NoppaClient
             {
                 btn.Text = "unpin";
                 btn.IconUri = new Uri("/Assets/pin.remove.png", UriKind.Relative);
-                Task add = App.PinnedCourses.Add(_courseCode);
+                App.PinnedCourses.Add(_courseCode);
             }
             else if (btn.Text == "unpin")
             {
                 btn.Text = "pin";
                 btn.IconUri = new Uri("/Assets/pin.png", UriKind.Relative);
-                Task remove = App.PinnedCourses.Remove(_courseCode);
+                App.PinnedCourses.Remove(_courseCode);
             }
         }
     }
