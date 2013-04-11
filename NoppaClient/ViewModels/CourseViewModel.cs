@@ -1,14 +1,19 @@
-﻿using System;
+﻿using NoppaClient.DataModel;
+using NoppaClient.Resources;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace NoppaClient.ViewModels
 {
     public class CourseViewModel : BindableBase
     {
+        private Course _course = null;
+
         private ObservableCollection<CourseContentViewModel> _contents = new ObservableCollection<CourseContentViewModel>();
         public ObservableCollection<CourseContentViewModel> Contents { get { return _contents; } }
 
@@ -18,14 +23,81 @@ namespace NoppaClient.ViewModels
         private string _code = "";
         public string Code { get { return _code; } set { SetProperty(ref _code, value); } }
 
+        #region Pinned courses
+
+        public string IsPinnedText
+        {
+            get { return IsPinned.HasValue && IsPinned.Value ? AppResources.UnpinCourseTitle : AppResources.PinCourseTitle; }
+        }
+
+        private bool _isPinningActive = false;
+        public bool? IsPinned
+        {
+            get { return _isPinningActive ? null : (bool?)App.PinnedCourses.Codes.Contains(_code); }
+            set 
+            {
+                if (_isPinningActive || !value.HasValue)
+                {
+                    return;
+                }
+
+                PinCourseAsync(value.Value);
+            }
+        }
+
+        private async void PinCourseAsync(bool toggle)
+        {
+            _isPinningActive = true;
+            NotifyPropertyChanged("IsPinned");
+            if (toggle)
+            {
+                await App.PinnedCourses.Add(_code);
+            }
+            else
+            {
+                await App.PinnedCourses.Remove(_code);
+            }
+            _isPinningActive = false;
+            NotifyPropertyChanged("IsPinned");
+            NotifyPropertyChanged("IsPinnedText");
+        }
+
+        #endregion
+
+        #region Secondary tile properties
+
+        private DelegateCommand _toggleSecondaryTileCommand;
+        public ICommand ToggleSecondaryTileCommand { get { return _toggleSecondaryTileCommand; } }
+
+        private string _toggleSecondaryTileText = AppResources.AddCourseTileLabel;
+        public string ToggleSecondaryTileText
+        {
+            get { return _toggleSecondaryTileText; }
+            set { SetProperty(ref _toggleSecondaryTileText, value); }
+        }
+
+        #endregion
+
         public CourseViewModel(string courseCode)
         {
             Code = courseCode;
             _contents.Add(new FrontPageViewModel(this)); // Always add this
+
+            _toggleSecondaryTileCommand = new DelegateCommand(ToggleSecondaryTile, () => _course != null);
         }
 
         public async Task LoadContentAsync()
         {
+            if (IsLoading)
+            {
+                return;
+            }
+
+            IsLoading = true;
+            _course = await NoppaAPI.GetCourse(Code);
+            _toggleSecondaryTileCommand.NotifyCanExecuteChanged();
+            UpdateToggleCommandText();
+
             var tasks = new List<Task<CourseContentViewModel>>();
 
             /* Load Overview */
@@ -101,6 +173,30 @@ namespace NoppaClient.ViewModels
                     _contents.Insert(index, content);
                 }
             }
+
+            IsLoading = false;
+        }
+
+        private void ToggleSecondaryTile()
+        {
+            if (_course != null)
+            {
+                if (CourseTile.Exists(_course))
+                {
+                    CourseTile.Delete(_course);
+                }
+                else
+                {
+                    CourseTile.CreateOrUpdate(_course);
+                }
+                UpdateToggleCommandText();
+            }
+        }
+
+        private void UpdateToggleCommandText()
+        {
+            ToggleSecondaryTileText = CourseTile.Exists(_course) ? AppResources.RemoveCourseTileLabel 
+                                                                 : AppResources.AddCourseTileLabel;
         }
     }
 }

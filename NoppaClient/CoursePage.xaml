@@ -264,7 +264,10 @@
     </Grid>
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar Mode="Default" Opacity="1.0" IsMenuEnabled="True" IsVisible="True">
-            <shell:ApplicationBarIconButton x:Name="btn" Click="btn_Click" IconUri = "/Assets/pin.png" Text="pin"  />
+            <shell:ApplicationBarIconButton x:Name="PinFavoriteButton" IconUri = "/Assets/pin.png" Text="pin" />
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem x:Name="ToggleTileMenuItem" Text="add course tile" />
+            </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
 

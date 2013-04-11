@@ -61,6 +61,15 @@ namespace NoppaClient.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to add course tile.
+        /// </summary>
+        public static string AddCourseTileLabel {
+            get {
+                return ResourceManager.GetString("AddCourseTileLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to noppa client.
         /// </summary>
         public static string ApplicationTitle {
@@ -142,6 +151,24 @@ namespace NoppaClient.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to pin.
+        /// </summary>
+        public static string PinCourseTitle {
+            get {
+                return ResourceManager.GetString("PinCourseTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to remove course tile.
+        /// </summary>
+        public static string RemoveCourseTileLabel {
+            get {
+                return ResourceManager.GetString("RemoveCourseTileLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to LeftToRight.
         /// </summary>
         public static string ResourceFlowDirection {
@@ -192,6 +219,15 @@ namespace NoppaClient.Resources {
         public static string SwedishLanguage {
             get {
                 return ResourceManager.GetString("SwedishLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to unpin.
+        /// </summary>
+        public static string UnpinCourseTitle {
+            get {
+                return ResourceManager.GetString("UnpinCourseTitle", resourceCulture);
             }
         }
         

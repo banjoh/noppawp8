@@ -23,7 +23,7 @@ namespace NoppaClient
 
         public void ShowCourse(Course course)
         {
-            _frame.Navigate(MakeUri("/CoursePage.xaml", "id", course.Id));
+            _frame.Navigate(MakeCoursePageUri(course));
         }
 
         public void ShowDepartment(Department department)
@@ -46,7 +46,7 @@ namespace NoppaClient
             _frame.Navigate(MakeUri("/MainPage.xaml"));
         }
 
-        private Uri MakeUri(string relativePath, params object[] parameters)
+        private static Uri MakeUri(string relativePath, params object[] parameters)
         {
             List<string> query = new List<string>();
 
@@ -56,6 +56,11 @@ namespace NoppaClient
             }
 
             return new Uri(relativePath + (query.Count == 0 ? "" : "?" + String.Join("&", query)), UriKind.Relative);
+        }
+
+        public static Uri MakeCoursePageUri(Course course)
+        {
+            return MakeUri("/CoursePage.xaml", "id", course.Id);
         }
     }
 }
