@@ -78,6 +78,8 @@ namespace NoppaClient.ViewModels
 
         #endregion
 
+        public CourseViewModel() { /* For design mode */ }
+
         public CourseViewModel(string courseCode)
         {
             Code = courseCode;
