@@ -75,6 +75,7 @@ namespace NoppaClient.DataModel
         [JsonProperty("end_time")]              public string EndTime { get; set; }
         [JsonProperty("location")]              public string Location { get; set; }
         [JsonProperty("title")]                 public string Title { get; set; }
+        [JsonProperty("content")]               public string Content { get; set; }
         [JsonProperty("materials")]             public List<Material> Materials { get; set; }
         [JsonProperty("authentication_required")] public bool authentication_required { get; set; }
     }
