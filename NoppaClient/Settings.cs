@@ -141,6 +141,28 @@ namespace NoppaClient
                     System.Diagnostics.Debug.WriteLine("Exception removing the Noppa Task Agent: {0}", e.Message);
                 }
             }
+            ClearPrimaryTile();
+        }
+
+        private void ClearPrimaryTile()
+        {
+            // Get the tile
+            ShellTile primaryTile = ShellTile.ActiveTiles.First();
+
+            //If tile was found then update the tile
+            if (primaryTile != null)
+            {
+                //TODO: Get content from the network
+                IconicTileData data = new IconicTileData
+                {
+                    Count = 0,
+                    WideContent1 = "",
+                    WideContent2 = "",
+                    WideContent3 = ""
+                };
+
+                primaryTile.Update(data);
+            }
         }
 
         public bool SetValue(string key, Object value)
