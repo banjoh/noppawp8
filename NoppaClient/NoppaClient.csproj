@@ -123,6 +123,7 @@
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
+    <Compile Include="ViewModels\AdditionalPageViewModel.cs" />
     <Compile Include="ViewModels\AssignmentsViewModel.cs" />
     <Compile Include="ViewModels\BindableBase.cs" />
     <Compile Include="SettingsPage.xaml.cs">
