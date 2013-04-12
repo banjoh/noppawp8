@@ -46,6 +46,11 @@ namespace NoppaClient
             _frame.Navigate(MakeUri("/MainPage.xaml"));
         }
 
+        public void ShowAbout()
+        {
+            _frame.Navigate(MakeUri("/AboutPage.xaml"));
+        }
+
         private static Uri MakeUri(string relativePath, params object[] parameters)
         {
             List<string> query = new List<string>();

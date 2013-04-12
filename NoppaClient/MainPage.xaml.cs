@@ -47,12 +47,15 @@ namespace NoppaClient
 
                 var searchButton = (ApplicationBarIconButton)ApplicationBar.Buttons[0];
                 var settingsMenu = (ApplicationBarMenuItem)ApplicationBar.MenuItems[0];
+                var aboutMenu = (ApplicationBarMenuItem)ApplicationBar.MenuItems[1];
 
                 searchButton.Text = AppResources.SearchTitle;
                 settingsMenu.Text = AppResources.SettingsTitle;
+                aboutMenu.Text = AppResources.AboutTitle;
 
                 _unbindActions.Add(AppBar.BindCommand(searchButton, _viewModel.ShowSearchCommand));
                 _unbindActions.Add(AppBar.BindCommand(settingsMenu, _viewModel.ShowSettingsCommand));
+                _unbindActions.Add(AppBar.BindCommand(aboutMenu, _viewModel.ShowAboutCommand));
             }
             catch (Exception ex)
             {

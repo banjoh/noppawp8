@@ -18,6 +18,8 @@ namespace NoppaClient.ViewModels
 
         void ShowCourseSearch();
 
-        void ShowSettings();        
+        void ShowSettings();
+
+        void ShowAbout();        
     }
 }

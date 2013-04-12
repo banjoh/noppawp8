@@ -61,6 +61,35 @@ namespace NoppaClient.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;Section xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;&gt;
+        ///&lt;Paragraph&gt;
+        ///Noppa client for Windows Phone 8.
+        ///&lt;LineBreak/&gt;
+        ///&lt;/Paragraph&gt;
+        ///&lt;Paragraph&gt;
+        ///Developed during the spring of 2013 as a project for the
+        ///course &lt;Run FontStyle=&quot;Italic&quot;&gt;T-110.5130 Mobile Systems Programming&lt;/Run&gt; at 
+        ///&lt;Hyperlink NavigateUri=&quot;http://www.aalto.fi/&quot; TargetName=&quot;_blank&quot;&gt;Aalto university&lt;/Hyperlink&gt; 
+        ///by Aura Palmgren, Kari Palenius, Evans Mungai, Vesa Eloranta and Christoffer Ventus.
+        ///&lt;/Paragraph&gt;
+        ///&lt;/Section&gt;.
+        /// </summary>
+        public static string AboutTextXaml {
+            get {
+                return ResourceManager.GetString("AboutTextXaml", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to about.
+        /// </summary>
+        public static string AboutTitle {
+            get {
+                return ResourceManager.GetString("AboutTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to add course tile.
         /// </summary>
         public static string AddCourseTileLabel {

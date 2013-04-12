@@ -34,5 +34,10 @@ namespace NoppaClient.ViewModels
         {
             return new DelegateCommand(controller.ShowHome);
         }
+
+        public static DelegateCommand MakeShowAboutCommand(INavigationController controller)
+        {
+            return new DelegateCommand(controller.ShowAbout);
+        }
     }
 }

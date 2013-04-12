@@ -186,4 +186,22 @@
   <data name="UnpinCourseTitle" xml:space="preserve">
     <value>unpin</value>
   </data>
+  <data name="AboutTextXaml" xml:space="preserve">
+    <value>&lt;Section xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"&gt;
+&lt;Paragraph&gt;
+Noppa client for Windows Phone 8.
+&lt;LineBreak/&gt;
+&lt;/Paragraph&gt;
+&lt;Paragraph&gt;
+Developed during the spring of 2013 as a project for the
+course &lt;Run FontStyle="Italic"&gt;T-110.5130 Mobile Systems Programming&lt;/Run&gt; at 
+&lt;Hyperlink NavigateUri="http://www.aalto.fi/" TargetName="_blank"&gt;Aalto university&lt;/Hyperlink&gt; 
+by Aura Palmgren, Kari Palenius, Evans Mungai, Vesa Eloranta and Christoffer Ventus.
+&lt;/Paragraph&gt;
+&lt;/Section&gt;</value>
+    <comment>Try to keep the same formatting if possible. The outermost tag has to have the xmlns property set, or else the Xaml parser will not accept it.</comment>
+  </data>
+  <data name="AboutTitle" xml:space="preserve">
+    <value>about</value>
+  </data>
 </root>
