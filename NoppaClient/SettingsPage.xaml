@@ -50,10 +50,7 @@
                 Grid.Row="1"
                 Name="updateTile"
                 Header="{Binding Path=LocalizedResources.UpdateTileLocalSettings, Source={StaticResource LocalizedStrings}}"
-                Unchecked="updateTile_Toggle"
-                Checked="updateTile_Toggle"/>
-                <!--Unchecked="updateTile_Toggle{Binding BackgroundAgentStatus, Mode=TwoWay}"-->
-                <!--Checked="{Binding BackgroundAgentStatus, Mode=TwoWay}"/>-->
+                IsChecked="{Binding PrimaryTileIsActive, Mode=TwoWay}" />
         </Grid>
     </Grid>
 
