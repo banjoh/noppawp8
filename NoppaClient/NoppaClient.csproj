@@ -137,6 +137,7 @@
     <Compile Include="ViewModels\CourseViewModel.cs" />
     <Compile Include="ViewModels\DelegateCommand.cs" />
     <Compile Include="ViewModels\DepartmentGroup.cs" />
+    <Compile Include="ViewModels\EventGroup.cs" />
     <Compile Include="ViewModels\EventViewModel.cs" />
     <Compile Include="ViewModels\ExercisesViewModel.cs" />
     <Compile Include="ViewModels\FrontPageViewModel.cs" />
@@ -153,6 +154,7 @@
     <Compile Include="View\EnumerableIndexConverter.cs" />
     <Compile Include="View\DataTemplateSelector.cs" />
     <Compile Include="View\DesignModeChecker.cs" />
+    <Compile Include="View\EventTypeConverter.cs" />
     <Compile Include="View\ItemClickCommand.cs" />
     <Compile Include="View\OpenBrowserCommand.cs" />
     <Compile Include="View\SearchCommand.cs" />

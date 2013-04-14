@@ -46,6 +46,37 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
+        <view:EventTypeConverter x:Key="eventTypeConverter" />
+        
+        <DataTemplate x:Key="EventItemTemplate">
+            <StackPanel Margin="0,-6,0,12">
+                <TextBlock Text="{Binding Title}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeExtraLarge}"/>
+                <TextBlock Text="{Binding Path=Type, Converter={StaticResource eventTypeConverter}}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeExtraLarge}"/>
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="EventGroupHeaderTemplate">
+            <Border Background="Transparent" Padding="5">
+                <TextBlock Text="{Binding EventDate}" Foreground="{StaticResource PhoneForegroundBrush}" 
+                           FontSize="24" Padding="6,20,6,6" 
+                           FontFamily="{StaticResource PhoneFontFamilySemiLight}" 
+                           HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            </Border>
+        </DataTemplate>
+
+        <Style x:Key="EventJumpListStyle" TargetType="phone:LongListSelector">
+            <Setter Property="LayoutMode" Value="List" />
+            <Setter Property="ItemTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding EventDate}" 
+                                   FontFamily="{StaticResource PhoneFontFamilySemiBold}" FontSize="48" Padding="6"
+                                   Foreground="{Binding Converter={StaticResource ForegroundConverter}}" VerticalAlignment="Center"/>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </phone:PhoneApplicationPage.Resources>
 
     <!--LayoutRoot is the root grid where all page content is placed-->
@@ -109,19 +140,22 @@
                 </phone:LongListSelector>
             </phone:PanoramaItem>
 
-            <!--Panorama item one-->
             <phone:PanoramaItem Header="Events">
-                <!--Single line list with text wrapping-->
-                <phone:LongListSelector Margin="0,0,-22,0" ItemsSource="{Binding Events}">
-                    <phone:LongListSelector.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Margin="0,-6,0,12">
-                                <TextBlock Text="{Binding Type}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeExtraLarge}"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </phone:LongListSelector.ItemTemplate>
-                </phone:LongListSelector>
+                <!--Single line list with text wrapping and grouping -->
+                <phone:LongListSelector
+                    x:Name="EventList"
+                    Margin="0,0,-22,0" 
+                    JumpListStyle="{StaticResource EventJumpListStyle}"
+                    ItemTemplate="{StaticResource EventItemTemplate}"
+                    GroupHeaderTemplate="{StaticResource EventGroupHeaderTemplate}"
+                    LayoutMode="List"
+                    IsGroupingEnabled="True"
+                    Background="Transparent"
+                    HideEmptyGroups="True"
+                    view:ItemClickCommand.Command="{Binding EventActivatedCommand}"
+                    ItemsSource="{Binding Events}" />
             </phone:PanoramaItem>
+
 
             <!--Panorama item two-->
             <phone:PanoramaItem Header="News">

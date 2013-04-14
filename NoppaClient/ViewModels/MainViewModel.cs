@@ -11,10 +11,11 @@ namespace NoppaClient.ViewModels
 {
     public class MainViewModel : BindableBase
     {
-        private ObservableCollection<CourseEvent> _events = new ObservableCollection<CourseEvent>();
-        public ObservableCollection<CourseEvent> Events {
+        private ObservableCollection<EventGroup> _events;
+        public ObservableCollection<EventGroup> Events
+        {
             get { return _events; }
-            private set { SetProperty(ref _events, value);  }
+            private set { SetProperty(ref _events, value); }
         }
 
         private CourseListViewModel _myCourses = new CourseListViewModel(new PhoneNavigationController());
@@ -37,6 +38,7 @@ namespace NoppaClient.ViewModels
         public ICommand ShowAboutCommand { get; private set; }
         public ICommand ShowSearchCommand { get; private set; }
         public ICommand ActivateCourseCommand { get; private set; }
+        public ICommand EventActivatedCommand { get; private set; }
 
         private string _sampleProperty = "Sample Runtime Property Value";
         /// <summary>
@@ -120,10 +122,10 @@ namespace NoppaClient.ViewModels
 
                 /* Figure out a better sorting strategy */
                 news.Sort( (a,b) => string.Compare(a.Date, b.Date) );
-                events.Sort( (a, b) => string.Compare(a.StartDate, b.StartDate) );
-
+ 
                 News = new ObservableCollection<CourseNews>(news);
-                Events = new ObservableCollection<CourseEvent>(events);
+                if (events != null)
+                        Events = EventGroup.CreateEventGroups(events);
             }
             catch (Exception ex)
             {
