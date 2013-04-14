@@ -19,6 +19,12 @@ namespace NoppaClient.ViewModels
         private ObservableCollection<Course> _courses = new ObservableCollection<Course>();
         public ObservableCollection<Course> Courses { get { return _courses; } }
 
+        private bool _isSearchHintVisible = true;
+        public bool IsSearchHintVisible { get { return _isSearchHintVisible; } set { SetProperty(ref _isSearchHintVisible, value); } }
+
+        private bool _isEmpty = true;
+        public bool IsEmpty { get { return _isEmpty; } set { SetProperty(ref _isEmpty, value); } }
+
         private CancellationTokenSource _cts;
         Task _loaderTask = null;
 
@@ -41,6 +47,8 @@ namespace NoppaClient.ViewModels
                 _loaderTask = LoadSearchResultsAsync(query, _cts.Token);
             });
 
+            _courses.CollectionChanged += (o, e) => IsEmpty = _courses.Count == 0;
+
             ActivateCourseCommand = ControllerUtil.MakeShowCourseCommand(navigationController);
         }
 
@@ -59,6 +67,7 @@ namespace NoppaClient.ViewModels
             Title = String.Format(AppResources.SearchResultsPageTitle, query);
 
             IsLoading = true;
+            IsSearchHintVisible = false;
             _courses.Clear();
 
             try

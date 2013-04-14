@@ -9,6 +9,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using NoppaClient.ViewModels;
 using NoppaClient.DataModel;
+using System.Windows.Input;
 
 namespace NoppaClient
 {
@@ -22,7 +23,11 @@ namespace NoppaClient
             _viewModel = new CourseListViewModel(new PhoneNavigationController());
             DataContext = _viewModel;
 
+            // Focus search box automatically
             this.Loaded += (o, e) => SearchBox.Focus();
-        }
+
+            // Unfocus when pressing enter
+            SearchBox.KeyUp += (o, e) => { if (e.Key == Key.Enter) this.Focus(); };
+            }
     }
 }

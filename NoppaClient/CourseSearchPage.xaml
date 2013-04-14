@@ -28,7 +28,7 @@
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel Grid.Row="0" Margin="12,17,12,28">
             <TextBlock Text="COURSE SEARCH" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBox x:Name="SearchBox" AcceptsReturn="False" Margin="0,5,0,0" 
+            <TextBox x:Name="SearchBox" AcceptsReturn="False" Margin="0,5,0,0" InputScope="Search" 
                      Text="" HorizontalAlignment="Stretch" 
                      view:SearchCommand.Command="{Binding SearchCommand}" 
                      view:SearchCommand.Parameter="{Binding Text, ElementName=SearchBox}" /> 
@@ -47,5 +47,22 @@
             view:ItemClickCommand.Command="{Binding ActivateCourseCommand}"
             ItemTemplate="{StaticResource CourseItemTemplate}"
             ItemsSource="{Binding Courses}"/>
+
+        <RichTextBox
+            Margin="12,0,12,0"
+            Grid.Row="1"
+            VerticalAlignment="Top"
+            IsReadOnly="True"
+            Visibility="{Binding IsSearchHintVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+            Xaml="{Binding Path=LocalizedResources.SearchHintTextXaml, Source={StaticResource LocalizedStrings}}" />
+
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="1"
+              Visibility="{Binding IsSearchHintVisible, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=invert}">
+            <Grid Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=invert}">
+                <TextBlock
+                    Text="no results"
+                    Visibility="{Binding IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            </Grid>
+        </Grid>
     </Grid>
 </phone:PhoneApplicationPage>

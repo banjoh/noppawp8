@@ -12,12 +12,14 @@ namespace NoppaClient.View
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            return value == null || (value is Boolean) && !(bool)value ? Visibility.Collapsed : Visibility.Visible;
+            bool invert = parameter is string && (string)parameter == "invert";
+            return (value == null || (value is bool) && !(bool)value) != invert ? Visibility.Collapsed : Visibility.Visible;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            return value is Visibility && (Visibility)value == Visibility.Visible;
+            bool invert = parameter is string && (string)parameter == "invert";
+            return (value is Visibility && (Visibility)value == Visibility.Visible) != invert;
         }
     }
 }

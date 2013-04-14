@@ -225,6 +225,28 @@ namespace NoppaClient.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;Section xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;&gt;
+        ///&lt;Paragraph&gt;
+        ///&lt;Run FontWeight=&quot;Bold&quot;&gt;search tips&lt;/Run&gt;
+        ///&lt;/Paragraph&gt;
+        ///&lt;Paragraph&gt;
+        ///You can search by course name, part of the course name, course code or part of the course code.
+        ///&lt;/Paragraph&gt;
+        ///&lt;Paragraph&gt;
+        ///&lt;Run FontWeight=&quot;Bold&quot;&gt;example searches&lt;/Run&gt;
+        ///&lt;/Paragraph&gt;
+        ///&lt;Paragraph&gt;&amp;#9679; TU-53.1145&lt;/Paragraph&gt;
+        ///&lt;Paragraph&gt;&amp;#9679; TU-53.1&lt;/Paragraph&gt;
+        ///&lt;Paragraph&gt;&amp;#9679; TU-53&lt;/Paragraph&gt;
+        ///&lt;Paragraph&gt;&amp;#9679; Leadership in product develo [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string SearchHintTextXaml {
+            get {
+                return ResourceManager.GetString("SearchHintTextXaml", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Course results for “{0}”.
         /// </summary>
         public static string SearchResultsPageTitle {
