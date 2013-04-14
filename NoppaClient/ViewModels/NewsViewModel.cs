@@ -1,4 +1,5 @@
 ﻿using NoppaClient.DataModel;
+using NoppaClient.Resources;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,7 +16,7 @@ namespace NoppaClient.ViewModels
 
         public NewsViewModel()
         {
-            Title = "news";
+            Title = AppResources.NewsTitle;
             Index = 2;
         }
 

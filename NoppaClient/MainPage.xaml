@@ -117,7 +117,7 @@
             </phone:PanoramaItem>
 
             <!--Panorama item one-->
-            <phone:PanoramaItem Header="MyCourses">
+            <phone:PanoramaItem Header="{Binding Path=LocalizedResources.MyCoursesTitle, Source={StaticResource LocalizedStrings}}">
                 <!--Single line list with text wrapping-->
                 <phone:LongListSelector Margin="0,0,-22,0" ItemsSource="{Binding MyCourses.Courses}" view:ItemClickCommand.Command="{Binding ActivateCourseCommand}">
                     <phone:LongListSelector.ItemTemplate>
@@ -131,7 +131,7 @@
                 </phone:LongListSelector>
             </phone:PanoramaItem>
 
-            <phone:PanoramaItem Header="Events">
+            <phone:PanoramaItem Header="{Binding Path=LocalizedResources.EventsTitle, Source={StaticResource LocalizedStrings}}">
                 <!--Single line list with text wrapping and grouping -->
                 <phone:LongListSelector
                     x:Name="EventList"
@@ -149,7 +149,7 @@
 
 
             <!--Panorama item two-->
-            <phone:PanoramaItem Header="News">
+            <phone:PanoramaItem Header="{Binding Path=LocalizedResources.NewsTitle, Source={StaticResource LocalizedStrings}}">
                 <!--Double line list with image placeholder and text wrapping using a floating header that scrolls with the content-->
                 <phone:LongListSelector Margin="0,-38,-22,2" ItemsSource="{Binding News}">
                     <phone:LongListSelector.ItemTemplate>
@@ -168,8 +168,8 @@
             </phone:PanoramaItem>
 
             <!--Panorama item three-->
+            <!--
             <phone:PanoramaItem Header="Something" Orientation="Horizontal">
-                <!--Double wide Panorama with large image placeholders-->
                 <Grid>
                     <StackPanel Margin="0,4,16,0" Orientation="Vertical" VerticalAlignment="Top">
                         <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
@@ -187,6 +187,7 @@
                     </StackPanel>
                 </Grid>
             </phone:PanoramaItem>
+            -->
         </phone:Panorama>
 
         <!--Pivot Control-->

@@ -108,6 +108,15 @@ namespace NoppaClient.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to assignments.
+        /// </summary>
+        public static string AssignmentsTitle {
+            get {
+                return ResourceManager.GetString("AssignmentsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0}.
         /// </summary>
         public static string DepartmentCourseListTitle {
@@ -117,7 +126,7 @@ namespace NoppaClient.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Departments.
+        ///   Looks up a localized string similar to departments.
         /// </summary>
         public static string DepartmentsTitle {
             get {
@@ -144,11 +153,38 @@ namespace NoppaClient.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to events.
+        /// </summary>
+        public static string EventsTitle {
+            get {
+                return ResourceManager.GetString("EventsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to exerices.
+        /// </summary>
+        public static string ExercisesTitle {
+            get {
+                return ResourceManager.GetString("ExercisesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to suomi.
         /// </summary>
         public static string FinnishLanguage {
             get {
                 return ResourceManager.GetString("FinnishLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to summary.
+        /// </summary>
+        public static string FrontPageTitle {
+            get {
+                return ResourceManager.GetString("FrontPageTitle", resourceCulture);
             }
         }
         
@@ -162,11 +198,29 @@ namespace NoppaClient.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to My Courses.
+        ///   Looks up a localized string similar to lectures.
+        /// </summary>
+        public static string LecturesTitle {
+            get {
+                return ResourceManager.GetString("LecturesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to my courses.
         /// </summary>
         public static string MyCoursesTitle {
             get {
                 return ResourceManager.GetString("MyCoursesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to news.
+        /// </summary>
+        public static string NewsTitle {
+            get {
+                return ResourceManager.GetString("NewsTitle", resourceCulture);
             }
         }
         
@@ -176,6 +230,15 @@ namespace NoppaClient.Resources {
         public static string OrganizationTitle {
             get {
                 return ResourceManager.GetString("OrganizationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to overview.
+        /// </summary>
+        public static string OverviewTitle {
+            get {
+                return ResourceManager.GetString("OverviewTitle", resourceCulture);
             }
         }
         
@@ -212,6 +275,15 @@ namespace NoppaClient.Resources {
         public static string ResourceLanguage {
             get {
                 return ResourceManager.GetString("ResourceLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to results.
+        /// </summary>
+        public static string ResultsTitle {
+            get {
+                return ResourceManager.GetString("ResultsTitle", resourceCulture);
             }
         }
         

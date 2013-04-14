@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using System.Collections.ObjectModel;
 using NoppaClient.DataModel;
+using NoppaClient.Resources;
 
 namespace NoppaClient.ViewModels
 {
@@ -16,7 +17,7 @@ namespace NoppaClient.ViewModels
 
         public AssignmentsViewModel()
         {
-            Title = "assignments";
+            Title = AppResources.AssignmentsTitle;
             Index = 7;
         }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NoppaClient.Resources;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -53,7 +54,7 @@ namespace NoppaClient.ViewModels
 
         public OverviewViewModel()
         {
-            Title = "overview";
+            Title = AppResources.OverviewTitle;
             Index = 1;
         }
 

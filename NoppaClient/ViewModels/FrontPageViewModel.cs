@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NoppaClient.Resources;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,7 +26,7 @@ namespace NoppaClient.ViewModels
             _courseViewModel = courseViewModel;
             Code = _courseViewModel.Code;
             
-            Title = "summary";
+            Title = AppResources.FrontPageTitle;
             Index = 0;
         }
     }

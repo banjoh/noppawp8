@@ -135,13 +135,13 @@
     <value>{0}</value>
   </data>
   <data name="DepartmentsTitle" xml:space="preserve">
-    <value>Departments</value>
+    <value>departments</value>
   </data>
   <data name="DepartmentTitle" xml:space="preserve">
     <value>Department</value>
   </data>
   <data name="MyCoursesTitle" xml:space="preserve">
-    <value>My Courses</value>
+    <value>my courses</value>
   </data>
   <data name="OrganizationTitle" xml:space="preserve">
     <value>Organization</value>
@@ -222,5 +222,29 @@ You can search by course name, part of the course name, course code or part of t
 &lt;Paragraph&gt;&amp;#9679; Lead&lt;/Paragraph&gt;
 &lt;/Section&gt;</value>
     <comment>Try to keep the same formatting if possible. The outermost tag has to have the xmlns property set, or else the Xaml parser will not accept it.</comment>
+  </data>
+  <data name="AssignmentsTitle" xml:space="preserve">
+    <value>assignments</value>
+  </data>
+  <data name="ExercisesTitle" xml:space="preserve">
+    <value>exerices</value>
+  </data>
+  <data name="FrontPageTitle" xml:space="preserve">
+    <value>summary</value>
+  </data>
+  <data name="LecturesTitle" xml:space="preserve">
+    <value>lectures</value>
+  </data>
+  <data name="NewsTitle" xml:space="preserve">
+    <value>news</value>
+  </data>
+  <data name="OverviewTitle" xml:space="preserve">
+    <value>overview</value>
+  </data>
+  <data name="ResultsTitle" xml:space="preserve">
+    <value>results</value>
+  </data>
+  <data name="EventsTitle" xml:space="preserve">
+    <value>events</value>
   </data>
 </root>
