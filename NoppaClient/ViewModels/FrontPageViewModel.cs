@@ -25,7 +25,7 @@ namespace NoppaClient.ViewModels
             _courseViewModel = courseViewModel;
             Code = _courseViewModel.Code;
             
-            Title = "Front Page";
+            Title = "summary";
             Index = 0;
         }
     }

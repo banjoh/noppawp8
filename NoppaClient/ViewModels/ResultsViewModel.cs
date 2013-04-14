@@ -16,7 +16,7 @@ namespace NoppaClient.ViewModels
 
         public ResultsViewModel()
         {
-            Title = "Results";
+            Title = "results";
             Index = 6;
         }
 

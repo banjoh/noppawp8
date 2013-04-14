@@ -53,7 +53,7 @@ namespace NoppaClient.ViewModels
 
         public OverviewViewModel()
         {
-            Title = "Overview";
+            Title = "overview";
             Index = 1;
         }
 

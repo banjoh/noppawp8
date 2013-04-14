@@ -16,7 +16,7 @@ namespace NoppaClient.ViewModels
 
         public AssignmentsViewModel()
         {
-            Title = "Assignments";
+            Title = "assignments";
             Index = 7;
         }
 

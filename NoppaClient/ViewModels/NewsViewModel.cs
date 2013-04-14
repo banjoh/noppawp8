@@ -15,7 +15,7 @@ namespace NoppaClient.ViewModels
 
         public NewsViewModel()
         {
-            Title = "News";
+            Title = "news";
             Index = 2;
         }
 
