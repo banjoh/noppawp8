@@ -46,15 +46,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
-        <view:EventTypeConverter x:Key="eventTypeConverter" />
-        
-        <DataTemplate x:Key="EventItemTemplate">
-            <StackPanel Margin="0,-6,0,12">
-                <TextBlock Text="{Binding Title}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeExtraLarge}"/>
-                <TextBlock Text="{Binding Path=Type, Converter={StaticResource eventTypeConverter}}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeExtraLarge}"/>
-            </StackPanel>
-        </DataTemplate>
 
         <DataTemplate x:Key="EventGroupHeaderTemplate">
             <Border Background="Transparent" Padding="5">

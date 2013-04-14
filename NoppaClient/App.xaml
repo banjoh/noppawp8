@@ -18,6 +18,24 @@
         </Style>
         
         <local:LocalizedStrings xmlns:local="clr-namespace:NoppaClient" x:Key="LocalizedStrings"/>
+        
+        <view:StringToResourceConverter x:Key="EventTypeToImageConverter" DefaultKey="other">
+            <view:StringToResourceConverter.ResourceDictionary>
+                <ResourceDictionary>
+                    <BitmapImage x:Key="event_course"       UriSource="Assets/event.type.event_course.png" />
+                    <BitmapImage x:Key="exams"              UriSource="Assets/event.type.exams.png" />
+                    <BitmapImage x:Key="mid_term_exams"     UriSource="Assets/event.type.mid_term_exams.png" />
+                    <BitmapImage x:Key="other"              UriSource="Assets/event.type.other.png" />
+                    <BitmapImage x:Key="seminar"            UriSource="Assets/event.type.seminar.png" />
+                    <BitmapImage x:Key="casework"           UriSource="Assets/event.type.casework.png" />
+                    <BitmapImage x:Key="demonstration"      UriSource="Assets/event.type.demonstration.png" />
+                    <BitmapImage x:Key="group_studies"      UriSource="Assets/event.type.group_studies.png" />
+                    <BitmapImage x:Key="individual_studies" UriSource="Assets/event.type.individual_studies.png" />
+                    <BitmapImage x:Key="hybrid_studies"     UriSource="Assets/event.type.hybrid_studies.png" />
+                    <BitmapImage x:Key="online_studies"     UriSource="Assets/event.type.online_studies.png" />
+                </ResourceDictionary>
+            </view:StringToResourceConverter.ResourceDictionary>
+        </view:StringToResourceConverter>
 
         <!-- Template for lists that contain items of type DataModel.Course -->
         <DataTemplate x:Key="CourseItemTemplate">
@@ -26,6 +44,22 @@
                            TextWrapping="Wrap"
                            Style="{StaticResource PhoneTextExtraLargeStyle}"
                            FontSize="{StaticResource PhoneFontSizeExtraLarge}"/>
+            </StackPanel>
+        </DataTemplate>
+        
+        <!-- Template for lists of events -->
+        <DataTemplate x:Key="EventItemTemplate">
+            <StackPanel Orientation="Horizontal" Margin="12,2,0,4" Height="105" Width="432">
+                <!--Replace rectangle with image-->
+                <Image Width="100" Height="100" Source="{Binding Type, Converter={StaticResource EventTypeToImageConverter}}" />
+                <StackPanel Width="311" Margin="8,-7,0,0">
+                    <TextBlock Text="{Binding Title}" TextWrapping="Wrap" Margin="10,0" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeLarge}" />
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding StartTime}" TextWrapping="NoWrap" Margin="10,-2,0,0" Style="{StaticResource PhoneTextSubtleStyle}" />
+                        <TextBlock Text="-" TextWrapping="NoWrap" Margin="2,-2,2,0" Style="{StaticResource PhoneTextSubtleStyle}" />
+                        <TextBlock Text="{Binding EndTime}" TextWrapping="NoWrap" Margin="0,-2,10,0" Style="{StaticResource PhoneTextSubtleStyle}" />
+                    </StackPanel>
+                </StackPanel>
             </StackPanel>
         </DataTemplate>
     </Application.Resources>
