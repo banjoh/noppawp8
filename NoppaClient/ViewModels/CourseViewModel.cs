@@ -105,7 +105,7 @@ namespace NoppaClient.ViewModels
             /* Load Overview */
             tasks.Add(Task.Run(async delegate () {
                     OverviewViewModel model = new OverviewViewModel();
-                    await model.LoadDataAsync(Code); 
+                    await model.LoadDataAsync(_course); 
                     return model as CourseContentViewModel;
                 })
             );

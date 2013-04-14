@@ -147,26 +147,24 @@
                 <DataTemplate x:Key="OverviewViewModel">
                     <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <StackPanel>
-                            <TextBlock Text="Overview" />
-                            <TextBlock Text="{Binding CourseId}" />
-                            <TextBlock Text="{Binding Credits}" />
-                            <TextBlock Text="{Binding Status}" />
-                            <TextBlock Text="{Binding Level}" />
-                            <TextBlock Text="{Binding TeachingPeriod}" />
-                            <TextBlock Text="{Binding Workload}" />
-                            <TextBlock Text="{Binding LearningOutcomes}" />
-                            <TextBlock Text="{Binding Content}" />
-                            <TextBlock Text="{Binding Assessment}" />
-                            <TextBlock Text="{Binding StudyMaterial}" />
-                            <TextBlock Text="{Binding GradingScale}" />
-                            <TextBlock Text="{Binding InstructionLanguage}" />
+                            <TextBlock TextWrapping="Wrap" Text="{Binding LongName}" />
+                            <TextBlock TextWrapping="Wrap" Text="{Binding Status}" />
+                            <TextBlock TextWrapping="Wrap" Text="{Binding Level}" />
+                            <TextBlock TextWrapping="Wrap" Text="{Binding TeachingPeriod}" />
+                            <TextBlock TextWrapping="Wrap" Text="{Binding Workload}" />
+                            <TextBlock TextWrapping="Wrap" Text="{Binding LearningOutcomes}" />
+                            <TextBlock TextWrapping="Wrap" Text="{Binding Content}" />
+                            <TextBlock TextWrapping="Wrap" Text="{Binding Assessment}" />
+                            <TextBlock TextWrapping="Wrap" Text="{Binding StudyMaterial}" />
+                            <TextBlock TextWrapping="Wrap" Text="{Binding GradingScale}" />
+                            <TextBlock TextWrapping="Wrap" Text="{Binding InstructionLanguage}" />
                             <TextBlock Text="{Binding Details}" />
                             <TextBlock Text="{Binding OodiUrl}" />
-                            <TextBlock Text="{Binding Substitutes}" />
-                            <TextBlock Text="{Binding CEFRLevel}" />
-                            <TextBlock Text="{Binding Registration}" />
-                            <TextBlock Text="{Binding Staff}" />
-                            <TextBlock Text="{Binding OfficeHours}" />
+                            <TextBlock TextWrapping="Wrap" Text="{Binding Substitutes}" />
+                            <TextBlock TextWrapping="Wrap" Text="{Binding CEFRLevel}" />
+                            <TextBlock TextWrapping="Wrap" Text="{Binding Registration}" />
+                            <TextBlock TextWrapping="Wrap" Text="{Binding Staff}" />
+                            <TextBlock TextWrapping="Wrap" Text="{Binding OfficeHours}" />
                             <Button Content="Open in Noppa"  Command="{Binding OpenNoppaPage}" />
                             <Button Content="Open in Oodi"  Command="{Binding OpenOodiPage}" />
                         </StackPanel>
@@ -235,7 +233,7 @@
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <!-- Runtime Pivot Control -->
-        <phone:Pivot Title="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}"
+        <phone:Pivot Title="{Binding Code}"
                      ItemsSource="{Binding Contents}"
                      Visibility="{Binding IsNotInDesignTool, Source={StaticResource DesignToolChecker}, Converter={StaticResource BooleanToVisibilityConverter}}">
             <phone:Pivot.ItemTemplate>

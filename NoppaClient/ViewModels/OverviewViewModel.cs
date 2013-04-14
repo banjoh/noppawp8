@@ -14,7 +14,10 @@ namespace NoppaClient.ViewModels
         public static string StripHtml(string html)
         {
             if (html != null)
-                return System.Net.HttpUtility.HtmlDecode(Regex.Replace(html, "<.+?>", string.Empty));
+            {
+                html = Regex.Replace(html, "<.+?>", string.Empty).Replace("\n", String.Empty);
+                return System.Net.HttpUtility.HtmlDecode(html);
+            }
             else
                 return String.Empty;
         }
@@ -22,7 +25,7 @@ namespace NoppaClient.ViewModels
 
     public class OverviewViewModel : CourseContentViewModel
     {
-        public string CourseId { get; private set; }
+        public string LongName { get; private set; }
         public string Credits { get; private set; }
         public string Status { get; private set; }
         public string Level { get; private set; }
@@ -54,13 +57,13 @@ namespace NoppaClient.ViewModels
             Index = 1;
         }
 
-        public async Task LoadDataAsync(string id)
+        public async Task LoadDataAsync(DataModel.Course course)
         {
-            DataModel.CourseOverview overview = await NoppaAPI.GetCourseOverview(id);
+            DataModel.CourseOverview overview = await NoppaAPI.GetCourseOverview(course.Id);
 
             if (overview != null)
             {
-                CourseId = id;
+                LongName = course.LongName;
                 Credits = Detail.StripHtml(overview.Credits);
                 Level = Detail.StripHtml(overview.Level);
                 TeachingPeriod = Detail.StripHtml(overview.TeachingPeriod);
@@ -72,7 +75,7 @@ namespace NoppaClient.ViewModels
                 InstructionLanguage = Detail.StripHtml(overview.InstructionLanguage);
                 Details = Detail.StripHtml(overview.Details);
 
-                var noppaUrl = new Uri(String.Format("https://noppa.aalto.fi/noppa/kurssi/{0}/etusivu", CourseId));
+                var noppaUrl = new Uri(String.Format("https://noppa.aalto.fi/noppa/kurssi/{0}/etusivu", course.Id));
                 var oodiUrl = new Uri(overview.OodiUrl);
 
                 _openOodiPage = new DelegateCommand(async delegate { await Launcher.LaunchUriAsync(oodiUrl); });
