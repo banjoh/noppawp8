@@ -158,6 +158,7 @@
     <Compile Include="View\ItemClickCommand.cs" />
     <Compile Include="View\OpenBrowserCommand.cs" />
     <Compile Include="View\SearchCommand.cs" />
+    <Compile Include="View\StringToResourceConverter.cs" />
     <Compile Include="View\TypeNameToDataTemplateConverter.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -210,6 +211,17 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\event.type.casework.png" />
+    <Content Include="Assets\event.type.demonstration.png" />
+    <Content Include="Assets\event.type.event_course.png" />
+    <Content Include="Assets\event.type.exams.png" />
+    <Content Include="Assets\event.type.group_studies.png" />
+    <Content Include="Assets\event.type.hybrid_studies.png" />
+    <Content Include="Assets\event.type.individual_studies.png" />
+    <Content Include="Assets\event.type.mid_term_exams.png" />
+    <Content Include="Assets\event.type.online_studies.png" />
+    <Content Include="Assets\event.type.other.png" />
+    <Content Include="Assets\event.type.seminar.png" />
     <Content Include="Assets\pin.png" />
     <Content Include="Assets\pin.remove.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Cancel.png">
