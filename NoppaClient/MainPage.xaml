@@ -18,16 +18,16 @@
     <phone:PhoneApplicationPage.Resources>
         <!-- Move these to a common resource file if they are reused -->
         <DataTemplate x:Key="DepartmentItemTemplate">
-            <StackPanel Margin="0,-6,0,12">
-                <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeExtraLarge}"/>
+            <StackPanel Margin="0,-3,0,12">
+                <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Style="{StaticResource PhoneTextLargeStyle}" FontSize="{StaticResource PhoneFontSizeLarge}"/>
             </StackPanel>
         </DataTemplate>
 
         <DataTemplate x:Key="DepartmentGroupHeaderTemplate">
             <Border Background="Transparent" Padding="5">
-                <TextBlock Text="{Binding Organization}" Foreground="{StaticResource PhoneForegroundBrush}" 
+                <TextBlock Text="{Binding Organization}" Foreground="{StaticResource PhoneSubtleBrush}" 
                            FontSize="24" Padding="6,20,6,6" 
-                           FontFamily="{StaticResource PhoneFontFamilySemiLight}" 
+                           FontFamily="{StaticResource PhoneFontFamilySemiLight}"
                            HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 </Border>
         </DataTemplate>
@@ -49,7 +49,7 @@
 
         <DataTemplate x:Key="EventGroupHeaderTemplate">
             <Border Background="Transparent" Padding="5">
-                <TextBlock Text="{Binding EventDate}" Foreground="{StaticResource PhoneForegroundBrush}" 
+                <TextBlock Text="{Binding EventDate}" Foreground="{StaticResource PhoneSubtleBrush}" 
                            FontSize="24" Padding="6,20,6,6" 
                            FontFamily="{StaticResource PhoneFontFamilySemiLight}" 
                            HorizontalAlignment="Left" VerticalAlignment="Center"/>
@@ -100,11 +100,11 @@
 
 
             <!--Panorama item one-->
-            <phone:PanoramaItem Header="{Binding Path=LocalizedResources.DepartmentsTitle, Source={StaticResource LocalizedStrings}}">
+            <phone:PanoramaItem>
                 <!--Single line list with text wrapping and grouping -->
                 <phone:LongListSelector
                     x:Name="DepartmentList"
-                    Margin="0,0,-22,0" 
+                    Margin="0,-20,-22,0"
                     JumpListStyle="{StaticResource DepartmentJumpListStyle}"
                     ItemTemplate="{StaticResource DepartmentItemTemplate}"
                     GroupHeaderTemplate="{StaticResource DepartmentGroupHeaderTemplate}"
@@ -113,29 +113,39 @@
                     Background="Transparent"
                     HideEmptyGroups="True"
                     view:ItemClickCommand.Command="{Binding DepartmentActivatedCommand}"
-                    ItemsSource="{Binding Departments}" />
+                    ItemsSource="{Binding Departments}" Height="537" VerticalAlignment="Bottom">
+                    <phone:LongListSelector.ListHeader>
+                        <TextBlock Text="{Binding Path=LocalizedResources.DepartmentsTitle, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextTitle1Style}"/>
+                    </phone:LongListSelector.ListHeader>
+                </phone:LongListSelector>
             </phone:PanoramaItem>
 
             <!--Panorama item one-->
-            <phone:PanoramaItem Header="{Binding Path=LocalizedResources.MyCoursesTitle, Source={StaticResource LocalizedStrings}}">
+            <phone:PanoramaItem>
+                <phone:PanoramaItem.Header>
+                    <TextBlock Text="{Binding Path=LocalizedResources.MyCoursesTitle, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextTitle1Style}" />
+                </phone:PanoramaItem.Header>
                 <!--Single line list with text wrapping-->
                 <phone:LongListSelector Margin="0,0,-22,0" ItemsSource="{Binding MyCourses.Courses}" view:ItemClickCommand.Command="{Binding ActivateCourseCommand}">
                     <phone:LongListSelector.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Margin="0,-6,0,12">
                                 <TextBlock Text="{Binding Id}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeExtraLarge}"/>
-                                <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeExtraLarge}"/>
+                                <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeLarge}"/>
                             </StackPanel>
                         </DataTemplate>
                     </phone:LongListSelector.ItemTemplate>
                 </phone:LongListSelector>
             </phone:PanoramaItem>
 
-            <phone:PanoramaItem Header="{Binding Path=LocalizedResources.EventsTitle, Source={StaticResource LocalizedStrings}}">
+            <phone:PanoramaItem>
+                <phone:PanoramaItem.Header>
+                    <TextBlock Text="{Binding Path=LocalizedResources.EventsTitle, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextTitle1Style}" />
+                </phone:PanoramaItem.Header>
                 <!--Single line list with text wrapping and grouping -->
                 <phone:LongListSelector
                     x:Name="EventList"
-                    Margin="0,0,-22,0" 
+                    Margin="0,0,-22,0"
                     JumpListStyle="{StaticResource EventJumpListStyle}"
                     ItemTemplate="{StaticResource EventItemTemplate}"
                     GroupHeaderTemplate="{StaticResource EventGroupHeaderTemplate}"
@@ -149,7 +159,10 @@
 
 
             <!--Panorama item two-->
-            <phone:PanoramaItem Header="{Binding Path=LocalizedResources.NewsTitle, Source={StaticResource LocalizedStrings}}">
+            <phone:PanoramaItem>
+                <phone:PanoramaItem.Header>
+                    <TextBlock Text="{Binding Path=LocalizedResources.NewsTitle, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextTitle1Style}" />
+                </phone:PanoramaItem.Header>
                 <!--Double line list with image placeholder and text wrapping using a floating header that scrolls with the content-->
                 <phone:LongListSelector Margin="0,-38,-22,2" ItemsSource="{Binding News}">
                     <phone:LongListSelector.ItemTemplate>
