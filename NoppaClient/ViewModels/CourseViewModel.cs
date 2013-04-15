@@ -1,4 +1,5 @@
 ﻿using NoppaLib.DataModel;
+using NoppaLib;
 using NoppaClient.Resources;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace NoppaClient.ViewModels
     public class CourseViewModel : BindableBase
     {
         private Course _course = null;
+        private PinnedCourses _pinnedCourses;
 
         private ObservableCollection<CourseContentViewModel> _contents = new ObservableCollection<CourseContentViewModel>();
         public ObservableCollection<CourseContentViewModel> Contents { get { return _contents; } }
@@ -30,13 +32,13 @@ namespace NoppaClient.ViewModels
             get { return IsPinned.HasValue && IsPinned.Value ? AppResources.UnpinCourseTitle : AppResources.PinCourseTitle; }
         }
 
-        private bool _isPinningActive = false;
+        private bool? _isPinned = null;
         public bool? IsPinned
         {
-            get { return _isPinningActive ? null : (bool?)App.PinnedCourses.Codes.Contains(_code); }
+            get { return _isPinned; }
             set 
             {
-                if (_isPinningActive || !value.HasValue)
+                if (_isPinned == null || !value.HasValue)
                 {
                     return;
                 }
@@ -45,21 +47,26 @@ namespace NoppaClient.ViewModels
             }
         }
 
-        private void PinCourseAsync(bool toggle)
+        private async void PinCourseAsync(bool toggle)
         {
-            _isPinningActive = true;
+            _isPinned = null;
             NotifyPropertyChanged("IsPinned");
             if (toggle)
             {
-                App.PinnedCourses.Add(_code);
+                await App.PinnedCourses.AddAsync(_code);
             }
             else
             {
-                App.PinnedCourses.Remove(_code);
+                await App.PinnedCourses.RemoveAsync(_code);
             }
-            _isPinningActive = false;
             NotifyPropertyChanged("IsPinned");
             NotifyPropertyChanged("IsPinnedText");
+        }
+
+        private async void SetPinnedStateAsync()
+        {
+            _isPinned = await _pinnedCourses.ContainsAsync(_code);
+            NotifyPropertyChanged("IsPinned");
         }
 
         #endregion
@@ -80,12 +87,15 @@ namespace NoppaClient.ViewModels
 
         public CourseViewModel() { /* For design mode */ }
 
-        public CourseViewModel(string courseCode)
+        public CourseViewModel(string courseCode, PinnedCourses pinnedCourses)
         {
             Code = courseCode;
+            _pinnedCourses = pinnedCourses;
             _contents.Add(new FrontPageViewModel(this)); // Always add this
 
             _toggleSecondaryTileCommand = new DelegateCommand(ToggleSecondaryTile, () => _course != null);
+
+            SetPinnedStateAsync();
         }
 
         public async Task LoadContentAsync()

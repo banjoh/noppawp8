@@ -1,35 +1,74 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.IO;
+using System.Collections.ObjectModel;
+using System.IO.IsolatedStorage;
+using System.Threading;
 
 namespace NoppaLib
 {
     public class PinnedCourses
     {
         public static readonly string CourseFile = "MyCourses.txt";
-        private List<string> _codes = new List<string>();
-        public List<string> Codes { get { return _codes; } }
 
-        public void Add(string CourseCode)
+        private SemaphoreSlim _codesLock = new SemaphoreSlim(1, 1);
+        private ObservableCollection<string> _codes;
+
+        public async Task AddAsync(string code)
         {
-            if (_codes.Contains(CourseCode) == false)
+            var codes = await GetCodesAsync();
+            if (!codes.Contains(code))
             {
-                _codes.Add(CourseCode);
+                codes.Add(code);
             }
         }
 
-        public void Remove(string CourseCode)
+        public async Task RemoveAsync(string code)
         {
-            if (_codes.Contains(CourseCode))
+            var codes = await GetCodesAsync();
+            codes.Remove(code);
+        }
+
+        public async Task<bool> ContainsAsync(string code)
+        {
+            var codes = await GetCodesAsync();
+            return codes.Contains(code);
+        }
+
+        public async Task<ObservableCollection<string>> GetCodesAsync()
+        {
+            await _codesLock.WaitAsync();
+            if (_codes == null)
             {
-                _codes.Remove(CourseCode);
+                _codes = new ObservableCollection<string>();
+                await Task.Run(() =>
+                    {
+                        try
+                        {
+                            using (var fileStorage = IsolatedStorageFile.GetUserStoreForApplication())
+                            {
+                                if (fileStorage.FileExists(PinnedCourses.CourseFile))
+                                {
+                                    using (var stream = new IsolatedStorageFileStream(PinnedCourses.CourseFile, FileMode.Open, FileAccess.Read, fileStorage))
+                                    {
+                                        Deserialize(stream);
+                                    }
+                                }
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            System.Diagnostics.Debug.WriteLine("GetCodesAsync: Error accessing the course list file in the IsolatedStorage.\n{0}", e.StackTrace);
+                        }
+                    });                
             }
+            _codesLock.Release();
+            return _codes;
         }
 
         public void Serialize(Stream s)
         {
-            try
-            {
+            try{
                 using (var writer = new StreamWriter(s))
                 {
                     // Save codes only if there is any
@@ -47,16 +86,15 @@ namespace NoppaLib
                     }
                 }
             }
-            catch (Exception e)
+            catch(Exception e)
             {
-                System.Diagnostics.Debug.WriteLine("PinnedCourse::SaveCodesToFile::{0}", e);
+                System.Diagnostics.Debug.WriteLine("PinnedCourse::SaveCodesToFile::{0}",e);          
             }
         }
 
-
         public void Deserialize(Stream s)
         {
-            try
+            try 
             {
                 using (var reader = new StreamReader(s))
                 {
@@ -64,7 +102,6 @@ namespace NoppaLib
                     if (fileContent != "")
                     {
                         string[] codes = fileContent.Split(';');
-                        _codes.Clear();
                         foreach (string c in codes)
                         {
                             _codes.Add(c);
@@ -72,9 +109,9 @@ namespace NoppaLib
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception e) 
             {
-                System.Diagnostics.Debug.WriteLine("PinnedCourse::ReadCodesFromFile::{0}", e);
+                System.Diagnostics.Debug.WriteLine("PinnedCourse::ReadCodesFromFile::{0}",e);
             }
         }
     }

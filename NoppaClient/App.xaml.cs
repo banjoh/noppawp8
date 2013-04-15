@@ -24,22 +24,6 @@ namespace NoppaClient
         private static Settings _settings;
         private static PinnedCourses _pinnedCourses;
 
-        /// <summary>
-        /// A static ViewModel used by the views to bind against.
-        /// </summary>
-        /// <returns>The MainViewModel object.</returns>
-        public static MainViewModel ViewModel
-        {
-            get
-            {
-                // Delay creation of the view model until necessary
-                if (viewModel == null)
-                    viewModel = new MainViewModel(new PhoneNavigationController());
-
-                return viewModel;
-            }
-        }
-
         public static Settings Settings
         {
             get
@@ -127,14 +111,6 @@ namespace NoppaClient
                             Cache.Deserialize(stream);
                         }
                     }
-
-                    if (fileStorage.FileExists(PinnedCourses.CourseFile))
-                    {
-                        using (var stream = new IsolatedStorageFileStream(PinnedCourses.CourseFile, FileMode.Open, FileAccess.Read, fileStorage))
-                        {
-                            PinnedCourses.Deserialize(stream);
-                        }
-                    }
                 }
             }
             catch
@@ -145,13 +121,8 @@ namespace NoppaClient
 
         // Code to execute when the application is activated (brought to foreground)
         // This code will not execute when the application is first launched
-        private async void Application_Activated(object sender, ActivatedEventArgs e)
+        private void Application_Activated(object sender, ActivatedEventArgs e)
         {
-            // Ensure that application state is restored appropriately
-            if (!App.ViewModel.IsDataLoaded)
-            {
-                await App.ViewModel.LoadDataAsync();
-            }
         }
 
         // Code to execute when the application is deactivated (sent to background)

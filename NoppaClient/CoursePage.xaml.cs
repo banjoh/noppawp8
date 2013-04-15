@@ -40,7 +40,12 @@ namespace NoppaClient
             var removeUri = new Uri("/Assets/pin.remove.png", UriKind.Relative);
             var addUri = new Uri("/Assets/pin.png", UriKind.Relative);
 
-            _viewModel = new CourseViewModel(courseCode);
+            if (_viewModel == null)
+            {
+                _viewModel = new CourseViewModel(courseCode, App.PinnedCourses);
+                _viewModel.LoadContentAsync();
+                DataContext = _viewModel;
+            }
 
             // Pin toggle button
             _unbindActions.Add(AppBar.BindToggleButtonToBoolean(toggleFavoriteButton, removeUri, addUri, _viewModel, "IsPinned"));
@@ -50,8 +55,6 @@ namespace NoppaClient
             _unbindActions.Add(AppBar.BindCommand(toggleTileMenuItem, _viewModel.ToggleSecondaryTileCommand));
             _unbindActions.Add(AppBar.BindText(toggleTileMenuItem, _viewModel, "ToggleSecondaryTileText"));
 
-            await _viewModel.LoadContentAsync();
-            DataContext = _viewModel;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)

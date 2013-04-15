@@ -5,6 +5,10 @@ using Microsoft.Phone.Shell;
 using System.Collections.Generic;
 using System;
 using System.Linq;
+using System.IO.IsolatedStorage;
+using System.IO;
+
+using NoppaLib;
 
 namespace NoppaTaskAgent
 {
@@ -50,22 +54,69 @@ namespace NoppaTaskAgent
         {
             System.Diagnostics.Debug.WriteLine("Noppa background agent started");
 
-            // Tile update
-            ShellTile primaryTile = ShellTile.ActiveTiles.First();
+            List<string> codes = null;
 
-            //If tile was found then update the tile
-            if (primaryTile != null)
+            using (var fileStorage = IsolatedStorageFile.GetUserStoreForApplication())
             {
-                //TODO: Get content from the network
-                IconicTileData data = new IconicTileData
+                if (fileStorage.FileExists(Cache.CACHEFILE))
                 {
-                    Count = new Random().Next(1, 100),
-                    WideContent1 = "Distributed Systems",
-                    WideContent2 = "Lecture has been updated",
-                    WideContent3 = "T1 Building"
+                    fileStorage.DeleteFile(Cache.CACHEFILE);
+                }
+
+                using (var stream = new IsolatedStorageFileStream(Cache.CACHEFILE, FileMode.OpenOrCreate, FileAccess.Write, fileStorage))
+                {
+                    Cache.Serialize(stream);
+                }
+
+                if (fileStorage.FileExists(PinnedCourses.CourseFile))
+                {
+                    fileStorage.DeleteFile(PinnedCourses.CourseFile);
+                }
+
+                using (var stream = new IsolatedStorageFileStream(PinnedCourses.CourseFile, FileMode.OpenOrCreate, FileAccess.Write, fileStorage))
+                {
+                    PinnedCourses pc = new PinnedCourses();
+                    pc.Serialize(stream);
+
+                    //codes = pc.Codes;
+                }
+            }
+
+            // Clear all the tiles
+            if (codes == null || codes.Count <= 0)
+            {
+                // Empty data
+                IconicTileData empty = new IconicTileData
+                {
+                    Count = 0
                 };
 
-                primaryTile.Update(data);
+                foreach (ShellTile tile in ShellTile.ActiveTiles)
+                {
+                    if (tile != null)
+                        tile.Update(empty);
+                }
+            }
+            // Update tiles with data
+            else
+            {
+                // Tile update
+                ShellTile primaryTile = ShellTile.ActiveTiles.First();
+
+                //If tile was found then update the tile
+                if (primaryTile != null)
+                {
+                    //TODO: Get content from the network
+                    IconicTileData data = new IconicTileData
+                    {
+                        Count = new Random().Next(1, 100),
+                        WideContent1 = "Distributed Systems",
+                        WideContent2 = "Lecture has been updated",
+                        WideContent3 = "T1 Building"
+                    };
+
+                    primaryTile.Update(data);
+                }
             }
 
             NotifyComplete();
