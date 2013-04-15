@@ -216,15 +216,6 @@ namespace NoppaClient.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to my courses.
-        /// </summary>
-        public static string LecturesTitle {
-            get {
-                return ResourceManager.GetString("LecturesTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to monday.
         /// </summary>
         public static string MondayTitle {
