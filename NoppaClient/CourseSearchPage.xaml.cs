@@ -24,7 +24,7 @@ namespace NoppaClient
             DataContext = _viewModel;
 
             // Focus search box automatically
-            this.Loaded += (o, e) => SearchBox.Focus();
+            this.Loaded += (o, e) => { if (_viewModel.IsEmpty) SearchBox.Focus(); };
 
             // Unfocus when pressing enter
             SearchBox.KeyUp += (o, e) => { if (e.Key == Key.Enter) this.Focus(); };
