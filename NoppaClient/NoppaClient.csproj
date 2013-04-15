@@ -111,6 +111,9 @@
     <Compile Include="DataModel\Department.cs" />
     <Compile Include="DataModel\Organisation.cs" />
     <Compile Include="DataModel\Course.cs" />
+    <Compile Include="EventPage.xaml.cs">
+      <DependentUpon>EventPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LocalizedStrings.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -151,6 +154,7 @@
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="View\AppBar.cs" />
     <Compile Include="View\BooleanToVisibilityConverter.cs" />
+    <Compile Include="View\DateTimeToWeekdayConverter.cs" />
     <Compile Include="View\EnumerableIndexConverter.cs" />
     <Compile Include="View\DataTemplateSelector.cs" />
     <Compile Include="View\DesignModeChecker.cs" />
@@ -182,6 +186,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="EventPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -195,6 +203,10 @@
       <SubType>Designer</SubType>
     </DesignData>
     <DesignData Include="SampleData\CourseViewModelSampleData.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </DesignData>
+    <DesignData Include="SampleData\EventViewModelSampleData.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </DesignData>

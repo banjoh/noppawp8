@@ -180,6 +180,15 @@ namespace NoppaClient.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to friday.
+        /// </summary>
+        public static string FridayTitle {
+            get {
+                return ResourceManager.GetString("FridayTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to summary.
         /// </summary>
         public static string FrontPageTitle {
@@ -203,6 +212,24 @@ namespace NoppaClient.Resources {
         public static string LecturesTitle {
             get {
                 return ResourceManager.GetString("LecturesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to my courses.
+        /// </summary>
+        public static string LecturesTitle {
+            get {
+                return ResourceManager.GetString("LecturesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to monday.
+        /// </summary>
+        public static string MondayTitle {
+            get {
+                return ResourceManager.GetString("MondayTitle", resourceCulture);
             }
         }
         
@@ -297,6 +324,15 @@ namespace NoppaClient.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to saturday.
+        /// </summary>
+        public static string SaturdayTitle {
+            get {
+                return ResourceManager.GetString("SaturdayTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;Section xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;&gt;
         ///&lt;Paragraph&gt;
         ///&lt;Run FontWeight=&quot;Bold&quot;&gt;search tips&lt;/Run&gt;
@@ -346,11 +382,38 @@ namespace NoppaClient.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to sunday.
+        /// </summary>
+        public static string SundayTitle {
+            get {
+                return ResourceManager.GetString("SundayTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to svenska.
         /// </summary>
         public static string SwedishLanguage {
             get {
                 return ResourceManager.GetString("SwedishLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to thursday.
+        /// </summary>
+        public static string ThursdayTitle {
+            get {
+                return ResourceManager.GetString("ThursdayTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to tuesday.
+        /// </summary>
+        public static string TuesdayTitle {
+            get {
+                return ResourceManager.GetString("TuesdayTitle", resourceCulture);
             }
         }
         
@@ -369,6 +432,15 @@ namespace NoppaClient.Resources {
         public static string UpdateTileLocalSettings {
             get {
                 return ResourceManager.GetString("UpdateTileLocalSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to wednesday.
+        /// </summary>
+        public static string WednesdayTitle {
+            get {
+                return ResourceManager.GetString("WednesdayTitle", resourceCulture);
             }
         }
     }

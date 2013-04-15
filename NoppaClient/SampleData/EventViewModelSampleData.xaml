@@ -1,0 +1,15 @@
+﻿<vm:EventViewModel
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:vm="clr-namespace:NoppaClient.ViewModels"
+    CourseId="T-61.5140"
+    Type="exams"
+    Title="Machine Learning: Advanced Probabilistic Methods P"
+    Weekday="Tue"
+    Location="T1 / C202 (T1), (Computer Science and Engineering)"
+    StartTime="13:00"
+    EndTime="16:00"
+    StartDate="2013-05-21"
+    EndDate="2013-05-21"
+    IsSingleDay="True"
+    CourseName="T-61.5140 Machine Learning: Advanced Probabilistic Methods P" />

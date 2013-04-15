@@ -81,6 +81,7 @@ namespace NoppaClient.ViewModels
             ShowAboutCommand = ControllerUtil.MakeShowAboutCommand(navigationController);
             ShowSearchCommand = ControllerUtil.MakeShowCourseSearchCommand(navigationController);
             ActivateCourseCommand = ControllerUtil.MakeShowCourseCommand(navigationController);
+            EventActivatedCommand = ControllerUtil.MakeShowCourseEventCommand(navigationController);
             // Here, make a model instance or something, and start filling in the 
             // view model data
          }

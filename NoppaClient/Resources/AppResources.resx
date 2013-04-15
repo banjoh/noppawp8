@@ -247,4 +247,25 @@ You can search by course name, part of the course name, course code or part of t
   <data name="EventsTitle" xml:space="preserve">
     <value>events</value>
   </data>
+  <data name="FridayTitle" xml:space="preserve">
+    <value>friday</value>
+  </data>
+  <data name="MondayTitle" xml:space="preserve">
+    <value>monday</value>
+  </data>
+  <data name="SaturdayTitle" xml:space="preserve">
+    <value>saturday</value>
+  </data>
+  <data name="SundayTitle" xml:space="preserve">
+    <value>sunday</value>
+  </data>
+  <data name="ThursdayTitle" xml:space="preserve">
+    <value>thursday</value>
+  </data>
+  <data name="TuesdayTitle" xml:space="preserve">
+    <value>tuesday</value>
+  </data>
+  <data name="WednesdayTitle" xml:space="preserve">
+    <value>wednesday</value>
+  </data>
 </root>

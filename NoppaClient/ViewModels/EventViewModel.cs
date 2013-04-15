@@ -1,47 +1,54 @@
-﻿using System;
+﻿using NoppaClient.DataModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace NoppaClient.ViewModels
 {
     public class EventViewModel : BindableBase
     {
-        private string _dayOfTheWeek;
-        public string DayOfTheWeek { get { return _dayOfTheWeek; } protected set { SetProperty(ref _dayOfTheWeek, value); } }
+        private CourseEvent _event;
 
-        private DateTime _date;
-        public DateTime Date { get { return _date; } protected set { SetProperty(ref _date, value);} }
+        public string CourseId { get { return _event.CourseId; } }
+        public string Type { get { return _event.Type; } }
+        public string Title { get { return _event.Title; } }
+        public string Weekday { get { return _event.Weekday; } }
+        public string Location { get { return _event.Location; } }
+        public string StartTime { get { return _event.StartTime; } }
+        public string EndTime { get { return _event.EndTime; } }
+        
+        public DateTime StartDate { get; private set; }
+        public DateTime EndDate { get; private set; }
 
-        private DateTime _startTime;
-        public DateTime StartTime { get {return _startTime; } protected set { SetProperty(ref _startTime, value); } }
+        public bool IsSingleDay { get { return StartDate.Date == EndDate.Date; } }
 
-        private DateTime _endTime;
-        public DateTime EndTime { get {return _endTime; } protected set { SetProperty(ref _endTime, value); } }
+        private string _courseName;
+        public string CourseName { get { return _courseName; } set { SetProperty(ref _courseName, value); } }
 
-        private string _title;
-        public string Title { get { return _title; } protected set { SetProperty(ref _title, value); } }
+        private ICommand _showCourseCommand;
+        public ICommand ShowCourseCommand { get { return _showCourseCommand; } private set { SetProperty(ref _showCourseCommand, value); } }
 
-        private string _content;
-        public string Content { get { return _content; } protected set { SetProperty(ref _content, value); } }
+        public EventViewModel() { /* for sample data */ }
 
-        private string _location;
-        public string Location { get { return _location; } protected set { SetProperty(ref _location, value); } }
+        public EventViewModel(CourseEvent courseEvent, INavigationController controller)
+        {
+            _event = courseEvent;
 
-        /*
+            StartDate = DateTime.Parse(courseEvent.StartDate);
+            EndDate = DateTime.Parse(courseEvent.EndDate);
 
-            lecture_id lecture id 50361 
-date date of lecture 2012-01-18 
-start_time start time 14:15:00 
-end_time end time 16:00:00 
-location lecture location AS1 
-title title Introduction: contents, practicalities, assignments. 
-content description of lecture Introduction, passing the course, course assignment 
-materials object details in next table
-  
-authentication_required material needs authentication
-true false
-         */
+            LoadCourseDataAsync(controller);
+        }
+
+        private async void LoadCourseDataAsync(INavigationController controller)
+        {
+            var course = await NoppaAPI.GetCourse(CourseId);
+            CourseName = course.LongName;
+
+            ShowCourseCommand = new DelegateCommand(() => controller.ShowCourse(course));
+        }
     }
 }
