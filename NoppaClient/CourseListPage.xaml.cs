@@ -25,6 +25,11 @@ namespace NoppaClient
         {
             base.OnNavigatedTo(e);
 
+            if (_viewModel != null)
+            {
+                return;
+            }
+
             _viewModel = new CourseListViewModel(new PhoneNavigationController());
             DataContext = _viewModel;
 
@@ -41,7 +46,7 @@ namespace NoppaClient
                     break;
 
                 default:
-                    await _viewModel.LoadMyCoursesAsync();
+                    await _viewModel.LoadMyCoursesAsync(App.PinnedCourses);
                     break;
             }
         }
