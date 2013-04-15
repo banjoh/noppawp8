@@ -22,13 +22,15 @@ namespace NoppaClient.ViewModels
         public CourseListViewModel MyCourses { get { return _myCourses; } }
 
         private ObservableCollection<CourseNews> _news = new ObservableCollection<CourseNews>();
-        public ObservableCollection<CourseNews> News {
+        public ObservableCollection<CourseNews> News 
+        {
             get { return _news; }
             private set { SetProperty(ref _news, value); }
         }
 
         private ObservableCollection<DepartmentGroup> _departments;
-        public ObservableCollection<DepartmentGroup> Departments {
+        public ObservableCollection<DepartmentGroup> Departments 
+        {
             get { return _departments; }
             private set { SetProperty(ref _departments, value); }
         }
@@ -39,28 +41,6 @@ namespace NoppaClient.ViewModels
         public ICommand ShowSearchCommand { get; private set; }
         public ICommand ActivateCourseCommand { get; private set; }
         public ICommand EventActivatedCommand { get; private set; }
-
-        private string _sampleProperty = "Sample Runtime Property Value";
-        /// <summary>
-        /// Sample ViewModel property; this property is used in the view to display its value using a Binding
-        /// </summary>
-        /// <returns></returns>
-        public string SampleProperty
-        {
-            get { return _sampleProperty; }
-            set { SetProperty(ref _sampleProperty, value); }
-        }
-
-        /// <summary>
-        /// Sample property that returns a localized string
-        /// </summary>
-        public string LocalizedSampleProperty
-        {
-            get
-            {
-                return AppResources.SampleProperty;
-            }
-        }
 
         public string Title
         {
@@ -82,14 +62,30 @@ namespace NoppaClient.ViewModels
             ShowSearchCommand = ControllerUtil.MakeShowCourseSearchCommand(navigationController);
             ActivateCourseCommand = ControllerUtil.MakeShowCourseCommand(navigationController);
             EventActivatedCommand = ControllerUtil.MakeShowCourseEventCommand(navigationController);
-            // Here, make a model instance or something, and start filling in the 
-            // view model data
          }
 
         /// <summary>
         /// Creates and adds a few ItemViewModel objects into the Items collection.
         /// </summary>
-        public async Task LoadDataAsync()
+        public async Task LoadDataAsync(PinnedCourses pinnedCourses)
+        {
+            try
+            {
+                LoadDepartmentGroupsAsync();
+                UpdateMyCoursesAsync(pinnedCourses);
+
+                var courses = await pinnedCourses.GetCodesAsync();
+                courses.CollectionChanged += (o, e) => UpdateMyCoursesAsync(pinnedCourses);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("LoadDataAsync: Caught exception: {0}", ex.Message);
+            }
+
+            this.IsDataLoaded = true;
+        }
+
+        private async void LoadDepartmentGroupsAsync()
         {
             try
             {
@@ -106,11 +102,24 @@ namespace NoppaClient.ViewModels
 
                     Departments = DepartmentGroup.CreateDepartmentGroups(orgMap, depts);
                 }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("LoadDepartmentGroupsAsync: Caught exception: {0}", ex.Message);
+            }
+        }
+
+        private async void UpdateMyCoursesAsync(PinnedCourses pinnedCourses)
+        {
+            try
+            {
+                var courses = await pinnedCourses.GetCodesAsync();
+                await MyCourses.LoadMyCoursesAsync(pinnedCourses);
 
                 List<CourseNews> news = new List<CourseNews>();
                 List<CourseEvent> events = new List<CourseEvent>();
 
-                foreach (var courseId in App.PinnedCourses.Codes)
+                foreach (var courseId in courses)
                 {
                     List<CourseNews> courseNews = await NoppaAPI.GetCourseNews(courseId);
                     if (courseNews != null)
@@ -122,18 +131,15 @@ namespace NoppaClient.ViewModels
                 }
 
                 /* Figure out a better sorting strategy */
-                news.Sort( (a,b) => string.Compare(a.Date, b.Date) );
- 
+                news.Sort((a, b) => string.Compare(a.Date, b.Date));
+
                 News = new ObservableCollection<CourseNews>(news);
-                if (events != null)
-                        Events = EventGroup.CreateEventGroups(events);
+                Events = EventGroup.CreateEventGroups(events);
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("Caught exception: {0}", ex.Message);
+                System.Diagnostics.Debug.WriteLine("LoadNewsAndEventsAsync: Caught exception: {0}", ex.Message);
             }
-
-            this.IsDataLoaded = true;
         }
     }
 }

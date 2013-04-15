@@ -19,60 +19,50 @@ namespace NoppaClient
     {
         Language _loadedLanguage;
         MainViewModel _viewModel;
-        List<Action> _unbindActions = new List<Action>();
 
         // Constructor
         public MainPage()
         {
             InitializeComponent();
 
-            // Set the data context of the listbox control to the sample data
-            _viewModel = App.ViewModel;
-            DataContext = _viewModel;
+            ReloadDataAsync();
             _loadedLanguage = App.Settings.Language;
+
+            var searchButton = (ApplicationBarIconButton)ApplicationBar.Buttons[0];
+            var settingsMenu = (ApplicationBarMenuItem)ApplicationBar.MenuItems[0];
+            var aboutMenu = (ApplicationBarMenuItem)ApplicationBar.MenuItems[1];
+
+            searchButton.Text = AppResources.SearchTitle;
+            settingsMenu.Text = AppResources.SettingsTitle;
+            aboutMenu.Text = AppResources.AboutTitle;
+
+            AppBar.BindCommand(searchButton, _viewModel.ShowSearchCommand);
+            AppBar.BindCommand(settingsMenu, _viewModel.ShowSettingsCommand);
+            AppBar.BindCommand(aboutMenu, _viewModel.ShowAboutCommand);
+        }
+
+        private async void ReloadDataAsync()
+        {
+            _viewModel = new MainViewModel(new PhoneNavigationController());
+            DataContext = _viewModel;
+            await _viewModel.LoadDataAsync(App.PinnedCourses);
         }
 
         // Load data for the ViewModel Items
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             try
             {
-                if (!App.ViewModel.IsDataLoaded || _loadedLanguage != App.Settings.Language)
+                if (_loadedLanguage != App.Settings.Language)
                 {
-                    await App.ViewModel.LoadDataAsync();
+                    ReloadDataAsync();
                     _loadedLanguage = App.Settings.Language;
-                }
-                //This loads MyCourses to MainPage, needs to be loaded every time in case changes in pinned courses
-                await App.ViewModel.MyCourses.LoadMyCoursesAsync();
-
-                var searchButton = (ApplicationBarIconButton)ApplicationBar.Buttons[0];
-                var settingsMenu = (ApplicationBarMenuItem)ApplicationBar.MenuItems[0];
-                var aboutMenu = (ApplicationBarMenuItem)ApplicationBar.MenuItems[1];
-
-                searchButton.Text = AppResources.SearchTitle;
-                settingsMenu.Text = AppResources.SettingsTitle;
-                aboutMenu.Text = AppResources.AboutTitle;
-
-                _unbindActions.Add(AppBar.BindCommand(searchButton, _viewModel.ShowSearchCommand));
-                _unbindActions.Add(AppBar.BindCommand(settingsMenu, _viewModel.ShowSettingsCommand));
-                _unbindActions.Add(AppBar.BindCommand(aboutMenu, _viewModel.ShowAboutCommand));
+                }              
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine("Couldn't load data: {0}", ex.Message);
             }
-        }
-
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            base.OnNavigatedFrom(e);
-
-            /* Unbind every app bar menu event manually. */
-            foreach (var action in _unbindActions)
-            {
-                action();
-            }
-            _unbindActions.Clear();
         }
     }
 }

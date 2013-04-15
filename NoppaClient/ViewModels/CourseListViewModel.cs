@@ -117,11 +117,11 @@ namespace NoppaClient.ViewModels
             IsLoading = false;
         }
 
-
-        public async Task LoadMyCoursesAsync()
+        public async Task LoadMyCoursesAsync(PinnedCourses pinnedCourses)
         {
             Courses.Clear();
-            foreach (string c in App.PinnedCourses.Codes){
+            var courses = await pinnedCourses.GetCodesAsync();
+            foreach (string c in courses){
                 Course course = await NoppaAPI.GetCourse(c);
                 Courses.Add(course);
             }
