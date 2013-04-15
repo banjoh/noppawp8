@@ -179,6 +179,10 @@
       <Project>{1D209C3F-D419-4FFD-ACFD-62A01BECD488}</Project>
       <Name>NoppaClient</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NoppaLib\NoppaLib.csproj">
+      <Project>{0D1A1CB5-E03A-42FC-A08E-93D68A536B59}</Project>
+      <Name>NoppaLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />

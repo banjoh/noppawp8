@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using NoppaClient.ViewModels;
-using NoppaClient.DataModel;
+using NoppaLib.DataModel;
 using Microsoft.Phone.Controls;
 using System.Net;
 

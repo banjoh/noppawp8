@@ -1,4 +1,4 @@
-﻿using NoppaClient.DataModel;
+﻿using NoppaLib.DataModel;
 using NoppaClient.Resources;
 using System;
 using System.Collections.Generic;
@@ -96,7 +96,16 @@ namespace NoppaClient.ViewModels
             _courses.Clear();
 
             Department dept = await NoppaAPI.GetDepartment(departmentId);
-            Title = String.Format(AppResources.DepartmentCourseListTitle, dept != null ? dept.Name : departmentId);
+            string deptName = "";
+            switch (App.Settings.Language)
+            {
+                case Language.Finnish: deptName = dept.name_fi; break;
+                case Language.English: deptName = dept.name_en; break;
+                case Language.Swedish: deptName = dept.name_sv; break;
+                default: break;
+            }
+
+            Title = String.Format(AppResources.DepartmentCourseListTitle, dept != null ? deptName : departmentId);
 
             try
             {

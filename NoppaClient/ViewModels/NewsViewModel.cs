@@ -1,4 +1,4 @@
-﻿using NoppaClient.DataModel;
+﻿using NoppaLib.DataModel;
 using NoppaClient.Resources;
 using System;
 using System.Collections.Generic;

@@ -7,7 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using NoppaClient.DataModel;
+using NoppaLib.DataModel;
 using NoppaClient.ViewModels;
 
 namespace NoppaClient

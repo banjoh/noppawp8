@@ -58,9 +58,9 @@ namespace NoppaClient.ViewModels
             Index = 1;
         }
 
-        public async Task LoadDataAsync(DataModel.Course course)
+        public async Task LoadDataAsync(NoppaLib.DataModel.Course course)
         {
-            DataModel.CourseOverview overview = await NoppaAPI.GetCourseOverview(course.Id);
+            NoppaLib.DataModel.CourseOverview overview = await NoppaAPI.GetCourseOverview(course.Id);
 
             if (overview != null)
             {

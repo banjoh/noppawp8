@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using NoppaClient.Resources;
-using NoppaClient.DataModel;
+using NoppaLib.DataModel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;

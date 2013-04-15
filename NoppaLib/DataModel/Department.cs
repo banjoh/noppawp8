@@ -1,18 +1,20 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
-namespace NoppaClient.DataModel
+namespace NoppaLib.DataModel
 {
-    public class Organization
+    public class Department
     {
-        /* JSON properties */
-        [JsonProperty("org_id")]
+        [JsonProperty("dept_id")]
         public string Id { get; set; }
+        [JsonProperty("org_id")]
+        public string OrgId { get; set; }
         public string name_fi { get; set; }
         public string name_sv { get; set; }
         public string name_en { get; set; }
+        public List<Link> links { get; set; }
 
-        /* Helper getters */
-        public string Name
+        /*public string Name
         {
             get
             {
@@ -24,6 +26,6 @@ namespace NoppaClient.DataModel
                     default: return "";
                 }
             }
-        }
+        }*/
     }
 }

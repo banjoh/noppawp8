@@ -1,19 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.Storage;
 using System.IO;
-using System.Windows;
-using System.Collections.ObjectModel;
-using NoppaClient.ViewModels;
-namespace NoppaClient
+
+namespace NoppaLib
 {
     public class PinnedCourses
     {
         public static readonly string CourseFile = "MyCourses.txt";
-        private List<string> _codes = new  List<string>();
+        private List<string> _codes = new List<string>();
         public List<string> Codes { get { return _codes; } }
 
         public void Add(string CourseCode)
@@ -34,7 +28,8 @@ namespace NoppaClient
 
         public void Serialize(Stream s)
         {
-            try{
+            try
+            {
                 using (var writer = new StreamWriter(s))
                 {
                     // Save codes only if there is any
@@ -51,15 +46,18 @@ namespace NoppaClient
                         writer.Write(codes);
                     }
                 }
-            }catch(Exception e){
-                System.Diagnostics.Debug.WriteLine("PinnedCourse::SaveCodesToFile::{0}",e);          
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("PinnedCourse::SaveCodesToFile::{0}", e);
             }
         }
 
 
         public void Deserialize(Stream s)
         {
-            try {
+            try
+            {
                 using (var reader = new StreamReader(s))
                 {
                     string fileContent = reader.ReadToEnd();
@@ -74,8 +72,9 @@ namespace NoppaClient
                     }
                 }
             }
-            catch (Exception e) {
-                System.Diagnostics.Debug.WriteLine("PinnedCourse::ReadCodesFromFile::{0}",e);
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("PinnedCourse::ReadCodesFromFile::{0}", e);
             }
         }
     }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NoppaClient.DataModel;
+using NoppaLib.DataModel;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -14,14 +14,6 @@ namespace UnitTests
     [TestClass]
     public class DataModelTests
     {
-        NoppaClient.Settings settings { get; set; }
-
-        [TestInitialize]
-        public void Setup()
-        {
-            settings = new NoppaClient.Settings();
-        }
-
         [TestMethod]
         public void TestOrganisationParsing()
         {
@@ -48,15 +40,9 @@ namespace UnitTests
             Organization org = JsonConvert.DeserializeObject<Organization>(json);
 
             Assert.IsTrue("CHEM" == org.Id);
-
-            settings.Language = Language.English;
-            Assert.IsTrue("School of Chemical Technology" == org.Name);
-
-            settings.Language = Language.Finnish;
-            Assert.IsTrue("Kemian tekniikan korkeakoulu" == org.Name);
-
-            settings.Language = Language.Swedish;
-            Assert.IsTrue("Högskolan för kemiteknik" == org.Name);
+            Assert.IsTrue("School of Chemical Technology" == org.name_en);
+            Assert.IsTrue("Kemian tekniikan korkeakoulu" == org.name_fi);
+            Assert.IsTrue("Högskolan för kemiteknik" == org.name_sv);
         }
 
         [TestMethod]
@@ -88,14 +74,9 @@ namespace UnitTests
             Assert.IsTrue("T2020" == dip.Id);
             Assert.IsTrue("ENG" == dip.OrgId);
 
-            settings.Language = Language.English;
-            Assert.IsTrue("Department of Energy Technology" == dip.Name);
-
-            settings.Language = Language.Finnish;
-            Assert.IsTrue("Energiatekniikan laitos" == dip.Name);
-
-            settings.Language = Language.Swedish;
-            Assert.IsTrue("Institutionen för energiteknik" == dip.Name);
+            Assert.IsTrue("Department of Energy Technology" == dip.name_en);
+            Assert.IsTrue("Energiatekniikan laitos" == dip.name_fi);
+            Assert.IsTrue("Institutionen för energiteknik" == dip.name_sv);
         }
 
         [TestMethod]

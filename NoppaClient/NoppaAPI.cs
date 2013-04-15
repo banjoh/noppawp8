@@ -10,7 +10,8 @@ using System.Net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-using NoppaClient.DataModel;
+using NoppaLib.DataModel;
+using NoppaLib;
 
 namespace NoppaClient
 {

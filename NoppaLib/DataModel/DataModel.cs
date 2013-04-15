@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace NoppaClient.DataModel
+namespace NoppaLib.DataModel
 {
     public enum Language
     {

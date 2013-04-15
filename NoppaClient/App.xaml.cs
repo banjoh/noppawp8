@@ -12,6 +12,7 @@ using NoppaClient.Resources;
 using NoppaClient.ViewModels;
 
 using NoppaClient;
+using NoppaLib;
 using System.IO;
 using System.IO.IsolatedStorage;
 

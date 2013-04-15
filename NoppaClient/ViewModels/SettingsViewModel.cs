@@ -43,9 +43,9 @@ namespace NoppaClient.ViewModels
         public SettingsViewModel()
         {
             // if we start adding more languages, this will become quite unwieldy
-            var finnish = new LanguageOption { Language = DataModel.Language.Finnish, Name = AppResources.FinnishLanguage };
-            var swedish = new LanguageOption { Language = DataModel.Language.Swedish, Name = AppResources.SwedishLanguage };
-            var english = new LanguageOption { Language = DataModel.Language.English, Name = AppResources.EnglishLanguage };
+            var finnish = new LanguageOption { Language = NoppaLib.DataModel.Language.Finnish, Name = AppResources.FinnishLanguage };
+            var swedish = new LanguageOption { Language = NoppaLib.DataModel.Language.Swedish, Name = AppResources.SwedishLanguage };
+            var english = new LanguageOption { Language = NoppaLib.DataModel.Language.English, Name = AppResources.EnglishLanguage };
 
             _languages = new LanguageOption[] {
                 finnish,
@@ -57,8 +57,8 @@ namespace NoppaClient.ViewModels
             {
                 switch (Settings.Language)
                 {
-                    case DataModel.Language.Finnish: _language = finnish; break;
-                    case DataModel.Language.Swedish: _language = swedish; break;
+                    case NoppaLib.DataModel.Language.Finnish: _language = finnish; break;
+                    case NoppaLib.DataModel.Language.Swedish: _language = swedish; break;
                     default: _language = english; break;
                 }
             }
@@ -72,7 +72,7 @@ namespace NoppaClient.ViewModels
     public class LanguageOption
     {
         public string Name { get; set; }
-        public DataModel.Language Language { get; set; }
+        public NoppaLib.DataModel.Language Language { get; set; }
         
         public override string ToString()
         {

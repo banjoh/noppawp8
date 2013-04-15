@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace NoppaClient.DataModel
+namespace NoppaLib.DataModel
 {
     public class Course
     {

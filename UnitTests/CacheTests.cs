@@ -9,6 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Phone.Testing;
 
 using NoppaClient;
+using NoppaLib;
 
 namespace UnitTests
 {

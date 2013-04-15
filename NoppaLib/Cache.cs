@@ -5,7 +5,7 @@ using System.IO.IsolatedStorage;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("UnitTests")]
-namespace NoppaClient
+namespace NoppaLib
 {
     public static class Cache
     {
@@ -138,7 +138,7 @@ namespace NoppaClient
             }
         }
         #endregion
-        
+
         #region Member varaibles and helper methods
         private static readonly Dictionary<string, CacheItem> _cache = new Dictionary<string, CacheItem>();
         private static readonly object _lock = new Object();
@@ -175,7 +175,7 @@ namespace NoppaClient
                 // Data length (Int23)
                 int dataLen = BitConverter.ToInt32(bytes, currentIdx);
                 currentIdx += 4;
- 
+
                 byte[] data = new byte[dataLen];
                 for (int i = 0; i < dataLen; i++)
                 {
@@ -214,7 +214,7 @@ namespace NoppaClient
                     // so check its existence first before accessing
                     if (_cache.ContainsKey(key))
                         c = _cache[key];
-                }                
+                }
                 if (c == null || c.TTL < now)
                     continue;
 
@@ -279,7 +279,7 @@ namespace NoppaClient
                     {
                         oldPolicy = _cache[key].Policy;
                         _cache.Remove(key);
-                        
+
                     }
                     _cache.Add(key, new CacheItem(value, TimeToLive(oldPolicy), oldPolicy));
                 }

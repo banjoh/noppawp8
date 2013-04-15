@@ -1,4 +1,4 @@
-﻿using NoppaClient.DataModel;
+﻿using NoppaLib.DataModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,7 +12,19 @@ namespace NoppaClient.ViewModels
     public class DepartmentGroup : ObservableCollection<Department>
     {
         private Organization _organization;
-        public string Organization { get { return _organization.Name; } }
+        public string Organization
+        {
+            get
+            {
+                switch (App.Settings.Language)
+                {
+                    case Language.Finnish: return _organization.name_fi;
+                    case Language.English: return _organization.name_en;
+                    case Language.Swedish: return _organization.name_sv;
+                    default: return "";
+                }
+            }
+        }
 
         public DepartmentGroup(Organization organization)
         {

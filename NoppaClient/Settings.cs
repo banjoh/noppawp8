@@ -9,6 +9,7 @@ using Microsoft.Phone.Shell;
 using Microsoft.Phone.Scheduler;
 using NoppaClient.Resources;
 using System.Windows;
+using NoppaLib.DataModel;
 
 namespace NoppaClient
 {
@@ -31,11 +32,11 @@ namespace NoppaClient
         /*
          * Application properties.
          */
-        public DataModel.Language Language
+        public Language Language
         {
             get
             {
-                return GetValueOrDefault(LanguageSettingKeyName, DataModel.Language.English);
+                return GetValueOrDefault(LanguageSettingKeyName, Language.English);
             }
             set
             {
