@@ -83,11 +83,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="APIConfig.cs" />
     <Compile Include="Cache.cs" />
     <Compile Include="DataModel\Course.cs" />
     <Compile Include="DataModel\DataModel.cs" />
     <Compile Include="DataModel\Department.cs" />
     <Compile Include="DataModel\Organisation.cs" />
+    <Compile Include="NoppaImpl.cs" />
     <Compile Include="PinnedCourses.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
