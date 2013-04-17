@@ -12,7 +12,7 @@ namespace NoppaLib
         public static readonly string CourseFile = "MyCourses.txt";
 
         private SemaphoreSlim _codesLock = new SemaphoreSlim(1, 1);
-        private ObservableCollection<string> _codes = new ObservableCollection<string>();
+        private ObservableCollection<string> _codes;
 
         public async Task AddAsync(string code)
         {
