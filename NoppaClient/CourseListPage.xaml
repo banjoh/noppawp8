@@ -33,6 +33,15 @@
             <ProgressBar IsEnabled="True" IsIndeterminate="True" VerticalAlignment="Stretch" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}" />
         </StackPanel>
 
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="1"
+              Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=invert}">
+            <Grid Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=invert}">
+                <TextBlock
+                    Text="no results, try again later"
+                    Visibility="{Binding IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            </Grid>
+        </Grid>
+
         <phone:LongListSelector
             Margin="12,0,12,0"
             Grid.Row="1"

@@ -97,6 +97,18 @@ namespace NoppaClient.ViewModels
             _courses.Clear();
 
             Department dept = await NoppaAPI.GetDepartment(departmentId);
+
+            /* Department search should mostly fail due to connectivity, as
+             * the ids that lead here are given by NoppaAPI. Caching leads
+             * to a situation that user may get into courselistview without
+             * having connectivity. */
+            if (dept == null)
+            {
+                IsLoading = false;
+                IsEmpty = true;
+                return;
+            }
+
             string deptName = "";
             switch (App.Settings.Language)
             {
