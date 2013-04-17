@@ -9,7 +9,31 @@ using System.Threading.Tasks;
 
 namespace NoppaClient.ViewModels
 {
-    public class DepartmentGroup : ObservableCollection<Department>
+    public class DepartmentProxy
+    {
+        private Department _department;
+
+        public string Id { get { return _department.Id; } }
+        public string OrgId { get { return _department.OrgId; } }
+        public string Name {
+            get
+            {
+                switch (App.Settings.Language)
+                {
+                    case Language.Finnish: return _department.name_fi;
+                    case Language.English: return _department.name_en;
+                    case Language.Swedish: return _department.name_sv;;
+                    default: return _department.name_en;
+                }
+            }
+        }
+        public DepartmentProxy(NoppaLib.DataModel.Department dept)
+        {
+            _department = dept;
+        }
+    }
+
+    public class DepartmentGroup : ObservableCollection<DepartmentProxy>
     {
         private Organization _organization;
         public string Organization
@@ -35,9 +59,10 @@ namespace NoppaClient.ViewModels
         {
             var groups = new Dictionary<string, DepartmentGroup>();
 
-            foreach (var item in items) 
+            foreach (var dept in items) 
             {
-                if (groups.ContainsKey(item.OrgId))
+                DepartmentProxy item = new DepartmentProxy(dept);
+                if (groups.ContainsKey(dept.OrgId))
                 {
                     groups[item.OrgId].Add(item);
                 }
@@ -46,7 +71,7 @@ namespace NoppaClient.ViewModels
                     Organization org = null;
                     if (!organizations.TryGetValue(item.OrgId, out org))
                     {
-                        Debug.WriteLine("No organization found: " + item.OrgId);
+                        Debug.WriteLine("No organization found: " + dept.OrgId);
                         org = organizations.First().Value;
                     }
                     var group = new DepartmentGroup(org);
