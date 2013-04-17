@@ -123,7 +123,7 @@
             <!--Panorama item one-->
             <phone:PanoramaItem>
                 <phone:PanoramaItem.Header>
-                    <TextBlock Text="{Binding Path=LocalizedResources.MyCoursesTitle, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextTitle1Style}" />
+                    <TextBlock Margin="0" Text="{Binding Path=LocalizedResources.MyCoursesTitle, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextTitle1Style}" />
                 </phone:PanoramaItem.Header>
                 <!--Single line list with text wrapping-->
                 <phone:LongListSelector Margin="0,0,-22,0" ItemsSource="{Binding MyCourses.Courses}" view:ItemClickCommand.Command="{Binding ActivateCourseCommand}">
@@ -140,7 +140,7 @@
 
             <phone:PanoramaItem>
                 <phone:PanoramaItem.Header>
-                    <TextBlock Text="{Binding Path=LocalizedResources.EventsTitle, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextTitle1Style}" />
+                    <TextBlock Margin="0" Text="{Binding Path=LocalizedResources.EventsTitle, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextTitle1Style}" />
                 </phone:PanoramaItem.Header>
                 <!--Single line list with text wrapping and grouping -->
                 <phone:LongListSelector
@@ -161,7 +161,7 @@
             <!--Panorama item two-->
             <phone:PanoramaItem>
                 <phone:PanoramaItem.Header>
-                    <TextBlock Text="{Binding Path=LocalizedResources.NewsTitle, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextTitle1Style}" />
+                    <TextBlock Margin="0" Text="{Binding Path=LocalizedResources.NewsTitle, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextTitle1Style}" />
                 </phone:PanoramaItem.Header>
                 <!--Double line list with image placeholder and text wrapping using a floating header that scrolls with the content-->
                 <phone:LongListSelector Margin="0,-38,-22,2" ItemsSource="{Binding News}">
