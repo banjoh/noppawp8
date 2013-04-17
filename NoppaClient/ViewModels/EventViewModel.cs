@@ -17,8 +17,8 @@ namespace NoppaClient.ViewModels
         public string Title { get { return _event.Title; } }
         public string Weekday { get { return _event.Weekday; } }
         public string Location { get { return _event.Location; } }
-        public string StartTime { get { return _event.StartTime; } }
-        public string EndTime { get { return _event.EndTime; } }
+        public string StartTime { get { return _event.StartTime.ToShortTimeString(); } }
+        public string EndTime { get { return _event.EndTime.ToShortTimeString(); } }
         
         public DateTime StartDate { get; private set; }
         public DateTime EndDate { get; private set; }
@@ -37,8 +37,8 @@ namespace NoppaClient.ViewModels
         {
             _event = courseEvent;
 
-            StartDate = DateTime.Parse(courseEvent.StartDate);
-            EndDate = DateTime.Parse(courseEvent.EndDate);
+            StartDate = courseEvent.StartDate;
+            EndDate = courseEvent.EndDate;
 
             LoadCourseDataAsync(controller);
         }

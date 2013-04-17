@@ -47,11 +47,11 @@
             <DataTemplate x:Key="LectureItemTemplate">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Date}"/>
+                        <TextBlock Text="{Binding Date, StringFormat=d}"/>
                         <TextBlock Text=" " />
-                        <TextBlock Text="{Binding StartTime}" />
+                        <TextBlock Text="{Binding StartTime, StringFormat=t}" />
                         <TextBlock Text="-" />
-                        <TextBlock Text="{Binding EndTime}" />
+                        <TextBlock Text="{Binding EndTime, StringFormat=t}" />
                         <TextBlock Text=" " />
                         <TextBlock Text="{Binding Location}" />
                         <TextBlock Text=" " />

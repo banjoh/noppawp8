@@ -25,15 +25,16 @@ namespace NoppaClient.ViewModels
 
             foreach (var item in items)
             {
-                if (groups.ContainsKey(item.StartDate))
+                string start = item.StartDate.ToShortDateString();
+                if (groups.ContainsKey(start))
                 {
-                    groups[item.StartDate].Add(item);
+                    groups[start].Add(item);
                 }
                 else
                 {
-                    var group = new EventGroup(item.StartDate);
+                    var group = new EventGroup(start);
                     group.Add(item);
-                    groups.Add(item.StartDate, group);
+                    groups.Add(start, group);
                 }
             }
 

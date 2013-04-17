@@ -47,10 +47,10 @@ namespace NoppaClient
                   Title = Detail.StripHtml(title),
                   Weekday = Detail.StripHtml(weekday),
                   Location = Detail.StripHtml(location),
-                  StartTime = Detail.StripHtml(startTime),
-                  EndTime = Detail.StripHtml(endTime),
-                  StartDate = Detail.StripHtml(startDate),
-                  EndDate = Detail.StripHtml(endDate)
+                  StartTime = DateTime.Parse(startTime),
+                  EndTime = DateTime.Parse(endTime),
+                  StartDate = DateTime.Parse(startDate),
+                  EndDate = DateTime.Parse(endDate)
             };
 
             DataContext = new EventViewModel(courseEvent, new PhoneNavigationController());

@@ -132,7 +132,7 @@ namespace NoppaClient.ViewModels
                 }
 
                 /* Figure out a better sorting strategy */
-                news.Sort((a, b) => string.Compare(a.Date, b.Date));
+                news.Sort((a, b) => a.Date.CompareTo(b.Date));
 
                 News = new ObservableCollection<CourseNews>(news);
                 Events = EventGroup.CreateEventGroups(events);
