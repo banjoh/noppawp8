@@ -10,20 +10,6 @@ using Windows.System;
 
 namespace NoppaClient.ViewModels
 {
-    public class Detail
-    {
-        public static string StripHtml(string html)
-        {
-            if (html != null)
-            {
-                html = Regex.Replace(html, "<.+?>", string.Empty).Replace("\n", String.Empty);
-                return System.Net.HttpUtility.HtmlDecode(html);
-            }
-            else
-                return String.Empty;
-        }
-    }
-
     public class OverviewViewModel : CourseContentViewModel
     {
         public string LongName { get; private set; }

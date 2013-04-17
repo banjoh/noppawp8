@@ -43,7 +43,7 @@ namespace NoppaClient
             if (_viewModel == null)
             {
                 _viewModel = new CourseViewModel(courseCode, App.PinnedCourses);
-                _viewModel.LoadContentAsync();
+                await _viewModel.LoadContentAsync();
                 DataContext = _viewModel;
             }
 

@@ -1,10 +1,6 @@
 ﻿using NoppaClient.Resources;
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Markup;
 
 namespace NoppaClient.ViewModels
 {
@@ -25,6 +21,10 @@ namespace NoppaClient.ViewModels
                 if (Settings.SetValue(Settings.LanguageSettingKeyName, value.Language))
                 {
                     _language = value;
+
+                    App.ChangeUILanguage(value.Language); // TODO Find a way to refresh ALL bindings (e.g. recreate all viewmodels)
+                    App.RootFrame.Language = XmlLanguage.GetLanguage(AppResources.ResourceLanguage);
+
                     NotifyPropertyChanged();
                 }
             }

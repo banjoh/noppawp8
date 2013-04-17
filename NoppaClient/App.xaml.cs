@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Diagnostics;
-using System.Resources;
 using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Navigation;
@@ -11,10 +8,12 @@ using Microsoft.Phone.Shell;
 using NoppaClient.Resources;
 using NoppaClient.ViewModels;
 
-using NoppaClient;
 using NoppaLib;
 using System.IO;
 using System.IO.IsolatedStorage;
+using System.Globalization;
+using System.Threading;
+using NoppaLib.DataModel;
 
 namespace NoppaClient
 {
@@ -47,6 +46,25 @@ namespace NoppaClient
                 }
                 return _pinnedCourses;
             }
+        }
+
+        public static void ChangeUILanguage(Language lang)
+        {
+            CultureInfo culture;
+
+            /* Change the application's culture so all localized strings are updated */
+            switch (lang)
+            {
+                case Language.Finnish:
+                    culture = new CultureInfo("fi"); break;
+                case Language.Swedish:
+                    culture = new CultureInfo("sv"); break;
+                default:
+                    culture = CultureInfo.InvariantCulture; break;
+            }
+
+            Thread.CurrentThread.CurrentCulture = culture;
+            Thread.CurrentThread.CurrentUICulture = culture;
         }
 
 
@@ -280,6 +298,7 @@ namespace NoppaClient
                 //
                 // If a compiler error is hit then ResourceLanguage is missing from
                 // the resource file.
+                ChangeUILanguage(Settings.Language);
                 RootFrame.Language = XmlLanguage.GetLanguage(AppResources.ResourceLanguage);
 
                 // Set the FlowDirection of all elements under the root frame based

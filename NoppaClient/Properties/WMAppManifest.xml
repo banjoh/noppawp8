@@ -1,6 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2012/deployment" AppPlatformVersion="8.0">
   <DefaultLanguage xmlns="" code="en-US" />
+  <Languages xmlns="">
+    <Language code="fi" />
+    <Language code="sv" />
+  </Languages>
   <App xmlns="" ProductID="{1d209c3f-d419-4ffd-acfd-62a01becd488}" Title="Noppa" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="NoppaClient author" Description="A native client for Noppa Webservice used in Aalto University." Publisher="NoppaClient" PublisherID="{8235272f-7ede-4bed-b1bf-d3ff7d364aeb}">
     <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
     <Capabilities>
@@ -13,7 +17,7 @@
     <Tasks>
       <DefaultTask Name="_default" NavigationPage="MainPage.xaml" />
       <ExtendedTask Name="BackgroundTask">
-        <BackgroundServiceAgent Name="NoppaTaskAgent" Type="NoppaTaskAgent.NoppaTaskAgent" Source="NoppaTaskAgent" Specifier="ScheduledTaskAgent"/>
+        <BackgroundServiceAgent Name="NoppaTaskAgent" Type="NoppaTaskAgent.NoppaTaskAgent" Source="NoppaTaskAgent" Specifier="ScheduledTaskAgent" />
       </ExtendedTask>
     </Tasks>
     <Tokens>
@@ -23,19 +27,13 @@
           <Count>0</Count>
           <IconImageURI IsRelative="true" IsResource="false">Assets\Tiles\Medium.png</IconImageURI>
           <Title>Noppa</Title>
-          <Message>
-          </Message>
-          <BackgroundColor>
-          </BackgroundColor>
+          <Message></Message>
+          <BackgroundColor></BackgroundColor>
           <HasLarge>True</HasLarge>
-          <LargeContent1>
-          </LargeContent1>
-          <LargeContent2>
-          </LargeContent2>
-          <LargeContent3>
-          </LargeContent3>
-          <DeviceLockImageURI IsRelative="true" IsResource="false">
-          </DeviceLockImageURI>
+          <LargeContent1></LargeContent1>
+          <LargeContent2></LargeContent2>
+          <LargeContent3></LargeContent3>
+          <DeviceLockImageURI IsRelative="true" IsResource="false"></DeviceLockImageURI>
         </TemplateIconic>
       </PrimaryToken>
     </Tokens>
