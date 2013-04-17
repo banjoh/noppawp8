@@ -42,15 +42,15 @@ namespace NoppaClient
 
             var courseEvent = new CourseEvent
             {
-                  CourseId = courseId,
-                  Type = type,
-                  Title = title,
-                  Weekday = weekday,
-                  Location = location,
-                  StartTime = startTime,
-                  EndTime = endTime,
-                  StartDate = startDate,
-                  EndDate = endDate
+                  CourseId = Detail.StripHtml(courseId),
+                  Type = Detail.StripHtml(type),
+                  Title = Detail.StripHtml(title),
+                  Weekday = Detail.StripHtml(weekday),
+                  Location = Detail.StripHtml(location),
+                  StartTime = Detail.StripHtml(startTime),
+                  EndTime = Detail.StripHtml(endTime),
+                  StartDate = Detail.StripHtml(startDate),
+                  EndDate = Detail.StripHtml(endDate)
             };
 
             DataContext = new EventViewModel(courseEvent, new PhoneNavigationController());
