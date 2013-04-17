@@ -129,6 +129,14 @@ namespace NoppaClient
                             Cache.Deserialize(stream);
                         }
                     }
+
+                    if (fileStorage.FileExists(PinnedCourses.CourseFile))
+                    {
+                        using (var stream = new IsolatedStorageFileStream(PinnedCourses.CourseFile, FileMode.Open, FileAccess.Read, fileStorage))
+                        {
+                            PinnedCourses.Deserialize(stream);
+                        }
+                    }
                 }
             }
             catch
