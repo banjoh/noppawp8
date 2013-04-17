@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
+using System;
 
 namespace NoppaLib.DataModel
 {
@@ -50,7 +51,7 @@ namespace NoppaLib.DataModel
 
     public class CourseNews
     {
-        [JsonProperty("date")]                  public string Date { get; set; }
+        [JsonProperty("date")]                  public DateTime Date { get; set; }
         [JsonProperty("title")]                 public string Title { get; set; }
         [JsonProperty("content")]               public string Content { get; set; }
         [JsonProperty("link")]                  public List<Link> Links { get; set; }
@@ -59,10 +60,10 @@ namespace NoppaLib.DataModel
     public class CourseResult
     {
         [JsonProperty("course_id")]             public string CourseId { get; set; }
-        [JsonProperty("date")]                  public string Date { get; set; }
+        [JsonProperty("date")]                  public DateTime Date { get; set; }
         [JsonProperty("grade_name")]            public string GradeName { get; set; }
         [JsonProperty("url")]                   public string Url { get; set; }
-        [JsonProperty("published")]             public string Published { get; set; }
+        [JsonProperty("published")]             public DateTime Published { get; set; }
         [JsonProperty("grade_review")]          public string GradeReview { get; set; }
         [JsonProperty("grade_scale")]           public string GradeScale { get; set; }
     }
@@ -70,9 +71,9 @@ namespace NoppaLib.DataModel
     public class CourseLecture
     {
         [JsonProperty("lecture_id")]            public string LectureId { get; set; }
-        [JsonProperty("date")]                  public string Date { get; set; }
-        [JsonProperty("start_time")]            public string StartTime { get; set; }
-        [JsonProperty("end_time")]              public string EndTime { get; set; }
+        [JsonProperty("date")]                  public DateTime Date { get; set; }
+        [JsonProperty("start_time")]            public DateTime StartTime { get; set; }
+        [JsonProperty("end_time")]              public DateTime EndTime { get; set; }
         [JsonProperty("location")]              public string Location { get; set; }
         [JsonProperty("title")]                 public string Title { get; set; }
         [JsonProperty("content")]               public string Content { get; set; }
@@ -85,16 +86,16 @@ namespace NoppaLib.DataModel
         [JsonProperty("course_id")]             public string CourseId { get; set; }
         [JsonProperty("group")]                 public string Group { get; set; }
         [JsonProperty("weekday")]               public string Weekday { get; set; }
-        [JsonProperty("start_time")]            public string StartTime { get; set; }
-        [JsonProperty("end_time")]              public string EndTime { get; set; }
+        [JsonProperty("start_time")]            public DateTime StartTime { get; set; }
+        [JsonProperty("end_time")]              public DateTime EndTime { get; set; }
         [JsonProperty("location")]              public string Location { get; set; }
-        [JsonProperty("start_date")]            public string StartDate { get; set; }
-        [JsonProperty("end_date")]              public string EndDate { get; set; }
+        [JsonProperty("start_date")]            public DateTime StartDate { get; set; }
+        [JsonProperty("end_date")]              public DateTime EndDate { get; set; }
     }
 
     public class CourseAssignment
     {
-        [JsonProperty("deadline")]              public string Deadline { get; set; }
+        [JsonProperty("deadline")]              public DateTime Deadline { get; set; }
         [JsonProperty("title")]                 public string Title { get; set; }
         [JsonProperty("content")]               public string Content { get; set; }
         [JsonProperty("material")]              public List<Material> Material { get; set; }
@@ -108,10 +109,10 @@ namespace NoppaLib.DataModel
         [JsonProperty("title")]                 public string Title { get; set; }
         [JsonProperty("weekday")]               public string Weekday { get; set; }
         [JsonProperty("location")]              public string Location { get; set; }
-        [JsonProperty("start_time")]            public string StartTime { get; set; }
-        [JsonProperty("end_time")]              public string EndTime { get; set; }
-        [JsonProperty("start_date")]            public string StartDate { get; set; }
-        [JsonProperty("end_date")]              public string EndDate { get; set; }
+        [JsonProperty("start_time")]            public DateTime StartTime { get; set; }
+        [JsonProperty("end_time")]              public DateTime EndTime { get; set; }
+        [JsonProperty("start_date")]            public DateTime StartDate { get; set; }
+        [JsonProperty("end_date")]              public DateTime EndDate { get; set; }
     }
 
     public class CourseMaterial
