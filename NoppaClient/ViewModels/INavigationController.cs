@@ -14,7 +14,7 @@ namespace NoppaClient.ViewModels
 
         void ShowCourse(Course course);
 
-        void ShowDepartment(Department department);
+        void ShowDepartment(DepartmentProxy department);
 
         void ShowCourseEvent(CourseEvent courseEvent);
 

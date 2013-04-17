@@ -26,7 +26,7 @@ namespace NoppaClient
             _frame.Navigate(MakeCoursePageUri(course));
         }
 
-        public void ShowDepartment(Department department)
+        public void ShowDepartment(DepartmentProxy department)
         {
             _frame.Navigate(MakeUri("/CourseListPage.xaml", "content", "department", "id", department.Id));
         }

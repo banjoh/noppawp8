@@ -15,9 +15,9 @@ namespace NoppaClient.ViewModels
             return new DelegateCommand<Course>(controller.ShowCourse, course => course != null);
         }
 
-        public static DelegateCommand<Department> MakeShowDepartmentCommand(INavigationController controller)
+        public static DelegateCommand<DepartmentProxy> MakeShowDepartmentCommand(INavigationController controller)
         {
-            return new DelegateCommand<Department>(controller.ShowDepartment, dept => dept != null);
+            return new DelegateCommand<DepartmentProxy>(controller.ShowDepartment, dept => dept != null);
         }
 
         public static DelegateCommand<CourseEvent> MakeShowCourseEventCommand(INavigationController controller)
