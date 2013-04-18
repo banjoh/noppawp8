@@ -93,7 +93,7 @@
                         <TextBlock Text=" " />
                         <TextBlock Text="{Binding GradeName}" />
                     </StackPanel>
-                        <TextBlock Text="Results:" />
+                        <TextBlock Text="Results" />
                         <Button Content="Results" Command="{StaticResource OpenBrowserCommand}" CommandParameter="{Binding Url}" />
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Grade review:" />
@@ -115,12 +115,9 @@
 
             <DataTemplate x:Key="AssignmentItemTemplate">
                 <StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Deadline}"/>
-                        <TextBlock Text=" " />
-                        <TextBlock Text="{Binding Title}" />
-                    </StackPanel>
-                    <TextBlock Text="{Binding Content}" />
+                    <TextBlock Text="{Binding Deadline}" Foreground="{StaticResource PhoneAccentBrush}" />
+                    <TextBlock Text="{Binding Title}" TextWrapping="Wrap" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
+                    <TextBlock Text="{Binding Content}" TextWrapping="Wrap" Margin="0,24" />
                     <ItemsControl ItemsSource="{Binding Material}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
@@ -223,7 +220,7 @@
 
                 <DataTemplate x:Key="AssignmentsViewModel">
                     <ListBox x:Name="AssignmentList"
-                    Margin="0,0,-22,0"
+                    Margin="0,0,6,0"
                     HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                     ItemTemplate="{StaticResource AssignmentItemTemplate}"
                     ItemsSource="{Binding Assignments}">
