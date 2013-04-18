@@ -14,7 +14,7 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait"  Orientation="Portrait"
     shell:SystemTray.IsVisible="False">
-    
+
     <phone:PhoneApplicationPage.Resources>
         <!-- Move these to a common resource file if they are reused -->
         <DataTemplate x:Key="DepartmentItemTemplate">
@@ -29,7 +29,7 @@
                            FontSize="24" Padding="6,20,6,6" 
                            FontFamily="{StaticResource PhoneFontFamilySemiLight}"
                            HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                </Border>
+            </Border>
         </DataTemplate>
 
         <phone:JumpListItemBackgroundConverter x:Key="BackgroundConverter"/>
@@ -72,7 +72,7 @@
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        
+
         <!-- LOCALIZATION NOTE:
             To localize the displayed strings copy their values to appropriately named
             keys in the app's neutral language resource file (AppResources.resx) then
@@ -92,33 +92,11 @@
             CurrentUICulture of the app at run time.
          -->
 
-         <!--Panorama control-->
+        <!--Panorama control-->
         <phone:Panorama Title="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}" Margin="0,-1,0,1">
             <phone:Panorama.Background>
                 <ImageBrush ImageSource="/NoppaClient;component/Assets/PanoramaBackground.png"/>
             </phone:Panorama.Background>
-
-
-            <!--Panorama item one-->
-            <phone:PanoramaItem>
-                <!--Single line list with text wrapping and grouping -->
-                <phone:LongListSelector
-                    x:Name="DepartmentList"
-                    Margin="0,-20,-22,0"
-                    JumpListStyle="{StaticResource DepartmentJumpListStyle}"
-                    ItemTemplate="{StaticResource DepartmentItemTemplate}"
-                    GroupHeaderTemplate="{StaticResource DepartmentGroupHeaderTemplate}"
-                    LayoutMode="List"
-                    IsGroupingEnabled="True"
-                    Background="Transparent"
-                    HideEmptyGroups="True"
-                    view:ItemClickCommand.Command="{Binding DepartmentActivatedCommand}"
-                    ItemsSource="{Binding Departments}" Height="537" VerticalAlignment="Bottom">
-                    <phone:LongListSelector.ListHeader>
-                        <TextBlock Text="{Binding Path=LocalizedResources.DepartmentsTitle, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextTitle1Style}"/>
-                    </phone:LongListSelector.ListHeader>
-                </phone:LongListSelector>
-            </phone:PanoramaItem>
 
             <!--Panorama item one-->
             <phone:PanoramaItem>
@@ -130,8 +108,8 @@
                     <phone:LongListSelector.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Margin="0,-6,0,12">
-                                <TextBlock Text="{Binding Id}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeExtraLarge}"/>
-                                <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeLarge}"/>
+                                <TextBlock Text="{Binding Id}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeExtraLarge}" Foreground="{StaticResource PhoneTextHighContrastBrush}" />
+                                <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeLarge}" Foreground="{StaticResource PhoneTextMidContrastBrush}" />
                             </StackPanel>
                         </DataTemplate>
                     </phone:LongListSelector.ItemTemplate>
@@ -145,7 +123,6 @@
                 <!--Single line list with text wrapping and grouping -->
                 <phone:LongListSelector
                     x:Name="EventList"
-                    Margin="0,0,-22,0"
                     JumpListStyle="{StaticResource EventJumpListStyle}"
                     ItemTemplate="{StaticResource EventItemTemplate}"
                     GroupHeaderTemplate="{StaticResource EventGroupHeaderTemplate}"
@@ -154,7 +131,8 @@
                     Background="Transparent"
                     HideEmptyGroups="True"
                     view:ItemClickCommand.Command="{Binding EventActivatedCommand}"
-                    ItemsSource="{Binding Events}" />
+                    Height="445" Margin="0,-41,-22,-1"
+                    ItemsSource="{Binding Events}" VerticalAlignment="Bottom" />
             </phone:PanoramaItem>
 
 
@@ -177,6 +155,28 @@
                             </StackPanel>
                         </DataTemplate>
                     </phone:LongListSelector.ItemTemplate>
+                </phone:LongListSelector>
+            </phone:PanoramaItem>
+
+
+            <!--Panorama item one-->
+            <phone:PanoramaItem>
+                <!--Single line list with text wrapping and grouping -->
+                <phone:LongListSelector
+                    x:Name="DepartmentList"
+                    Margin="0,-20,-22,0"
+                    JumpListStyle="{StaticResource DepartmentJumpListStyle}"
+                    ItemTemplate="{StaticResource DepartmentItemTemplate}"
+                    GroupHeaderTemplate="{StaticResource DepartmentGroupHeaderTemplate}"
+                    LayoutMode="List"
+                    IsGroupingEnabled="True"
+                    Background="Transparent"
+                    HideEmptyGroups="True"
+                    view:ItemClickCommand.Command="{Binding DepartmentActivatedCommand}"
+                    ItemsSource="{Binding Departments}" Height="537" VerticalAlignment="Bottom">
+                    <phone:LongListSelector.ListHeader>
+                        <TextBlock Text="{Binding Path=LocalizedResources.DepartmentsTitle, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextTitle1Style}"/>
+                    </phone:LongListSelector.ListHeader>
                 </phone:LongListSelector>
             </phone:PanoramaItem>
 
@@ -212,13 +212,13 @@
         <!--<Image Source="/Assets/AlignmentGrid.png" VerticalAlignment="Top" Height="800" Width="480" Margin="0" Grid.Row="0" Grid.RowSpan="2" IsHitTestVisible="False" />-->
 
     </Grid>
-    
+
 
 
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar Mode="Default" Opacity="1.0" IsMenuEnabled="True" IsVisible="True">
             <shell:ApplicationBarIconButton IconUri="/Assets/feature.search.png" Text="search" />
-            
+
             <shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem Text="settings" />
                 <shell:ApplicationBarMenuItem Text="about" />
