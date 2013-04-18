@@ -24,7 +24,7 @@
             <DataTemplate x:Key="NewsItemTemplate">
                 <StackPanel Margin="0,0,0,0">
                     <TextBlock Text="{Binding Title}" Style="{StaticResource PhoneTextTitle2Style}" TextWrapping="Wrap" />
-                    <TextBlock Text="{Binding Date}" Style="{StaticResource PhoneTextSubtleStyle}" />
+                    <TextBlock Text="{Binding Date, StringFormat=g}" Style="{StaticResource PhoneTextSubtleStyle}" />
                     <TextBlock Text="{Binding Content}" Style="{StaticResource PhoneTextNormalStyle}" TextWrapping="Wrap" />
                     <!-- Use ItemsControl here so that items are laid out inline, and not in a scroll area -->
                     <ItemsControl ItemsSource="{Binding Links}">
@@ -47,16 +47,15 @@
             <DataTemplate x:Key="LectureItemTemplate">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Date, StringFormat=d}"/>
-                        <TextBlock Text=" " />
-                        <TextBlock Text="{Binding StartTime, StringFormat=t}" />
-                        <TextBlock Text="-" />
-                        <TextBlock Text="{Binding EndTime, StringFormat=t}" />
-                        <TextBlock Text=" " />
-                        <TextBlock Text="{Binding Location}" />
-                        <TextBlock Text=" " />
+                        <TextBlock Style="{StaticResource PhoneTextTitle3Style}" Text="{Binding Date, StringFormat=d}" />
+                        <TextBlock Style="{StaticResource PhoneTextTitle3Style}" Text=" " />
+                        <TextBlock Style="{StaticResource PhoneTextTitle3Style}" Text="{Binding StartTime, StringFormat=t}" />
+                        <TextBlock Style="{StaticResource PhoneTextTitle3Style}" Text="-" />
+                        <TextBlock Style="{StaticResource PhoneTextTitle3Style}" Text="{Binding EndTime, StringFormat=t}" />
+                        <TextBlock Style="{StaticResource PhoneTextTitle3Style}" Text=" " />
+                        <TextBlock Style="{StaticResource PhoneTextTitle3Style}" Text="{Binding Location}" />
                     </StackPanel>
-                    <TextBlock Text="{Binding Title}" />
+                    <TextBlock Margin="1" Text="{Binding Title}" />
                     <ItemsControl ItemsSource="{Binding Materials}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
@@ -147,23 +146,38 @@
                 <DataTemplate x:Key="OverviewViewModel">
                     <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <StackPanel>
+                            <TextBlock Text="Course name" Foreground="{StaticResource PhoneAccentBrush}" />
                             <TextBlock TextWrapping="Wrap" Text="{Binding LongName}" />
+                            <TextBlock Text="Status" Foreground="{StaticResource PhoneAccentBrush}" />
                             <TextBlock TextWrapping="Wrap" Text="{Binding Status}" />
+                            <TextBlock Text="Level" Foreground="{StaticResource PhoneAccentBrush}" />
                             <TextBlock TextWrapping="Wrap" Text="{Binding Level}" />
+                            <TextBlock Text="Teaching period" Foreground="{StaticResource PhoneAccentBrush}" />
                             <TextBlock TextWrapping="Wrap" Text="{Binding TeachingPeriod}" />
+                            <TextBlock Text="Workload" Foreground="{StaticResource PhoneAccentBrush}" />
                             <TextBlock TextWrapping="Wrap" Text="{Binding Workload}" />
+                            <TextBlock Text="Learning outcomes" Foreground="{StaticResource PhoneAccentBrush}" />
                             <TextBlock TextWrapping="Wrap" Text="{Binding LearningOutcomes}" />
                             <TextBlock TextWrapping="Wrap" Text="{Binding Content}" />
+                            <TextBlock Text="Assessment" Foreground="{StaticResource PhoneAccentBrush}" />
                             <TextBlock TextWrapping="Wrap" Text="{Binding Assessment}" />
+                            <TextBlock Text="Study material" Foreground="{StaticResource PhoneAccentBrush}" />
                             <TextBlock TextWrapping="Wrap" Text="{Binding StudyMaterial}" />
+                            <TextBlock Text="Grading scale" Foreground="{StaticResource PhoneAccentBrush}" />
                             <TextBlock TextWrapping="Wrap" Text="{Binding GradingScale}" />
+                            <TextBlock Text="Instruction language" Foreground="{StaticResource PhoneAccentBrush}" />
                             <TextBlock TextWrapping="Wrap" Text="{Binding InstructionLanguage}" />
+                            <TextBlock Text="Details" Foreground="{StaticResource PhoneAccentBrush}" />
                             <TextBlock Text="{Binding Details}" />
-                            <TextBlock Text="{Binding OodiUrl}" />
+                            <TextBlock Text="Substitutes" Foreground="{StaticResource PhoneAccentBrush}" />
                             <TextBlock TextWrapping="Wrap" Text="{Binding Substitutes}" />
+                            <TextBlock Text="CEFR Level" Foreground="{StaticResource PhoneAccentBrush}" />
                             <TextBlock TextWrapping="Wrap" Text="{Binding CEFRLevel}" />
+                            <TextBlock Text="Registration" Foreground="{StaticResource PhoneAccentBrush}" />
                             <TextBlock TextWrapping="Wrap" Text="{Binding Registration}" />
+                            <TextBlock Text="Staff" Foreground="{StaticResource PhoneAccentBrush}" />
                             <TextBlock TextWrapping="Wrap" Text="{Binding Staff}" />
+                            <TextBlock Text="Office hours" Foreground="{StaticResource PhoneAccentBrush}" />
                             <TextBlock TextWrapping="Wrap" Text="{Binding OfficeHours}" />
                             <Button Content="Open in Noppa"  Command="{Binding OpenNoppaPage}" />
                             <Button Content="Open in Oodi"  Command="{Binding OpenOodiPage}" />
