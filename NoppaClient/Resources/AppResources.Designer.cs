@@ -99,7 +99,7 @@ namespace NoppaClient.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Noppa.
+        ///   Looks up a localized string similar to noppa.
         /// </summary>
         public static string ApplicationTitle {
             get {
