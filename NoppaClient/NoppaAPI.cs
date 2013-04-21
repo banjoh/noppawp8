@@ -66,7 +66,7 @@ namespace NoppaClient
 
         public static async Task<Course> GetCourse(string course_id)
         {
-            return await NoppaImpl.GetInstance().GetObject<Course>(Cache.PolicyLevel.Short, "/courses/{0}?key={1}", course_id, APIConfigHolder.Key);
+            return await NoppaImpl.GetInstance().GetObject<Course>(Cache.PolicyLevel.Long, "/courses/{0}?key={1}", course_id, APIConfigHolder.Key);
         }
 
         #endregion
