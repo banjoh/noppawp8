@@ -68,6 +68,8 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
+        <view:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </phone:PhoneApplicationPage.Resources>
 
     <!--LayoutRoot is the root grid where all page content is placed-->
@@ -161,6 +163,10 @@
 
             <!--Panorama item one-->
             <phone:PanoramaItem>
+                <phone:PanoramaItem.Header>
+                    <TextBlock Text="{Binding Path=LocalizedResources.DepartmentsTitle, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextTitle1Style}"
+                               Visibility="{Binding IsDepartmentListEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                </phone:PanoramaItem.Header>
                 <!--Single line list with text wrapping and grouping -->
                 <phone:LongListSelector
                     x:Name="DepartmentList"

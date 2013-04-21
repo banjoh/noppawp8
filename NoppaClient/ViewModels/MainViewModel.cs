@@ -55,6 +55,13 @@ namespace NoppaClient.ViewModels
             private set { SetProperty(ref _isDataLoaded, value); }
         }
 
+        private bool _isDepartmentListEmpty = true;
+        public bool IsDepartmentListEmpty
+        {
+            get { return _isDepartmentListEmpty; }
+            private set { SetProperty(ref _isDepartmentListEmpty, value); }
+        }
+
         public MainViewModel(INavigationController navigationController)
         {
             DepartmentActivatedCommand = ControllerUtil.MakeShowDepartmentCommand(navigationController);
@@ -102,6 +109,7 @@ namespace NoppaClient.ViewModels
                     }
 
                     Departments = DepartmentGroup.CreateDepartmentGroups(orgMap, depts);
+                    IsDepartmentListEmpty = Departments.Count == 0;
                 }
             }
             catch (Exception ex)
