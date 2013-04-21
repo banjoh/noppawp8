@@ -135,16 +135,16 @@
     <value>{0}</value>
   </data>
   <data name="DepartmentsTitle" xml:space="preserve">
-    <value>departments</value>
+    <value>avdelningar</value>
   </data>
   <data name="DepartmentTitle" xml:space="preserve">
-    <value>Department</value>
+    <value>Avdelningar</value>
   </data>
   <data name="MyCoursesTitle" xml:space="preserve">
-    <value>my courses</value>
+    <value>mina kurser</value>
   </data>
   <data name="OrganizationTitle" xml:space="preserve">
-    <value>Organization</value>
+    <value>Organisation</value>
   </data>
   <data name="SearchResultsPageTitle" xml:space="preserve">
     <value>Course results for “{0}”</value>
@@ -158,10 +158,10 @@
     <comment>This probably shouldn't be translated</comment>
   </data>
   <data name="LanguageTitle" xml:space="preserve">
-    <value>language</value>
+    <value>språk</value>
   </data>
   <data name="SettingsTitle" xml:space="preserve">
-    <value>settings</value>
+    <value>inställningar</value>
     <comment>Title on settings page</comment>
   </data>
   <data name="SwedishLanguage" xml:space="preserve">
@@ -169,22 +169,22 @@
     <comment>This probably shouldn't be translated</comment>
   </data>
   <data name="UpdateTileLocalSettings" xml:space="preserve">
-    <value>Automatically update primary tile</value>
+    <value>Uppdatera huvudsakliga panelen automatiskt</value>
   </data>
   <data name="AddCourseTileLabel" xml:space="preserve">
-    <value>add course tile</value>
+    <value>tillägg kurspanelens</value>
   </data>
   <data name="RemoveCourseTileLabel" xml:space="preserve">
-    <value>remove course tile</value>
+    <value>radera kurspanelen</value>
   </data>
   <data name="PinCourseTitle" xml:space="preserve">
-    <value>pin</value>
+    <value>fäst</value>
   </data>
   <data name="SearchTitle" xml:space="preserve">
-    <value>search</value>
+    <value>sök</value>
   </data>
   <data name="UnpinCourseTitle" xml:space="preserve">
-    <value>unpin</value>
+    <value>ta loss</value>
   </data>
   <data name="AboutTextXaml" xml:space="preserve">
     <value>&lt;Section xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"&gt;
@@ -202,7 +202,7 @@ by Aura Palmgren, Kari Palenius, Evans Mungai, Vesa Eloranta and Christoffer Ven
     <comment>Try to keep the same formatting if possible. The outermost tag has to have the xmlns property set, or else the Xaml parser will not accept it.</comment>
   </data>
   <data name="AboutTitle" xml:space="preserve">
-    <value>about</value>
+    <value>uppgifter</value>
   </data>
   <data name="SearchHintTextXaml" xml:space="preserve">
     <value>&lt;Section xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"&gt;
@@ -224,48 +224,48 @@ You can search by course name, part of the course name, course code or part of t
     <comment>Try to keep the same formatting if possible. The outermost tag has to have the xmlns property set, or else the Xaml parser will not accept it.</comment>
   </data>
   <data name="AssignmentsTitle" xml:space="preserve">
-    <value>assignments</value>
+    <value>uppgifter</value>
   </data>
   <data name="ExercisesTitle" xml:space="preserve">
-    <value>exerices</value>
+    <value>övningar</value>
   </data>
   <data name="FrontPageTitle" xml:space="preserve">
-    <value>summary</value>
+    <value>sammandrag</value>
   </data>
   <data name="LecturesTitle" xml:space="preserve">
-    <value>lectures</value>
+    <value>föreläsningar</value>
   </data>
   <data name="NewsTitle" xml:space="preserve">
-    <value>news</value>
+    <value>nyheter</value>
   </data>
   <data name="OverviewTitle" xml:space="preserve">
-    <value>overview</value>
+    <value>översikt</value>
   </data>
   <data name="ResultsTitle" xml:space="preserve">
-    <value>results</value>
+    <value>resultat</value>
   </data>
   <data name="EventsTitle" xml:space="preserve">
-    <value>events</value>
+    <value>händelser</value>
   </data>
   <data name="FridayTitle" xml:space="preserve">
-    <value>friday</value>
+    <value>fredag</value>
   </data>
   <data name="MondayTitle" xml:space="preserve">
-    <value>monday</value>
+    <value>måndag</value>
   </data>
   <data name="SaturdayTitle" xml:space="preserve">
-    <value>saturday</value>
+    <value>lördag</value>
   </data>
   <data name="SundayTitle" xml:space="preserve">
-    <value>sunday</value>
+    <value>söndag</value>
   </data>
   <data name="ThursdayTitle" xml:space="preserve">
-    <value>thursday</value>
+    <value>torsdag</value>
   </data>
   <data name="TuesdayTitle" xml:space="preserve">
-    <value>tuesday</value>
+    <value>tisdag</value>
   </data>
   <data name="WednesdayTitle" xml:space="preserve">
-    <value>wednesday</value>
+    <value>onsdag</value>
   </data>
 </root>
