@@ -7,9 +7,23 @@ using NoppaLib;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Collections.Specialized;
 
 namespace NoppaClient.ViewModels
 {
+    public class BatchableObservableCollection<T> : ObservableCollection<T>
+    {
+        /* Incredibly stupid from efficiency standpoint but we'll see how bad it gets. */
+        public void AddRangeSorted(IEnumerable<T> items, Comparison<T> comparison)
+        {
+            CheckReentrancy();
+            foreach (var item in items)
+                Items.Add(item);
+            (Items as List<T>).Sort(comparison);
+            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+        }
+    }
+
     public class MainViewModel : BindableBase
     {
         private ObservableCollection<EventGroup> _events;
@@ -22,8 +36,8 @@ namespace NoppaClient.ViewModels
         private CourseListViewModel _myCourses = new CourseListViewModel(new PhoneNavigationController());
         public CourseListViewModel MyCourses { get { return _myCourses; } }
 
-        private ObservableCollection<CourseNews> _news = new ObservableCollection<CourseNews>();
-        public ObservableCollection<CourseNews> News 
+        private BatchableObservableCollection<CourseNews> _news = new BatchableObservableCollection<CourseNews>();
+        public BatchableObservableCollection<CourseNews> News 
         {
             get { return _news; }
             private set { SetProperty(ref _news, value); }
@@ -125,7 +139,6 @@ namespace NoppaClient.ViewModels
                 var courses = await pinnedCourses.GetCodesAsync();
                 await MyCourses.LoadMyCoursesAsync(pinnedCourses);
 
-                List<CourseNews> news = new List<CourseNews>();
                 List<CourseEvent> events = new List<CourseEvent>();
 
                 /* For each course task to get list of news/events */
@@ -145,7 +158,10 @@ namespace NoppaClient.ViewModels
                     var newsItems = await newsTask;
 
                     if (newsItems != null)
-                        news.AddRange(newsItems);
+                        /* Each add now also sorts the list and updates UI. If there are LOTS of
+                         * news, this will hurt performance. However, at this point I favor immediate
+                         * response so well see how this goes. */
+                        News.AddRangeSorted(newsItems, (a, b) => a.Date.CompareTo(b.Date));
 
                     var eventTask = await Task.WhenAny(eventTasks);
                     eventTasks.Remove(eventTask);
@@ -155,10 +171,6 @@ namespace NoppaClient.ViewModels
                         events.AddRange(eventItems);
                 }
 
-                /* Figure out a better sorting strategy */
-                news.Sort((a, b) => a.Date.CompareTo(b.Date));
-
-                News = new ObservableCollection<CourseNews>(news);
                 Events = EventGroup.CreateEventGroups(events);
             }
             catch (Exception ex)
