@@ -143,9 +143,19 @@ namespace NoppaClient.ViewModels
         {
             Courses.Clear();
             var courses = await pinnedCourses.GetCodesAsync();
-            foreach (string c in courses){
-                Course course = await NoppaAPI.GetCourse(c);
-                Courses.Add(course);
+
+            var tasks = new List<Task<Course>>();
+
+            foreach (string c in courses) {
+                tasks.Add(Task.Run(async () => await NoppaAPI.GetCourse(c) ));
+            }
+
+            while (tasks.Count > 0)
+            {
+                var course = await Task.WhenAny(tasks);
+                tasks.Remove(course);
+
+                Courses.Add(await course);
             }
             IsLoading = false;
         }
