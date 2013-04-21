@@ -29,8 +29,8 @@
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel Grid.Row="0" Margin="12,17,0,28">
             <TextBlock Text="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}" TextWrapping="NoWrap" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeExtraLarge}" />
-            <TextBlock Text="{Binding Title}" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
-            <ProgressBar IsEnabled="True" IsIndeterminate="True" VerticalAlignment="Stretch" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <TextBlock Text="{Binding Title}" Foreground="#00C13A" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            <ProgressBar IsEnabled="True" IsIndeterminate="True" VerticalAlignment="Stretch" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}" x:Name="customIndeterminateProgressBar" Style="{StaticResource CustomIndeterminateProgressBar}"/>
         </StackPanel>
 
         <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="1"
