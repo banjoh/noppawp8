@@ -128,15 +128,31 @@ namespace NoppaClient.ViewModels
                 List<CourseNews> news = new List<CourseNews>();
                 List<CourseEvent> events = new List<CourseEvent>();
 
+                /* For each course task to get list of news/events */
+                var newsTasks = new List<Task<List<CourseNews>>>();
+                var eventTasks = new List<Task<List<CourseEvent>>>();
+
                 foreach (var courseId in courses)
                 {
-                    List<CourseNews> courseNews = await NoppaAPI.GetCourseNews(courseId);
-                    if (courseNews != null)
-                        news.AddRange(courseNews);
+                    newsTasks.Add(Task.Run(async () => await NoppaAPI.GetCourseNews(courseId)));
+                    eventTasks.Add(Task.Run(async () => await NoppaAPI.GetCourseEvents(courseId)));
+                }
 
-                    List<CourseEvent> courseEvents = await NoppaAPI.GetCourseEvents(courseId);
-                    if (courseEvents != null)
-                        events.AddRange(courseEvents);
+                while (newsTasks.Count > 0 || eventTasks.Count > 0)
+                {
+                    var newsTask = await Task.WhenAny(newsTasks);
+                    newsTasks.Remove(newsTask);
+                    var newsItems = await newsTask;
+
+                    if (newsItems != null)
+                        news.AddRange(newsItems);
+
+                    var eventTask = await Task.WhenAny(eventTasks);
+                    eventTasks.Remove(eventTask);
+                    var eventItems = await eventTask;
+
+                    if (eventItems != null)
+                        events.AddRange(eventItems);
                 }
 
                 /* Figure out a better sorting strategy */
