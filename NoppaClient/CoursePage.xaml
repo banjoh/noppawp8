@@ -22,10 +22,10 @@
             <view:OpenBrowserCommand x:Key="OpenBrowserCommand" />
  
             <DataTemplate x:Key="NewsItemTemplate">
-                <StackPanel Margin="0,0,0,0">
-                    <TextBlock Text="{Binding Title}" Style="{StaticResource PhoneTextTitle2Style}" TextWrapping="Wrap" />
-                    <TextBlock Text="{Binding Date, StringFormat=g}" Style="{StaticResource PhoneTextSubtleStyle}" />
-                    <TextBlock Text="{Binding Content}" Style="{StaticResource PhoneTextNormalStyle}" TextWrapping="Wrap" />
+                <StackPanel Margin="0,16">
+                    <TextBlock Text="{Binding Date, StringFormat=g}" Foreground="{StaticResource PhoneAccentBrush}" />
+                    <TextBlock Text="{Binding Title}" FontSize="{StaticResource PhoneFontSizeMediumLarge}" TextWrapping="Wrap" />
+                    <TextBlock Text="{Binding Content}" Style="{StaticResource PhoneTextNormalStyle}" TextWrapping="Wrap" Margin="0,6"/>
                     <!-- Use ItemsControl here so that items are laid out inline, and not in a scroll area -->
                     <ItemsControl ItemsSource="{Binding Links}">
                         <ItemsControl.ItemTemplate>
