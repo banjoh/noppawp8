@@ -161,7 +161,7 @@ namespace NoppaClient.ViewModels
                         /* Each add now also sorts the list and updates UI. If there are LOTS of
                          * news, this will hurt performance. However, at this point I favor immediate
                          * response so well see how this goes. */
-                        News.AddRangeSorted(newsItems, (a, b) => a.Date.CompareTo(b.Date));
+                        News.AddRangeSorted(newsItems, (a, b) => b.Date.CompareTo(a.Date));
 
                     var eventTask = await Task.WhenAny(eventTasks);
                     eventTasks.Remove(eventTask);
