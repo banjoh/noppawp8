@@ -45,17 +45,16 @@
             </DataTemplate>
 
             <DataTemplate x:Key="LectureItemTemplate">
-                <StackPanel>
+                <StackPanel Margin="0,24">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Style="{StaticResource PhoneTextTitle3Style}" Text="{Binding Date, StringFormat=d}" />
-                        <TextBlock Style="{StaticResource PhoneTextTitle3Style}" Text=" " />
-                        <TextBlock Style="{StaticResource PhoneTextTitle3Style}" Text="{Binding StartTime, StringFormat=t}" />
-                        <TextBlock Style="{StaticResource PhoneTextTitle3Style}" Text="-" />
-                        <TextBlock Style="{StaticResource PhoneTextTitle3Style}" Text="{Binding EndTime, StringFormat=t}" />
-                        <TextBlock Style="{StaticResource PhoneTextTitle3Style}" Text=" " />
-                        <TextBlock Style="{StaticResource PhoneTextTitle3Style}" Text="{Binding Location}" />
+                        <TextBlock Foreground="{StaticResource PhoneAccentBrush}" Text="{Binding Date, StringFormat=d}" />
+                        <TextBlock Foreground="{StaticResource PhoneAccentBrush}" Text=" " />
+                        <TextBlock Foreground="{StaticResource PhoneAccentBrush}" Text="{Binding StartTime, StringFormat=t}" />
+                        <TextBlock Foreground="{StaticResource PhoneAccentBrush}" Text="-" />
+                        <TextBlock Foreground="{StaticResource PhoneAccentBrush}" Text="{Binding EndTime, StringFormat=t}" />
                     </StackPanel>
-                    <TextBlock Margin="1" Text="{Binding Title}" />
+                    <TextBlock Margin="1" Text="{Binding Title}" TextWrapping="Wrap" FontSize="{StaticResource PhoneFontSizeMediumLarge}" />
+                    <TextBlock Foreground="{StaticResource PhoneSubtleBrush}" Text="{Binding Location}" />
                     <ItemsControl ItemsSource="{Binding Materials}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
@@ -69,44 +68,45 @@
             </DataTemplate>
 
             <DataTemplate x:Key="ExerciseItemTemplate">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{Binding Group}"/>
-                    <TextBlock Text=" " />
-                    <TextBlock Text="{Binding Weekday}" />
-                    <TextBlock Text=" " />
-                    <TextBlock Text="{Binding StartTime}" />
-                    <TextBlock Text="-" />
-                    <TextBlock Text="{Binding EndTime}" />
-                    <TextBlock Text=" " />
-                    <TextBlock Text="{Binding Location}" />
-                    <TextBlock Text=" " />
-                    <TextBlock Text="{Binding StartDate}" />
-                    <TextBlock Text=" - " />
-                    <TextBlock Text="{Binding EndDate}" />
+                <StackPanel Margin="0,24">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Foreground="{StaticResource PhoneAccentBrush}" Text="{Binding Weekday}" />
+                        <TextBlock Foreground="{StaticResource PhoneAccentBrush}" Text=" " />
+                        <TextBlock Foreground="{StaticResource PhoneAccentBrush}" Text="{Binding StartTime, StringFormat=t}" />
+                        <TextBlock Foreground="{StaticResource PhoneAccentBrush}" Text="-" />
+                        <TextBlock Foreground="{StaticResource PhoneAccentBrush}" Text="{Binding EndTime, StringFormat=t}" />
+                        <TextBlock Foreground="{StaticResource PhoneAccentBrush}" Text=" " />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock FontSize="{StaticResource PhoneFontSizeMediumLarge}" Text="{Binding Group}"/>
+                        <TextBlock FontSize="{StaticResource PhoneFontSizeMediumLarge}" Text=" " />
+                        <TextBlock FontSize="{StaticResource PhoneFontSizeMediumLarge}" Text="{Binding Location}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding StartDate, StringFormat=d}" />
+                        <TextBlock Text=" - " />
+                        <TextBlock Text="{Binding EndDate, StringFormat=d}" />
+                    </StackPanel>
                 </StackPanel>
             </DataTemplate>
 
            <DataTemplate x:Key="ResultItemTemplate">
-                <StackPanel>
+                <StackPanel Margin="0,24">
+                    <TextBlock Foreground="{StaticResource PhoneAccentBrush}" Text="{Binding Date, StringFormat=d}"/>
+                    <TextBlock FontSize="{StaticResource PhoneFontSizeMediumLarge}" Text="{Binding GradeName}" />
+                    <Button Content="Results" Command="{StaticResource OpenBrowserCommand}" CommandParameter="{Binding Url}" />
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Date}"/>
-                        <TextBlock Text=" " />
-                        <TextBlock Text="{Binding GradeName}" />
-                    </StackPanel>
-                        <TextBlock Text="Results" />
-                        <Button Content="Results" Command="{StaticResource OpenBrowserCommand}" CommandParameter="{Binding Url}" />
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Grade review:" />
+                        <TextBlock Foreground="{StaticResource PhoneSubtleBrush}" Text="Grade review:" />
                         <TextBlock Text="    " />
                         <TextBlock Text="{Binding GradeReview}" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Grade scale:" />
+                        <TextBlock Foreground="{StaticResource PhoneSubtleBrush}" Text="Grade scale:" />
                         <TextBlock Text="    " />
                         <TextBlock Text="{Binding GradeScale}" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Result published:" />
+                        <TextBlock Foreground="{StaticResource PhoneSubtleBrush}" Text="Result published:" />
                         <TextBlock Text="    " />
                         <TextBlock Text="{Binding Published}" />
                     </StackPanel>
@@ -144,38 +144,38 @@
                     <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <StackPanel>
                             <TextBlock Text="Course name" Foreground="{StaticResource PhoneAccentBrush}" />
-                            <TextBlock TextWrapping="Wrap" Text="{Binding LongName}" />
+                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding LongName}" />
                             <TextBlock Text="Status" Foreground="{StaticResource PhoneAccentBrush}" />
-                            <TextBlock TextWrapping="Wrap" Text="{Binding Status}" />
+                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding Status}" />
                             <TextBlock Text="Level" Foreground="{StaticResource PhoneAccentBrush}" />
-                            <TextBlock TextWrapping="Wrap" Text="{Binding Level}" />
+                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding Level}" />
                             <TextBlock Text="Teaching period" Foreground="{StaticResource PhoneAccentBrush}" />
-                            <TextBlock TextWrapping="Wrap" Text="{Binding TeachingPeriod}" />
+                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding TeachingPeriod}" />
                             <TextBlock Text="Workload" Foreground="{StaticResource PhoneAccentBrush}" />
-                            <TextBlock TextWrapping="Wrap" Text="{Binding Workload}" />
+                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding Workload}" />
                             <TextBlock Text="Learning outcomes" Foreground="{StaticResource PhoneAccentBrush}" />
-                            <TextBlock TextWrapping="Wrap" Text="{Binding LearningOutcomes}" />
-                            <TextBlock TextWrapping="Wrap" Text="{Binding Content}" />
+                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding LearningOutcomes}" />
+                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding Content}" />
                             <TextBlock Text="Assessment" Foreground="{StaticResource PhoneAccentBrush}" />
-                            <TextBlock TextWrapping="Wrap" Text="{Binding Assessment}" />
+                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding Assessment}" />
                             <TextBlock Text="Study material" Foreground="{StaticResource PhoneAccentBrush}" />
-                            <TextBlock TextWrapping="Wrap" Text="{Binding StudyMaterial}" />
+                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding StudyMaterial}" />
                             <TextBlock Text="Grading scale" Foreground="{StaticResource PhoneAccentBrush}" />
-                            <TextBlock TextWrapping="Wrap" Text="{Binding GradingScale}" />
+                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding GradingScale}" />
                             <TextBlock Text="Instruction language" Foreground="{StaticResource PhoneAccentBrush}" />
-                            <TextBlock TextWrapping="Wrap" Text="{Binding InstructionLanguage}" />
+                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding InstructionLanguage}" />
                             <TextBlock Text="Details" Foreground="{StaticResource PhoneAccentBrush}" />
-                            <TextBlock Text="{Binding Details}" />
+                            <TextBlock Text="{Binding Details}" Margin="4,4" />
                             <TextBlock Text="Substitutes" Foreground="{StaticResource PhoneAccentBrush}" />
-                            <TextBlock TextWrapping="Wrap" Text="{Binding Substitutes}" />
+                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding Substitutes}" />
                             <TextBlock Text="CEFR Level" Foreground="{StaticResource PhoneAccentBrush}" />
-                            <TextBlock TextWrapping="Wrap" Text="{Binding CEFRLevel}" />
+                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding CEFRLevel}" />
                             <TextBlock Text="Registration" Foreground="{StaticResource PhoneAccentBrush}" />
-                            <TextBlock TextWrapping="Wrap" Text="{Binding Registration}" />
+                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding Registration}" />
                             <TextBlock Text="Staff" Foreground="{StaticResource PhoneAccentBrush}" />
-                            <TextBlock TextWrapping="Wrap" Text="{Binding Staff}" />
+                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding Staff}" />
                             <TextBlock Text="Office hours" Foreground="{StaticResource PhoneAccentBrush}" />
-                            <TextBlock TextWrapping="Wrap" Text="{Binding OfficeHours}" />
+                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding OfficeHours}" />
                             <Button Content="Open in Noppa"  Command="{Binding OpenNoppaPage}" />
                             <Button Content="Open in Oodi"  Command="{Binding OpenOodiPage}" />
                         </StackPanel>
@@ -194,7 +194,7 @@
                 <DataTemplate x:Key="LecturesViewModel">
                     <ListBox x:Name="LectureList"
                         Margin="0,0,-22,0"
-                        HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                        HorizontalAlignment="Left" VerticalAlignment="Stretch"
                         ItemTemplate="{StaticResource LectureItemTemplate}"
                         ItemsSource="{Binding Lectures}">
                     </ListBox>
@@ -203,7 +203,7 @@
                 <DataTemplate x:Key="ExercisesViewModel">
                     <ListBox
                     Margin="0,0,-22,0"
-                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                    HorizontalAlignment="Left"  VerticalAlignment="Stretch"
                     ItemTemplate="{StaticResource ExerciseItemTemplate}"
                     ItemsSource="{Binding Exercises}">
                     </ListBox>
