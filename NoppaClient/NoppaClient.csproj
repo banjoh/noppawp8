@@ -104,7 +104,6 @@
     <Compile Include="CourseSearchPage.xaml.cs">
       <DependentUpon>CourseSearchPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CourseTile.cs" />
     <Compile Include="Detail.cs" />
     <Compile Include="EventPage.xaml.cs">
       <DependentUpon>EventPage.xaml</DependentUpon>

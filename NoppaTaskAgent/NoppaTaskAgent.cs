@@ -17,9 +17,7 @@ namespace NoppaTaskAgent
 {
     public class NoppaTaskAgent : ScheduledTaskAgent
     {
-        /// <remarks>
-        /// ScheduledAgent constructor, initializes the UnhandledException handler
-        /// </remarks>
+        // ScheduledAgent constructor, initializes the UnhandledException handler
         static NoppaTaskAgent()
         {
             // Subscribe to the managed exception handler
@@ -29,7 +27,7 @@ namespace NoppaTaskAgent
             });
         }
 
-        /// Code to execute on Unhandled Exceptions
+        // Code to execute on Unhandled Exceptions
         private static void UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e)
         {
             if (Debugger.IsAttached)
@@ -37,83 +35,117 @@ namespace NoppaTaskAgent
                 // An unhandled exception has occurred; break into the debugger
                 Debugger.Break();
             }
-
-            if (e != null && e.ExceptionObject != null && e.ExceptionObject.Message != null)
-            {
-                System.Diagnostics.Debug.WriteLine("Background agent exception: {0}", e.ExceptionObject.Message);
-            }
         }
 
-        /// <summary>
-        /// Agent that runs a scheduled task
-        /// </summary>
-        /// <param name="task">
-        /// The invoked task
-        /// </param>
-        /// <remarks>
-        /// This method is called when a periodic or resource intensive task is invoked
-        /// </remarks>
+        // This method is called when a periodic or resource intensive task is invoked by the system
         protected override void OnInvoke(ScheduledTask task)
         {
             System.Diagnostics.Debug.WriteLine("Noppa background agent started");
 
-            //TODO: To use the CACHE or not to use it?
-
-            PinnedCourses pc = new PinnedCourses();
-            Task<ObservableCollection<string>> t = pc.GetCodesAsync();
-            t.Wait();
-            ObservableCollection<string> codes = t.Result;
-
-            // Clear all the tiles
-            if (codes == null || codes.Count <= 0)
+            try
             {
+                // Clear all tiles first
                 ClearTiles();
-            }
-            // Update tiles with data
-            else
-            {
-                Task<List<CourseNews>>[] asyncOps = (from code in codes select GetCourseNewsAsync(code)).ToArray();
-                try
+
+                Collection<string> codes = GetCourseCodes();
+                
+                if (codes.Count > 0)
                 {
-                    Task.WaitAll(asyncOps, new TimeSpan(0, 0, 20));   // Wait for 20 seconds max. Might throw a timeout exception
+                    // Update tiles with data
+                    Dictionary<string, Task<List<CourseNews>>> asyncOps = new Dictionary<string, Task<List<CourseNews>>>();
+                    foreach (string code in codes)
+                    {
+                        asyncOps.Add(code, GetCourseNewsAsync(code));
+                    }
+                    
+                    Task.WaitAll(asyncOps.Values.ToArray(), new TimeSpan(0, 0, 20));   // Wait for 20 seconds max. Might throw a timeout exception
+                    
                     int count = 0;
-                    foreach (Task<List<CourseNews>> op in asyncOps)
+                    DateTime dt = default(DateTime);
+                    CourseNews latest = null;
+
+                    foreach (string code in asyncOps.Keys)
                     {
-                        List<CourseNews> news = op.Result;
+                        List<CourseNews> news = asyncOps[code].Result;
+                        CourseTile.Update(code, news.Count);
                         count += news.Count;
-                    }
 
-                    // Tile update
-                    ShellTile primaryTile = ShellTile.ActiveTiles.First();
-
-                    //If tile was found then update the tile
-                    if (primaryTile != null)
-                    {
-                        //TODO: Get content from the network
-                        IconicTileData data = new IconicTileData
+                        // Get the latest piece of news
+                        foreach (CourseNews n in news)
                         {
-                            Count = count,
-                            WideContent1 = "Distributed Systems",
-                            WideContent2 = "Lecture has been updated",
-                            WideContent3 = "T1 Building"
-                        };
-
-                        primaryTile.Update(data);
+                            if (n.Date > dt)
+                            {
+                                dt = n.Date;
+                                latest = n;
+                            }
+                        }
                     }
+
+                    UpdatePrimaryTile(latest, count);
                 }
-                catch
-                { 
-                    // Exception caught. Do nothing
+
+                System.Diagnostics.Debug.WriteLine("Noppa background agent ended successfully");
+            }
+            catch (Exception e)
+            {
+                // Catch all exceptions. The agent should never throw an exception
+                System.Diagnostics.Debug.WriteLine("Background agent exception: {0}", e.Message);
+                
+                if (Debugger.IsAttached)
+                {
+                    Debugger.Break();
                 }
             }
 
             NotifyComplete();
-            System.Diagnostics.Debug.WriteLine("Noppa background agent ended successfully");
+        }
+
+        private Collection<string> GetCourseCodes()
+        {
+            Task<ObservableCollection<string>> t = new PinnedCourses().GetCodesAsync();
+            t.Wait();
+
+            ObservableCollection<string> codes = t.Result;
+
+            foreach (ShellTile tile in ShellTile.ActiveTiles)
+            {
+                string code = CourseTile.GetCourseCode(tile.NavigationUri);
+                if (code != null && codes.Contains(code) == false)
+                {
+                    codes.Add(code);
+                }
+            }
+
+            return t.Result;
         }
 
         private Task<List<CourseNews>> GetCourseNewsAsync(string course_id)
         {
             return NoppaImpl.GetInstance().GetObject<List<CourseNews>>(Cache.PolicyLevel.BypassCache, "/courses/{0}/news?key={1}", course_id, APIConfigHolder.Key);
+        }
+
+        private void UpdatePrimaryTile(CourseNews news, int count)
+        {
+            // Tile update
+            ShellTile primaryTile = ShellTile.ActiveTiles.First();
+
+            //If tile was found then update the tile
+            if (primaryTile != null)
+            {
+                //TODO: Get content from the network
+                IconicTileData data = news == null 
+                    ? new IconicTileData { Count = 0 }
+                    : new IconicTileData
+                    {
+                        Count = count,
+                        // TODO: Adjust length of the text
+                        WideContent1 = news.Title,
+                        WideContent2 = news.Content,
+                        WideContent3 = news.Content
+                    };
+
+                primaryTile.Update(data);
+            }
         }
 
         private void ClearTiles()

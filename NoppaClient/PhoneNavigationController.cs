@@ -7,7 +7,7 @@ using System.Windows.Input;
 using NoppaClient.ViewModels;
 using NoppaLib.DataModel;
 using Microsoft.Phone.Controls;
-using System.Net;
+using NoppaLib;
 
 namespace NoppaClient
 {
@@ -23,18 +23,18 @@ namespace NoppaClient
 
         public void ShowCourse(Course course)
         {
-            _frame.Navigate(MakeCoursePageUri(course));
+            _frame.Navigate(PhoneNavigationController.MakeCoursePageUri(course));
         }
 
         public void ShowDepartment(DepartmentProxy department)
         {
-            _frame.Navigate(MakeUri("/CourseListPage.xaml", "content", "department", "id", department.Id));
+            _frame.Navigate(NoppaUtility.MakeUri("/CourseListPage.xaml", "content", "department", "id", department.Id));
         }
 
         public void ShowCourseEvent(CourseEvent courseEvent)
         {
             // Pass the whole event as navigation parameters
-            _frame.Navigate(MakeUri("/EventPage.xaml",
+            _frame.Navigate(NoppaUtility.MakeUri("/EventPage.xaml",
                                     "course_id",  courseEvent.CourseId,
                                     "type", courseEvent.Type,
                                     "title", courseEvent.Title,
@@ -48,39 +48,27 @@ namespace NoppaClient
 
         public void ShowCourseSearch()
         {
-            _frame.Navigate(MakeUri("/CourseSearchPage.xaml"));
+            _frame.Navigate(NoppaUtility.MakeUri("/CourseSearchPage.xaml"));
         }
 
         public void ShowSettings()
         {
-            _frame.Navigate(MakeUri("/SettingsPage.xaml"));
+            _frame.Navigate(NoppaUtility.MakeUri("/SettingsPage.xaml"));
         }
 
         public void ShowHome()
         {
-            _frame.Navigate(MakeUri("/MainPage.xaml"));
+            _frame.Navigate(NoppaUtility.MakeUri("/MainPage.xaml"));
         }
 
         public void ShowAbout()
         {
-            _frame.Navigate(MakeUri("/AboutPage.xaml"));
-        }
-
-        private static Uri MakeUri(string relativePath, params object[] parameters)
-        {
-            List<string> query = new List<string>();
-
-            for (int i = 0; i + 1 < parameters.Length; i += 2)
-            {
-                query.Add(HttpUtility.UrlEncode(parameters[i].ToString()) + '=' + HttpUtility.UrlEncode(parameters[i + 1].ToString()));
-            }
-
-            return new Uri(relativePath + (query.Count == 0 ? "" : "?" + String.Join("&", query)), UriKind.Relative);
+            _frame.Navigate(NoppaUtility.MakeUri("/AboutPage.xaml"));
         }
 
         public static Uri MakeCoursePageUri(Course course)
         {
-            return MakeUri("/CoursePage.xaml", "id", course.Id);
+            return NoppaUtility.MakeUri("/CoursePage.xaml", "id", course.Id);
         }
     }
 }
