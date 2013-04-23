@@ -11,21 +11,21 @@ namespace NoppaClient.ViewModels
 {
     public class EventGroup : ObservableCollection<CourseEvent>
     {
-        private string _eventDate;
-        public string EventDate { get { return _eventDate; } }
+        private DateTime _eventDate;
+        public DateTime EventDate { get { return _eventDate; } }
 
-        public EventGroup(string eventDate)
+        public EventGroup(DateTime eventDate)
         {
             _eventDate = eventDate;
         }
 
         public static ObservableCollection<EventGroup> CreateEventGroups(IEnumerable<CourseEvent> items)
         {
-            var groups = new Dictionary<string, EventGroup>();
+            var groups = new Dictionary<DateTime, EventGroup>();
 
             foreach (var item in items)
             {
-                string start = item.StartDate.ToShortDateString();
+                DateTime start = item.StartDate;
                 if (groups.ContainsKey(start))
                 {
                     groups[start].Add(item);

@@ -49,7 +49,7 @@
 
         <DataTemplate x:Key="EventGroupHeaderTemplate">
             <Border Background="Transparent" Padding="5">
-                <TextBlock Text="{Binding EventDate}" Foreground="{StaticResource PhoneSubtleBrush}" 
+                <TextBlock Text="{Binding EventDate, StringFormat='d'}" Foreground="{StaticResource PhoneSubtleBrush}" 
                            FontSize="24" Padding="6,20,6,6" 
                            FontFamily="{StaticResource PhoneFontFamilySemiLight}" 
                            HorizontalAlignment="Left" VerticalAlignment="Center"/>
@@ -61,7 +61,7 @@
             <Setter Property="ItemTemplate">
                 <Setter.Value>
                     <DataTemplate>
-                        <TextBlock Text="{Binding EventDate}" 
+                        <TextBlock Text="{Binding EventDate, StringFormat='d'}" 
                                    FontFamily="{StaticResource PhoneFontFamilySemiBold}" FontSize="48" Padding="6"
                                    Foreground="{Binding Converter={StaticResource ForegroundConverter}}" VerticalAlignment="Center"/>
                     </DataTemplate>
