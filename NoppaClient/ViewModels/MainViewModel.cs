@@ -8,19 +8,54 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Collections.Specialized;
+using System.Linq;
 
 namespace NoppaClient.ViewModels
 {
-    public class BatchableObservableCollection<T> : ObservableCollection<T>
+    public class NewsGroupItem : ObservableCollection<CourseNews>
     {
-        /* Incredibly stupid from efficiency standpoint but we'll see how bad it gets. */
-        public void AddRangeSorted(IEnumerable<T> items, Comparison<T> comparison)
+        private string _newsDate;
+        public string NewsDate { get { return _newsDate; } }
+        private DateTime _dtnewsDate;
+        public DateTime dtNewsDate { get { return _dtnewsDate; } }
+
+        public NewsGroupItem(string newsDate, DateTime dtnewsDate)
+            : base()
         {
-            CheckReentrancy();
-            foreach (var item in items)
-                Items.Add(item);
-            (Items as List<T>).Sort(comparison);
-            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+            _newsDate = newsDate;
+            _dtnewsDate = dtnewsDate;
+        }
+    }
+
+    public class NewsGroup : ObservableCollection<NewsGroupItem>
+    {
+        public NewsGroup() : base() { }
+
+        public async void AddNewItems(List<CourseNews> courseNews)
+        {
+            foreach (var c in courseNews)
+            {
+                bool found = false;
+                foreach (NewsGroupItem item in Items)
+                {
+                    if (item.NewsDate == c.Date.ToShortDateString())
+                    {
+                        found = true;
+                        item.Add(c);
+                        break;
+                    }
+                }
+                if (!found)
+                {
+                    NewsGroupItem newItem = new NewsGroupItem(c.Date.ToShortDateString(), c.Date);
+                    newItem.Add(c);
+                    Add(newItem);
+                }
+            }
+            var sortedList = this.OrderByDescending(x => x.dtNewsDate).ToList();
+            this.Clear();
+            foreach (var sortedItem in sortedList)
+                this.Add(sortedItem);
         }
     }
 
@@ -36,8 +71,8 @@ namespace NoppaClient.ViewModels
         private CourseListViewModel _myCourses = new CourseListViewModel(new PhoneNavigationController());
         public CourseListViewModel MyCourses { get { return _myCourses; } }
 
-        private BatchableObservableCollection<CourseNews> _news = new BatchableObservableCollection<CourseNews>();
-        public BatchableObservableCollection<CourseNews> News 
+        private NewsGroup _news;
+        public NewsGroup News
         {
             get { return _news; }
             private set { SetProperty(ref _news, value); }
@@ -56,6 +91,7 @@ namespace NoppaClient.ViewModels
         public ICommand ShowSearchCommand { get; private set; }
         public ICommand ActivateCourseCommand { get; private set; }
         public ICommand EventActivatedCommand { get; private set; }
+        public ICommand NewsActivatedCommand { get; private set; }
 
         public string Title
         {
@@ -136,6 +172,7 @@ namespace NoppaClient.ViewModels
         {
             try
             {
+                News = new NewsGroup();
                 var courses = await pinnedCourses.GetCodesAsync();
                 await MyCourses.LoadMyCoursesAsync(pinnedCourses);
 
@@ -161,7 +198,7 @@ namespace NoppaClient.ViewModels
                         /* Each add now also sorts the list and updates UI. If there are LOTS of
                          * news, this will hurt performance. However, at this point I favor immediate
                          * response so well see how this goes. */
-                        News.AddRangeSorted(newsItems, (a, b) => b.Date.CompareTo(a.Date));
+                        News.AddNewItems(newsItems);
 
                     var eventTask = await Task.WhenAny(eventTasks);
                     eventTasks.Remove(eventTask);

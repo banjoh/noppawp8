@@ -68,7 +68,37 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
+
+        <DataTemplate x:Key="NewsItemTemplate">
+            <StackPanel Margin="0,-3,0,12">
+                <TextBlock Text="{Binding Title}" TextWrapping="Wrap" Margin="10,0" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeLarge}" />
+                <TextBlock Text="{Binding Content}" TextWrapping="Wrap" Margin="10,-2,10,0" Style="{StaticResource PhoneTextSubtleStyle}" />
+       
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="NewsGroupHeaderTemplate">
+            <Border Background="Transparent" Padding="5">
+                <TextBlock Text="{Binding NewsDate, StringFormat='d'}" Foreground="{StaticResource PhoneSubtleBrush}" 
+                           FontSize="24" Padding="6,20,6,6" 
+                           FontFamily="{StaticResource PhoneFontFamilySemiLight}" 
+                           HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            </Border>
+        </DataTemplate>
+
+        <Style x:Key="NewsJumpListStyle" TargetType="phone:LongListSelector">
+            <Setter Property="LayoutMode" Value="List" />
+            <Setter Property="ItemTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding NewsDate, StringFormat='d'}" 
+                                   FontFamily="{StaticResource PhoneFontFamilySemiBold}" FontSize="48" Padding="6"
+                                   Foreground="{Binding Converter={StaticResource ForegroundConverter}}" VerticalAlignment="Center"/>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <view:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </phone:PhoneApplicationPage.Resources>
 
@@ -143,23 +173,20 @@
                 <phone:PanoramaItem.Header>
                     <TextBlock Margin="0" Text="{Binding Path=LocalizedResources.NewsTitle, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextTitle1Style}" />
                 </phone:PanoramaItem.Header>
-                <!--Double line list with image placeholder and text wrapping using a floating header that scrolls with the content-->
-                <phone:LongListSelector Margin="0,-38,-22,2" ItemsSource="{Binding News}">
-                    <phone:LongListSelector.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal" Margin="12,2,0,4" Height="105" Width="432">
-                                <!--Replace rectangle with image-->
-                                <Border BorderThickness="1" Width="99" Height="99" BorderBrush="#FFFFC700" Background="#FFFFC700"/>
-                                <StackPanel Width="311" Margin="8,-7,0,0">
-                                    <TextBlock Text="{Binding Title}" TextWrapping="Wrap" Margin="10,0" Style="{StaticResource PhoneTextLargeStyle}" FontSize="{StaticResource PhoneFontSizeMedium}" />
-                                    <TextBlock Text="{Binding Content}" TextWrapping="Wrap" Margin="10,-2,10,0" Style="{StaticResource PhoneTextSubtleStyle}" />
-                                </StackPanel>
-                            </StackPanel>
-                        </DataTemplate>
-                    </phone:LongListSelector.ItemTemplate>
-                </phone:LongListSelector>
+                <!--Single line list with text wrapping and grouping -->
+                <phone:LongListSelector
+                    x:Name="NewsList"
+                    JumpListStyle="{StaticResource NewsJumpListStyle}"
+                    ItemTemplate="{StaticResource NewsItemTemplate}"
+                    GroupHeaderTemplate="{StaticResource NewsGroupHeaderTemplate}"
+                    LayoutMode="List"
+                    IsGroupingEnabled="True"
+                    Background="Transparent"
+                    HideEmptyGroups="True"
+                    view:ItemClickCommand.Command="{Binding NewsActivatedCommand}"
+                    Height="445" Margin="0,-41,-22,-1"
+                    ItemsSource="{Binding News}" VerticalAlignment="Bottom" />
             </phone:PanoramaItem>
-
 
             <!--Panorama item one-->
             <phone:PanoramaItem>
