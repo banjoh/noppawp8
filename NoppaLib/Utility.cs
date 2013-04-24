@@ -16,7 +16,9 @@ namespace NoppaLib
 
             for (int i = 0; i + 1 < parameters.Length; i += 2)
             {
-                query.Add(HttpUtility.UrlEncode(parameters[i].ToString()) + '=' + HttpUtility.UrlEncode(parameters[i + 1].ToString()));
+                var key = parameters[i] != null ? parameters[i].ToString() : "";
+                var val = parameters[i + 1] != null ? parameters[i + 1].ToString() : "";
+                query.Add(HttpUtility.UrlEncode(key) + '=' + HttpUtility.UrlEncode(val));
             }
 
             return new Uri(relativePath + (query.Count == 0 ? "" : "?" + String.Join("&", query)), UriKind.Relative);
