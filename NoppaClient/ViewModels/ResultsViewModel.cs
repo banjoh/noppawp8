@@ -13,7 +13,10 @@ namespace NoppaClient.ViewModels
     public class ResultsViewModel : CourseContentViewModel
     {
         private ObservableCollection<CourseResult> _results = new ObservableCollection<CourseResult>();
-        public ObservableCollection<CourseResult> Results { get { return _results; } }
+        public ObservableCollection<CourseResult> Results {
+            get { return _results; }
+            private set { SetProperty(ref _results, value); }
+        }
 
         public ResultsViewModel()
         {
@@ -26,10 +29,8 @@ namespace NoppaClient.ViewModels
             List<CourseResult> results = await NoppaAPI.GetCourseResults(id);
             if (results != null)
             {
-                foreach (var r in results)
-                {
-                    _results.Add(r);
-                }
+                results.Sort((a, b) => b.Date.CompareTo(a.Date));
+                Results = new ObservableCollection<CourseResult>(results);
             }
             IsEmpty = results == null || results.Count == 0;
         }
