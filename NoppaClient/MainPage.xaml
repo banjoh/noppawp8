@@ -98,7 +98,7 @@
         </Style>
 
         <DataTemplate x:Key="CourseItemTemplate">
-            <StackPanel Margin="0,-6,0,12">
+            <StackPanel Margin="0,12">
                 <TextBlock Text="{Binding Id}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeExtraLarge}" Foreground="{StaticResource PhoneTextHighContrastBrush}" />
                 <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeLarge}" Foreground="{StaticResource PhoneTextMidContrastBrush}" />
             </StackPanel>
@@ -131,9 +131,11 @@
 
         <!--Panorama control-->
         <phone:Panorama Title="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}" Margin="0,-1,0,1">
+            <!--
             <phone:Panorama.Background>
                 <ImageBrush ImageSource="/NoppaClient;component/Assets/PanoramaBackground.png"/>
             </phone:Panorama.Background>
+            -->
 
             <!--Panorama item one-->
             <phone:PanoramaItem Style="{StaticResource PanoramaItemNoHeaderStyle}">
@@ -249,7 +251,7 @@
             if the System Tray is hidden.
 
             Before shipping remove this XAML and the image itself.-->
-        <Image Source="/Assets/AlignmentGrid.png" VerticalAlignment="Top" Height="800" Width="480" Margin="0" Grid.Row="0" Grid.RowSpan="2" IsHitTestVisible="False" />
+        <!-- <Image Source="/Assets/AlignmentGrid.png" VerticalAlignment="Top" Height="800" Width="480" Margin="0" Grid.Row="0" Grid.RowSpan="2" IsHitTestVisible="False" /> -->
 
     </Grid>
 
