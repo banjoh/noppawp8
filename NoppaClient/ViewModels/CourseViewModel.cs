@@ -91,7 +91,6 @@ namespace NoppaClient.ViewModels
         {
             Code = courseCode;
             _pinnedCourses = pinnedCourses;
-            _contents.Add(new FrontPageViewModel(this)); // Always add this
 
             _toggleSecondaryTileCommand = new DelegateCommand(ToggleSecondaryTile, () => _course != null);
 

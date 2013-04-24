@@ -229,9 +229,6 @@ You can search by course name, part of the course name, course code or part of t
   <data name="ExercisesTitle" xml:space="preserve">
     <value>exerices</value>
   </data>
-  <data name="FrontPageTitle" xml:space="preserve">
-    <value>summary</value>
-  </data>
   <data name="LecturesTitle" xml:space="preserve">
     <value>lectures</value>
   </data>

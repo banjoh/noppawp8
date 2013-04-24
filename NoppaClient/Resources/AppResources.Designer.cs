@@ -189,15 +189,6 @@ namespace NoppaClient.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to summary.
-        /// </summary>
-        public static string FrontPageTitle {
-            get {
-                return ResourceManager.GetString("FrontPageTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to language.
         /// </summary>
         public static string LanguageTitle {

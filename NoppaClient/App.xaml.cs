@@ -19,7 +19,6 @@ namespace NoppaClient
 {
     public partial class App : Application
     {
-        private static MainViewModel viewModel = null;
         private static Settings _settings;
         private static PinnedCourses _pinnedCourses;
 
