@@ -97,13 +97,6 @@
             </Setter>
         </Style>
 
-        <DataTemplate x:Key="CourseItemTemplate">
-            <StackPanel Margin="0,12">
-                <TextBlock Text="{Binding Id}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeExtraLarge}" Foreground="{StaticResource PhoneTextHighContrastBrush}" />
-                <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeLarge}" Foreground="{StaticResource PhoneTextMidContrastBrush}" />
-            </StackPanel>
-        </DataTemplate>
-
         <view:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </phone:PhoneApplicationPage.Resources>
 
@@ -146,6 +139,7 @@
                     ItemsSource="{Binding MyCourses.Courses}" 
                     LayoutMode="List"
                     IsGroupingEnabled="False"
+                    HideEmptyGroups="False"
                     Background="Transparent"
                     ItemTemplate="{StaticResource CourseItemTemplate}"
                     view:ItemClickCommand.Command="{Binding ActivateCourseCommand}">

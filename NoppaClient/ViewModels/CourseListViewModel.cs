@@ -40,6 +40,7 @@ namespace NoppaClient.ViewModels
 
         public ICommand ActivateCourseCommand { get; private set; }
 
+        public CourseListViewModel() { }
         public CourseListViewModel(INavigationController navigationController)
         {
             _searchCommand = new DelegateCommand<string>(query => {

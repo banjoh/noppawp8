@@ -56,14 +56,12 @@
 
         <!-- Template for lists that contain items of type DataModel.Course -->
         <DataTemplate x:Key="CourseItemTemplate">
-            <StackPanel Margin="0,-6,0,12">
-                <TextBlock Text="{Binding Name}"
-                           TextWrapping="Wrap"
-                           Style="{StaticResource PhoneTextExtraLargeStyle}"
-                           FontSize="{StaticResource PhoneFontSizeExtraLarge}"/>
+            <StackPanel Margin="0,0,0,20">
+                <TextBlock Text="{Binding Id}" Style="{StaticResource PhoneTextNormalStyle}" Foreground="{StaticResource PhoneTextMidContrastBrush}" />
+                <TextBlock Text="{Binding Name}" Margin="10,-6,0,0" TextWrapping="Wrap" Style="{StaticResource PhoneTextLargeStyle}" Foreground="{StaticResource PhoneTextHighContrastBrush}" />
             </StackPanel>
         </DataTemplate>
-        
+
         <!-- Template for lists of events -->
         <DataTemplate x:Key="EventItemTemplate">
             <StackPanel Orientation="Horizontal" Margin="12,2,0,4" Height="105" Width="432">
