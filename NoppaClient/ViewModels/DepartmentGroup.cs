@@ -27,6 +27,7 @@ namespace NoppaClient.ViewModels
                 }
             }
         }
+        public DepartmentProxy() { /* For compatibility with design time data. Don't use, don't remove. */ }
         public DepartmentProxy(NoppaLib.DataModel.Department dept)
         {
             _department = dept;
@@ -82,5 +83,7 @@ namespace NoppaClient.ViewModels
 
             return new ObservableCollection<DepartmentGroup>(groups.Values.OrderBy(o => o.Organization));
         }
+
+        public DepartmentGroup() { /* For compatibility with design time data. Don't use, don't remove. */ }
     }
 }
