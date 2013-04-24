@@ -138,8 +138,10 @@
                         <StackPanel>
                             <TextBlock Text="Course name" Foreground="{StaticResource PhoneAccentBrush}" />
                             <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding LongName}" />
-                            <TextBlock Text="Status" Foreground="{StaticResource PhoneAccentBrush}" />
-                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding Status}" />
+                            <TextBlock Text="Status" Foreground="{StaticResource PhoneAccentBrush}" 
+                                       Visibility="{Binding Status, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding Status}"
+                                       Visibility="{Binding Status, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
                             <TextBlock Text="Level" Foreground="{StaticResource PhoneAccentBrush}" />
                             <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding Level}" />
                             <TextBlock Text="Teaching period" Foreground="{StaticResource PhoneAccentBrush}" />
@@ -227,10 +229,12 @@
             </ResourceDictionary>
             
             <!-- Misc. content -->
+            <view:EmptyStringToVisibilityConverter x:Key="EmptyStringToVisibilityConverter" />
             <view:TypeNameToDataTemplateConverter x:Key="TypeNameToDataTemplateConverter" />
             <view:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
             <view:EnumerableIndexConverter x:Key="EnumerableIndexConverter" />
             <view:DesignToolChecker x:Key="DesignToolChecker" />
+            
         </ResourceDictionary>
     </phone:PhoneApplicationPage.Resources>
     
