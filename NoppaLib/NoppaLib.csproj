@@ -85,7 +85,7 @@
   <ItemGroup>
     <Compile Include="APIConfig.cs" />
     <Compile Include="Cache.cs" />
-    <Compile Include="CourseTile.cs" />
+    <Compile Include="NoppaTiles.cs" />
     <Compile Include="DataModel\Course.cs" />
     <Compile Include="DataModel\DataModel.cs" />
     <Compile Include="DataModel\Department.cs" />

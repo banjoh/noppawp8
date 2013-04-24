@@ -193,13 +193,13 @@ namespace NoppaClient.ViewModels
         {
             if (_course != null)
             {
-                if (CourseTile.Exists(_course))
+                if (NoppaTiles.Exists(_course))
                 {
-                    CourseTile.Delete(_course);
+                    NoppaTiles.Delete(_course);
                 }
                 else
                 {
-                    CourseTile.CreateOrUpdate(_course);
+                    NoppaTiles.CreateOrUpdate(_course);
                 }
                 UpdateToggleCommandText();
             }
@@ -207,7 +207,7 @@ namespace NoppaClient.ViewModels
 
         private void UpdateToggleCommandText()
         {
-            ToggleSecondaryTileText = CourseTile.Exists(_course) ? AppResources.RemoveCourseTileLabel 
+            ToggleSecondaryTileText = NoppaTiles.Exists(_course) ? AppResources.RemoveCourseTileLabel 
                                                                  : AppResources.AddCourseTileLabel;
         }
     }

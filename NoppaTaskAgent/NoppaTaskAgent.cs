@@ -45,7 +45,7 @@ namespace NoppaTaskAgent
             try
             {
                 // Clear all tiles first
-                ClearTiles();
+                NoppaTiles.ClearAllTiles();
 
                 Collection<string> codes = GetCourseCodes();
                 
@@ -67,7 +67,7 @@ namespace NoppaTaskAgent
                     foreach (string code in asyncOps.Keys)
                     {
                         List<CourseNews> news = asyncOps[code].Result;
-                        CourseTile.Update(code, news.Count);
+                        NoppaTiles.Update(code, news.Count);
                         count += news.Count;
 
                         // Get the latest piece of news
@@ -109,7 +109,7 @@ namespace NoppaTaskAgent
 
             foreach (ShellTile tile in ShellTile.ActiveTiles)
             {
-                string code = CourseTile.GetCourseCode(tile.NavigationUri);
+                string code = NoppaTiles.GetCourseCode(tile.NavigationUri);
                 if (code != null && codes.Contains(code) == false)
                 {
                     codes.Add(code);
@@ -139,23 +139,12 @@ namespace NoppaTaskAgent
                     {
                         Count = count,
                         // TODO: Adjust length of the text
-                        WideContent1 = news.Title,
-                        WideContent2 = news.Content,
-                        WideContent3 = news.Content
+                        WideContent1 = news.Title.Substring(0, Math.Min(news.Title.Length, 33)),
+                        WideContent2 = news.Content.Substring(0, Math.Min(news.Content.Length, 33)),
+                        WideContent3 = news.Date.ToShortDateString() + " " + news.Date.ToShortTimeString()
                     };
 
                 primaryTile.Update(data);
-            }
-        }
-
-        private void ClearTiles()
-        {
-            // Empty data
-            IconicTileData empty = new IconicTileData { Count = 0 };
-            foreach (ShellTile tile in ShellTile.ActiveTiles)
-            {
-                if (tile != null)
-                    tile.Update(empty);
             }
         }
     }

@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 
 namespace NoppaLib
 {
-    public static class CourseTile
+    public static class NoppaTiles
     {
         public static bool Exists(Course course)
         {
@@ -104,6 +104,17 @@ namespace NoppaLib
             }
 
             return null;
+        }
+
+        public static void ClearAllTiles()
+        {
+            // Empty data
+            IconicTileData empty = new IconicTileData { Count = 0 };
+            foreach (ShellTile tile in ShellTile.ActiveTiles)
+            {
+                if (tile != null)
+                    tile.Update(empty);
+            }
         }
     }
 }
