@@ -169,8 +169,6 @@
                             <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding Staff}" />
                             <TextBlock Text="Office hours" Foreground="{StaticResource PhoneAccentBrush}" />
                             <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding OfficeHours}" />
-                            <Button Content="Open in Noppa"  Command="{Binding OpenNoppaPage}" />
-                            <Button Content="Open in Oodi"  Command="{Binding OpenOodiPage}" />
                         </StackPanel>
                     </ScrollViewer>
                 </DataTemplate>
@@ -270,8 +268,10 @@
         </phone:Pivot>
     </Grid>
     <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar Mode="Default" Opacity="1.0" IsMenuEnabled="True" IsVisible="True">
-            <shell:ApplicationBarIconButton x:Name="PinFavoriteButton" IconUri = "/Assets/pin.png" Text="pin" />
+        <shell:ApplicationBar Mode="Default"  Opacity="1.0" IsMenuEnabled="True" IsVisible="True">
+            <shell:ApplicationBarIconButton x:Name="OpenWebOodi" IconUri = "/Assets/oodi.png" Text="oodi" />
+            <shell:ApplicationBarIconButton x:Name="PinFavoriteButton" IconUri = "/Assets/star.empty.png" Text="follow" />
+            <shell:ApplicationBarIconButton x:Name="OpenWebNoppa" IconUri = "/Assets/noppa.png" Text="noppa" />
             <shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem x:Name="ToggleTileMenuItem" Text="add course tile" />
             </shell:ApplicationBar.MenuItems>

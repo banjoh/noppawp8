@@ -61,6 +61,7 @@ namespace NoppaClient.ViewModels
                 GradingScale = Detail.StripHtml(overview.GradingScale);
                 InstructionLanguage = Detail.StripHtml(overview.InstructionLanguage);
                 Details = Detail.StripHtml(overview.Details);
+                OodiUrl = overview.OodiUrl;
 
                 var noppaUrl = new Uri(String.Format("https://noppa.aalto.fi/noppa/kurssi/{0}/etusivu", course.Id));
                 var oodiUrl = new Uri(overview.OodiUrl);
