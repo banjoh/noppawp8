@@ -15,7 +15,11 @@ namespace NoppaClient
         {
             if (html != null)
             {
-                html = Regex.Replace(html, "<.+?>", string.Empty).Replace("\n", " ");
+                html = Regex.Replace(html,
+                                     "(\\<script(.+?)\\</script\\>)|(\\<style(.+?)\\</style\\>)|<.+?>",
+                                     string.Empty,
+                                     RegexOptions.Singleline | RegexOptions.IgnoreCase
+                ).Replace("\n", " ");
                 return System.Net.HttpUtility.HtmlDecode(html).Trim();
             }
             else
