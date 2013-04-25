@@ -19,8 +19,14 @@
     <phone:PhoneApplicationPage.Resources>
         <ResourceDictionary x:Name="Resources">
             
+            <!-- Misc. content -->
+            <view:EmptyStringToVisibilityConverter x:Key="EmptyStringToVisibilityConverter" />
+            <view:TypeNameToDataTemplateConverter x:Key="TypeNameToDataTemplateConverter" />
+            <view:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+            <view:EnumerableIndexConverter x:Key="EnumerableIndexConverter" />
+            <view:DesignToolChecker x:Key="DesignToolChecker" />
             <view:OpenBrowserCommand x:Key="OpenBrowserCommand" />
- 
+
             <DataTemplate x:Key="NewsItemTemplate">
                 <StackPanel Margin="0,16">
                     <TextBlock Text="{Binding Date, StringFormat=g}" Foreground="{StaticResource PhoneAccentBrush}" />
@@ -138,39 +144,85 @@
                         <StackPanel>
                             <TextBlock Text="Course name" Foreground="{StaticResource PhoneAccentBrush}" />
                             <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding LongName}" />
+                            
                             <TextBlock Text="Status" Foreground="{StaticResource PhoneAccentBrush}" 
                                        Visibility="{Binding Status, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
                             <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding Status}"
                                        Visibility="{Binding Status, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
-                            <TextBlock Text="Level" Foreground="{StaticResource PhoneAccentBrush}" />
-                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding Level}" />
-                            <TextBlock Text="Teaching period" Foreground="{StaticResource PhoneAccentBrush}" />
-                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding TeachingPeriod}" />
-                            <TextBlock Text="Workload" Foreground="{StaticResource PhoneAccentBrush}" />
-                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding Workload}" />
-                            <TextBlock Text="Learning outcomes" Foreground="{StaticResource PhoneAccentBrush}" />
-                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding LearningOutcomes}" />
-                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding Content}" />
-                            <TextBlock Text="Assessment" Foreground="{StaticResource PhoneAccentBrush}" />
-                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding Assessment}" />
-                            <TextBlock Text="Study material" Foreground="{StaticResource PhoneAccentBrush}" />
-                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding StudyMaterial}" />
-                            <TextBlock Text="Grading scale" Foreground="{StaticResource PhoneAccentBrush}" />
-                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding GradingScale}" />
-                            <TextBlock Text="Instruction language" Foreground="{StaticResource PhoneAccentBrush}" />
-                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding InstructionLanguage}" />
-                            <TextBlock Text="Details" Foreground="{StaticResource PhoneAccentBrush}" />
-                            <TextBlock Text="{Binding Details}" Margin="4,4" />
-                            <TextBlock Text="Substitutes" Foreground="{StaticResource PhoneAccentBrush}" />
-                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding Substitutes}" />
-                            <TextBlock Text="CEFR Level" Foreground="{StaticResource PhoneAccentBrush}" />
-                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding CEFRLevel}" />
-                            <TextBlock Text="Registration" Foreground="{StaticResource PhoneAccentBrush}" />
-                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding Registration}" />
-                            <TextBlock Text="Staff" Foreground="{StaticResource PhoneAccentBrush}" />
-                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding Staff}" />
-                            <TextBlock Text="Office hours" Foreground="{StaticResource PhoneAccentBrush}" />
-                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding OfficeHours}" />
+                            
+                            <TextBlock Text="Level" Foreground="{StaticResource PhoneAccentBrush}"
+                                       Visibility="{Binding Level, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding Level}"
+                                       Visibility="{Binding Level, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+                            
+                            <TextBlock Text="Teaching period" Foreground="{StaticResource PhoneAccentBrush}"
+                                       Visibility="{Binding TeachingPeriod, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding TeachingPeriod}"
+                                       Visibility="{Binding TeachingPeriod, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+                            
+                            <TextBlock Text="Workload" Foreground="{StaticResource PhoneAccentBrush}"
+                                       Visibility="{Binding Workload, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding Workload}"
+                                       Visibility="{Binding Workload, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+                            
+                            <TextBlock Text="Learning outcomes" Foreground="{StaticResource PhoneAccentBrush}"
+                                       Visibility="{Binding LearningOutcomes, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding LearningOutcomes}"
+                                       Visibility="{Binding LearningOutcomes, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+                            
+                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding Content}"
+                                       Visibility="{Binding Content, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+                            
+                            <TextBlock Text="Assessment" Foreground="{StaticResource PhoneAccentBrush}"
+                                       Visibility="{Binding Assessment, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding Assessment}"
+                                       Visibility="{Binding Assessment, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+                            
+                            <TextBlock Text="Study material" Foreground="{StaticResource PhoneAccentBrush}"
+                                       Visibility="{Binding StudyMaterial, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding StudyMaterial}"
+                                       Visibility="{Binding StudyMaterial, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+                            
+                            <TextBlock Text="Grading scale" Foreground="{StaticResource PhoneAccentBrush}"
+                                       Visibility="{Binding GradingScale, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding GradingScale}"
+                                       Visibility="{Binding GradingScale, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+                            
+                            <TextBlock Text="Instruction language" Foreground="{StaticResource PhoneAccentBrush}"
+                                       Visibility="{Binding InstructionLanguage, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding InstructionLanguage}"
+                                       Visibility="{Binding InstructionLanguage, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+                            
+                            <TextBlock Text="Details" Foreground="{StaticResource PhoneAccentBrush}"
+                                       Visibility="{Binding Details, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+                            <TextBlock Text="{Binding Details}" Margin="4,4"
+                                       Visibility="{Binding Details, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+                            
+                            <TextBlock Text="Substitutes" Foreground="{StaticResource PhoneAccentBrush}"
+                                       Visibility="{Binding Substitutes, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding Substitutes}"
+                                       Visibility="{Binding Substitutes, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+                            
+                            <TextBlock Text="CEFR Level" Foreground="{StaticResource PhoneAccentBrush}"
+                                       Visibility="{Binding CEFRLevel, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding CEFRLevel}"
+                                       Visibility="{Binding CEFRLevel, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+                            
+                            <TextBlock Text="Registration" Foreground="{StaticResource PhoneAccentBrush}"
+                                       Visibility="{Binding Registration, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding Registration}"
+                                       Visibility="{Binding Registration, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+                            
+                            <TextBlock Text="Staff" Foreground="{StaticResource PhoneAccentBrush}"
+                                       Visibility="{Binding Staff, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding Staff}"
+                                       Visibility="{Binding Staff, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+                            
+                            <TextBlock Text="Office hours" Foreground="{StaticResource PhoneAccentBrush}"
+                                       Visibility="{Binding OfficeHours, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+                            <TextBlock TextWrapping="Wrap" Margin="4,4" Text="{Binding OfficeHours}"
+                                       Visibility="{Binding OfficeHours, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+                            
                             <Button Content="Open in Noppa"  Command="{Binding OpenNoppaPage}" />
                             <Button Content="Open in Oodi"  Command="{Binding OpenOodiPage}" />
                         </StackPanel>
@@ -227,13 +279,6 @@
                 </DataTemplate>
             
             </ResourceDictionary>
-            
-            <!-- Misc. content -->
-            <view:EmptyStringToVisibilityConverter x:Key="EmptyStringToVisibilityConverter" />
-            <view:TypeNameToDataTemplateConverter x:Key="TypeNameToDataTemplateConverter" />
-            <view:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-            <view:EnumerableIndexConverter x:Key="EnumerableIndexConverter" />
-            <view:DesignToolChecker x:Key="DesignToolChecker" />
             
         </ResourceDictionary>
     </phone:PhoneApplicationPage.Resources>
