@@ -29,6 +29,9 @@ namespace NoppaClient.ViewModels
         private CancellationTokenSource _cts;
         Task _loaderTask = null;
 
+        private string _subtitle = "";
+        public string Subtitle { get { return _subtitle; } private set { SetProperty(ref _subtitle, value); } }
+
         private string _title = "";
         public string Title { get { return _title; } private set { SetProperty(ref _title, value); } }
 
@@ -119,7 +122,8 @@ namespace NoppaClient.ViewModels
                 default: break;
             }
 
-            Title = String.Format(AppResources.DepartmentCourseListTitle, dept != null ? deptName : departmentId);
+            Title = departmentId.ToUpper();
+            Subtitle = dept != null ? deptName : Title;
 
             try
             {

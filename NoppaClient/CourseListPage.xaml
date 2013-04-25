@@ -30,7 +30,7 @@
         <StackPanel Grid.Row="0" Margin="12,17,0,28">
             <TextBlock Text="{Binding Title}" TextWrapping="NoWrap" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeExtraLarge}" />
             <!-- <TextBlock Text="{Binding Title}" Foreground="#00C13A" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/> -->
-            <ProgressBar IsEnabled="True" IsIndeterminate="True" VerticalAlignment="Stretch" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}" x:Name="customIndeterminateProgressBar" Style="{StaticResource CustomIndeterminateProgressBar}"/>
+            
         </StackPanel>
 
         <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="1"
@@ -47,7 +47,17 @@
             Grid.Row="1"
             ItemTemplate="{StaticResource CourseItemTemplate}"
             ItemsSource="{Binding Courses}"
-            view:ItemClickCommand.Command="{Binding ActivateCourseCommand}"/>
+            view:ItemClickCommand.Command="{Binding ActivateCourseCommand}">
+            <phone:LongListSelector.ListHeader>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="10" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="{Binding Subtitle}" TextWrapping="Wrap" Foreground="#00C13A" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle2Style}"/>
+                    <ProgressBar Grid.Row="1"  IsEnabled="True" IsIndeterminate="True" VerticalAlignment="Bottom" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}" x:Name="customIndeterminateProgressBar" Style="{StaticResource CustomIndeterminateProgressBar}"/>
+                </Grid>
+            </phone:LongListSelector.ListHeader>
+        </phone:LongListSelector>
     </Grid>
-
 </phone:PhoneApplicationPage>
