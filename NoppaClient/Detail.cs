@@ -16,7 +16,7 @@ namespace NoppaClient
             if (html != null)
             {
                 html = Regex.Replace(html, "<.+?>", string.Empty).Replace("\n", " ");
-                return System.Net.HttpUtility.HtmlDecode(html);
+                return System.Net.HttpUtility.HtmlDecode(html).Trim();
             }
             else
                 return String.Empty;
