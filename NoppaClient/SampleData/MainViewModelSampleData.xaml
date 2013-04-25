@@ -15,6 +15,28 @@
             </vm:CourseListViewModel.Courses>
         </vm:CourseListViewModel>
     </vm:MainViewModel.MyCourses>
+
+    <vm:MainViewModel.Events>
+        <vm:EventGroup EventDate="2013-05-15">
+            <dm:CourseEvent 
+                CourseId="TIK.kand" Type="seminar" 
+                Title="SU-SEM" 
+                Weekday="Thu" Location="T1 / C202 (T1), (Tietotekniikka)" 
+                StartTime="13:00" EndTime="16:00" StartDate="2013-02-15" EndDate="2013-02-26" />
+        </vm:EventGroup>
+        <vm:EventGroup EventDate="2013-05-21">
+            <dm:CourseEvent 
+                CourseId="Tfy-125.4433" Type="exams" 
+                Title="Laser Physics P" Weekday="Tue" 
+                Location="C-Sali / Y205 (C), (Main Building)"
+                StartTime="09:00" EndTime="12:00" StartDate="2013-05-21" EndDate="2013-05-21" />
+            <dm:CourseEvent 
+                CourseId="TIK.kand" Type="exams" 
+                Title="Kandidaatintyö ja seminaari (T)" 
+                Weekday="Thu" Location="T1 / C202 (T1), (Tietotekniikka)" 
+                StartTime="13:00" EndTime="16:00" StartDate="2013-05-30" EndDate="2013-05-30" />
+        </vm:EventGroup>
+    </vm:MainViewModel.Events>
     
     <vm:MainViewModel.Departments>
         <vm:DepartmentGroup Organization="School of Assorted Magicks">

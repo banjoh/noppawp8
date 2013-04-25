@@ -16,6 +16,9 @@
     shell:SystemTray.IsVisible="False">
 
     <phone:PhoneApplicationPage.Resources>
+        <phone:JumpListItemBackgroundConverter x:Key="BackgroundConverter"/>
+        <phone:JumpListItemForegroundConverter x:Key="ForegroundConverter"/>
+
         <!-- Move these to a common resource file if they are reused -->
         <DataTemplate x:Key="DepartmentItemTemplate">
             <StackPanel Margin="0,-3,0,12">
@@ -24,35 +27,33 @@
         </DataTemplate>
 
         <DataTemplate x:Key="DepartmentGroupHeaderTemplate">
-            <Border Background="Transparent" Padding="5">
-                <TextBlock Text="{Binding Organization}" Foreground="{StaticResource PhoneSubtleBrush}" 
-                           FontSize="24" Padding="6,20,6,6" 
-                           FontFamily="{StaticResource PhoneFontFamilySemiLight}"
-                           HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Border Background="Transparent" Padding="0,10,0,0">
+                <TextBlock Text="{Binding Organization}" 
+                       Foreground="{StaticResource PhoneSubtleBrush}" 
+                       Style="{StaticResource PhoneTextNormalStyle}"
+                       FontFamily="{StaticResource PhoneFontFamilySemiLight}" />
             </Border>
         </DataTemplate>
 
-        <phone:JumpListItemBackgroundConverter x:Key="BackgroundConverter"/>
-        <phone:JumpListItemForegroundConverter x:Key="ForegroundConverter"/>
         <Style x:Key="DepartmentJumpListStyle" TargetType="phone:LongListSelector">
             <Setter Property="LayoutMode" Value="List" />
             <Setter Property="ItemTemplate">
                 <Setter.Value>
                     <DataTemplate>
                         <TextBlock Text="{Binding Organization}" 
-                                   FontFamily="{StaticResource PhoneFontFamilySemiBold}" FontSize="48" Padding="6"
-                                   Foreground="{Binding Converter={StaticResource ForegroundConverter}}" VerticalAlignment="Center"/>
+                                   FontFamily="{StaticResource PhoneFontFamilySemiBold}" FontSize="36" TextWrapping="Wrap" Padding="10,10,10,30"
+                                   Foreground="{Binding Converter={StaticResource ForegroundConverter}}" />
                     </DataTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
 
         <DataTemplate x:Key="EventGroupHeaderTemplate">
-            <Border Background="Transparent" Padding="5">
-                <TextBlock Text="{Binding EventDate, StringFormat='d'}" Foreground="{StaticResource PhoneSubtleBrush}" 
-                           FontSize="24" Padding="6,20,6,6" 
-                           FontFamily="{StaticResource PhoneFontFamilySemiLight}" 
-                           HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Border Background="Transparent" Padding="0,10,0,0">
+                <TextBlock Text="{Binding EventDate, StringFormat='d'}" 
+                       Foreground="{StaticResource PhoneSubtleBrush}" 
+                       Style="{StaticResource PhoneTextNormalStyle}"
+                       FontFamily="{StaticResource PhoneFontFamilySemiLight}" />
             </Border>
         </DataTemplate>
 
@@ -77,11 +78,12 @@
         </DataTemplate>
 
         <DataTemplate x:Key="NewsGroupHeaderTemplate">
-            <TextBlock Text="{Binding NewsDate, StringFormat='d'}" Foreground="{StaticResource PhoneSubtleBrush}" 
-                       Margin="10,27,0,0"
-                       FontSize="24"
+            <Border Background="Transparent" Padding="0,10,0,0">
+                <TextBlock Text="{Binding NewsDate, StringFormat='d'}" 
+                       Foreground="{StaticResource PhoneSubtleBrush}" 
+                       Style="{StaticResource PhoneTextNormalStyle}"
                        FontFamily="{StaticResource PhoneFontFamilySemiLight}" />
-        
+            </Border>
         </DataTemplate>
 
         <Style x:Key="NewsJumpListStyle" TargetType="phone:LongListSelector">
@@ -90,8 +92,8 @@
                 <Setter.Value>
                     <DataTemplate>
                         <TextBlock Text="{Binding NewsDate, StringFormat='d'}" 
-                                   FontFamily="{StaticResource PhoneFontFamilySemiBold}" FontSize="48" Padding="6"
-                                   Foreground="{Binding Converter={StaticResource ForegroundConverter}}" VerticalAlignment="Center"/>
+                                   FontFamily="{StaticResource PhoneFontFamilySemiBold}" FontSize="36" TextWrapping="Wrap" Padding="10,10,10,30"
+                                   Foreground="{Binding Converter={StaticResource ForegroundConverter}}" />
                     </DataTemplate>
                 </Setter.Value>
             </Setter>
