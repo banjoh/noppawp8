@@ -19,6 +19,8 @@ namespace NoppaClient.ViewModels
         private DateTime _dtnewsDate;
         public DateTime dtNewsDate { get { return _dtnewsDate; } }
 
+        public NewsGroupItem() { }
+
         public NewsGroupItem(string newsDate, DateTime dtnewsDate)
             : base()
         {
@@ -29,9 +31,9 @@ namespace NoppaClient.ViewModels
 
     public class NewsGroup : ObservableCollection<NewsGroupItem>
     {
-        public NewsGroup() : base() { }
+        public NewsGroup() { }
 
-        public async void AddNewItems(List<CourseNews> courseNews)
+        public void AddNewItems(List<CourseNews> courseNews)
         {
             foreach (var c in courseNews)
             {
@@ -68,7 +70,7 @@ namespace NoppaClient.ViewModels
             private set { SetProperty(ref _events, value); }
         }
 
-        private CourseListViewModel _myCourses = new CourseListViewModel(new PhoneNavigationController());
+        private CourseListViewModel _myCourses;
         public CourseListViewModel MyCourses { get { return _myCourses; } }
 
         private NewsGroup _news;
@@ -112,8 +114,12 @@ namespace NoppaClient.ViewModels
             private set { SetProperty(ref _isDepartmentListEmpty, value); }
         }
 
+        public MainViewModel() { /* For compatibility with design time data. Don't use, don't remove. */ }
+
         public MainViewModel(INavigationController navigationController)
         {
+            _myCourses = new CourseListViewModel(navigationController);
+
             DepartmentActivatedCommand = ControllerUtil.MakeShowDepartmentCommand(navigationController);
             ShowSettingsCommand = ControllerUtil.MakeShowSettingsCommand(navigationController);
             ShowAboutCommand = ControllerUtil.MakeShowAboutCommand(navigationController);

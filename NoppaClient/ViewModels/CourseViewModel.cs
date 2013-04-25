@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.System;
 
 namespace NoppaClient.ViewModels
 {
@@ -15,6 +16,8 @@ namespace NoppaClient.ViewModels
     {
         private Course _course = null;
         private PinnedCourses _pinnedCourses;
+
+        OverviewViewModel _overviewModel;
 
         private ObservableCollection<CourseContentViewModel> _contents = new ObservableCollection<CourseContentViewModel>();
         public ObservableCollection<CourseContentViewModel> Contents { get { return _contents; } }
@@ -59,6 +62,7 @@ namespace NoppaClient.ViewModels
             {
                 await App.PinnedCourses.RemoveAsync(_code);
             }
+            _isPinned = toggle;
             NotifyPropertyChanged("IsPinned");
             NotifyPropertyChanged("IsPinnedText");
         }
@@ -85,6 +89,42 @@ namespace NoppaClient.ViewModels
 
         #endregion
 
+        #region Open in web commands
+
+        Uri _noppaPageUri;
+        private Uri NoppaPageUri
+        {
+            get { return _noppaPageUri; }
+            set
+            {
+                if (SetProperty(ref _noppaPageUri, value) && _openNoppaPage != null)
+                {
+                    _openNoppaPage.NotifyCanExecuteChanged();
+                }
+            }
+        }
+
+        DelegateCommand _openNoppaPage;
+        public ICommand OpenNoppaPage { get { return _openNoppaPage; } }
+
+        Uri _oodiPageUri = null;
+        private Uri OodiPageUri 
+        { 
+            get { return _oodiPageUri; } 
+            set 
+            { 
+                if (SetProperty(ref _oodiPageUri, value) && _openOodiPage != null)
+                {
+                    _openOodiPage.NotifyCanExecuteChanged();
+                }
+            }
+        }
+
+        DelegateCommand _openOodiPage;
+        public ICommand OpenOodiPage { get { return _openOodiPage; } }
+
+        #endregion
+
         public CourseViewModel() { /* For design mode */ }
 
         public CourseViewModel(string courseCode, PinnedCourses pinnedCourses)
@@ -93,6 +133,11 @@ namespace NoppaClient.ViewModels
             _pinnedCourses = pinnedCourses;
 
             _toggleSecondaryTileCommand = new DelegateCommand(ToggleSecondaryTile, () => _course != null);
+
+            _openNoppaPage = new DelegateCommand(async delegate { await Launcher.LaunchUriAsync(NoppaPageUri); }, () => NoppaPageUri != null);
+            _openOodiPage = new DelegateCommand(async delegate { await Launcher.LaunchUriAsync(OodiPageUri); }, () => OodiPageUri != null);
+
+            NoppaPageUri = new Uri(String.Format("https://noppa.aalto.fi/noppa/kurssi/{0}/etusivu", courseCode));
 
             SetPinnedStateAsync();
         }
@@ -114,7 +159,8 @@ namespace NoppaClient.ViewModels
             /* Load Overview */
             tasks.Add(Task.Run(async delegate () {
                     OverviewViewModel model = new OverviewViewModel();
-                    await model.LoadDataAsync(_course); 
+                    await model.LoadDataAsync(_course);
+                    _overviewModel = model;
                     return model as CourseContentViewModel;
                 })
             );
@@ -183,6 +229,11 @@ namespace NoppaClient.ViewModels
                     }
                     _contents.Insert(index, content);
                 }
+            }
+
+            if (_overviewModel.OodiUrl != null)
+            {
+                OodiPageUri = new Uri(_overviewModel.OodiUrl);
             }
 
             IsLoading = false;

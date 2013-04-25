@@ -2,15 +2,16 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:vm="clr-namespace:NoppaClient.ViewModels"
-    xmlns:m="clr-namespace:NoppaClient.DataModel"
+    xmlns:dm="clr-namespace:NoppaLib.DataModel;assembly=NoppaLib"
     IsLoading="True"
-    Title="Courses">
+    Title="T2060"
+    Subtitle="Department of Structural Engineering and Building Technology">
 
     <vm:CourseListViewModel.Courses>
-        <m:Course Name="T-123.4567 Foobar" />
-        <m:Course Name="T-123.4567 Foobar" />
-        <m:Course Name="T-123.4567 Foobar" />
-        <m:Course Name="T-123.4567 Foobar" />
-        <m:Course Name="T-123.4567 Foobar" />
+        <dm:Course Name="Micro- and Nanorobotics P" Id="AS-74.3178" />
+        <dm:Course Name="Antennas-Theory" Id="S-96.3415 " />
+        <dm:Course Name="Algebraic Geometry L" Id="Mat-1.3140 " />
+        <dm:Course Name="Extremes of Random Phenomena P" Id="Mat-1.3610 " />
+        <dm:Course Name="Laser Physics P" Id="Tfy-125.4433 " />
     </vm:CourseListViewModel.Courses>
 </vm:CourseListViewModel>

@@ -16,6 +16,8 @@ namespace NoppaClient.ViewModels
         private DateTime _dteventDate;
         public DateTime dtEventDate { get { return _dteventDate; } }
 
+        public EventGroup() { }
+
         public EventGroup(string eventDate,DateTime dteventDate)
         {
             _eventDate = eventDate;

@@ -226,8 +226,16 @@
     <Content Include="Assets\event.type.online_studies.png" />
     <Content Include="Assets\event.type.other.png" />
     <Content Include="Assets\event.type.seminar.png" />
+    <Content Include="Assets\noppa.png" />
+    <Content Include="Assets\oodi.png" />
     <Content Include="Assets\pin.png" />
     <Content Include="Assets\pin.remove.png" />
+    <Content Include="Assets\star.empty.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\star.full.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Toolkit.Content\ApplicationBar.Cancel.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

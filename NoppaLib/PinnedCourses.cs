@@ -4,6 +4,7 @@ using System.IO;
 using System.Collections.ObjectModel;
 using System.IO.IsolatedStorage;
 using System.Threading;
+using System.Diagnostics;
 
 namespace NoppaLib
 {
@@ -60,7 +61,19 @@ namespace NoppaLib
                         {
                             System.Diagnostics.Debug.WriteLine("GetCodesAsync: Error accessing the course list file in the IsolatedStorage.\n{0}", e.StackTrace);
                         }
-                    });                
+                    });  
+              
+#if DEBUG
+                if (_codes.Count == 0)
+                {
+                    // Add a few courses
+                    _codes.Add("t-106.4300");
+                    _codes.Add("t-110.5130");
+                    _codes.Add("mat-1.2600");
+                    _codes.Add("as-0.1103");
+                    _codes.Add("t-106.5150");
+                }
+#endif
             }
             _codesLock.Release();
             return _codes;
