@@ -27,7 +27,7 @@
 
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel Grid.Row="0" Margin="12,17,12,28">
-            <TextBlock Text="COURSE SEARCH" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock Text="COURSE SEARCH" Foreground="#00C13A"  Style="{StaticResource PhoneTextNormalStyle}" FontWeight="SemiBold"/>
             <TextBox x:Name="SearchBox" AcceptsReturn="False" Margin="0,5,0,0" InputScope="Search" 
                      Text="" HorizontalAlignment="Stretch" 
                      view:SearchCommand.Command="{Binding SearchCommand}" 
@@ -39,7 +39,8 @@
                      Margin="0,0,0,16" 
                      VerticalAlignment="Bottom" 
                      HorizontalAlignment="Stretch" 
-                     Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"  />
+                     Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"
+                     x:Name="customIndeterminateProgressBar" Style="{StaticResource CustomIndeterminateProgressBar}"/>
 
         <phone:LongListSelector
             Margin="12,0,12,0"
@@ -54,7 +55,7 @@
             VerticalAlignment="Top"
             IsReadOnly="True"
             Visibility="{Binding IsSearchHintVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
-            Xaml="{Binding Path=LocalizedResources.SearchHintTextXaml, Source={StaticResource LocalizedStrings}}" />
+            Xaml="{Binding Path=LocalizedResources.SearchHintTextXaml, Source={StaticResource LocalizedStrings}}"/>
 
         <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="1"
               Visibility="{Binding IsSearchHintVisible, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=invert}">
