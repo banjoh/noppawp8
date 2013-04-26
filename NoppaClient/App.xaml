@@ -45,7 +45,7 @@
             </view:StringToResourceConverter.ResourceDictionary>
         </view:StringToResourceConverter>
 
-
+        <!--Progressbar styling-->
         <Style x:Key="CustomIndeterminateProgressBar" TargetType="ProgressBar">
             <Setter Property="Foreground" Value="#00C13A"/>
             <Setter Property="Background" Value="{StaticResource PhoneAccentBrush}"/>
@@ -53,6 +53,7 @@
             <Setter Property="IsHitTestVisible" Value="False"/>
             <Setter Property="Padding" Value="{StaticResource PhoneHorizontalMargin}"/>    
         </Style>
+
 
         <!-- Template for lists that contain items of type DataModel.Course -->
         <DataTemplate x:Key="CourseItemTemplate">

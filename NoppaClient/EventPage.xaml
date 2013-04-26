@@ -30,8 +30,8 @@
 
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock Text="{Binding CourseName}" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock Text="{Binding Type, Converter={StaticResource EventTypeConverter}}" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            <TextBlock Text="{Binding CourseName}" Style="{StaticResource PhoneTextNormalStyle}" Margin="12,0,12,0"/>
+            <TextBlock Text="{Binding Type, Converter={StaticResource EventTypeConverter}}" Margin="9,-7,12,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
@@ -46,21 +46,21 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
  
-            <Image Grid.Row="0" Grid.Column="0" Width="100" Height="100" Source="{Binding Type, Converter={StaticResource EventTypeToImageConverter}}" />
-            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Title}" TextWrapping="Wrap" />
+            <Image Grid.Row="0" Grid.Column="0" Margin="12,0,0,0" Width="100" Height="100" Source="{Binding Type, Converter={StaticResource EventTypeToImageConverter}}" />
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Title}" TextWrapping="Wrap" Margin="12,0,0,0" />
 
             <StackPanel Orientation="Horizontal" Grid.Row="1"  Grid.ColumnSpan="2">
-                <TextBlock Margin="0,0,6,0" Text="{Binding StartDate, Converter={StaticResource DateTimeToWeekdayConverter}}" />
-                <TextBlock Margin="0,0,6,0" Text="{Binding StartDate, StringFormat='{}{0:dd.MM.yyyy}'}" />
-                <TextBlock Margin="0,0,2,0" Text="{Binding StartTime}" />
-                <TextBlock Margin="0,0,2,0" Text="-" />
+                <TextBlock Margin="12,6,6,0" Text="{Binding StartDate, Converter={StaticResource DateTimeToWeekdayConverter}}" />
+                <TextBlock Margin="0,6,6,0" Text="{Binding StartDate, StringFormat='{}{0:dd.MM.yyyy}'}" />
+                <TextBlock Margin="0,6,2,0" Text="{Binding StartTime}" />
+                <TextBlock Margin="0,6,2,0" Text="-" />
                 <!-- Don't show these if it's the same day -->
-                <TextBlock Margin="0,0,6,0" Text="{Binding EndDate, Converter={StaticResource DateTimeToWeekdayConverter}}" Visibility="{Binding IsSingleDay, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=invert}" />
-                <TextBlock Margin="0,0,6,0" Text="{Binding EndDate, StringFormat='{}{0:dd.MM.yyyy}'}" Visibility="{Binding IsSingleDay, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=invert}" />
-                <TextBlock Text="{Binding EndTime}" />
+                <TextBlock Margin="0,6,6,0" Text="{Binding EndDate, Converter={StaticResource DateTimeToWeekdayConverter}}" Visibility="{Binding IsSingleDay, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=invert}" />
+                <TextBlock Margin="0,6,6,0" Text="{Binding EndDate, StringFormat='{}{0:dd.MM.yyyy}'}" Visibility="{Binding IsSingleDay, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=invert}" />
+                <TextBlock Margin="0,6,6,0" Text="{Binding EndTime}" />
             </StackPanel>
 
-            <TextBlock Grid.Row="2"  Grid.ColumnSpan="2" Text="{Binding Location}" />
+            <TextBlock Margin="12,6,0,0" Grid.Row="2"  Grid.ColumnSpan="2" Text="{Binding Location}" />
         </Grid>
     </Grid>
 
