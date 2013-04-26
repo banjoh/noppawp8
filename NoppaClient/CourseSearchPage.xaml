@@ -27,7 +27,7 @@
 
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel Grid.Row="0" Margin="12,17,12,28">
-            <TextBlock Text="COURSE SEARCH" Style="{StaticResource PhoneTextNormalStyle}" Foreground="#FF00C13A" FontWeight="SemiBold"/>
+            <TextBlock Text="COURSE SEARCH" Style="{StaticResource PhoneTextNormalStyle}"/>
             <TextBox x:Name="SearchBox" AcceptsReturn="False" Margin="0,5,0,0" InputScope="Search" 
                      Text="" HorizontalAlignment="Stretch" 
                      view:SearchCommand.Command="{Binding SearchCommand}" 
@@ -39,9 +39,7 @@
                      Margin="0,0,0,16" 
                      VerticalAlignment="Bottom" 
                      HorizontalAlignment="Stretch" 
-                     Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"
-                     x:Name="customIndeterminateProgressBar" Style="{StaticResource CustomIndeterminateProgressBar}"/>
-
+                     Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"  />
 
         <phone:LongListSelector
             Margin="12,0,12,0"
