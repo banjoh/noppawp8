@@ -35,9 +35,10 @@ namespace NoppaClient.ViewModels
 
         private void AddContent(string title, string content)
         {
-            if (!String.IsNullOrWhiteSpace(Detail.StripHtml(content)))
+            var stripped = Detail.StripHtml(content);
+            if (!String.IsNullOrWhiteSpace(stripped))
             {
-                Items.Add(new OverviewItemViewModel() { Title = title, Content = content });
+                Items.Add(new OverviewItemViewModel() { Title = title, Content = stripped });
             }
         }
 

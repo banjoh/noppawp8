@@ -16,7 +16,7 @@ namespace NoppaClient
             if (html != null)
             {
                 html = Regex.Replace(html,
-                                     "(\\<script(.+?)\\</script\\>)|(\\<style(.+?)\\</style\\>)|<.+?>",
+                                     "(\\<script(.+?)\\</script\\>)|(\\<style(.+?)\\</style\\>)|\\<.+?\\>",
                                      string.Empty,
                                      RegexOptions.Singleline | RegexOptions.IgnoreCase
                 ).Replace("\n", " ");
