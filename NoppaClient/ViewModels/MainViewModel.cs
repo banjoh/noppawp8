@@ -42,12 +42,24 @@ namespace NoppaClient.ViewModels
 
     public class NewsGroupCollection : ObservableCollection<NewsGroup>
     {
-        public NewsGroupCollection() { }
+        public NewsGroupCollection() : this(DateTime.Today.AddYears(-1)) { }
+
+        public NewsGroupCollection(DateTime dateLimit) 
+        {
+            _dateLimit = dateLimit;
+        }
+
+        DateTime _dateLimit;
 
         public void AddNewItems(List<CourseNewsViewModel> courseNews)
         {
             foreach (var news in courseNews)
             {
+                if (news.Date.CompareTo(_dateLimit) < 0)
+                {
+                    continue;
+                }
+
                 bool found = false;
                 foreach (NewsGroup item in Items)
                 {
@@ -191,7 +203,7 @@ namespace NoppaClient.ViewModels
         {
             try
             {
-                News = new NewsGroupCollection();
+                News = new NewsGroupCollection(DateTime.Today.AddMonths(-3));
                 var courses = await pinnedCourses.GetCodesAsync();
                 await MyCourses.LoadMyCoursesAsync(pinnedCourses);
 
