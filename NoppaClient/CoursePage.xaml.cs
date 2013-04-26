@@ -28,10 +28,20 @@ namespace NoppaClient
             Task loadTask = null;
             base.OnNavigatedTo(e);
             string courseCode = "";
+            int? newsItem = null;
             
             if (NavigationContext.QueryString.ContainsKey("id"))
             {
                 courseCode = NavigationContext.QueryString["id"];
+            }
+
+            try
+            {
+                newsItem = Convert.ToInt32(NavigationContext.QueryString["news"]);
+            }
+            catch (Exception)
+            {
+                /* Either no news, or news parameter wasn't a valid integer. */
             }
 
             // Find menu objects
@@ -46,8 +56,16 @@ namespace NoppaClient
             if (_viewModel == null)
             {
                 _viewModel = new CourseViewModel(courseCode, App.PinnedCourses);
+
+                // Make pivot view start on the news page with the item selected
+                if (newsItem.HasValue)
+                {
+                    _viewModel.CurrentContent = _viewModel.NewsModel;
+                    _viewModel.NewsModel.CurrentNewsIndex = newsItem.Value;
+                }
+
                 /* No need to await this here, the page shows up faster w/o doing it, and it loads asynchronously just fine.  */
-                loadTask =_viewModel.LoadContentAsync(); 
+                loadTask = _viewModel.LoadContentAsync();
                 DataContext = _viewModel;
             }
 

@@ -25,6 +25,11 @@ namespace NoppaClient.ViewModels
             return new DelegateCommand<CourseEvent>(controller.ShowCourseEvent, ev => ev != null);
         }
 
+        public static DelegateCommand<CourseNewsViewModel> MakeShowCourseNewsCommand(INavigationController controller)
+        {
+            return new DelegateCommand<CourseNewsViewModel>(controller.ShowCourseNews, news => news != null);
+        }
+
         public static DelegateCommand MakeShowCourseSearchCommand(INavigationController controller)
         {
             return new DelegateCommand(controller.ShowCourseSearch);

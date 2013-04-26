@@ -12,16 +12,27 @@ using System.Linq;
 
 namespace NoppaClient.ViewModels
 {
-    public class NewsGroupItem : ObservableCollection<CourseNews>
+    public class CourseNewsViewModel
+    {
+        public CourseNews News { get; set; }
+        public Course Course { get; set; }
+        public int Index { get; set; }
+        public DateTime Date { get { return News.Date; } }
+        public string Title { get { return News.Title; } }
+        public string Content { get { return News.Content; } }
+        public List<Link> Links { get { return News.Links; } }
+    }
+
+    public class NewsGroup : ObservableCollection<CourseNewsViewModel>
     {
         private string _newsDate;
         public string NewsDate { get { return _newsDate; } }
         private DateTime _dtnewsDate;
         public DateTime dtNewsDate { get { return _dtnewsDate; } }
 
-        public NewsGroupItem() { }
+        public NewsGroup() { }
 
-        public NewsGroupItem(string newsDate, DateTime dtnewsDate)
+        public NewsGroup(string newsDate, DateTime dtnewsDate)
             : base()
         {
             _newsDate = newsDate;
@@ -29,31 +40,32 @@ namespace NoppaClient.ViewModels
         }
     }
 
-    public class NewsGroup : ObservableCollection<NewsGroupItem>
+    public class NewsGroupCollection : ObservableCollection<NewsGroup>
     {
-        public NewsGroup() { }
+        public NewsGroupCollection() { }
 
-        public void AddNewItems(List<CourseNews> courseNews)
+        public void AddNewItems(List<CourseNewsViewModel> courseNews)
         {
-            foreach (var c in courseNews)
+            foreach (var news in courseNews)
             {
                 bool found = false;
-                foreach (NewsGroupItem item in Items)
+                foreach (NewsGroup item in Items)
                 {
-                    if (item.NewsDate == c.Date.ToShortDateString())
+                    if (item.NewsDate == news.Date.ToShortDateString())
                     {
                         found = true;
-                        item.Add(c);
+                        item.Add(news);
                         break;
                     }
                 }
                 if (!found)
                 {
-                    NewsGroupItem newItem = new NewsGroupItem(c.Date.ToShortDateString(), c.Date);
-                    newItem.Add(c);
+                    NewsGroup newItem = new NewsGroup(news.Date.ToShortDateString(), news.Date);
+                    newItem.Add(news);
                     Add(newItem);
                 }
             }
+
             var sortedList = this.OrderByDescending(x => x.dtNewsDate).ToList();
             this.Clear();
             foreach (var sortedItem in sortedList)
@@ -73,8 +85,8 @@ namespace NoppaClient.ViewModels
         private CourseListViewModel _myCourses;
         public CourseListViewModel MyCourses { get { return _myCourses; } }
 
-        private NewsGroup _news;
-        public NewsGroup News
+        private NewsGroupCollection _news;
+        public NewsGroupCollection News
         {
             get { return _news; }
             private set { SetProperty(ref _news, value); }
@@ -126,6 +138,7 @@ namespace NoppaClient.ViewModels
             ShowSearchCommand = ControllerUtil.MakeShowCourseSearchCommand(navigationController);
             ActivateCourseCommand = ControllerUtil.MakeShowCourseCommand(navigationController);
             EventActivatedCommand = ControllerUtil.MakeShowCourseEventCommand(navigationController);
+            NewsActivatedCommand = ControllerUtil.MakeShowCourseNewsCommand(navigationController);
          }
 
         /// <summary>
@@ -178,27 +191,42 @@ namespace NoppaClient.ViewModels
         {
             try
             {
-                News = new NewsGroup();
+                News = new NewsGroupCollection();
                 var courses = await pinnedCourses.GetCodesAsync();
                 await MyCourses.LoadMyCoursesAsync(pinnedCourses);
 
                 List<CourseEvent> events = new List<CourseEvent>();
 
                 /* For each course task to get list of news/events */
-                var newsTasks = new List<Task<List<CourseNews>>>();
+                var newsTasks = new List<Task<List<CourseNewsViewModel>>>();
                 var eventTasks = new List<Task<List<CourseEvent>>>();
 
                 foreach (var courseId in courses)
                 {
-                    newsTasks.Add(Task.Run(async () => await NoppaAPI.GetCourseNews(courseId)));
-                    eventTasks.Add(Task.Run(async () => await NoppaAPI.GetCourseEvents(courseId)));
+                    newsTasks.Add(Task.Run(async () =>
+                        {
+                            var courseTask = NoppaAPI.GetCourse(courseId);
+                            var newsTask = NoppaAPI.GetCourseNews(courseId);
+                            await Task.WhenAll(newsTask, courseTask);
+
+                            var newsList = new List<CourseNewsViewModel>();
+                            var result = newsTask.Result;
+                            var course = courseTask.Result;
+                            for (int i = 0; i < result.Count; i++)
+                            {
+                                newsList.Add(new CourseNewsViewModel { News = result[i], Course = course, Index = i });
+                            }
+                            return newsList;
+                        }));
+
+                    eventTasks.Add(NoppaAPI.GetCourseEvents(courseId));
                 }
 
                 while (newsTasks.Count > 0 || eventTasks.Count > 0)
                 {
                     var newsTask = await Task.WhenAny(newsTasks);
                     newsTasks.Remove(newsTask);
-                    var newsItems = await newsTask;
+                    var newsItems = newsTask.Result;
 
                     if (newsItems != null)
                         /* Each add now also sorts the list and updates UI. If there are LOTS of

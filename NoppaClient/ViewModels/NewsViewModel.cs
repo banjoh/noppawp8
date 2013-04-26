@@ -9,10 +9,17 @@ using System.Threading.Tasks;
 
 namespace NoppaClient.ViewModels
 {
-    class NewsViewModel : CourseContentViewModel
+    public class NewsViewModel : CourseContentViewModel
     {
         private ObservableCollection<CourseNews> _news = new ObservableCollection<CourseNews>();
         public ObservableCollection<CourseNews> News { get { return _news; } }
+
+        private int _currentNewsIndex = -1;
+        public int CurrentNewsIndex 
+        { 
+            get { return _currentNewsIndex >= 0 && _currentNewsIndex < News.Count ? _currentNewsIndex : -1; } 
+            set { SetProperty(ref _currentNewsIndex, value); } 
+        }
 
         public NewsViewModel()
         {
@@ -28,6 +35,12 @@ namespace NoppaClient.ViewModels
                 foreach (var n in news)
                 {
                     _news.Add(n);
+                }
+
+                // In case the current index was set and read before the items were loaded
+                if (_currentNewsIndex >= 0 && _currentNewsIndex < _news.Count)
+                {
+                    NotifyPropertyChanged("CurrentNewsIndex");
                 }
             }
         }

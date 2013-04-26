@@ -35,15 +35,22 @@ namespace NoppaClient
         {
             // Pass the whole event as navigation parameters
             _frame.Navigate(NoppaUtility.MakeUri("/EventPage.xaml",
-                                    "course_id",  courseEvent.CourseId,
-                                    "type", courseEvent.Type,
-                                    "title", courseEvent.Title,
-                                    "weekday", courseEvent.Weekday,
-                                    "location", courseEvent.Location,
-                                    "start_time", courseEvent.StartTime,
-                                    "end_time", courseEvent.EndTime,
-                                    "start_date", courseEvent.StartDate,
-                                    "end_date", courseEvent.EndDate));
+                "course_id",  courseEvent.CourseId,
+                "type", courseEvent.Type,
+                "title", courseEvent.Title,
+                "weekday", courseEvent.Weekday,
+                "location", courseEvent.Location,
+                "start_time", courseEvent.StartTime,
+                "end_time", courseEvent.EndTime,
+                "start_date", courseEvent.StartDate,
+                "end_date", courseEvent.EndDate));
+        }
+
+        public void ShowCourseNews(CourseNewsViewModel news)
+        {
+            _frame.Navigate(NoppaUtility.MakeUri("/CoursePage.xaml", 
+                "id", news.Course.Id, 
+                "news", news.Index));
         }
 
         public void ShowCourseSearch()

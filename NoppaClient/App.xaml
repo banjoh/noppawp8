@@ -74,7 +74,7 @@
                 <!--Replace rectangle with image-->
                 <Image Width="100" Height="100" Source="{Binding Type, Converter={StaticResource EventTypeToImageConverter}}" />
                 <StackPanel Width="311" Margin="8,-7,0,0">
-                    <TextBlock Text="{Binding Title}" TextWrapping="Wrap" Margin="10,0" Style="{StaticResource PhoneTextLargeStyle}" FontSize="{StaticResource PhoneFontSizeMedium}" />
+                    <TextBlock Text="{Binding Title}" TextWrapping="Wrap" Margin="10,0" Style="{StaticResource PhoneTextNormalStyle}" />
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding StartTime, StringFormat=t}" TextWrapping="NoWrap" Margin="10,-2,0,0" Style="{StaticResource PhoneTextSubtleStyle}" />
                         <TextBlock Text="-" TextWrapping="NoWrap" Margin="2,-2,2,0" Style="{StaticResource PhoneTextSubtleStyle}" />

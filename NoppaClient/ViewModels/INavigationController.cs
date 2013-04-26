@@ -18,6 +18,8 @@ namespace NoppaClient.ViewModels
 
         void ShowCourseEvent(CourseEvent courseEvent);
 
+        void ShowCourseNews(CourseNewsViewModel courseNews);
+
         void ShowCourseSearch();
 
         void ShowSettings();

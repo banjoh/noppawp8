@@ -28,15 +28,15 @@
             <view:OpenBrowserCommand x:Key="OpenBrowserCommand" />
 
             <DataTemplate x:Key="NewsItemTemplate">
-                <StackPanel Margin="0,16">
-                    <TextBlock Text="{Binding Date, StringFormat=g}" Foreground="{StaticResource PhoneAccentBrush}" />
-                    <TextBlock Text="{Binding Title}" FontSize="{StaticResource PhoneFontSizeMediumLarge}" TextWrapping="Wrap" />
-                    <TextBlock Text="{Binding Content}" Style="{StaticResource PhoneTextNormalStyle}" TextWrapping="Wrap" Margin="0,6"/>
+                <StackPanel Margin="-4,12">
+                    <TextBlock Text="{Binding Date, StringFormat=g}" Foreground="{StaticResource PhoneAccentBrush}" Style="{StaticResource PhoneTextSmallStyle}" />
+                    <TextBlock Text="{Binding Title}" Style="{StaticResource PhoneTextNormalStyle}" FontSize="{StaticResource PhoneFontSizeMediumLarge}" TextWrapping="Wrap" />
+                    <TextBlock Text="{Binding Content}" Style="{StaticResource PhoneTextNormalStyle}" TextWrapping="Wrap" />
                     <!-- Use ItemsControl here so that items are laid out inline, and not in a scroll area -->
                     <ItemsControl ItemsSource="{Binding Links}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Margin="22,0,22,10">
+                                <StackPanel Margin="12,0,12,10">
                                     <Button Content="{Binding Title}" Command="{StaticResource OpenBrowserCommand}" CommandParameter="{Binding Url}" />
                                 </StackPanel>
                             </DataTemplate>
@@ -229,9 +229,10 @@
 
                 <DataTemplate x:Key="NewsViewModel">
                     <ListBox
-                        Margin="0,0,-22,0"
+                        Margin="12,0,-10,0"                        
                         HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                         ItemTemplate="{StaticResource NewsItemTemplate}"
+                        SelectedIndex="{Binding CurrentNewsIndex}"
                         ItemsSource="{Binding News}">
                     </ListBox>
                 </DataTemplate>
@@ -286,6 +287,7 @@
         <!-- Runtime Pivot Control -->
         <phone:Pivot Title="{Binding Code}"
                      ItemsSource="{Binding Contents}"
+                     SelectedItem="{Binding CurrentContent}"
                      Visibility="{Binding IsNotInDesignTool, Source={StaticResource DesignToolChecker}, Converter={StaticResource BooleanToVisibilityConverter}}">
             <phone:Pivot.ItemTemplate>
                 <DataTemplate>

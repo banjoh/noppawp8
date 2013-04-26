@@ -17,16 +17,20 @@ namespace NoppaClient.ViewModels
         private Course _course = null;
         private PinnedCourses _pinnedCourses;
 
-        OverviewViewModel _overviewModel;
-
         private ObservableCollection<CourseContentViewModel> _contents = new ObservableCollection<CourseContentViewModel>();
         public ObservableCollection<CourseContentViewModel> Contents { get { return _contents; } }
+
+        private CourseContentViewModel _currentContent;
+        public CourseContentViewModel CurrentContent { get { return _currentContent; } set { SetProperty(ref _currentContent, value); } }
 
         private bool _isLoading;
         public bool IsLoading { get { return _isLoading; } private set { SetProperty(ref _isLoading, value); } }
 
         private string _code = "";
         public string Code { get { return _code; } set { SetProperty(ref _code, value); } }
+
+        public OverviewViewModel OverviewModel { get; private set; }
+        public NewsViewModel NewsModel { get; private set; }
 
         #region Pinned courses
 
@@ -139,6 +143,13 @@ namespace NoppaClient.ViewModels
 
             NoppaPageUri = new Uri(String.Format("https://noppa.aalto.fi/noppa/kurssi/{0}/etusivu", courseCode));
 
+            // By default, always add these two items (which can be assigned to CurrentContent by the view)
+            OverviewModel = new OverviewViewModel();
+            NewsModel = new NewsViewModel();
+
+            Contents.Add(OverviewModel);
+            Contents.Add(NewsModel);
+
             SetPinnedStateAsync();
         }
 
@@ -156,14 +167,11 @@ namespace NoppaClient.ViewModels
 
             var tasks = new List<Task<CourseContentViewModel>>();
 
-            /* Load Overview */
-            tasks.Add(Task.Run(async delegate () {
-                    OverviewViewModel model = new OverviewViewModel();
-                    await model.LoadDataAsync(_course);
-                    _overviewModel = model;
-                    return model as CourseContentViewModel;
-                })
-            );
+            /* Load Overview (already in the contents) */
+            var loadOverViewTask = OverviewModel.LoadDataAsync(_course);
+
+            /* Load News (already in the contents) */
+            var loadNewsTask = NewsModel.LoadDataAsync(Code);
 
             /* Load Lectures */
             tasks.Add(Task.Run(async delegate(){
@@ -181,14 +189,6 @@ namespace NoppaClient.ViewModels
                 })
             );
 
-            /* Load News */
-            tasks.Add(Task.Run(async delegate () {
-                    NewsViewModel model = new NewsViewModel();
-                    await model.LoadDataAsync(Code);
-                    return model as CourseContentViewModel;
-                })
-            );
-
             /* Load Results */
             tasks.Add(Task.Run(async delegate(){
                     ResultsViewModel model = new ResultsViewModel();
@@ -197,7 +197,6 @@ namespace NoppaClient.ViewModels
                 })
             );
 
-
             /* Load Assignments */
             tasks.Add(Task.Run(async delegate(){
                     AssignmentsViewModel model = new AssignmentsViewModel();
@@ -205,7 +204,6 @@ namespace NoppaClient.ViewModels
                     return model as CourseContentViewModel;
                 })
             );
-
 
             /* Add items in the order they are finished. */
             while (tasks.Count > 0)
@@ -231,9 +229,11 @@ namespace NoppaClient.ViewModels
                 }
             }
 
-            if (_overviewModel.OodiUrl != null)
+            await Task.WhenAll(loadNewsTask, loadOverViewTask);
+
+            if (OverviewModel.OodiUrl != null)
             {
-                OodiPageUri = new Uri(_overviewModel.OodiUrl);
+                OodiPageUri = new Uri(OverviewModel.OodiUrl);
             }
 
             IsLoading = false;
