@@ -25,7 +25,7 @@
                 <TextBlock Text="{Binding Name}" TextWrapping="Wrap" 
                            Style="{StaticResource PhoneTextLargeStyle}" 
                            FontSize="{StaticResource PhoneFontSizeLarge}"
-                            LineStackingStrategy="BlockLineHeight" LineHeight="34"/>
+                           LineStackingStrategy="BlockLineHeight" LineHeight="34"/>
             </StackPanel>
         </DataTemplate>
 
@@ -74,9 +74,12 @@
         </Style>
 
         <DataTemplate x:Key="NewsItemTemplate">
-            <StackPanel Margin="0,0,0,40">
-                <TextBlock Text="{Binding Title}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeLarge}" />
-                <TextBlock Text="{Binding Content}" TextWrapping="Wrap"  Style="{StaticResource PhoneTextSubtleStyle}" />
+            <StackPanel Margin="0,0,0,40">                
+                <TextBlock Text="{Binding Title}" TextWrapping="Wrap" 
+                           Style="{StaticResource PhoneTextLargeStyle}" 
+                           FontSize="{StaticResource PhoneFontSizeLarge}"
+                           LineStackingStrategy="BlockLineHeight" LineHeight="34" />
+                <TextBlock Text="{Binding Course.LongName}" TextWrapping="Wrap"  Style="{StaticResource PhoneTextSubtleStyle}" />
             </StackPanel>
         </DataTemplate>
 
