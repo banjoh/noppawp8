@@ -2,25 +2,22 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:vm="clr-namespace:NoppaClient.ViewModels"
-    xmlns:dm="clr-namespace:NoppaLib.DataModel"
+    xmlns:dm="clr-namespace:NoppaLib.DataModel;assembly=NoppaLib"
     Code="T-110.5130">
 
     <vm:CourseViewModel.Contents>
-        <vm:FrontPageViewModel Title="FrontPage" Code="T-110.5130" />
-        <vm:OverviewViewModel Title="Overview"
-                              CourseId="T-75.4400"
-                              Credits="4 cr"
-                              Level="&lt;p&gt;The course is only for students who have completed their general studies.&lt;/p&gt;"
-                              TeachingPeriod="III - IV"
-                              Workload="Lectures 24 h, exercises 42 h, self-study 36 h. HTML"
-                              LearningOutcomes="Upon completion of the course the student knows the basic concepts and methods of information retrieval."
-                              Content="Classic information retrieval (Boolean method, vector space model, probability models), [...]"
-                              Assessment="Exam and exercises."
-                              StudyMaterial="To be announced later."
-                              GradingScale="0-5"
-                              InstructionLanguage="FI. Primarily Finnish. The assessed work may be completed in English or upon request."
-                              Details="Kurssikirja: Christopher D. Manning, Prabhakar Raghavan and Hinrich Schütze, Introduction to Information Retrieval, Cambridge University Press. 2008.  ISBN: 0521865719. Saatavissa osoitteesta: http://nlp.stanford.edu/ IR-book/" />
-  
+        <vm:OverviewViewModel Title="Overview">
+            <vm:OverviewViewModel.Items>
+                <vm:OverviewItemViewModel Title="course name" Content="T-75.4400 Some Course Name" />
+                <vm:OverviewItemViewModel Title="credits" Content="4 cr" />
+                <vm:OverviewItemViewModel Title="level" Content="The course is only for students who have completed their general studies." />
+                <vm:OverviewItemViewModel Title="teaching period" Content="III - IV" />
+                <vm:OverviewItemViewModel Title="workload" Content="Lectures 24 h, exercises 42 h, self-study 36 h. HTML" />
+                <vm:OverviewItemViewModel Title="learning outcomes" Content="Upon completion of the course the student knows the basic concepts and methods of information retrieval." />
+                <vm:OverviewItemViewModel Title="content" Content="Classic information retrieval (Boolean method, vector space model, probability models), [...]" />
+            </vm:OverviewViewModel.Items>
+        </vm:OverviewViewModel>
+
         <vm:NewsViewModel Title="News">
             <vm:NewsViewModel.News>
                 <dm:CourseNews
@@ -87,9 +84,7 @@ Also, I updated the Assignments page with instructions regarding the project pla
         </vm:NewsViewModel>
         <vm:LecturesViewModel Title="Lectures">
             <vm:LecturesViewModel.Lectures>
-                <dm:CourseLecture LectureId="Hello" Date="Today" 
-                            StartTime="Now"
-                            EndTime="In half an hour"
+                <dm:CourseLecture 
                             Location="T1" 
                             Title="Lobotomy over IP" 
                             Content="" />

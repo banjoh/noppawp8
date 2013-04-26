@@ -117,6 +117,177 @@ namespace NoppaClient.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to assessment.
+        /// </summary>
+        public static string CourseAssessmentTitle {
+            get {
+                return ResourceManager.GetString("CourseAssessmentTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CEFR level.
+        /// </summary>
+        public static string CourseCEFRLevelTitle {
+            get {
+                return ResourceManager.GetString("CourseCEFRLevelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to content.
+        /// </summary>
+        public static string CourseContentTitle {
+            get {
+                return ResourceManager.GetString("CourseContentTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to credits.
+        /// </summary>
+        public static string CourseCreditsTitle {
+            get {
+                return ResourceManager.GetString("CourseCreditsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to details.
+        /// </summary>
+        public static string CourseDetailsTitle {
+            get {
+                return ResourceManager.GetString("CourseDetailsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to grading scale.
+        /// </summary>
+        public static string CourseGradingScaleTitle {
+            get {
+                return ResourceManager.GetString("CourseGradingScaleTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to instruction language.
+        /// </summary>
+        public static string CourseInstructionLanguageTitle {
+            get {
+                return ResourceManager.GetString("CourseInstructionLanguageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to learning outcomes.
+        /// </summary>
+        public static string CourseLearningOutcomesTitle {
+            get {
+                return ResourceManager.GetString("CourseLearningOutcomesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to level.
+        /// </summary>
+        public static string CourseLevelTitle {
+            get {
+                return ResourceManager.GetString("CourseLevelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to course name.
+        /// </summary>
+        public static string CourseNameTitle {
+            get {
+                return ResourceManager.GetString("CourseNameTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to office hours.
+        /// </summary>
+        public static string CourseOfficeHoursTitle {
+            get {
+                return ResourceManager.GetString("CourseOfficeHoursTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to prerequisites.
+        /// </summary>
+        public static string CoursePrerequisitesTitle {
+            get {
+                return ResourceManager.GetString("CoursePrerequisitesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to registration.
+        /// </summary>
+        public static string CourseRegistrationTitle {
+            get {
+                return ResourceManager.GetString("CourseRegistrationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to staff.
+        /// </summary>
+        public static string CourseStaffTitle {
+            get {
+                return ResourceManager.GetString("CourseStaffTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to status.
+        /// </summary>
+        public static string CourseStatusTitle {
+            get {
+                return ResourceManager.GetString("CourseStatusTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to study material.
+        /// </summary>
+        public static string CourseStudyMaterialTitle {
+            get {
+                return ResourceManager.GetString("CourseStudyMaterialTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to substitutes.
+        /// </summary>
+        public static string CourseSubstitutesTitle {
+            get {
+                return ResourceManager.GetString("CourseSubstitutesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to teaching period.
+        /// </summary>
+        public static string CourseTeachingPeriodTitle {
+            get {
+                return ResourceManager.GetString("CourseTeachingPeriodTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to workload.
+        /// </summary>
+        public static string CourseWorkloadTitle {
+            get {
+                return ResourceManager.GetString("CourseWorkloadTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0}.
         /// </summary>
         public static string DepartmentCourseListTitle {

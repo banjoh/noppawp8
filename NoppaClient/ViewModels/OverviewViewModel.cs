@@ -1,6 +1,8 @@
 ﻿using NoppaClient.Resources;
+using NoppaLib.DataModel;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -10,64 +12,62 @@ using Windows.System;
 
 namespace NoppaClient.ViewModels
 {
+    public class OverviewItemViewModel
+    {
+        public string Title { get; set; }
+        public string Content { get; set; }
+    }
+
     public class OverviewViewModel : CourseContentViewModel
     {
-        public string LongName { get; private set; }
-        public string Credits { get; private set; }
-        public string Status { get; private set; }
-        public string Level { get; private set; }
-        public string TeachingPeriod { get; private set; }
-        public string Workload { get; private set; }
-        public string LearningOutcomes { get; private set; }
-        public string Content { get; private set; }
-        public string Assessment { get; private set; }
-        public string StudyMaterial { get; private set; }
-        public string GradingScale { get; private set; }
-        public string InstructionLanguage { get; private set; }
-        public string Details { get; private set; }
-        public string OodiUrl { get; private set; }
-        public string Substitutes { get; private set; }
-        public string CEFRLevel { get; private set; } 
-        public string Registration { get; private set; }
-        public string Staff { get; private set; }
-        public string OfficeHours { get; private set; }
 
-        private ICommand _openNoppaPage;
-        public ICommand OpenNoppaPage { get { return _openNoppaPage; } }
+        public ObservableCollection<OverviewItemViewModel> Items { get; private set; }
 
-        private ICommand _openOodiPage;
-        public ICommand OpenOodiPage { get { return _openOodiPage; } }
+        private string _oodiUrl;
+        public string OodiUrl { get { return _oodiUrl; } private set { SetProperty(ref _oodiUrl, value); } }
 
         public OverviewViewModel()
         {
             Title = AppResources.OverviewTitle;
+            Items = new ObservableCollection<OverviewItemViewModel>();
             Index = 1;
         }
 
-        public async Task LoadDataAsync(NoppaLib.DataModel.Course course)
+        private void AddContent(string title, string content)
         {
-            NoppaLib.DataModel.CourseOverview overview = await NoppaAPI.GetCourseOverview(course.Id);
+            if (!String.IsNullOrWhiteSpace(Detail.StripHtml(content)))
+            {
+                Items.Add(new OverviewItemViewModel() { Title = title, Content = content });
+            }
+        }
+
+        public async Task LoadDataAsync(Course course)
+        {
+            CourseOverview overview = await NoppaAPI.GetCourseOverview(course.Id);
 
             if (overview != null)
             {
-                LongName = course.LongName;
-                Credits = Detail.StripHtml(overview.Credits);
-                Level = Detail.StripHtml(overview.Level);
-                TeachingPeriod = Detail.StripHtml(overview.TeachingPeriod);
-                Workload = Detail.StripHtml(overview.Workload);
-                LearningOutcomes = Detail.StripHtml(overview.LearningOutcomes);
-                Assessment = Detail.StripHtml(overview.Assessment);
-                StudyMaterial = Detail.StripHtml(overview.StudyMaterial);
-                GradingScale = Detail.StripHtml(overview.GradingScale);
-                InstructionLanguage = Detail.StripHtml(overview.InstructionLanguage);
-                Details = Detail.StripHtml(overview.Details);
+                AddContent(AppResources.CourseNameTitle, course.LongName);
+                AddContent(AppResources.CourseCreditsTitle, overview.Credits);
+                AddContent(AppResources.CourseStatusTitle, overview.Status);
+                AddContent(AppResources.CourseLevelTitle, overview.Level);
+                AddContent(AppResources.CourseTeachingPeriodTitle, overview.TeachingPeriod);
+                AddContent(AppResources.CourseWorkloadTitle, overview.Workload);
+                AddContent(AppResources.CourseLearningOutcomesTitle, overview.LearningOutcomes);
+                AddContent(AppResources.CourseContentTitle, overview.Content);
+                AddContent(AppResources.CourseAssessmentTitle, overview.Assessment);
+                AddContent(AppResources.CourseStudyMaterialTitle, overview.StudyMaterial);
+                AddContent(AppResources.CourseSubstitutesTitle, overview.substitutes);
+                AddContent(AppResources.CourseCEFRLevelTitle, overview.CefrLevel);
+                AddContent(AppResources.CoursePrerequisitesTitle, overview.Prerequisites);
+                AddContent(AppResources.CourseGradingScaleTitle, overview.GradingScale);
+                AddContent(AppResources.CourseRegistrationTitle, overview.Registration);
+                AddContent(AppResources.CourseInstructionLanguageTitle, overview.InstructionLanguage);
+                AddContent(AppResources.CourseStaffTitle, overview.Staff);
+                AddContent(AppResources.CourseOfficeHoursTitle, overview.OfficeHours);
+                AddContent(AppResources.CourseDetailsTitle, overview.Details);
+
                 OodiUrl = overview.OodiUrl;
-
-                var noppaUrl = new Uri(String.Format("https://noppa.aalto.fi/noppa/kurssi/{0}/etusivu", course.Id));
-                var oodiUrl = new Uri(overview.OodiUrl);
-
-                _openOodiPage = new DelegateCommand(async delegate { await Launcher.LaunchUriAsync(oodiUrl); });
-                _openNoppaPage = new DelegateCommand(async delegate { await Launcher.LaunchUriAsync(noppaUrl); });
             }
         }
     }

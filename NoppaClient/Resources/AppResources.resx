@@ -265,4 +265,61 @@ You can search by course name, part of the course name, course code or part of t
   <data name="WednesdayTitle" xml:space="preserve">
     <value>wednesday</value>
   </data>
+  <data name="CourseAssessmentTitle" xml:space="preserve">
+    <value>assessment</value>
+  </data>
+  <data name="CourseCEFRLevelTitle" xml:space="preserve">
+    <value>CEFR level</value>
+  </data>
+  <data name="CourseContentTitle" xml:space="preserve">
+    <value>content</value>
+  </data>
+  <data name="CourseCreditsTitle" xml:space="preserve">
+    <value>credits</value>
+  </data>
+  <data name="CourseDetailsTitle" xml:space="preserve">
+    <value>details</value>
+  </data>
+  <data name="CourseGradingScaleTitle" xml:space="preserve">
+    <value>grading scale</value>
+  </data>
+  <data name="CourseInstructionLanguageTitle" xml:space="preserve">
+    <value>instruction language</value>
+  </data>
+  <data name="CourseLearningOutcomesTitle" xml:space="preserve">
+    <value>learning outcomes</value>
+  </data>
+  <data name="CourseLevelTitle" xml:space="preserve">
+    <value>level</value>
+  </data>
+  <data name="CourseNameTitle" xml:space="preserve">
+    <value>course name</value>
+  </data>
+  <data name="CourseOfficeHoursTitle" xml:space="preserve">
+    <value>office hours</value>
+  </data>
+  <data name="CoursePrerequisitesTitle" xml:space="preserve">
+    <value>prerequisites</value>
+  </data>
+  <data name="CourseRegistrationTitle" xml:space="preserve">
+    <value>registration</value>
+  </data>
+  <data name="CourseStaffTitle" xml:space="preserve">
+    <value>staff</value>
+  </data>
+  <data name="CourseStatusTitle" xml:space="preserve">
+    <value>status</value>
+  </data>
+  <data name="CourseStudyMaterialTitle" xml:space="preserve">
+    <value>study material</value>
+  </data>
+  <data name="CourseSubstitutesTitle" xml:space="preserve">
+    <value>substitutes</value>
+  </data>
+  <data name="CourseTeachingPeriodTitle" xml:space="preserve">
+    <value>teaching period</value>
+  </data>
+  <data name="CourseWorkloadTitle" xml:space="preserve">
+    <value>workload</value>
+  </data>
 </root>
