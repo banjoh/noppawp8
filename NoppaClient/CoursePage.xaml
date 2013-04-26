@@ -289,7 +289,11 @@
                      Visibility="{Binding IsNotInDesignTool, Source={StaticResource DesignToolChecker}, Converter={StaticResource BooleanToVisibilityConverter}}">
             <phone:Pivot.ItemTemplate>
                 <DataTemplate>
-                    <view:DataTemplateSelector Content="{Binding}" TemplateDictionary="{StaticResource ViewModelTemplates}" />
+                    <view:DataTemplateSelector 
+                        Content="{Binding}" 
+                        TemplateDictionary="{StaticResource ViewModelTemplates}" 
+                        HorizontalContentAlignment="Stretch" 
+                        VerticalContentAlignment="Top" />
                 </DataTemplate>
             </phone:Pivot.ItemTemplate>
             <phone:Pivot.HeaderTemplate>
