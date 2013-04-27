@@ -21,7 +21,7 @@
 
         <!-- Move these to a common resource file if they are reused -->
         <DataTemplate x:Key="DepartmentItemTemplate">
-            <StackPanel Margin="0,-2,0,12">
+            <StackPanel Margin="0,-2,0,20">
                 <TextBlock Text="{Binding Name}" TextWrapping="Wrap" 
                            Style="{StaticResource PhoneTextLargeStyle}" 
                            FontSize="{StaticResource PhoneFontSizeLarge}"
