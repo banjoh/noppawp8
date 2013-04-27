@@ -11,11 +11,6 @@
     <Application.Resources>
         <sys:Double x:Key="PanoramaItemHeaderFontSize">66</sys:Double>
 
-        <Style x:Key="PanoramaItemHeaderTextStyle" TargetType="TextBlock">
-            <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiLight}"/>
-            <Setter Property="FontSize" Value="{StaticResource PanoramaItemHeaderFontSize}"/>
-            <Setter Property="CharacterSpacing" Value="-35"/>
-        </Style>
 
         <!-- Use this brush for changing header colors etc. -->
         <SolidColorBrush x:Key="NoppaPrimaryColorBrush" Color="#FF00C13A" />
@@ -31,6 +26,12 @@
         <Style TargetType="Button">
             <Setter Property="Background" Value="#1B66C9"/>
             <Setter Property="BorderBrush" Value="#1B66C9"/>
+        </Style>
+
+        <Style x:Key="PanoramaItemHeaderTextStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiLight}"/>
+            <Setter Property="FontSize" Value="{StaticResource PanoramaItemHeaderFontSize}"/>
+            <Setter Property="CharacterSpacing" Value="-35"/>
         </Style>
 
         <local:LocalizedStrings xmlns:local="clr-namespace:NoppaClient" x:Key="LocalizedStrings"/>
@@ -121,7 +122,8 @@
             <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiLight}"/>
             <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeExtraExtraLarge}"/>
             <Setter Property="Margin" Value="10,-2,0,0" />
-            <Setter Property="CharacterSpacing" Value="-35" />            
+            <Setter Property="CharacterSpacing" Value="-35" />
+            <Setter Property="Foreground" Value="{StaticResource NoppaPrimaryColorBrush}" />
         </Style>
     </Application.Resources>
 

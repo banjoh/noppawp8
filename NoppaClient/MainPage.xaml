@@ -126,7 +126,13 @@
          -->
 
         <!--Panorama control-->
-        <phone:Panorama Title="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}" Margin="0,-1,0,1">
+        <phone:Panorama Margin="0,-1,0,1">
+            <phone:Panorama.TitleTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}" 
+                               Foreground="{StaticResource NoppaPrimaryColorBrush}" />
+                </DataTemplate>
+            </phone:Panorama.TitleTemplate>
             <!--
             <phone:Panorama.Background>
                 <ImageBrush ImageSource="/NoppaClient;component/Assets/PanoramaBackground.png"/>
