@@ -62,25 +62,46 @@
         <vm:NewsGroup NewsDate="15.4">
             <vm:CourseNewsViewModel Date="2013-04-15T12:01" Title="Phase 4 review session reservation open">
                 <vm:CourseNewsViewModel.Content>The phase 4 review session reservation is now open. Information about reservation has been sent via email. As usually, if you have not received the email, contact the course staff.</vm:CourseNewsViewModel.Content>
+                <vm:CourseNewsViewModel.Course>
+                    <dm:Course LongName="T-106.5130" />
+                </vm:CourseNewsViewModel.Course>
             </vm:CourseNewsViewModel>
         </vm:NewsGroup>
         <vm:NewsGroup NewsDate="12.4">
-                <vm:CourseNewsViewModel Date="2013-04-12T10:55" Title="Phase 3 deadline change">
-                <vm:CourseNewsViewModel.Content>Since there were differing deadlines for the phase 3 code submission on the Noppa page by mistake, we will move the deadline for the Phase 3 code submission to today (friday 12.04) at 24.00</vm:CourseNewsViewModel.Content>
+            <vm:CourseNewsViewModel Date="2013-04-12T10:55" Title="Phase 3 deadline change">
+            <vm:CourseNewsViewModel.Content>Since there were differing deadlines for the phase 3 code submission on the Noppa page by mistake, we will move the deadline for the Phase 3 code submission to today (friday 12.04) at 24.00</vm:CourseNewsViewModel.Content>
+            <vm:CourseNewsViewModel.Course>
+                <dm:Course LongName="T-106.5130" />
+            </vm:CourseNewsViewModel.Course>
             </vm:CourseNewsViewModel>
             <vm:CourseNewsViewModel Date="2013-03-26T20:23" Title="Phase 3 assignment instructions fixed">
+                <vm:CourseNewsViewModel.Course>
+                    <dm:Course LongName="T-106.5130" />
+                </vm:CourseNewsViewModel.Course>
                 <vm:CourseNewsViewModel.Content>As some of you noticed, there was a slight error in the phase 3 instructions that has now been corrected. You are NOT supposed to change the sector size for the disk used in this assignment.</vm:CourseNewsViewModel.Content>
             </vm:CourseNewsViewModel>
             <vm:CourseNewsViewModel Date="2013-03-18T11:55" Title="Phase 3 review reservations open">
+                <vm:CourseNewsViewModel.Course>
+                    <dm:Course LongName="T-106.5130" />
+                </vm:CourseNewsViewModel.Course>
                 <vm:CourseNewsViewModel.Content>The phase 3 review session reservation is now open. Information about reservation has been sent via email. As usually, if you have not received the email, contact the course staff.</vm:CourseNewsViewModel.Content>
             </vm:CourseNewsViewModel>
             <vm:CourseNewsViewModel Date="2013-02-18T16:06" Title="Phase 2 review session reservation open">
+                <vm:CourseNewsViewModel.Course>
+                    <dm:Course LongName="T-106.5130" />
+                </vm:CourseNewsViewModel.Course>
                 <vm:CourseNewsViewModel.Content>The phase 2 review session reservation is now open. Information about reservation has been sent via email. If you have not received the email, contact the course staff.</vm:CourseNewsViewModel.Content>
             </vm:CourseNewsViewModel>
             <vm:CourseNewsViewModel Date="2013-01-28T13:46" Title="Phase 1 review session reservations open">
+                <vm:CourseNewsViewModel.Course>
+                    <dm:Course LongName="T-106.5130" />
+                </vm:CourseNewsViewModel.Course>
                 <vm:CourseNewsViewModel.Content>The reservation system for the phase 1 review sessions are now open. Information about the reservations has been sent by email to all registered participants of the course. If you haven't received the email, contact the course staff. The deadline for the reservations is 12.00 on Friday 1.2.2013.</vm:CourseNewsViewModel.Content>
             </vm:CourseNewsViewModel>
             <vm:CourseNewsViewModel Date="2013-01-24T14:20" Title="Phase 1 assignment instructions">
+                <vm:CourseNewsViewModel.Course>
+                    <dm:Course LongName="T-106.5130" />
+                </vm:CourseNewsViewModel.Course>
                 <vm:CourseNewsViewModel.Content>The phase 1 assignment instructions have been added to the assignments page in Noppa.\n\nAs a reminder, do not forget to register your group by sending an email to the course email address. The format of the email is described in the ¿phase 0¿ instructions on the assignments page. You may look for group members using the old TKY newsgroup (link below). If you cannot find a group by the registration deadline, send a message to the course email address so you can be assigned to a group by the course staff.\n\nWeb client for the news group:</vm:CourseNewsViewModel.Content>
                 <vm:CourseNewsViewModel.Links>
                     <dm:Link Title="Opinnot.tik.os" Url="http://news.tky.fi/thread.php?group=opinnot.tik.os" />

@@ -19,12 +19,19 @@
 
         <!-- Use this brush for changing header colors etc. -->
         <SolidColorBrush x:Key="NoppaPrimaryColorBrush" Color="#FF00C13A" />
-        
+
+        <Style x:Key="NoppaTextLargeStyle" BasedOn="{StaticResource PhoneTextLargeStyle}" TargetType="TextBlock">
+            <Setter Property="TextWrapping" Value="Wrap" /> 
+            <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeLarge}" />
+            <Setter Property="LineStackingStrategy" Value="BlockLineHeight" />
+            <Setter Property="LineHeight" Value="34" />
+            <Setter Property="Foreground" Value="{StaticResource PhoneTextHighContrastBrush}" />
+        </Style>
+
         <Style TargetType="Button">
             <Setter Property="Background" Value="#1B66C9"/>
             <Setter Property="BorderBrush" Value="#1B66C9"/>
         </Style>
-
 
         <local:LocalizedStrings xmlns:local="clr-namespace:NoppaClient" x:Key="LocalizedStrings"/>
         
@@ -60,7 +67,7 @@
             <Border Background="Transparent" Padding="0,10,0,10">            
                 <StackPanel>
                     <TextBlock Text="{Binding Id}" Style="{StaticResource PhoneTextNormalStyle}" Foreground="{StaticResource PhoneSubtleBrush}" FontFamily="{StaticResource PhoneFontFamilySemiLight}"  />
-                    <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Style="{StaticResource PhoneTextLargeStyle}" Foreground="{StaticResource PhoneTextHighContrastBrush}" LineStackingStrategy="BlockLineHeight" LineHeight="34">
+                    <TextBlock Text="{Binding Name}" Style="{StaticResource NoppaTextLargeStyle}" >
                         <TextBlock.RenderTransform>
                             <TranslateTransform Y="-2" />
                         </TextBlock.RenderTransform>

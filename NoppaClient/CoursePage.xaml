@@ -30,10 +30,7 @@
             <DataTemplate x:Key="NewsItemTemplate">
                 <StackPanel Margin="0,0,0,12">
                     <TextBlock Text="{Binding Date, StringFormat=g}" Foreground="{StaticResource NoppaPrimaryColorBrush}" Style="{StaticResource PhoneTextSmallStyle}" />
-                    <TextBlock Text="{Binding Title}" TextWrapping="Wrap" 
-                           Style="{StaticResource PhoneTextLargeStyle}" 
-                           FontSize="{StaticResource PhoneFontSizeLarge}"
-                           LineStackingStrategy="BlockLineHeight" LineHeight="34" />
+                    <TextBlock Text="{Binding Title}" Style="{StaticResource NoppaTextLargeStyle}" />
                     <TextBlock Text="{Binding Content}" Style="{StaticResource PhoneTextNormalStyle}" TextWrapping="Wrap" />
                     <!-- Use ItemsControl here so that items are laid out inline, and not in a scroll area -->
                     <ItemsControl ItemsSource="{Binding Links}">
@@ -152,10 +149,8 @@
                                        FontWeight="SemiBold"
                                        Style="{StaticResource PhoneTextNormalStyle}"
                                        Visibility="{Binding Title, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
-                                    <TextBlock Text="{Binding Content}" TextWrapping="Wrap" 
-                                       Style="{StaticResource PhoneTextLargeStyle}" 
-                                       FontSize="{StaticResource PhoneFontSizeLarge}"
-                                       LineStackingStrategy="BlockLineHeight" LineHeight="34"
+                                    <TextBlock Text="{Binding Content}"  
+                                       Style="{StaticResource NoppaTextLargeStyle}" 
                                        Visibility="{Binding Content, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
                                 </StackPanel>
                             </DataTemplate>
