@@ -54,7 +54,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="10" />
                     </Grid.RowDefinitions>
-                    <TextBlock Text="{Binding Subtitle}" TextWrapping="Wrap" Foreground="#00C13A" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle2Style}"/>
+                    <TextBlock Text="{Binding Subtitle}" TextWrapping="Wrap" Foreground="{StaticResource NoppaPrimaryColorBrush}" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle2Style}"/>
                     <ProgressBar Grid.Row="1"  IsEnabled="True" IsIndeterminate="True" VerticalAlignment="Bottom" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}" x:Name="customIndeterminateProgressBar" Style="{StaticResource CustomIndeterminateProgressBar}"/>
                 </Grid>
             </phone:LongListSelector.ListHeader>
