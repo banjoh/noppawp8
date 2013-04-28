@@ -553,6 +553,15 @@ namespace NoppaClient.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to by unit.
+        /// </summary>
+        public static string SortByDepartmentTitle {
+            get {
+                return ResourceManager.GetString("SortByDepartmentTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to by name.
         /// </summary>
         public static string SortByNameTitle {

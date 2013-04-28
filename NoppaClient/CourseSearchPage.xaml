@@ -66,4 +66,12 @@
             </Grid>
         </Grid>
     </Grid>
+    
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True">
+            <shell:ApplicationBarIconButton Text="by code" IconUri="Assets/sort.code.png" />
+            <shell:ApplicationBarIconButton Text="by name" IconUri="Assets/sort.name.png" />
+            <!-- <shell:ApplicationBarIconButton Text="by department" IconUri="Assets/sort.department.png" /> -->
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
 </phone:PhoneApplicationPage>

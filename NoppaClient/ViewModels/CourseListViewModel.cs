@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Collections.Specialized;
 
 namespace NoppaClient.ViewModels
 {
@@ -18,7 +19,20 @@ namespace NoppaClient.ViewModels
     public class CourseListViewModel : BindableBase
     {
         private ObservableCollection<Course> _courses = new ObservableCollection<Course>();
-        public ObservableCollection<Course> Courses { get { return _courses; } set { SetProperty(ref _courses, value); } }
+        public ObservableCollection<Course> Courses 
+        { 
+            get { return _courses; } 
+            set 
+            {
+                var oldCourses = _courses;
+                if (SetProperty(ref _courses, value))
+                {
+                    oldCourses.CollectionChanged -= OnCoursesChanged;
+                    _courses.CollectionChanged += OnCoursesChanged;
+                    IsEmpty = value.Count == 0;
+                }
+            } 
+        }
 
         private bool _isSearchHintVisible = true;
         public bool IsSearchHintVisible { get { return _isSearchHintVisible; } set { SetProperty(ref _isSearchHintVisible, value); } }
@@ -52,16 +66,20 @@ namespace NoppaClient.ViewModels
             {
                 if (!IsLoading && SetProperty(ref _courseFilter, value))
                 {
-                    FilterCourses(value);                    
+                    UpdateFilter();                    
                 }
             }
         }
 
-        private async void FilterCourses(CourseFilter filter)
+        private async void UpdateFilter()
         {
             IsLoading = true;
+            await FilterCourses(_courseFilter, _courses);
+            IsLoading = false;
+        }
 
-            var courses = _courses;
+        private async Task FilterCourses(CourseFilter filter, IEnumerable<Course> unfilteredCourses)
+        {
             Courses = new ObservableCollection<Course>();
 
             Courses = await Task<ObservableCollection<Course>>.Run(() =>
@@ -70,19 +88,17 @@ namespace NoppaClient.ViewModels
                     switch (filter)
                     {
                         case CourseFilter.Code:
-                            filteredCourses = courses.OrderBy(course => course.Id);
+                            filteredCourses = unfilteredCourses.OrderBy(course => course.Id);
                             break;
                         case CourseFilter.Name:
-                            filteredCourses = courses.OrderBy(course => course.Name);
+                            filteredCourses = unfilteredCourses.OrderBy(course => course.Name);
                             break;
                         case CourseFilter.Department:
-                            filteredCourses = courses.OrderBy(course => course.DepartmentId);
+                            filteredCourses = unfilteredCourses.OrderBy(course => course.DepartmentId);
                             break;
                     }
                     return new ObservableCollection<Course>(filteredCourses);
                 });
-
-            IsLoading = false;
         }
 
         #endregion
@@ -99,9 +115,14 @@ namespace NoppaClient.ViewModels
                 _loaderTask = LoadSearchResultsAsync(query, _cts.Token);
             });
 
-            _courses.CollectionChanged += (o, e) => IsEmpty = _courses.Count == 0;
+            _courses.CollectionChanged += OnCoursesChanged;
 
             ActivateCourseCommand = ControllerUtil.MakeShowCourseCommand(navigationController);
+        }
+
+        private void OnCoursesChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            IsEmpty = _courses.Count == 0;
         }
 
         public void StopLoading()
@@ -128,10 +149,7 @@ namespace NoppaClient.ViewModels
 
                 if (courses != null)
                 {
-                    foreach (var course in courses)
-                    {
-                        _courses.Add(course);
-                    }
+                    await FilterCourses(_courseFilter, courses);
                 }
             }
             catch (TaskCanceledException)
@@ -177,10 +195,7 @@ namespace NoppaClient.ViewModels
                 List<Course> courses = await NoppaAPI.GetCourses("", "", departmentId);
                 if (courses != null)
                 {
-                    foreach (var course in courses)
-                    {
-                        _courses.Add(course);
-                    }
+                    await FilterCourses(_courseFilter, courses);
                 }
             }
             catch (TaskCanceledException)
@@ -193,6 +208,8 @@ namespace NoppaClient.ViewModels
 
         public async Task LoadMyCoursesAsync(PinnedCourses pinnedCourses)
         {
+            IsLoading = true;
+
             Courses.Clear();
             var courses = await pinnedCourses.GetCodesAsync();
 

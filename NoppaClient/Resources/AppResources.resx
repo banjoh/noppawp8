@@ -331,4 +331,7 @@ You can search by course name, part of the course name, course code or part of t
   <data name="SortByNameTitle" xml:space="preserve">
     <value>by name</value>
   </data>
+  <data name="SortByDepartmentTitle" xml:space="preserve">
+    <value>by unit</value>
+  </data>
 </root>
