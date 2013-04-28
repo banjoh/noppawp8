@@ -544,6 +544,24 @@ namespace NoppaClient.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to by code.
+        /// </summary>
+        public static string SortByCodeTitle {
+            get {
+                return ResourceManager.GetString("SortByCodeTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to by name.
+        /// </summary>
+        public static string SortByNameTitle {
+            get {
+                return ResourceManager.GetString("SortByNameTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to sunday.
         /// </summary>
         public static string SundayTitle {

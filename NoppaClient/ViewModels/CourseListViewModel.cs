@@ -18,16 +18,13 @@ namespace NoppaClient.ViewModels
     public class CourseListViewModel : BindableBase
     {
         private ObservableCollection<Course> _courses = new ObservableCollection<Course>();
-        public ObservableCollection<Course> Courses { get { return _courses; } }
+        public ObservableCollection<Course> Courses { get { return _courses; } set { SetProperty(ref _courses, value); } }
 
         private bool _isSearchHintVisible = true;
         public bool IsSearchHintVisible { get { return _isSearchHintVisible; } set { SetProperty(ref _isSearchHintVisible, value); } }
 
         private bool _isEmpty = true;
         public bool IsEmpty { get { return _isEmpty; } set { SetProperty(ref _isEmpty, value); } }
-
-        private CancellationTokenSource _cts;
-        Task _loaderTask = null;
 
         private string _subtitle = "";
         public string Subtitle { get { return _subtitle; } private set { SetProperty(ref _subtitle, value); } }
@@ -42,6 +39,56 @@ namespace NoppaClient.ViewModels
         public ICommand SearchCommand { get { return _searchCommand; } }
 
         public ICommand ActivateCourseCommand { get; private set; }
+
+        #region Course list filter
+
+        public enum CourseFilter { Code, Name, Department };
+
+        CourseFilter _courseFilter = CourseFilter.Code;
+        public CourseFilter Filter
+        {
+            get { return _courseFilter; }
+            set
+            {
+                if (!IsLoading && SetProperty(ref _courseFilter, value))
+                {
+                    FilterCourses(value);                    
+                }
+            }
+        }
+
+        private async void FilterCourses(CourseFilter filter)
+        {
+            IsLoading = true;
+
+            var courses = _courses;
+            Courses = new ObservableCollection<Course>();
+
+            Courses = await Task<ObservableCollection<Course>>.Run(() =>
+                {
+                    IEnumerable<Course> filteredCourses = null;
+                    switch (filter)
+                    {
+                        case CourseFilter.Code:
+                            filteredCourses = courses.OrderBy(course => course.Id);
+                            break;
+                        case CourseFilter.Name:
+                            filteredCourses = courses.OrderBy(course => course.Name);
+                            break;
+                        case CourseFilter.Department:
+                            filteredCourses = courses.OrderBy(course => course.DepartmentId);
+                            break;
+                    }
+                    return new ObservableCollection<Course>(filteredCourses);
+                });
+
+            IsLoading = false;
+        }
+
+        #endregion
+
+        private CancellationTokenSource _cts;
+        Task _loaderTask = null;
 
         public CourseListViewModel() { }
         public CourseListViewModel(INavigationController navigationController)

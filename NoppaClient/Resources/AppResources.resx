@@ -325,4 +325,10 @@ You can search by course name, part of the course name, course code or part of t
   <data name="AddToCalendarTitle" xml:space="preserve">
     <value>add event</value>
   </data>
+  <data name="SortByCodeTitle" xml:space="preserve">
+    <value>by code</value>
+  </data>
+  <data name="SortByNameTitle" xml:space="preserve">
+    <value>by name</value>
+  </data>
 </root>

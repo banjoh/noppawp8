@@ -13,24 +13,24 @@ namespace NoppaClient.View
     public static class AppBar
     {
         /* Bind menu item's Click event and IsEnabled property to the command. Return an action that unbinds. */
-        public static Action BindCommand(IApplicationBarMenuItem item, ICommand command)
+        public static Action BindCommand(IApplicationBarMenuItem item, ICommand command, object parameter = null)
         {
             EventHandler onClick = (o, e) =>
                 {
-                    if (command.CanExecute(null))
+                    if (command.CanExecute(parameter))
                     {
-                        command.Execute(null);
+                        command.Execute(parameter);
                     }
                 };
 
             EventHandler onCanExecuteChanged = (o, e) =>
                 {
-                    item.IsEnabled = command.CanExecute(null);
+                    item.IsEnabled = command.CanExecute(parameter);
                 };
 
             item.Click += onClick;
             command.CanExecuteChanged += onCanExecuteChanged;
-            item.IsEnabled = command.CanExecute(null);
+            item.IsEnabled = command.CanExecute(parameter);
 
             return () =>
                 {
@@ -79,6 +79,33 @@ namespace NoppaClient.View
             UpdateToggleButtonState(button, trueUri, falseUri, obj, property);
 
             return () => 
+            {
+                obj.PropertyChanged -= onPropertyChanged;
+                button.Click -= onClick;
+            };
+        }
+
+        public static Action BindRadioButton(ApplicationBarIconButton button, INotifyPropertyChanged obj, string property, object targetValue)
+        {
+            PropertyChangedEventHandler onPropertyChanged = (o, e) =>
+            {
+                if (property == e.PropertyName)
+                {
+                    button.IsEnabled = !GetPropertyValue<object>(obj, property).Equals(targetValue);
+                }
+            };
+
+            EventHandler onClick = (o, e) =>
+            {
+                SetPropertyValue(obj, property, targetValue);
+            };
+
+            obj.PropertyChanged += onPropertyChanged;
+            button.Click += onClick;
+            var value = GetPropertyValue<object>(obj, property);
+            button.IsEnabled = !value.Equals(targetValue);
+
+            return () =>
             {
                 obj.PropertyChanged -= onPropertyChanged;
                 button.Click -= onClick;

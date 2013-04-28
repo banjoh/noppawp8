@@ -231,6 +231,8 @@
     <Content Include="Assets\oodi.png" />
     <Content Include="Assets\pin.png" />
     <Content Include="Assets\pin.remove.png" />
+    <Content Include="Assets\sort.code.png" />
+    <Content Include="Assets\sort.name.png" />
     <Content Include="Assets\star.empty.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

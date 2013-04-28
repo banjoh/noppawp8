@@ -9,12 +9,16 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using NoppaClient.ViewModels;
 using NoppaLib.DataModel;
+using System.ComponentModel;
+using NoppaClient.View;
+using NoppaClient.Resources;
 
 namespace NoppaClient
 {
     public partial class CourseListPage : PhoneApplicationPage
     {
         CourseListViewModel _viewModel;
+        List<Action> _unbindActions = new List<Action>();
 
         public CourseListPage()
         {
@@ -25,30 +29,38 @@ namespace NoppaClient
         {
             base.OnNavigatedTo(e);
 
-            if (_viewModel != null)
+            if (_viewModel == null)
             {
-                return;
+                _viewModel = new CourseListViewModel(new PhoneNavigationController());
+                DataContext = _viewModel;
+
+                var content = "";
+                if (NavigationContext.QueryString.ContainsKey("content"))
+                {
+                    content = NavigationContext.QueryString["content"];
+                }
+
+                switch (content)
+                {
+                    case "department":
+                        string id = NavigationContext.QueryString["id"];
+                        await _viewModel.LoadDepartmentAsync(id);
+                        break;
+
+                    default:
+                        await _viewModel.LoadMyCoursesAsync(App.PinnedCourses);
+                        break;
+                }
             }
 
-            _viewModel = new CourseListViewModel(new PhoneNavigationController());
-            DataContext = _viewModel;
+            var sortByCodeButton = (ApplicationBarIconButton)this.ApplicationBar.Buttons[0];
+            var sortByNameButton = (ApplicationBarIconButton)ApplicationBar.Buttons[1];
 
-            var content = "";
-            if (NavigationContext.QueryString.ContainsKey("content")) {
-                content = NavigationContext.QueryString["content"];
-            }
+            _unbindActions.Add(AppBar.BindRadioButton(sortByCodeButton, _viewModel, "Filter", CourseListViewModel.CourseFilter.Code));
+            _unbindActions.Add(AppBar.BindRadioButton(sortByNameButton, _viewModel, "Filter", CourseListViewModel.CourseFilter.Name));
 
-            switch (content) 
-            {
-                case "department":
-                    string id = NavigationContext.QueryString["id"];
-                    await _viewModel.LoadDepartmentAsync(id);
-                    break;
-
-                default:
-                    await _viewModel.LoadMyCoursesAsync(App.PinnedCourses);
-                    break;
-            }
+            sortByCodeButton.Text = AppResources.SortByCodeTitle;
+            sortByNameButton.Text = AppResources.SortByNameTitle;
         }
         
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -56,6 +68,13 @@ namespace NoppaClient
             base.OnNavigatedFrom(e);
 
             _viewModel.StopLoading();
+
+            /* Unbind every app bar menu event manually. */
+            foreach (var action in _unbindActions)
+            {
+                action();
+            }
+            _unbindActions.Clear();
         }
     }
 }

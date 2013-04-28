@@ -7,6 +7,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:view="clr-namespace:NoppaClient.View"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:scm="clr-namespace:System.ComponentModel;assembly=System.Windows"
     d:DataContext="{d:DesignData SampleData/CourseListViewModelSampleData.xaml}"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -41,7 +43,7 @@
                     Visibility="{Binding IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}"/>
             </Grid>
         </Grid>
-
+        
         <phone:LongListSelector
             Margin="12,0,12,0"
             Grid.Row="1"
@@ -59,5 +61,12 @@
                 </Grid>
             </phone:LongListSelector.ListHeader>
         </phone:LongListSelector>
+        
     </Grid>
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar>
+            <shell:ApplicationBarIconButton Text="by code" IconUri="Assets/sort.code.png" />
+            <shell:ApplicationBarIconButton Text="by name" IconUri="Assets/sort.name.png" />
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
 </phone:PhoneApplicationPage>
