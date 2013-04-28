@@ -71,7 +71,7 @@
         </Style>
 
         <DataTemplate x:Key="NewsItemTemplate">
-            <StackPanel Margin="0,0,0,20">                
+            <StackPanel Margin="0,0,0,20">
                 <TextBlock Text="{Binding Title}" 
                            Style="{StaticResource NoppaTextLargeStyle}" />
                 <TextBlock Text="{Binding Course.LongName}" TextWrapping="Wrap"  Style="{StaticResource PhoneTextSubtleStyle}" />
@@ -255,7 +255,6 @@
 
             Before shipping remove this XAML and the image itself.-->
         <!-- <Image Source="/Assets/AlignmentGrid.png" VerticalAlignment="Top" Height="800" Width="480" Margin="0" Grid.Row="0" Grid.RowSpan="2" IsHitTestVisible="False" /> -->
-
     </Grid>
 
     <phone:PhoneApplicationPage.ApplicationBar>
