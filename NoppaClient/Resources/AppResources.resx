@@ -322,4 +322,7 @@ You can search by course name, part of the course name, course code or part of t
   <data name="CourseWorkloadTitle" xml:space="preserve">
     <value>workload</value>
   </data>
+  <data name="AddToCalendarTitle" xml:space="preserve">
+    <value>add event</value>
+  </data>
 </root>

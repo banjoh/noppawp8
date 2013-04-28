@@ -99,6 +99,15 @@ namespace NoppaClient.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to add event.
+        /// </summary>
+        public static string AddToCalendarTitle {
+            get {
+                return ResourceManager.GetString("AddToCalendarTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to noppa.
         /// </summary>
         public static string ApplicationTitle {

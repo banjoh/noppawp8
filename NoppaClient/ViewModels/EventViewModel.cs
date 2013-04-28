@@ -28,8 +28,24 @@ namespace NoppaClient.ViewModels
         private string _courseName;
         public string CourseName { get { return _courseName; } set { SetProperty(ref _courseName, value); } }
 
-        private ICommand _showCourseCommand;
-        public ICommand ShowCourseCommand { get { return _showCourseCommand; } private set { SetProperty(ref _showCourseCommand, value); } }
+        private Course _course;
+        public Course Course 
+        { 
+            get { return _course; } 
+            set 
+            {
+                if (SetProperty(ref _course, value) && _showCourseCommand != null)
+                {
+                    _showCourseCommand.NotifyCanExecuteChanged();
+                }
+            } 
+        }
+
+        private DelegateCommand _showCourseCommand;
+        public ICommand ShowCourseCommand { get { return _showCourseCommand; } }
+
+        private DelegateCommand _addToCalendarCommand;
+        public ICommand AddToCalendarCommand { get { return _addToCalendarCommand; } }
 
         public EventViewModel() { /* for sample data */ }
 
@@ -40,15 +56,21 @@ namespace NoppaClient.ViewModels
             StartDate = courseEvent.StartDate;
             EndDate = courseEvent.EndDate;
 
+            _showCourseCommand = new DelegateCommand(() => controller.ShowCourse(Course), () => Course != null);
+            _addToCalendarCommand = new DelegateCommand(AddToCalendar);
+
             LoadCourseDataAsync(controller);
+        }
+
+        private async void AddToCalendar()
+        {
+            /* Add to calendar */
         }
 
         private async void LoadCourseDataAsync(INavigationController controller)
         {
-            var course = await NoppaAPI.GetCourse(CourseId);
-            CourseName = course.LongName;
-
-            ShowCourseCommand = new DelegateCommand(() => controller.ShowCourse(course));
+            Course = await NoppaAPI.GetCourse(CourseId);
+            CourseName = Course.LongName;
         }
     }
 }

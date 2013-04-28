@@ -10,8 +10,7 @@
     <!--Application Resources-->
     <Application.Resources>
         <sys:Double x:Key="PanoramaItemHeaderFontSize">66</sys:Double>
-
-
+        
         <!-- Use this brush for changing header colors etc. -->
         <SolidColorBrush x:Key="NoppaPrimaryColorBrush" Color="#FF00C13A" />
 

@@ -60,8 +60,12 @@
                 <TextBlock Margin="0,6,6,0" Text="{Binding EndTime}" />
             </StackPanel>
 
-            <TextBlock Grid.Row="2"  Grid.ColumnSpan="2" Margin="12,6,0,0" Text="{Binding Location}" />
+            <TextBlock Grid.Row="2"  Grid.ColumnSpan="2" Margin="12,6,0,0" Text="{Binding Location}" TextWrapping="Wrap" />
         </Grid>
     </Grid>
-
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar>
+            <shell:ApplicationBarIconButton x:Name="AddToCalendarButton" Text="add event" IconUri="Assets/feature.calendar.png" />
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
 </phone:PhoneApplicationPage>

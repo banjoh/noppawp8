@@ -226,6 +226,7 @@
     <Content Include="Assets\event.type.online_studies.png" />
     <Content Include="Assets\event.type.other.png" />
     <Content Include="Assets\event.type.seminar.png" />
+    <Content Include="Assets\feature.calendar.png" />
     <Content Include="Assets\noppa.png" />
     <Content Include="Assets\oodi.png" />
     <Content Include="Assets\pin.png" />
