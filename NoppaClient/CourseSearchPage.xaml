@@ -61,7 +61,7 @@
               Visibility="{Binding IsSearchHintVisible, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=invert}">
             <Grid Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=invert}">
                 <TextBlock
-                    Text="no results"
+                    Text="{Binding NoSearchResultsTitle, Source={StaticResource LocalizedStrings}}"
                     Visibility="{Binding IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}"/>
             </Grid>
         </Grid>

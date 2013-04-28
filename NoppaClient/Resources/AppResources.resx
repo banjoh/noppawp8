@@ -331,6 +331,12 @@ You can search by course name, part of the course name, course code or part of t
   <data name="SortByNameTitle" xml:space="preserve">
     <value>by name</value>
   </data>
+  <data name="NoDepartmentCoursesTitle" xml:space="preserve">
+    <value>no results, try again later</value>
+  </data>
+  <data name="NoSearchResultsTitle" xml:space="preserve">
+    <value>no results</value>
+  </data>
   <data name="SortByDepartmentTitle" xml:space="preserve">
     <value>by unit</value>
   </data>

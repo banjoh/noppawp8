@@ -414,6 +414,24 @@ namespace NoppaClient.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to no results, try again later.
+        /// </summary>
+        public static string NoDepartmentCoursesTitle {
+            get {
+                return ResourceManager.GetString("NoDepartmentCoursesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to no results.
+        /// </summary>
+        public static string NoSearchResultsTitle {
+            get {
+                return ResourceManager.GetString("NoSearchResultsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Organization.
         /// </summary>
         public static string OrganizationTitle {
