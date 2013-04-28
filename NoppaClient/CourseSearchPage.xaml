@@ -57,7 +57,7 @@
             Visibility="{Binding IsSearchHintVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
             Xaml="{Binding Path=LocalizedResources.SearchHintTextXaml, Source={StaticResource LocalizedStrings}}"/>
 
-        <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="1"
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1"
               Visibility="{Binding IsSearchHintVisible, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=invert}">
             <Grid Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=invert}">
                 <TextBlock
