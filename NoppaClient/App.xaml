@@ -15,11 +15,17 @@
         <SolidColorBrush x:Key="NoppaPrimaryColorBrush" Color="#FF00C13A" />
 
         <Style x:Key="NoppaTextLargeStyle" BasedOn="{StaticResource PhoneTextLargeStyle}" TargetType="TextBlock">
-            <Setter Property="TextWrapping" Value="Wrap" /> 
+            <Setter Property="TextWrapping" Value="Wrap" />
             <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeLarge}" />
             <Setter Property="LineStackingStrategy" Value="BlockLineHeight" />
             <Setter Property="LineHeight" Value="34" />
             <Setter Property="Foreground" Value="{StaticResource PhoneTextHighContrastBrush}" />
+        </Style>
+
+        <Style x:Key="NoppaTextSmallStyle" BasedOn="{StaticResource PhoneTextNormalStyle}" TargetType="TextBlock">
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="{StaticResource PhoneSubtleBrush}" />
         </Style>
 
         <Style TargetType="Button">

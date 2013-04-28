@@ -28,15 +28,15 @@
             <view:OpenBrowserCommand x:Key="OpenBrowserCommand" />
 
             <DataTemplate x:Key="NewsItemTemplate">
-                <StackPanel Margin="0,0,0,12">
-                    <TextBlock Text="{Binding Date, StringFormat=g}" Foreground="{StaticResource NoppaPrimaryColorBrush}" Style="{StaticResource PhoneTextSmallStyle}" />
+                <StackPanel Margin="0,0,0,20">
                     <TextBlock Text="{Binding Title}" Style="{StaticResource NoppaTextLargeStyle}" />
+                    <TextBlock Text="{Binding Date, StringFormat=g}" Foreground="{StaticResource NoppaPrimaryColorBrush}" Style="{StaticResource PhoneTextSmallStyle}" />
                     <TextBlock Text="{Binding Content}" Style="{StaticResource PhoneTextNormalStyle}" TextWrapping="Wrap" />
                     <!-- Use ItemsControl here so that items are laid out inline, and not in a scroll area -->
                     <ItemsControl ItemsSource="{Binding Links}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Margin="12,0,12,10">
+                                <StackPanel Margin="12,10,12,10">
                                     <Button Content="{Binding Title}" Command="{StaticResource OpenBrowserCommand}" CommandParameter="{Binding Url}" />
                                 </StackPanel>
                             </DataTemplate>
@@ -51,26 +51,34 @@
             </DataTemplate>
 
             <DataTemplate x:Key="LectureItemTemplate">
-                <StackPanel Margin="0,24">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Foreground="{StaticResource PhoneAccentBrush}" Text="{Binding Date, StringFormat=d}" />
-                        <TextBlock Foreground="{StaticResource PhoneAccentBrush}" Text=" " />
-                        <TextBlock Foreground="{StaticResource PhoneAccentBrush}" Text="{Binding StartTime, StringFormat=t}" />
-                        <TextBlock Foreground="{StaticResource PhoneAccentBrush}" Text="-" />
-                        <TextBlock Foreground="{StaticResource PhoneAccentBrush}" Text="{Binding EndTime, StringFormat=t}" />
+                <Grid HorizontalAlignment="Stretch" Margin="0,0,0,20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="{Binding Title}" Style="{StaticResource NoppaTextLargeStyle}" />
+                    <TextBlock Grid.Row="1" Text="{Binding Location}" Style="{StaticResource NoppaTextLargeStyle}" Foreground="{StaticResource PhoneSubtleBrush}" />
+                    <StackPanel Orientation="Horizontal" Grid.Row="2">
+                        <TextBlock Foreground="{StaticResource NoppaPrimaryColorBrush}" Style="{StaticResource PhoneTextSmallStyle}" Text="{Binding Date, StringFormat=d}" />
+                        <TextBlock Foreground="{StaticResource NoppaPrimaryColorBrush}" Style="{StaticResource PhoneTextSmallStyle}" Text="{Binding StartTime, StringFormat=t}" />
+                        <TextBlock Foreground="{StaticResource NoppaPrimaryColorBrush}" Style="{StaticResource PhoneTextSmallStyle}" Text="-" Margin="-10,0,0,0" />
+                        <TextBlock Foreground="{StaticResource NoppaPrimaryColorBrush}" Style="{StaticResource PhoneTextSmallStyle}" Text="{Binding EndTime, StringFormat=t}" Margin="0,0,0,0" />
                     </StackPanel>
-                    <TextBlock Margin="1" Text="{Binding Title}" TextWrapping="Wrap" FontSize="{StaticResource PhoneFontSizeMediumLarge}" />
-                    <TextBlock Foreground="{StaticResource PhoneSubtleBrush}" Text="{Binding Location}" />
-                    <ItemsControl ItemsSource="{Binding Materials}">
+                    <TextBlock Grid.Row="3" Text="{Binding Content}" Style="{StaticResource PhoneTextNormalStyle}" TextWrapping="Wrap"
+                               Visibility="{Binding Content, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+                    <ItemsControl Grid.Row="4" ItemsSource="{Binding Materials}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Margin="22,0,22,10">
+                                <Grid Margin="12,10,12,10">
                                     <Button Content="{Binding Title}" Command="{StaticResource OpenBrowserCommand}" CommandParameter="{Binding Url}" />
-                                </StackPanel>
+                                </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                </StackPanel>
+                </Grid>
             </DataTemplate>
 
             <DataTemplate x:Key="ExerciseItemTemplate">
@@ -169,12 +177,12 @@
                 </DataTemplate>
 
                 <DataTemplate x:Key="LecturesViewModel">
-                    <ListBox x:Name="LectureList"
-                        Margin="0,0,-22,0"
-                        HorizontalAlignment="Left" VerticalAlignment="Stretch"
+                    <phone:LongListSelector x:Name="LectureList"
+                        Margin="0,0,0,0"
+                        HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                         ItemTemplate="{StaticResource LectureItemTemplate}"
                         ItemsSource="{Binding Lectures}">
-                    </ListBox>
+                    </phone:LongListSelector>
                 </DataTemplate>
 
                 <DataTemplate x:Key="ExercisesViewModel">
@@ -207,7 +215,10 @@
                 <DataTemplate x:Key="AdditionalPageViewModel">
                     <TextBlock Text="{Binding Content}" />
                 </DataTemplate>
-            
+
+                <DataTemplate x:Key="EventsViewModel">
+                    <TextBlock Text="{Binding Content}" />
+                </DataTemplate>
             </ResourceDictionary>
             
         </ResourceDictionary>
@@ -245,13 +256,14 @@
             It's a little bit messy how it gets the correct template. Hopefully the indicies won't change.
         -->
         <phone:Pivot Title="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}" Visibility="{Binding IsInDesignTool, Source={StaticResource DesignToolChecker}, Converter={StaticResource BooleanToVisibilityConverter}}" Foreground="{StaticResource NoppaPrimaryColorBrush}">
-            <phone:PivotItem Header="Overview" Content="{Binding Contents,Converter={StaticResource EnumerableIndexConverter},ConverterParameter=0}" ContentTemplate="{Binding Source={StaticResource ViewModelTemplates},Path=Values[6]}" />
-            <phone:PivotItem Header="News" Content="{Binding Contents,Converter={StaticResource EnumerableIndexConverter},ConverterParameter=1}" ContentTemplate="{Binding Source={StaticResource ViewModelTemplates},Path=Values[5]}" />
-            <phone:PivotItem Header="Lectures" Content="{Binding Contents,Converter={StaticResource EnumerableIndexConverter},ConverterParameter=2}" ContentTemplate="{Binding Source={StaticResource ViewModelTemplates},Path=Values[4]}" />
-            <phone:PivotItem Header="Exercises" Content="{Binding Contents,Converter={StaticResource EnumerableIndexConverter},ConverterParameter=3}" ContentTemplate="{Binding Source={StaticResource ViewModelTemplates},Path=Values[3]}" />
-            <phone:PivotItem Header="Results" Content="{Binding Contents,Converter={StaticResource EnumerableIndexConverter},ConverterParameter=4}" ContentTemplate="{Binding Source={StaticResource ViewModelTemplates},Path=Values[2]}" />
-            <phone:PivotItem Header="Assignments" Content="{Binding Contents,Converter={StaticResource EnumerableIndexConverter},ConverterParameter=5}" ContentTemplate="{Binding Source={StaticResource ViewModelTemplates},Path=Values[1]}" />
-            <phone:PivotItem Header="Additional Page" Content="{Binding Contents,Converter={StaticResource EnumerableIndexConverter},ConverterParameter=6}" ContentTemplate="{Binding Source={StaticResource ViewModelTemplates},Path=Values[0]}" />
+            <phone:PivotItem Header="Overview" Content="{Binding Contents,Converter={StaticResource EnumerableIndexConverter},ConverterParameter=0}" ContentTemplate="{Binding Source={StaticResource ViewModelTemplates},Path=Values[7]}" />
+            <phone:PivotItem Header="News" Content="{Binding Contents,Converter={StaticResource EnumerableIndexConverter},ConverterParameter=1}" ContentTemplate="{Binding Source={StaticResource ViewModelTemplates},Path=Values[6]}" />
+            <phone:PivotItem Header="Lectures" Content="{Binding Contents,Converter={StaticResource EnumerableIndexConverter},ConverterParameter=2}" ContentTemplate="{Binding Source={StaticResource ViewModelTemplates},Path=Values[5]}" />
+            <phone:PivotItem Header="Exercises" Content="{Binding Contents,Converter={StaticResource EnumerableIndexConverter},ConverterParameter=3}" ContentTemplate="{Binding Source={StaticResource ViewModelTemplates},Path=Values[4]}" />
+            <phone:PivotItem Header="Results" Content="{Binding Contents,Converter={StaticResource EnumerableIndexConverter},ConverterParameter=4}" ContentTemplate="{Binding Source={StaticResource ViewModelTemplates},Path=Values[3]}" />
+            <phone:PivotItem Header="Assignments" Content="{Binding Contents,Converter={StaticResource EnumerableIndexConverter},ConverterParameter=5}" ContentTemplate="{Binding Source={StaticResource ViewModelTemplates},Path=Values[2]}" />
+            <phone:PivotItem Header="Additional Page" Content="{Binding Contents,Converter={StaticResource EnumerableIndexConverter},ConverterParameter=6}" ContentTemplate="{Binding Source={StaticResource ViewModelTemplates},Path=Values[1]}" />
+            <phone:PivotItem Header="Events" Content="{Binding Contents,Converter={StaticResource EnumerableIndexConverter},ConverterParameter=7}" ContentTemplate="{Binding Source={StaticResource ViewModelTemplates},Path=Values[0]}" />
         </phone:Pivot>
     </Grid>
     <phone:PhoneApplicationPage.ApplicationBar>
