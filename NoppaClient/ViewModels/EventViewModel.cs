@@ -1,4 +1,5 @@
-﻿using NoppaLib.DataModel;
+﻿using Microsoft.Phone.Tasks;
+using NoppaLib.DataModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,6 +66,38 @@ namespace NoppaClient.ViewModels
         private async void AddToCalendar()
         {
             /* Add to calendar */
+            DateTime dtStartTime = new DateTime(StartDate.Year, StartDate.Month, StartDate.Day, _event.StartTime.Hour, _event.StartTime.Minute, _event.StartTime.Second);
+            DateTime dtEndTime = new DateTime(EndDate.Year, EndDate.Month, EndDate.Day, _event.EndTime.Hour, _event.EndTime.Minute, _event.EndTime.Second);
+            var appt = new SaveAppointmentTask
+            {
+                AppointmentStatus = Microsoft.Phone.UserData.AppointmentStatus.Busy,
+                Subject = Title,
+                Details = EventTypeConverter(Type) + " " + CourseName,
+                Location = Location,
+                StartTime = dtStartTime,
+                EndTime = dtEndTime,
+                Reminder = Reminder.OneHour
+            };
+            appt.Show();
+        }
+
+        private string EventTypeConverter(string eventType)
+        {
+            switch (eventType)
+            {
+                case "event_course": return ("Course Event");
+                case "exams": return ("Exam");
+                case "mid_term_exams": return ("Mid term exam");
+                case "other": return ("Other event");
+                case "seminar": return ("Seminar");
+                case "casework": return ("Casework");
+                case "demonstration": return ("Demonstration");
+                case "group_studies": return ("Group studies");
+                case "individual_studies": return ("Individual studies");
+                case "hybrid_studies": return ("Hybrid studies");
+                case "online_studies": return ("Online studies");
+                default: return ("");
+            }
         }
 
         private async void LoadCourseDataAsync(INavigationController controller)
