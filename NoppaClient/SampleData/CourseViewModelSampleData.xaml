@@ -90,7 +90,98 @@ Also, I updated the Assignments page with instructions regarding the project pla
                             Content="" />
             </vm:LecturesViewModel.Lectures>
         </vm:LecturesViewModel>
-        <vm:ExercisesViewModel Title="Exercises" />
+        <vm:ExercisesViewModel Title="Exercises" HasExerciseMaterial="True" HasExercises="True">
+            <vm:ExercisesViewModel.Exercises>
+                <dm:CourseExercise CourseId="S-104.1011" Group="H1" Weekday="Thu" StartTime="12:15" EndTime="14:00" Location="29331" StartDate="2012-09-13" EndDate="2012-10-18" AdditionalInfo="Lauri Leukkunen" />
+                <dm:CourseExercise CourseId="S-104.1011" Group="H2" Weekday="Thu" StartTime="12:15" EndTime="14:00" Location="29330" StartDate="2012-09-13" EndDate="2012-10-18" AdditionalInfo="Markus Peltola" />
+                <dm:CourseExercise CourseId="S-104.1011" Group="H3" Weekday="Thu" StartTime="12:15" EndTime="14:00" Location="1J" StartDate="2012-09-13" EndDate="2012-10-18" AdditionalInfo="Juha Panu" />
+                <dm:CourseExercise CourseId="S-104.1011" Group="H4" Weekday="Thu" StartTime="12:15" EndTime="14:00" Location="29432" StartDate="2012-09-13" EndDate="2012-10-18" AdditionalInfo="Anni-Emilia Pesonen" />
+                <dm:CourseExercise CourseId="S-104.1011" Group="H5" Weekday="Thu" StartTime="14:15" EndTime="16:00" Location="29432" StartDate="2012-09-13" EndDate="2012-10-18" AdditionalInfo="Anni-Emilia Pesonen  Taneli Juntunen" />
+                <dm:CourseExercise CourseId="S-104.1011" Group="H6" Weekday="Thu" StartTime="14:15" EndTime="16:00" Location="29428" StartDate="2012-09-13" EndDate="2012-10-18" AdditionalInfo="Markus Peltola" />
+                <dm:CourseExercise CourseId="S-104.1011" Group="H7" Weekday="Thu" StartTime="14:15" EndTime="16:00" Location="1F" StartDate="2012-09-13" EndDate="2012-10-18" AdditionalInfo="Antti Yli-Savola" />
+                <dm:CourseExercise CourseId="S-104.1011" Group="H10" Weekday="Thu" StartTime="16:15" EndTime="18:00" Location="29331" StartDate="2012-09-13" EndDate="2012-10-18" AdditionalInfo="Nikolai Mäntyoja" />
+                <dm:CourseExercise CourseId="S-104.1011" Group="H9" Weekday="Thu" StartTime="16:15" EndTime="18:00" Location="29428" StartDate="2012-09-13" EndDate="2012-10-18" AdditionalInfo="Niko Pasanen" />
+                <dm:CourseExercise CourseId="S-104.1011" Group="H11" Weekday="Fri" StartTime="10:15" EndTime="12:00" Location="1U345" StartDate="2012-09-14" EndDate="2012-10-19" AdditionalInfo="Lauri Leukkunen" />
+                <dm:CourseExercise CourseId="S-104.1011" Group="H12" Weekday="Fri" StartTime="10:15" EndTime="12:00" Location="1J" StartDate="2012-09-14" EndDate="2012-10-19" AdditionalInfo="Nikolai Mäntyoja" />
+                <dm:CourseExercise CourseId="S-104.1011" Group="H13" Weekday="Fri" StartTime="10:15" EndTime="12:00" Location="1U410b" StartDate="2012-09-14" EndDate="2012-10-19" AdditionalInfo="Taneli Juntunen" />
+                <dm:CourseExercise CourseId="S-104.1011" Group="H15" Weekday="Fri" StartTime="12:15" EndTime="14:00" Location="1H" StartDate="2012-09-14" EndDate="2012-09-14" AdditionalInfo="Antti Yli-Savola" />
+                <dm:CourseExercise CourseId="S-104.1011" Group="H16" Weekday="Fri" StartTime="12:15" EndTime="14:00" Location="1U510" StartDate="2012-09-14" EndDate="2012-10-19" AdditionalInfo="Juha Panu" />
+                <dm:CourseExercise CourseId="S-104.1011" Group="H14" Weekday="Fri" StartTime="14:15" EndTime="16:00" Location="29330" StartDate="2012-09-14" EndDate="2012-10-19" AdditionalInfo="Niko Pasanen" />
+                <dm:CourseExercise CourseId="S-104.1011" Group="H15" Weekday="Fri" StartTime="12:15" EndTime="14:00" Location="29432" StartDate="2012-09-21" EndDate="2012-10-19" AdditionalInfo="Antti Yli-Savola" />
+            </vm:ExercisesViewModel.Exercises>
+            <vm:ExercisesViewModel.ExerciseMaterial>
+                <dm:CourseExerciseMaterial CourseId="T-61.5140" Number="1" Topic="Jan 25 lecture / DL Feb 5">
+                    <dm:CourseExerciseMaterial.Material>
+                        <dm:Material Title="Problems" Url="http://noppa-api-dev.aalto.fi/noppa/kurssi/t-61.5140/viikkoharjoitukset/dkdixnwhe" AuthenticationRequired="false" />
+                        <dm:Material Title="Solutions" Url="http://noppa-api-dev.aalto.fi/noppa/kurssi/t-61.5140/viikkoharjoitukset/sbomgizw" AuthenticationRequired="false" />
+                        <dm:Material Title="Slides" Url="http://noppa-api-dev.aalto.fi/noppa/kurssi/t-61.5140/viikkoharjoitukset/icaovgqud" AuthenticationRequired="false" />
+                    </dm:CourseExerciseMaterial.Material>
+                </dm:CourseExerciseMaterial>
+                <dm:CourseExerciseMaterial CourseId="T-61.5140" Number="2" Topic="Feb 1 lecture / DL Feb 12">
+                    <dm:CourseExerciseMaterial.Material>
+                        <dm:Material Title="Problems" Url="http://noppa-api-dev.aalto.fi/noppa/kurssi/t-61.5140/viikkoharjoitukset/zowycqvjh" AuthenticationRequired="false" />
+                        <dm:Material Title="Solutions" Url="http://noppa-api-dev.aalto.fi/noppa/kurssi/t-61.5140/viikkoharjoitukset/lagmzgot" AuthenticationRequired="false" />
+                        <dm:Material Title="Slides" Url="http://noppa-api-dev.aalto.fi/noppa/kurssi/t-61.5140/viikkoharjoitukset/yombccfta" AuthenticationRequired="false" />
+                    </dm:CourseExerciseMaterial.Material>
+                </dm:CourseExerciseMaterial>
+                <dm:CourseExerciseMaterial CourseId="T-61.5140" Number="3" Topic="Feb 8 lecture / DL Feb 19">
+                    <dm:CourseExerciseMaterial.Material>
+                        <dm:Material Title="Problems" Url="http://noppa-api-dev.aalto.fi/noppa/kurssi/t-61.5140/viikkoharjoitukset/jcgsyzkny" AuthenticationRequired="false" />
+                        <dm:Material Title="Solutions" Url="http://noppa-api-dev.aalto.fi/noppa/kurssi/t-61.5140/viikkoharjoitukset/zslktbmdu" AuthenticationRequired="false" />
+                        <dm:Material Title="Slides" Url="http://noppa-api-dev.aalto.fi/noppa/kurssi/t-61.5140/viikkoharjoitukset/fglytmozm" AuthenticationRequired="false" />
+                    </dm:CourseExerciseMaterial.Material>
+                </dm:CourseExerciseMaterial>
+                <dm:CourseExerciseMaterial CourseId="T-61.5140" Number="4" Topic="Feb 15 lecture / DL Feb 26">
+                    <dm:CourseExerciseMaterial.Material>
+                        <dm:Material Title="Problems" Url="http://noppa-api-dev.aalto.fi/noppa/kurssi/t-61.5140/viikkoharjoitukset/lcwrkxsqsg" AuthenticationRequired="false" />
+                        <dm:Material Title="Solutions" Url="http://noppa-api-dev.aalto.fi/noppa/kurssi/t-61.5140/viikkoharjoitukset/ewzktrxr" AuthenticationRequired="false" />
+                        <dm:Material Title="Slides" Url="http://noppa-api-dev.aalto.fi/noppa/kurssi/t-61.5140/viikkoharjoitukset/qtsnzxics" AuthenticationRequired="false" />
+                    </dm:CourseExerciseMaterial.Material>
+                </dm:CourseExerciseMaterial>
+                <dm:CourseExerciseMaterial CourseId="T-61.5140" Number="5" Topic="Mar 1 lecture / DL Mar 12">
+                    <dm:CourseExerciseMaterial.Material>
+                        <dm:Material Title="Problems" Url="http://noppa-api-dev.aalto.fi/noppa/kurssi/t-61.5140/viikkoharjoitukset/orgussgt" AuthenticationRequired="false" />
+                        <dm:Material Title="Solutions" Url="http://noppa-api-dev.aalto.fi/noppa/kurssi/t-61.5140/viikkoharjoitukset/saiktyzbn" AuthenticationRequired="false" />
+                        <dm:Material Title="Slides" Url="http://noppa-api-dev.aalto.fi/noppa/kurssi/t-61.5140/viikkoharjoitukset/haarcytp" AuthenticationRequired="false" />
+                    </dm:CourseExerciseMaterial.Material>
+                </dm:CourseExerciseMaterial>
+                <dm:CourseExerciseMaterial CourseId="T-61.5140" Number="6" Topic="Mar 15 lecture / DL Mar 26">
+                    <dm:CourseExerciseMaterial.Material>
+                        <dm:Material Title="Problems" Url="http://noppa-api-dev.aalto.fi/noppa/kurssi/t-61.5140/viikkoharjoitukset/gtqardusm" AuthenticationRequired="false" />
+                        <dm:Material Title="Solutions" Url="http://noppa-api-dev.aalto.fi/noppa/kurssi/t-61.5140/viikkoharjoitukset/jmxewkovbt" AuthenticationRequired="false" />
+                        <dm:Material Title="Slides" Url="http://noppa-api-dev.aalto.fi/noppa/kurssi/t-61.5140/viikkoharjoitukset/izeahlpxaw" AuthenticationRequired="false" />
+                    </dm:CourseExerciseMaterial.Material>
+                </dm:CourseExerciseMaterial>
+                <dm:CourseExerciseMaterial CourseId="T-61.5140" Number="7" Topic="Mar 22 lecture / DL Apr 9">
+                    <dm:CourseExerciseMaterial.Material>
+                        <dm:Material Title="Problems" Url="http://noppa-api-dev.aalto.fi/noppa/kurssi/t-61.5140/viikkoharjoitukset/yyxfbyosp" AuthenticationRequired="false" />
+                        <dm:Material Title="Solutions" Url="http://noppa-api-dev.aalto.fi/noppa/kurssi/t-61.5140/viikkoharjoitukset/waamzwzviv" AuthenticationRequired="false" />
+                        <dm:Material Title="Slides" Url="http://noppa-api-dev.aalto.fi/noppa/kurssi/t-61.5140/viikkoharjoitukset/rzvpoagl" AuthenticationRequired="false" />
+                        <dm:Material Title="MATLAB demo code" Url="http://noppa-api-dev.aalto.fi/noppa/kurssi/t-61.5140/viikkoharjoitukset/zvnoulstk" AuthenticationRequired="false" />
+                    </dm:CourseExerciseMaterial.Material>
+                </dm:CourseExerciseMaterial>
+                <dm:CourseExerciseMaterial CourseId="T-61.5140" Number="8" Topic="Apr 5 lecture / DL Apr 16">
+                    <dm:CourseExerciseMaterial.Material>
+                        <dm:Material Title="Problems" Url="http://noppa-api-dev.aalto.fi/noppa/kurssi/t-61.5140/viikkoharjoitukset/kztnwhcwq" AuthenticationRequired="false" />
+                        <dm:Material Title="Solutions" Url="http://noppa-api-dev.aalto.fi/noppa/kurssi/t-61.5140/viikkoharjoitukset/aoxpevyjil" AuthenticationRequired="false" />
+                        <dm:Material Title="Slides" Url="http://noppa-api-dev.aalto.fi/noppa/kurssi/t-61.5140/viikkoharjoitukset/eeqqilclv" AuthenticationRequired="false" />
+                    </dm:CourseExerciseMaterial.Material>
+                </dm:CourseExerciseMaterial>
+                <dm:CourseExerciseMaterial CourseId="T-61.5140" Number="9" Topic="Apr 12 lecture / DL Apr 23">
+                    <dm:CourseExerciseMaterial.Material>
+                        <dm:Material Title="Problems" Url="http://noppa-api-dev.aalto.fi/noppa/kurssi/t-61.5140/viikkoharjoitukset/hvadrpuesc" AuthenticationRequired="false" />
+                        <dm:Material Title="Solutions" Url="http://noppa-api-dev.aalto.fi/noppa/kurssi/t-61.5140/viikkoharjoitukset/bziizlgiv" AuthenticationRequired="false" />
+                        <dm:Material Title="Slides" Url="http://noppa-api-dev.aalto.fi/noppa/kurssi/t-61.5140/viikkoharjoitukset/axrncwiyyl" AuthenticationRequired="false" />
+                    </dm:CourseExerciseMaterial.Material>
+                </dm:CourseExerciseMaterial>
+                <dm:CourseExerciseMaterial CourseId="T-61.5140" Number="10" Topic="Apr 19/25 lectures / DL May 7">
+                    <dm:CourseExerciseMaterial.Material>
+                        <dm:Material Title="Problems" Url="http://noppa-api-dev.aalto.fi/noppa/kurssi/t-61.5140/viikkoharjoitukset/juwfnccmgn" AuthenticationRequired="false" />
+                        <dm:Material Title="MATLAB/Octave function unknown_p for problems 1, 2 (rename to unknown_p.m)" Url="http://noppa-api-dev.aalto.fi/noppa/kurssi/t-61.5140/viikkoharjoitukset/souaifdku" AuthenticationRequired="false" />
+                    </dm:CourseExerciseMaterial.Material>
+                </dm:CourseExerciseMaterial>
+            </vm:ExercisesViewModel.ExerciseMaterial>
+        </vm:ExercisesViewModel>
         <vm:ResultsViewModel />
         <vm:AssignmentsViewModel />
         <vm:AdditionalPageViewModel />

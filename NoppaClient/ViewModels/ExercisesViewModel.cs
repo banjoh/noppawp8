@@ -15,6 +15,15 @@ namespace NoppaClient.ViewModels
         private ObservableCollection<CourseExercise> _exercises = new ObservableCollection<CourseExercise>();
         public ObservableCollection<CourseExercise> Exercises { get { return _exercises; } }
 
+        private bool _hasExercises = false;
+        public bool HasExercises { get { return _hasExercises; } set { SetProperty(ref _hasExercises, value); } }
+
+        private ObservableCollection<CourseExerciseMaterial> _exerciseMaterial = new ObservableCollection<CourseExerciseMaterial>();
+        public ObservableCollection<CourseExerciseMaterial> ExerciseMaterial { get { return _exerciseMaterial; } }
+
+        private bool _hasExerciseMaterial = false;
+        public bool HasExerciseMaterial { get { return _hasExerciseMaterial; } set { SetProperty(ref _hasExerciseMaterial, value); } }
+
         public ExercisesViewModel()
         {
             Title = AppResources.ExercisesTitle;
@@ -23,7 +32,14 @@ namespace NoppaClient.ViewModels
 
         public async Task LoadDataAsync(string id)
         {
-            List<CourseExercise> exercises = await NoppaAPI.GetCourseExercises(id);
+            Task<List<CourseExercise>> exercisesTask = NoppaAPI.GetCourseExercises(id);
+            Task<List<CourseExerciseMaterial>> materialTask = NoppaAPI.GetCourseExerciseMaterial(id);
+
+            await Task.WhenAll(exercisesTask, materialTask);
+
+            var exercises = exercisesTask.Result;
+            var exerciseMaterial = materialTask.Result;
+
             if (exercises != null)
             {
                 foreach (var exercise in exercises)
@@ -31,7 +47,18 @@ namespace NoppaClient.ViewModels
                     _exercises.Add(exercise);
                 }
             }
-            IsEmpty = exercises == null || exercises.Count == 0;
+
+            if (exerciseMaterial != null)
+            {
+                foreach (var material in exerciseMaterial)
+                {
+                    _exerciseMaterial.Add(material);
+                }
+            }
+
+            HasExercises = exercises != null && exercises.Count > 0;
+            HasExerciseMaterial = exerciseMaterial != null && exerciseMaterial.Count > 0;
+            IsEmpty = !HasExercises && !HasExerciseMaterial;
         }
     }
 }

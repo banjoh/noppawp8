@@ -91,6 +91,7 @@ namespace NoppaLib.DataModel
         [JsonProperty("location")]              public string Location { get; set; }
         [JsonProperty("start_date")]            public DateTime StartDate { get; set; }
         [JsonProperty("end_date")]              public DateTime EndDate { get; set; }
+        [JsonProperty("additional_info")]       public string AdditionalInfo { get; set; }
     }
 
     public class CourseAssignment
@@ -128,7 +129,7 @@ namespace NoppaLib.DataModel
     {
         [JsonProperty("course_id")]             public string CourseId { get; set; }
         [JsonProperty("number")]                public string Number { get; set; }
-        [JsonProperty("topic")]                 public string topic { get; set; }
+        [JsonProperty("topic")]                 public string Topic { get; set; }
         [JsonProperty("material")]              public List<Material> Material { get; set; }
     }
 
