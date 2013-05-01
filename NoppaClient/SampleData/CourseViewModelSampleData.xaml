@@ -182,7 +182,14 @@ Also, I updated the Assignments page with instructions regarding the project pla
                 </dm:CourseExerciseMaterial>
             </vm:ExercisesViewModel.ExerciseMaterial>
         </vm:ExercisesViewModel>
-        <vm:ResultsViewModel />
+        <vm:ResultsViewModel>
+            <vm:ResultsViewModel.Results>
+                <dm:CourseResult CourseId="S-104.1011" Date="2010-10-27" GradeScale="1: 12 pistettä\n2: 15 pistettä\n3: 18 pistettä\n4: 21 pistettä\n5: 24 pistettä" GradeReview="ilmoitetaan myöhemmin" GradeName="Tentti" Url="http://noppa-api-dev.aalto.fi/noppa/kurssi/S-104.1011/tulokset/tvasrpyzi" Published="2010-11-26T15:43" />
+                <dm:CourseResult CourseId="S-104.1011" Date="2010-12-15" GradeName="Tentti" Url="http://noppa-api-dev.aalto.fi/noppa/kurssi/S-104.1011/tulokset/vvdywnqo" Published="2011-01-11T14:46" />
+                <dm:CourseResult CourseId="S-104.1011" Date="2011-10-26" GradeScale="Kok. pisteet = 0.4 * LH + 0.6 * Tentti. Hyväksytyt tulokset pyöristetty ylöspäin seuraavaan kokonaislukuun.\n12 -> 1\n15 -> 2\n18 -> 3\n21 -> 4\n24 -> 5" GradeReview="ilmoitetaan myöhemmin" GradeName="Tentti" Url="http://noppa-api-dev.aalto.fi/noppa/kurssi/S-104.1011/tulokset/yhcyjkoih" Published="2011-11-21T14:14" />
+                <dm:CourseResult CourseId="S-104.1011" Date="2012-10-24" GradeName="Tentti - alustava" Url="http://noppa-api-dev.aalto.fi/noppa/kurssi/S-104.1011/tulokset/jqaskttbrt" Published="2012-11-12T13:12" />
+            </vm:ResultsViewModel.Results>
+        </vm:ResultsViewModel>
         <vm:AssignmentsViewModel />
         <vm:AdditionalPageViewModel />
     </vm:CourseViewModel.Contents>

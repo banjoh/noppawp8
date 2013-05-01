@@ -369,6 +369,42 @@ namespace NoppaClient.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to published.
+        /// </summary>
+        public static string GradePublishedTitle {
+            get {
+                return ResourceManager.GetString("GradePublishedTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to results.
+        /// </summary>
+        public static string GradeResultsTitle {
+            get {
+                return ResourceManager.GetString("GradeResultsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to grade review.
+        /// </summary>
+        public static string GradeReviewTitle {
+            get {
+                return ResourceManager.GetString("GradeReviewTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to grade scale.
+        /// </summary>
+        public static string GradeScaleTitle {
+            get {
+                return ResourceManager.GetString("GradeScaleTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to language.
         /// </summary>
         public static string LanguageTitle {

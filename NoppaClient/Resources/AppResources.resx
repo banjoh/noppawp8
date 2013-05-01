@@ -340,4 +340,16 @@ You can search by course name, part of the course name, course code or part of t
   <data name="SortByDepartmentTitle" xml:space="preserve">
     <value>by unit</value>
   </data>
+  <data name="GradePublishedTitle" xml:space="preserve">
+    <value>published</value>
+  </data>
+  <data name="GradeResultsTitle" xml:space="preserve">
+    <value>results</value>
+  </data>
+  <data name="GradeReviewTitle" xml:space="preserve">
+    <value>grade review</value>
+  </data>
+  <data name="GradeScaleTitle" xml:space="preserve">
+    <value>grade scale</value>
+  </data>
 </root>

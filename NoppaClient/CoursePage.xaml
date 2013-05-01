@@ -136,26 +136,35 @@
             </DataTemplate>
 
            <DataTemplate x:Key="ResultItemTemplate">
-                <StackPanel Margin="0,24">
-                    <TextBlock Foreground="{StaticResource PhoneAccentBrush}" Text="{Binding Date, StringFormat=d}"/>
-                    <TextBlock FontSize="{StaticResource PhoneFontSizeMediumLarge}" Text="{Binding GradeName}" />
-                    <Button Content="Results" Command="{StaticResource OpenBrowserCommand}" CommandParameter="{Binding Url}" />
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Foreground="{StaticResource PhoneSubtleBrush}" Text="Grade review:" />
-                        <TextBlock Text="    " />
-                        <TextBlock Text="{Binding GradeReview}" />
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Foreground="{StaticResource PhoneSubtleBrush}" Text="Grade scale:" />
-                        <TextBlock Text="    " />
-                        <TextBlock Text="{Binding GradeScale}" />
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Foreground="{StaticResource PhoneSubtleBrush}" Text="Result published:" />
-                        <TextBlock Text="    " />
-                        <TextBlock Text="{Binding Published}" />
-                    </StackPanel>
-                </StackPanel>
+                <Grid Margin="0,0,0,20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Foreground="{StaticResource NoppaPrimaryColorBrush}" Style="{StaticResource NoppaTextSmallStyle}" Text="{Binding Date, StringFormat=d}"/>
+                    <TextBlock Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource NoppaTextLargeStyle}"  Text="{Binding GradeName}" />
+
+                    <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource NoppaTextSmallStyle}" Text="{Binding Path=LocalizedResources.GradeReviewTitle, Source={StaticResource LocalizedStrings}}" />
+                    <TextBlock Grid.Column="1" Grid.Row="2" Foreground="{StaticResource PhoneForegroundBrush}" Text="{Binding GradeReview}" TextWrapping="Wrap" />
+
+                    <TextBlock Grid.Column="0" Grid.Row="3" Style="{StaticResource NoppaTextSmallStyle}" Text="{Binding Path=LocalizedResources.GradeScaleTitle, Source={StaticResource LocalizedStrings}}" />
+                    <TextBlock Grid.Column="1" Grid.Row="3" Foreground="{StaticResource PhoneForegroundBrush}" Text="{Binding GradeScale}" TextWrapping="Wrap" />
+
+                    <TextBlock Grid.Column="0" Grid.Row="4" Style="{StaticResource NoppaTextSmallStyle}" Text="{Binding Path=LocalizedResources.GradePublishedTitle, Source={StaticResource LocalizedStrings}}" />
+                    <TextBlock Grid.Column="1" Grid.Row="4" Foreground="{StaticResource PhoneForegroundBrush}" Text="{Binding Published}" TextWrapping="Wrap" />
+
+                    <Button Content="{Binding Path=LocalizedResources.GradeResultsTitle, Source={StaticResource LocalizedStrings}}" 
+                            Grid.Row="5" Grid.ColumnSpan="3" Command="{StaticResource OpenBrowserCommand}" CommandParameter="{Binding Url}" />
+
+                </Grid>
             </DataTemplate>
 
             <DataTemplate x:Key="AssignmentItemTemplate">
@@ -247,12 +256,11 @@
                 </DataTemplate>
 
                 <DataTemplate x:Key="ResultsViewModel">
-                    <ListBox
-                    Margin="0,0,-22,0"
-                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                    ItemTemplate="{StaticResource ResultItemTemplate}"
-                    ItemsSource="{Binding Results}">
-                    </ListBox>
+                    <phone:LongListSelector
+                        HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                        ItemTemplate="{StaticResource ResultItemTemplate}"
+                        ItemsSource="{Binding Results}">
+                    </phone:LongListSelector>
                 </DataTemplate>
 
                 <DataTemplate x:Key="AssignmentsViewModel">
