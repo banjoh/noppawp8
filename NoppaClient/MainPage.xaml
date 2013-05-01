@@ -16,9 +16,6 @@
     shell:SystemTray.IsVisible="False">
 
     <phone:PhoneApplicationPage.Resources>
-        <phone:JumpListItemBackgroundConverter x:Key="BackgroundConverter"/>
-        <phone:JumpListItemForegroundConverter x:Key="ForegroundConverter"/>
-
         <!-- Move these to a common resource file if they are reused -->
         <DataTemplate x:Key="DepartmentItemTemplate">
             <StackPanel Margin="0,-2,0,20">

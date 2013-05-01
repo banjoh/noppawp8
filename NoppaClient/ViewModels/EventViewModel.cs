@@ -1,4 +1,5 @@
 ﻿using Microsoft.Phone.Tasks;
+using NoppaClient.Resources;
 using NoppaLib.DataModel;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,9 @@ namespace NoppaClient.ViewModels
         public string Location { get { return _event.Location; } }
         public string StartTime { get { return _event.StartTime.ToShortTimeString(); } }
         public string EndTime { get { return _event.EndTime.ToShortTimeString(); } }
+
+        private string _pageTitle = "";
+        public string PageTitle { get { return _pageTitle; } set { SetProperty(ref _pageTitle, value); } }
         
         public DateTime StartDate { get; private set; }
         public DateTime EndDate { get; private set; }
@@ -54,6 +58,8 @@ namespace NoppaClient.ViewModels
         {
             _event = courseEvent;
 
+            PageTitle = AppResources.ApplicationTitle.ToUpper();
+
             StartDate = courseEvent.StartDate;
             EndDate = courseEvent.EndDate;
 
@@ -63,7 +69,7 @@ namespace NoppaClient.ViewModels
             LoadCourseDataAsync(controller);
         }
 
-        private async void AddToCalendar()
+        private void AddToCalendar()
         {
             /* Add to calendar */
             DateTime dtStartTime = new DateTime(StartDate.Year, StartDate.Month, StartDate.Day, _event.StartTime.Hour, _event.StartTime.Minute, _event.StartTime.Second);
@@ -85,18 +91,18 @@ namespace NoppaClient.ViewModels
         {
             switch (eventType)
             {
-                case "event_course": return ("Course Event");
-                case "exams": return ("Exam");
-                case "mid_term_exams": return ("Mid term exam");
-                case "other": return ("Other event");
-                case "seminar": return ("Seminar");
-                case "casework": return ("Casework");
-                case "demonstration": return ("Demonstration");
-                case "group_studies": return ("Group studies");
-                case "individual_studies": return ("Individual studies");
-                case "hybrid_studies": return ("Hybrid studies");
-                case "online_studies": return ("Online studies");
-                default: return ("");
+                case "event_course": return AppResources.EventCourseEventTitle;
+                case "exams": return AppResources.EventExamTitle;
+                case "mid_term_exams": return AppResources.EventMidTermExamTitle;
+                case "other": return AppResources.EventOtherTitle;
+                case "seminar": return AppResources.EventSeminarTitle;
+                case "casework": return AppResources.EventCaseworkTitle;
+                case "demonstration": return AppResources.EventDemonstrationTitle;
+                case "group_studies": return AppResources.EventGroupStudies;
+                case "individual_studies": return AppResources.EventIndividualStudies;
+                case "hybrid_studies": return AppResources.EventHybridStudies;
+                case "online_studies": return AppResources.EventOnlineStudies;
+                default: return AppResources.EventOtherTitle;
             }
         }
 
@@ -104,6 +110,7 @@ namespace NoppaClient.ViewModels
         {
             Course = await NoppaAPI.GetCourse(CourseId);
             CourseName = Course.LongName;
+            PageTitle = AppResources.ApplicationTitle.ToUpper() + " " + Course.Id.ToUpper();
         }
     }
 }

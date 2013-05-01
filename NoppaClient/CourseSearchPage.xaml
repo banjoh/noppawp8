@@ -27,7 +27,7 @@
 
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel Grid.Row="0" Margin="12,17,12,28">
-            <TextBlock Text="COURSE SEARCH" Foreground="{StaticResource NoppaPrimaryColorBrush}"  Style="{StaticResource PhoneTextNormalStyle}" FontWeight="SemiBold"/>
+            <TextBlock Text="{Binding Path=LocalizedResources.NoppaSearchTitle, Source={StaticResource LocalizedStrings},Converter={StaticResource StringToUpperConverter}}" Foreground="{StaticResource NoppaPrimaryColorBrush}"  Style="{StaticResource PhoneTextNormalStyle}" FontWeight="SemiBold" />
             <TextBox x:Name="SearchBox" AcceptsReturn="False" Margin="0,5,0,0" InputScope="Search" 
                      Text="" HorizontalAlignment="Stretch" 
                      view:SearchCommand.Command="{Binding SearchCommand}" 

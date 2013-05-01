@@ -156,6 +156,7 @@
     <Compile Include="View\OpenBrowserCommand.cs" />
     <Compile Include="View\SearchCommand.cs" />
     <Compile Include="View\StringToResourceConverter.cs" />
+    <Compile Include="View\StringToUpperConverter.cs" />
     <Compile Include="View\TypeNameToDataTemplateConverter.cs" />
   </ItemGroup>
   <ItemGroup>

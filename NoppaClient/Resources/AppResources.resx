@@ -352,4 +352,40 @@ You can search by course name, part of the course name, course code or part of t
   <data name="GradeScaleTitle" xml:space="preserve">
     <value>grade scale</value>
   </data>
+  <data name="EventCaseworkTitle" xml:space="preserve">
+    <value>casework</value>
+  </data>
+  <data name="EventCourseEventTitle" xml:space="preserve">
+    <value>course event</value>
+  </data>
+  <data name="EventDemonstrationTitle" xml:space="preserve">
+    <value>demonstration</value>
+  </data>
+  <data name="EventExamTitle" xml:space="preserve">
+    <value>exam</value>
+  </data>
+  <data name="EventGroupStudies" xml:space="preserve">
+    <value>group studies</value>
+  </data>
+  <data name="EventHybridStudies" xml:space="preserve">
+    <value>hybrid studies</value>
+  </data>
+  <data name="EventIndividualStudies" xml:space="preserve">
+    <value>individual studies</value>
+  </data>
+  <data name="EventMidTermExamTitle" xml:space="preserve">
+    <value>mid term exam</value>
+  </data>
+  <data name="EventOnlineStudies" xml:space="preserve">
+    <value>online studies</value>
+  </data>
+  <data name="EventOtherTitle" xml:space="preserve">
+    <value>other</value>
+  </data>
+  <data name="EventSeminarTitle" xml:space="preserve">
+    <value>seminar</value>
+  </data>
+  <data name="NoppaSearchTitle" xml:space="preserve">
+    <value>noppa search</value>
+  </data>
 </root>

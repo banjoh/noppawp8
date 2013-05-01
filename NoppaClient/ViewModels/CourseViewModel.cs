@@ -17,6 +17,9 @@ namespace NoppaClient.ViewModels
         private Course _course = null;
         private PinnedCourses _pinnedCourses;
 
+        private string _title = "";
+        public string Title { get { return _title; } set { SetProperty(ref _title, value); } }
+
         private ObservableCollection<CourseContentViewModel> _contents = new ObservableCollection<CourseContentViewModel>();
         public ObservableCollection<CourseContentViewModel> Contents { get { return _contents; } }
 
@@ -134,6 +137,7 @@ namespace NoppaClient.ViewModels
         public CourseViewModel(string courseCode, PinnedCourses pinnedCourses)
         {
             Code = courseCode;
+            Title = AppResources.ApplicationTitle.ToUpper() + " " + Code.ToUpper();
             _pinnedCourses = pinnedCourses;
 
             _toggleSecondaryTileCommand = new DelegateCommand(ToggleSecondaryTile, () => _course != null);

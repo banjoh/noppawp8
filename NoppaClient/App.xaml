@@ -10,7 +10,12 @@
     <!--Application Resources-->
     <Application.Resources>
         <sys:Double x:Key="PanoramaItemHeaderFontSize">66</sys:Double>
+
+        <phone:JumpListItemBackgroundConverter x:Key="BackgroundConverter"/>
+        <phone:JumpListItemForegroundConverter x:Key="ForegroundConverter"/>
         
+        <view:StringToUpperConverter x:Key="StringToUpperConverter" />
+
         <!-- Use this brush for changing header colors etc. -->
         <SolidColorBrush x:Key="NoppaPrimaryColorBrush" Color="#FF00C13A" />
 

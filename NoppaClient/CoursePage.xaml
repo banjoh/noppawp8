@@ -298,7 +298,7 @@
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <!-- Runtime Pivot Control -->
-        <phone:Pivot Title="{Binding Code}"
+        <phone:Pivot Title="{Binding Title}"
                      ItemsSource="{Binding Contents}"
                      SelectedItem="{Binding CurrentContent}"
                      Foreground="{StaticResource NoppaPrimaryColorBrush}"

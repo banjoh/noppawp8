@@ -333,6 +333,105 @@ namespace NoppaClient.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to casework.
+        /// </summary>
+        public static string EventCaseworkTitle {
+            get {
+                return ResourceManager.GetString("EventCaseworkTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to course event.
+        /// </summary>
+        public static string EventCourseEventTitle {
+            get {
+                return ResourceManager.GetString("EventCourseEventTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to demonstration.
+        /// </summary>
+        public static string EventDemonstrationTitle {
+            get {
+                return ResourceManager.GetString("EventDemonstrationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to exam.
+        /// </summary>
+        public static string EventExamTitle {
+            get {
+                return ResourceManager.GetString("EventExamTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to group studies.
+        /// </summary>
+        public static string EventGroupStudies {
+            get {
+                return ResourceManager.GetString("EventGroupStudies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to hybrid studies.
+        /// </summary>
+        public static string EventHybridStudies {
+            get {
+                return ResourceManager.GetString("EventHybridStudies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to individual studies.
+        /// </summary>
+        public static string EventIndividualStudies {
+            get {
+                return ResourceManager.GetString("EventIndividualStudies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to mid term exam.
+        /// </summary>
+        public static string EventMidTermExamTitle {
+            get {
+                return ResourceManager.GetString("EventMidTermExamTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to online studies.
+        /// </summary>
+        public static string EventOnlineStudies {
+            get {
+                return ResourceManager.GetString("EventOnlineStudies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to other.
+        /// </summary>
+        public static string EventOtherTitle {
+            get {
+                return ResourceManager.GetString("EventOtherTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to seminar.
+        /// </summary>
+        public static string EventSeminarTitle {
+            get {
+                return ResourceManager.GetString("EventSeminarTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to events.
         /// </summary>
         public static string EventsTitle {
@@ -455,6 +554,15 @@ namespace NoppaClient.Resources {
         public static string NoDepartmentCoursesTitle {
             get {
                 return ResourceManager.GetString("NoDepartmentCoursesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to noppa search.
+        /// </summary>
+        public static string NoppaSearchTitle {
+            get {
+                return ResourceManager.GetString("NoppaSearchTitle", resourceCulture);
             }
         }
         
