@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using NoppaLib.DataModel;
 using NoppaClient.Resources;
+using System.Windows.Input;
 
 namespace NoppaClient.ViewModels
 {
@@ -15,9 +16,13 @@ namespace NoppaClient.ViewModels
         private ObservableCollection<EventGroup> _events = new ObservableCollection<EventGroup>();
         public ObservableCollection<EventGroup> Events { get { return _events; } set { SetProperty(ref _events, value); } }
 
-        public EventsViewModel()
+        public ICommand EventActivatedCommand { get; private set; }
+
+        public EventsViewModel(INavigationController navigationController)
         {
             Title = AppResources.EventsTitle;
+
+            EventActivatedCommand = ControllerUtil.MakeShowCourseEventCommand(navigationController);
             Index = 8;
         }
 

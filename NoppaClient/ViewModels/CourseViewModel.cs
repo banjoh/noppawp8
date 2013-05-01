@@ -32,8 +32,6 @@ namespace NoppaClient.ViewModels
         public OverviewViewModel OverviewModel { get; private set; }
         public NewsViewModel NewsModel { get; private set; }
 
-        public ICommand EventActivatedCommand { get; private set; }
-
         #region Pinned courses
 
         public string IsPinnedText
@@ -133,7 +131,7 @@ namespace NoppaClient.ViewModels
 
         public CourseViewModel() { /* For design mode */ }
 
-        public CourseViewModel(string courseCode, PinnedCourses pinnedCourses, INavigationController navigationController)
+        public CourseViewModel(string courseCode, PinnedCourses pinnedCourses)
         {
             Code = courseCode;
             _pinnedCourses = pinnedCourses;
@@ -152,12 +150,10 @@ namespace NoppaClient.ViewModels
             Contents.Add(OverviewModel);
             Contents.Add(NewsModel);
 
-            EventActivatedCommand = ControllerUtil.MakeShowCourseEventCommand(navigationController);
-
             SetPinnedStateAsync();
         }
 
-        public async Task LoadContentAsync()
+        public async Task LoadContentAsync(INavigationController navigationController)
         {
             if (IsLoading)
             {
@@ -216,7 +212,7 @@ namespace NoppaClient.ViewModels
             /* Load Events */
             tasks.Add(Task.Run(async delegate()
                 {
-                    EventsViewModel model = new EventsViewModel();
+                    EventsViewModel model = new EventsViewModel(navigationController);
                     await model.LoadDataAsync(Code);
                     return model as CourseContentViewModel;
                 })

@@ -55,7 +55,7 @@ namespace NoppaClient
 
             if (_viewModel == null)
             {
-                _viewModel = new CourseViewModel(courseCode, App.PinnedCourses, new PhoneNavigationController());
+                _viewModel = new CourseViewModel(courseCode, App.PinnedCourses);
 
                 // Make pivot view start on the news page with the item selected
                 if (newsItem.HasValue)
@@ -65,7 +65,7 @@ namespace NoppaClient
                 }
 
                 /* No need to await this here, the page shows up faster w/o doing it, and it loads asynchronously just fine.  */
-                loadTask = _viewModel.LoadContentAsync();
+                loadTask = _viewModel.LoadContentAsync(new PhoneNavigationController());
                 DataContext = _viewModel;
             }
 
