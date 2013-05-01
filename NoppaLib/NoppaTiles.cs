@@ -109,7 +109,13 @@ namespace NoppaLib
         public static void ClearAllTiles()
         {
             // Empty data
-            IconicTileData empty = new IconicTileData { Count = 0 };
+            IconicTileData empty = new IconicTileData { 
+                Count = 0,
+                WideContent1 = "",
+                WideContent2 = "",
+                WideContent3 = ""
+            };
+
             foreach (ShellTile tile in ShellTile.ActiveTiles)
             {
                 if (tile != null)
