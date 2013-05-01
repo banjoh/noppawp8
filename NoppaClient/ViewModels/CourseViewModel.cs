@@ -32,6 +32,8 @@ namespace NoppaClient.ViewModels
         public OverviewViewModel OverviewModel { get; private set; }
         public NewsViewModel NewsModel { get; private set; }
 
+        public ICommand EventActivatedCommand { get; private set; }
+
         #region Pinned courses
 
         public string IsPinnedText
@@ -131,7 +133,7 @@ namespace NoppaClient.ViewModels
 
         public CourseViewModel() { /* For design mode */ }
 
-        public CourseViewModel(string courseCode, PinnedCourses pinnedCourses)
+        public CourseViewModel(string courseCode, PinnedCourses pinnedCourses, INavigationController navigationController)
         {
             Code = courseCode;
             _pinnedCourses = pinnedCourses;
@@ -149,6 +151,8 @@ namespace NoppaClient.ViewModels
 
             Contents.Add(OverviewModel);
             Contents.Add(NewsModel);
+
+            EventActivatedCommand = ControllerUtil.MakeShowCourseEventCommand(navigationController);
 
             SetPinnedStateAsync();
         }
@@ -174,7 +178,8 @@ namespace NoppaClient.ViewModels
             var loadNewsTask = NewsModel.LoadDataAsync(Code);
 
             /* Load Lectures */
-            tasks.Add(Task.Run(async delegate(){
+            tasks.Add(Task.Run(async delegate() 
+                {
                     LecturesViewModel model = new LecturesViewModel();
                     await model.LoadDataAsync(Code);
                     return model as CourseContentViewModel;
@@ -182,7 +187,8 @@ namespace NoppaClient.ViewModels
             );
 
             /* Load Exercises */
-            tasks.Add(Task.Run(async delegate(){
+            tasks.Add(Task.Run(async delegate() 
+                {
                     ExercisesViewModel model = new ExercisesViewModel();
                     await model.LoadDataAsync(Code);
                     return model as CourseContentViewModel;
@@ -190,7 +196,8 @@ namespace NoppaClient.ViewModels
             );
 
             /* Load Results */
-            tasks.Add(Task.Run(async delegate(){
+            tasks.Add(Task.Run(async delegate() 
+                {
                     ResultsViewModel model = new ResultsViewModel();
                     await model.LoadDataAsync(Code);
                     return model as CourseContentViewModel;
@@ -198,8 +205,18 @@ namespace NoppaClient.ViewModels
             );
 
             /* Load Assignments */
-            tasks.Add(Task.Run(async delegate(){
+            tasks.Add(Task.Run(async delegate() 
+                {
                     AssignmentsViewModel model = new AssignmentsViewModel();
+                    await model.LoadDataAsync(Code);
+                    return model as CourseContentViewModel;
+                })
+            );
+
+            /* Load Events */
+            tasks.Add(Task.Run(async delegate()
+                {
+                    EventsViewModel model = new EventsViewModel();
                     await model.LoadDataAsync(Code);
                     return model as CourseContentViewModel;
                 })

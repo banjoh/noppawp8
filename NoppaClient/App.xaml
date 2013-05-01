@@ -147,6 +147,28 @@
                 </StackPanel>
             </StackPanel>
         </DataTemplate>
+
+        <DataTemplate x:Key="EventGroupHeaderTemplate">
+            <Border Background="Transparent" Padding="0,10,0,0">
+                <TextBlock Text="{Binding EventDate, StringFormat='d'}" 
+                       Foreground="{StaticResource PhoneSubtleBrush}" 
+                       Style="{StaticResource PhoneTextNormalStyle}"
+                       FontFamily="{StaticResource PhoneFontFamilySemiLight}" />
+            </Border>
+        </DataTemplate>
+
+        <Style x:Key="EventJumpListStyle" TargetType="phone:LongListSelector">
+            <Setter Property="LayoutMode" Value="List" />
+            <Setter Property="ItemTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding EventDate, StringFormat='d'}" 
+                                   FontFamily="{StaticResource PhoneFontFamilySemiBold}" FontSize="48" Padding="6"
+                                   Foreground="{Binding Converter={StaticResource ForegroundConverter}}" VerticalAlignment="Center"/>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         
         <Style x:Key="PanoramaItemNoHeaderStyle" TargetType="phone:PanoramaItem">
             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>

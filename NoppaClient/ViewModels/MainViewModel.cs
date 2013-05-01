@@ -236,22 +236,28 @@ namespace NoppaClient.ViewModels
 
                 while (newsTasks.Count > 0 || eventTasks.Count > 0)
                 {
-                    var newsTask = await Task.WhenAny(newsTasks);
-                    newsTasks.Remove(newsTask);
-                    var newsItems = newsTask.Result;
+                    if (newsTasks.Count > 0)
+                    {
+                        var newsTask = await Task.WhenAny(newsTasks);
+                        newsTasks.Remove(newsTask);
+                        var newsItems = newsTask.Result;
 
-                    if (newsItems != null)
-                        /* Each add now also sorts the list and updates UI. If there are LOTS of
-                         * news, this will hurt performance. However, at this point I favor immediate
-                         * response so well see how this goes. */
-                        News.AddNewItems(newsItems);
+                        if (newsItems != null)
+                            /* Each add now also sorts the list and updates UI. If there are LOTS of
+                             * news, this will hurt performance. However, at this point I favor immediate
+                             * response so well see how this goes. */
+                            News.AddNewItems(newsItems);
+                    }
 
-                    var eventTask = await Task.WhenAny(eventTasks);
-                    eventTasks.Remove(eventTask);
-                    var eventItems = await eventTask;
+                    if (eventTasks.Count > 0)
+                    {
+                        var eventTask = await Task.WhenAny(eventTasks);
+                        eventTasks.Remove(eventTask);
+                        var eventItems = await eventTask;
 
-                    if (eventItems != null)
-                        events.AddRange(eventItems);
+                        if (eventItems != null)
+                            events.AddRange(eventItems);
+                    }
                 }
 
                 Events = EventGroup.CreateEventGroups(events);

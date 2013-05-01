@@ -280,7 +280,15 @@
                 </DataTemplate>
 
                 <DataTemplate x:Key="EventsViewModel">
-                    <TextBlock Text="{Binding Content}" />
+                    <phone:LongListSelector
+                        JumpListStyle="{StaticResource EventJumpListStyle}"
+                        ItemTemplate="{StaticResource EventItemTemplate}"
+                        GroupHeaderTemplate="{StaticResource EventGroupHeaderTemplate}"
+                        LayoutMode="List"
+                        IsGroupingEnabled="True"
+                        HideEmptyGroups="True"
+                        view:ItemClickCommand.Command="{Binding EventActivatedCommand}"
+                        ItemsSource="{Binding Events}" />
                 </DataTemplate>
             </ResourceDictionary>
             

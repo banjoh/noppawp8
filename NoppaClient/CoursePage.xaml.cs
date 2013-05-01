@@ -55,7 +55,7 @@ namespace NoppaClient
 
             if (_viewModel == null)
             {
-                _viewModel = new CourseViewModel(courseCode, App.PinnedCourses);
+                _viewModel = new CourseViewModel(courseCode, App.PinnedCourses, new PhoneNavigationController());
 
                 // Make pivot view start on the news page with the item selected
                 if (newsItem.HasValue)
