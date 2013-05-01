@@ -17,7 +17,7 @@ namespace NoppaClient.ViewModels
 
         public EventsViewModel()
         {
-            Title = AppResources.AssignmentsTitle;
+            Title = AppResources.EventsTitle;
             Index = 8;
         }
 
