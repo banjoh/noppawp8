@@ -14,6 +14,12 @@
         <phone:JumpListItemBackgroundConverter x:Key="BackgroundConverter"/>
         <phone:JumpListItemForegroundConverter x:Key="ForegroundConverter"/>
         
+        <view:EmptyStringToVisibilityConverter x:Key="EmptyStringToVisibilityConverter" />
+        <view:TypeNameToDataTemplateConverter x:Key="TypeNameToDataTemplateConverter" />
+        <view:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <view:OpenBrowserCommand x:Key="OpenBrowserCommand" />
+        <view:DateTimeToWeekdayConverter x:Name="DateTimeToWeekdayConverter" />
+
         <view:StringToUpperConverter x:Key="StringToUpperConverter" />
 
         <!-- Use this brush for changing header colors etc. -->
@@ -207,6 +213,272 @@
             <Setter Property="CharacterSpacing" Value="-35" />
             <Setter Property="Foreground" Value="{StaticResource NoppaPrimaryColorBrush}" />
         </Style>
+
+
+        <DataTemplate x:Key="NewsItemTemplate">
+            <StackPanel Margin="0,0,0,20">
+                <TextBlock Text="{Binding Title}" Style="{StaticResource NoppaTextLargeStyle}" />
+                <TextBlock Text="{Binding Date, StringFormat=g}" Foreground="{StaticResource NoppaPrimaryColorBrush}" Style="{StaticResource PhoneTextSmallStyle}" />
+                <TextBlock Text="{Binding Content}" Style="{StaticResource PhoneTextNormalStyle}" TextWrapping="Wrap" />
+                <!-- Use ItemsControl here so that items are laid out inline, and not in a scroll area -->
+                <ItemsControl ItemsSource="{Binding Links}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="12,10,12,10">
+                                <Button Content="{Binding Title}" Command="{StaticResource OpenBrowserCommand}" CommandParameter="{Binding Url}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Vertical" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="LectureItemTemplate">
+            <Grid HorizontalAlignment="Stretch" Margin="0,0,0,20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="{Binding Title}" Style="{StaticResource NoppaTextLargeStyle}" />
+                <TextBlock Grid.Row="1" Text="{Binding Location}" Style="{StaticResource NoppaTextLargeStyle}" Foreground="{StaticResource PhoneSubtleBrush}" />
+                <StackPanel Orientation="Horizontal" Grid.Row="2">
+                    <TextBlock Foreground="{StaticResource NoppaPrimaryColorBrush}" Style="{StaticResource PhoneTextSmallStyle}" Text="{Binding Date, StringFormat=d}" />
+                    <TextBlock Foreground="{StaticResource NoppaPrimaryColorBrush}" Style="{StaticResource PhoneTextSmallStyle}" Text="{Binding StartTime, StringFormat=t}" />
+                    <TextBlock Foreground="{StaticResource NoppaPrimaryColorBrush}" Style="{StaticResource PhoneTextSmallStyle}" Text="-" Margin="-10,0,0,0" />
+                    <TextBlock Foreground="{StaticResource NoppaPrimaryColorBrush}" Style="{StaticResource PhoneTextSmallStyle}" Text="{Binding EndTime, StringFormat=t}" Margin="0,0,0,0" />
+                </StackPanel>
+                <TextBlock Grid.Row="3" Text="{Binding Content}" Style="{StaticResource PhoneTextNormalStyle}" TextWrapping="Wrap"
+                               Visibility="{Binding Content, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+                <ItemsControl Grid.Row="4" ItemsSource="{Binding Materials}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="12,10,12,10">
+                                <Button Content="{Binding Title}" Command="{StaticResource OpenBrowserCommand}" CommandParameter="{Binding Url}" />
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="ExerciseItemTemplate">
+            <Grid HorizontalAlignment="Stretch" Margin="0,0,0,20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource NoppaTextLargeStyle}" Text="{Binding Group}"/>
+                    <TextBlock Style="{StaticResource NoppaTextLargeStyle}" Text="{Binding Location}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Row="1">
+                    <TextBlock Style="{StaticResource NoppaTextSmallStyle}" Margin="12,0,0,0" Text="{Binding StartDate, Converter={StaticResource DateTimeToWeekdayConverter}}" />
+                    <TextBlock Style="{StaticResource NoppaTextSmallStyle}" Margin="0" Text=" " />
+                    <TextBlock Style="{StaticResource NoppaTextSmallStyle}" Margin="0" Text="{Binding StartTime, StringFormat=t}" />
+                    <TextBlock Style="{StaticResource NoppaTextSmallStyle}" Margin="0" Text=" - " />
+                    <TextBlock Style="{StaticResource NoppaTextSmallStyle}" Margin="0" Text="{Binding EndTime, StringFormat=t}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Row="2">
+                    <TextBlock Style="{StaticResource NoppaTextSmallStyle}" Margin="12,0,0,0" Text="{Binding StartDate, StringFormat=d}" />
+                    <TextBlock Style="{StaticResource NoppaTextSmallStyle}" Margin="0" Text=" - " />
+                    <TextBlock Style="{StaticResource NoppaTextSmallStyle}" Margin="0" Text="{Binding EndDate, StringFormat=d}" />
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="ExerciseMaterialItemTemplate">
+            <Grid HorizontalAlignment="Stretch" Margin="0,0,0,20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal" Grid.Row="0">
+                    <TextBlock Style="{StaticResource NoppaTextLargeStyle}" Text="{Binding Topic}" />
+                </StackPanel>
+
+                <ItemsControl ItemsSource="{Binding Material}" Grid.Row="1">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <Button Content="{Binding Title}" Command="{StaticResource OpenBrowserCommand}" CommandParameter="{Binding Url}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Vertical" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="ResultItemTemplate">
+            <Grid Margin="0,0,0,20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Foreground="{StaticResource NoppaPrimaryColorBrush}" Style="{StaticResource NoppaTextSmallStyle}" Text="{Binding Date, StringFormat=d}"/>
+                <TextBlock Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource NoppaTextLargeStyle}"  Text="{Binding GradeName}" />
+
+                <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource NoppaTextSmallStyle}" Text="{Binding Path=LocalizedResources.GradeReviewTitle, Source={StaticResource LocalizedStrings}}" />
+                <TextBlock Grid.Column="1" Grid.Row="2" Foreground="{StaticResource PhoneForegroundBrush}" Text="{Binding GradeReview}" TextWrapping="Wrap" />
+
+                <TextBlock Grid.Column="0" Grid.Row="3" Style="{StaticResource NoppaTextSmallStyle}" Text="{Binding Path=LocalizedResources.GradeScaleTitle, Source={StaticResource LocalizedStrings}}" />
+                <TextBlock Grid.Column="1" Grid.Row="3" Foreground="{StaticResource PhoneForegroundBrush}" Text="{Binding GradeScale}" TextWrapping="Wrap" />
+
+                <TextBlock Grid.Column="0" Grid.Row="4" Style="{StaticResource NoppaTextSmallStyle}" Text="{Binding Path=LocalizedResources.GradePublishedTitle, Source={StaticResource LocalizedStrings}}" />
+                <TextBlock Grid.Column="1" Grid.Row="4" Foreground="{StaticResource PhoneForegroundBrush}" Text="{Binding Published}" TextWrapping="Wrap" />
+
+                <Button Content="{Binding Path=LocalizedResources.GradeResultsTitle, Source={StaticResource LocalizedStrings}}" 
+                            Grid.Row="5" Grid.ColumnSpan="3" Command="{StaticResource OpenBrowserCommand}" CommandParameter="{Binding Url}" />
+
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="AssignmentItemTemplate">
+            <Grid Margin="0,0,0,20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="{Binding Deadline}" Style="{StaticResource NoppaTextSmallStyle}" Foreground="{StaticResource NoppaPrimaryColorBrush}" />
+                <TextBlock Grid.Row="1" Text="{Binding Title}"  Style="{StaticResource NoppaTextLargeStyle}"/>
+                <TextBlock Grid.Row="2" Text="{Binding Content}" Style="{StaticResource NoppaTextLargeStyle}"
+                               Visibility="{Binding Content, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+                <ItemsControl Grid.Row="3" ItemsSource="{Binding Material}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Content="{Binding Title}" Command="{StaticResource OpenBrowserCommand}" CommandParameter="{Binding Url}" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+        </DataTemplate>
+
+        <!-- Templates for the Pivot view models -->
+        <ResourceDictionary x:Key="ViewModelTemplates">
+            <DataTemplate x:Key="OverviewViewModel">
+                <ListBox ItemsSource="{Binding Items}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="0,0,0,12">
+                                <TextBlock Text="{Binding Title}" 
+                                       Foreground="{StaticResource NoppaPrimaryColorBrush}"
+                                       FontWeight="SemiBold"
+                                       Style="{StaticResource PhoneTextNormalStyle}"
+                                       Visibility="{Binding Title, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+                                <TextBlock Text="{Binding Content}"  
+                                       Style="{StaticResource NoppaTextLargeStyle}" 
+                                       Visibility="{Binding Content, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </DataTemplate>
+
+            <DataTemplate x:Key="NewsViewModel">
+                <ListBox
+                        Margin="0,0,0,0"                        
+                        HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                        ItemTemplate="{StaticResource NewsItemTemplate}"
+                        SelectedIndex="{Binding CurrentNewsIndex}"
+                        ItemsSource="{Binding News}">
+                </ListBox>
+            </DataTemplate>
+
+            <DataTemplate x:Key="LecturesViewModel">
+                <phone:LongListSelector x:Name="LectureList"
+                        Margin="0,0,0,0"
+                        HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                        ItemTemplate="{StaticResource LectureItemTemplate}"
+                        ItemsSource="{Binding Lectures}">
+                </phone:LongListSelector>
+            </DataTemplate>
+
+            <DataTemplate x:Key="ExercisesViewModel">
+                <phone:LongListSelector ItemsSource="{Binding ExerciseMaterial}" 
+                                            ItemTemplate="{StaticResource ExerciseMaterialItemTemplate}">
+                    <phone:LongListSelector.ListHeader>
+                        <Grid>
+                            <!-- Place the list of exercise sessions at the top of the list -->
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="groups" 
+                                           Visibility="{Binding HasExercises, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                                           Style="{StaticResource NoppaTextSmallStyle}" Foreground="{StaticResource NoppaPrimaryColorBrush}" Grid.Row="0" />
+                            <ItemsControl Grid.Row="1" Margin="0,0,0,10"
+                                              Visibility="{Binding HasExercises, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                                              ItemsSource="{Binding Exercises}"
+                                              ItemTemplate="{StaticResource ExerciseItemTemplate}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Vertical" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </ItemsControl>
+
+                            <TextBlock Visibility="{Binding HasExerciseMaterial, Converter={StaticResource BooleanToVisibilityConverter}}"  Text="materials" Style="{StaticResource NoppaTextSmallStyle}" Foreground="{StaticResource NoppaPrimaryColorBrush}" Grid.Row="3" />
+                        </Grid>
+                    </phone:LongListSelector.ListHeader>
+                </phone:LongListSelector>
+            </DataTemplate>
+
+            <DataTemplate x:Key="ResultsViewModel">
+                <phone:LongListSelector
+                        HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                        ItemTemplate="{StaticResource ResultItemTemplate}"
+                        ItemsSource="{Binding Results}">
+                </phone:LongListSelector>
+            </DataTemplate>
+
+            <DataTemplate x:Key="AssignmentsViewModel">
+                <phone:LongListSelector x:Name="AssignmentList"
+                        HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                        ItemTemplate="{StaticResource AssignmentItemTemplate}"
+                        ItemsSource="{Binding Assignments}" />
+            </DataTemplate>
+
+            <DataTemplate x:Key="AdditionalPageViewModel">
+                <TextBlock Text="{Binding Content}" />
+            </DataTemplate>
+
+            <DataTemplate x:Key="EventsViewModel">
+                <phone:LongListSelector
+                        JumpListStyle="{StaticResource EventJumpListStyle}"
+                        ItemTemplate="{StaticResource EventItemTemplate}"
+                        GroupHeaderTemplate="{StaticResource EventGroupHeaderTemplate}"
+                        LayoutMode="List"
+                        IsGroupingEnabled="True"
+                        HideEmptyGroups="True"
+                        view:ItemClickCommand.Command="{Binding EventActivatedCommand}"
+                        ItemsSource="{Binding Events}" />
+            </DataTemplate>
+        </ResourceDictionary>
+
     </Application.Resources>
 
     <Application.ApplicationLifetimeObjects>
