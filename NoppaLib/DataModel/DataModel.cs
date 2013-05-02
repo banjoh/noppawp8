@@ -48,5 +48,7 @@ namespace NoppaLib.DataModel
         public string Title { get; set; }
         [JsonProperty("url")]
         public string Url { get; set; }
+        [JsonProperty("authentication_required")]
+        public bool AuthenticationRequired { get; set; }
     }
 }

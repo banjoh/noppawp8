@@ -326,6 +326,7 @@
             Look at CourseViewModelSampleData.xaml under SampleData/ to add and change the items
             It's a little bit messy how it gets the correct template. Hopefully the indicies won't change.
         -->
+        <!--
         <phone:Pivot Title="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}" Visibility="{Binding IsInDesignTool, Source={StaticResource DesignToolChecker}, Converter={StaticResource BooleanToVisibilityConverter}}" Foreground="{StaticResource NoppaPrimaryColorBrush}">
             <phone:PivotItem Header="overview" Content="{Binding Contents,Converter={StaticResource EnumerableIndexConverter},ConverterParameter=0}" ContentTemplate="{Binding Source={StaticResource ViewModelTemplates},Path=Values[7]}" />
             <phone:PivotItem Header="news" Content="{Binding Contents,Converter={StaticResource EnumerableIndexConverter},ConverterParameter=1}" ContentTemplate="{Binding Source={StaticResource ViewModelTemplates},Path=Values[6]}" />
@@ -335,7 +336,8 @@
             <phone:PivotItem Header="assignments" Content="{Binding Contents,Converter={StaticResource EnumerableIndexConverter},ConverterParameter=5}" ContentTemplate="{Binding Source={StaticResource ViewModelTemplates},Path=Values[2]}" />
             <phone:PivotItem Header="additional page" Content="{Binding Contents,Converter={StaticResource EnumerableIndexConverter},ConverterParameter=6}" ContentTemplate="{Binding Source={StaticResource ViewModelTemplates},Path=Values[1]}" />
             <phone:PivotItem Header="events" Content="{Binding Contents,Converter={StaticResource EnumerableIndexConverter},ConverterParameter=7}" ContentTemplate="{Binding Source={StaticResource ViewModelTemplates},Path=Values[0]}" />
-        </phone:Pivot>
+        </phone:Pivot> 
+        -->
     </Grid>
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar Mode="Default"  Opacity="1.0" IsMenuEnabled="True" IsVisible="True">

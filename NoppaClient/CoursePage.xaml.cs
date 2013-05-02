@@ -35,13 +35,16 @@ namespace NoppaClient
                 courseCode = NavigationContext.QueryString["id"];
             }
 
-            try
+            if (NavigationContext.QueryString.ContainsKey("news"))
             {
-                newsItem = Convert.ToInt32(NavigationContext.QueryString["news"]);
-            }
-            catch (Exception)
-            {
-                /* Either no news, or news parameter wasn't a valid integer. */
+                try
+                {
+                    newsItem = Convert.ToInt32(NavigationContext.QueryString["news"]);
+                }
+                catch (Exception)
+                {
+                    /* news parameter wasn't a valid integer */
+                }
             }
 
             // Find menu objects
