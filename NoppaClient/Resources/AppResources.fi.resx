@@ -236,7 +236,7 @@ You can search by course name, part of the course name, course code or part of t
     <value>uutiset</value>
   </data>
   <data name="OverviewTitle" xml:space="preserve">
-    <value>yleiset</value>
+    <value>yleiskuva</value>
   </data>
   <data name="ResultsTitle" xml:space="preserve">
     <value>tulokset</value>
@@ -264,5 +264,128 @@ You can search by course name, part of the course name, course code or part of t
   </data>
   <data name="WednesdayTitle" xml:space="preserve">
     <value>keskiviikko</value>
+  </data>
+  <data name="CourseAssessmentTitle" xml:space="preserve">
+    <value>arviointi</value>
+  </data>
+  <data name="CourseCEFRLevelTitle" xml:space="preserve">
+    <value>CEFR-taso</value>
+  </data>
+  <data name="CourseContentTitle" xml:space="preserve">
+    <value>sisältö</value>
+  </data>
+  <data name="CourseCreditsTitle" xml:space="preserve">
+    <value>opintopisteet</value>
+  </data>
+  <data name="CourseDetailsTitle" xml:space="preserve">
+    <value>lisätietoja</value>
+  </data>
+  <data name="CourseGradingTitle" xml:space="preserve">
+    <value>arvostelu</value>
+  </data>
+  <data name="CourseInstructionLanguageTitle" xml:space="preserve">
+    <value>opetuskieli</value>
+  </data>
+  <data name="CourseLearningOutcomesTitle" xml:space="preserve">
+    <value>oppimistavoitteet</value>
+  </data>
+  <data name="CourseLevelTitle" xml:space="preserve">
+    <value>taso</value>
+  </data>
+  <data name="CourseNameTitle" xml:space="preserve">
+    <value>kurssin nimi</value>
+  </data>
+  <data name="CourseOfficeHoursTitle" xml:space="preserve">
+    <value>vastaanottoajat</value>
+  </data>
+  <data name="CoursePrerequisitesTitle" xml:space="preserve">
+    <value>esitiedot</value>
+  </data>
+  <data name="CourseRegistrationTitle" xml:space="preserve">
+    <value>ilmoittautuminen</value>
+  </data>
+  <data name="CourseStaffTitle" xml:space="preserve">
+    <value>henkilökunta</value>
+  </data>
+  <data name="CourseStatusTitle" xml:space="preserve">
+    <value>tila</value>
+  </data>
+  <data name="CourseStudyMaterialTitle" xml:space="preserve">
+    <value>opintomateriaalit</value>
+  </data>
+  <data name="CourseSubstitutesTitle" xml:space="preserve">
+    <value>korvaavuudet</value>
+  </data>
+  <data name="CourseTeachingPeriodTitle" xml:space="preserve">
+    <value>opintojakso</value>
+  </data>
+  <data name="CourseWorkloadTitle" xml:space="preserve">
+    <value>työmäärä</value>
+  </data>
+  <data name="EventCaseworkTitle" xml:space="preserve">
+    <value>avustustyö</value>
+  </data>
+  <data name="EventCourseEventTitle" xml:space="preserve">
+    <value>kurssitapahtuma</value>
+  </data>
+  <data name="EventDemonstrationTitle" xml:space="preserve">
+    <value>demo</value>
+  </data>
+  <data name="EventExamTitle" xml:space="preserve">
+    <value>tentti</value>
+  </data>
+  <data name="EventGroupStudies" xml:space="preserve">
+    <value>ryhmäopiskelu</value>
+  </data>
+  <data name="EventHybridStudies" xml:space="preserve">
+    <value>yhdistelmäopiskelu</value>
+  </data>
+  <data name="EventIndividualStudies" xml:space="preserve">
+    <value>itsenäisopiskelu</value>
+  </data>
+  <data name="EventMidTermExamTitle" xml:space="preserve">
+    <value>välikoe</value>
+  </data>
+  <data name="EventOnlineStudies" xml:space="preserve">
+    <value>nettiopiskelu</value>
+  </data>
+  <data name="EventOtherTitle" xml:space="preserve">
+    <value>muu</value>
+  </data>
+  <data name="EventSeminarTitle" xml:space="preserve">
+    <value>seminaari</value>
+  </data>
+  <data name="SortByCodeTitle" xml:space="preserve">
+    <value>by code</value>
+  </data>
+  <data name="SortByDepartmentTitle" xml:space="preserve">
+    <value>by unit</value>
+  </data>
+  <data name="SortByNameTitle" xml:space="preserve">
+    <value>by name</value>
+  </data>
+  <data name="AddToCalendarTitle" xml:space="preserve">
+    <value>lisää tapahtuma</value>
+  </data>
+  <data name="GradePublishedTitle" xml:space="preserve">
+    <value>julkaistu</value>
+  </data>
+  <data name="GradeResultsTitle" xml:space="preserve">
+    <value>tulokset</value>
+  </data>
+  <data name="GradeReviewTitle" xml:space="preserve">
+    <value>arvostelutilaisuus</value>
+  </data>
+  <data name="GradeScaleTitle" xml:space="preserve">
+    <value>arvosteluasteikko</value>
+  </data>
+  <data name="NoDepartmentCoursesTitle" xml:space="preserve">
+    <value>ei tuloksia, yritä myöhemmin uudelleen</value>
+  </data>
+  <data name="NoppaSearchTitle" xml:space="preserve">
+    <value>noppa haku</value>
+  </data>
+  <data name="NoSearchResultsTitle" xml:space="preserve">
+    <value>ei tuloksia</value>
   </data>
 </root>

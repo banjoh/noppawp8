@@ -441,7 +441,7 @@ namespace NoppaClient.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to exerices.
+        ///   Looks up a localized string similar to exercises.
         /// </summary>
         public static string ExercisesTitle {
             get {

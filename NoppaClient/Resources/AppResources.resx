@@ -227,7 +227,7 @@ You can search by course name, part of the course name, course code or part of t
     <value>assignments</value>
   </data>
   <data name="ExercisesTitle" xml:space="preserve">
-    <value>exerices</value>
+    <value>exercises</value>
   </data>
   <data name="LecturesTitle" xml:space="preserve">
     <value>lectures</value>
