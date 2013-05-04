@@ -64,6 +64,11 @@ namespace NoppaClient
 
             Thread.CurrentThread.CurrentCulture = culture;
             Thread.CurrentThread.CurrentUICulture = culture;
+
+            /* Without these, any delegate or lambda task would have
+             * wrong culture, leading to partially localized pages. */
+            CultureInfo.DefaultThreadCurrentCulture = culture;
+            CultureInfo.DefaultThreadCurrentUICulture = culture;
         }
 
 
