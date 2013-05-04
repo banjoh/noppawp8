@@ -59,19 +59,18 @@ namespace NoppaLib
             }
 
             var timeoutCancel = new CancellationTokenSource();
-            var timeoutCancelToken = timeoutCancel.Token;
 
             try
             {
                 Task<HttpWebResponse> responseTask = CallAPIAsync(query);
 
                 /* Handle the timeout */
-                var timeoutTask = Task.Delay(_timeout, timeoutCancelToken);
+                var timeoutTask = Task.Delay(_timeout, timeoutCancel.Token);
                 var completeTask = await Task.WhenAny(responseTask, timeoutTask);
                 if (completeTask == responseTask)
                 {
-                    response = await responseTask.ConfigureAwait(false);
                     timeoutCancel.Cancel();
+                    response = await responseTask.ConfigureAwait(false);
                 }
                 else
                 {
