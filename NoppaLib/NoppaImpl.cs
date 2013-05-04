@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.IO;
 using System.Net;
@@ -56,18 +57,26 @@ namespace NoppaLib
             {
                 return JsonConvert.DeserializeObject<T>(Cache.Get(query));
             }
-            
+
+            var timeoutCancel = new CancellationTokenSource();
+            var timeoutCancelToken = timeoutCancel.Token;
+
             try
             {
                 Task<HttpWebResponse> responseTask = CallAPIAsync(query);
 
                 /* Handle the timeout */
-                var completeTask = await Task.WhenAny(responseTask, Task.Delay(_timeout));
+                var timeoutTask = Task.Delay(_timeout, timeoutCancelToken);
+                var completeTask = await Task.WhenAny(responseTask, timeoutTask);
                 if (completeTask == responseTask)
+                {
                     response = await responseTask.ConfigureAwait(false);
+                    timeoutCancel.Cancel();
+                }
                 else
                 {
                     /* Timeout */
+                    await timeoutTask;
                     System.Diagnostics.Debug.WriteLine("NoppaApiClient: Timed out ({0} ms)", _timeout);
                     return null;
                 }
@@ -76,6 +85,7 @@ namespace NoppaLib
             {
                 /* Caught exception */
                 System.Diagnostics.Debug.WriteLine("NoppaApiClient: Caught exception: {0}", webExc.Message);
+                timeoutCancel.Cancel();
                 return null;
             }
 
