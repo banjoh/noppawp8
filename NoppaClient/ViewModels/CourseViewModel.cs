@@ -178,7 +178,7 @@ namespace NoppaClient.ViewModels
             var loadNewsTask = NewsModel.LoadDataAsync(Code);
 
             /* Load Lectures */
-            tasks.Add(Task.Run(async delegate() 
+            tasks.Add(Task.Run(async delegate()
                 {
                     LecturesViewModel model = new LecturesViewModel();
                     await model.LoadDataAsync(Code);
@@ -222,6 +222,8 @@ namespace NoppaClient.ViewModels
                 })
             );
 
+            await Task.WhenAll(loadNewsTask, loadOverViewTask);
+
             /* Add items in the order they are finished. */
             while (tasks.Count > 0)
             {
@@ -243,10 +245,9 @@ namespace NoppaClient.ViewModels
                         }
                     }
                     _contents.Insert(index, content);
+                    NotifyPropertyChanged("Contents");
                 }
             }
-
-            await Task.WhenAll(loadNewsTask, loadOverViewTask);
 
             if (OverviewModel.OodiUrl != null)
             {

@@ -97,10 +97,7 @@ namespace NoppaClient
             base.OnNavigatedFrom(e);
 
             /* Unbind every app bar menu event manually. */
-            foreach (var action in _unbindActions)
-            {
-                action();
-            }
+            _unbindActions.ForEach( action => action() );
             _unbindActions.Clear();
         }
     }
