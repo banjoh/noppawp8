@@ -356,13 +356,13 @@ You can search by course name, part of the course name, course code or part of t
     <value>seminaari</value>
   </data>
   <data name="SortByCodeTitle" xml:space="preserve">
-    <value>by code</value>
+    <value>kurssikoodin mukaan</value>
   </data>
   <data name="SortByDepartmentTitle" xml:space="preserve">
-    <value>by unit</value>
+    <value>yksikön mukaan</value>
   </data>
   <data name="SortByNameTitle" xml:space="preserve">
-    <value>by name</value>
+    <value>nimen mukaan</value>
   </data>
   <data name="AddToCalendarTitle" xml:space="preserve">
     <value>lisää tapahtuma</value>
