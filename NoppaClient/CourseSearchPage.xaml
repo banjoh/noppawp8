@@ -25,22 +25,23 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        <ProgressBar IsIndeterminate="True" 
+            Grid.Row="0" 
+            Margin="0,0,0,16" 
+            VerticalAlignment="Top" 
+            HorizontalAlignment="Stretch" 
+            Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"
+            x:Name="customIndeterminateProgressBar"
+            Style="{StaticResource CustomIndeterminateProgressBar}"/>
+
         <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel Grid.Row="0" Margin="12,17,12,28">
+        <StackPanel Grid.Row="0" Margin="12,17,12,0">
             <TextBlock Text="{Binding Path=LocalizedResources.NoppaSearchTitle, Source={StaticResource LocalizedStrings},Converter={StaticResource StringToUpperConverter}}" Foreground="{StaticResource NoppaPrimaryColorBrush}"  Style="{StaticResource PhoneTextNormalStyle}" FontWeight="SemiBold" />
             <TextBox x:Name="SearchBox" AcceptsReturn="False" Margin="0,5,0,0" InputScope="Search" 
                      Text="" HorizontalAlignment="Stretch" 
                      view:SearchCommand.Command="{Binding SearchCommand}" 
                      view:SearchCommand.Parameter="{Binding Text, ElementName=SearchBox}" /> 
         </StackPanel>
-
-        <ProgressBar IsIndeterminate="True" 
-                     Grid.Row="0" 
-                     Margin="0,0,0,16" 
-                     VerticalAlignment="Bottom" 
-                     HorizontalAlignment="Stretch" 
-                     Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"
-                     x:Name="customIndeterminateProgressBar" Style="{StaticResource CustomIndeterminateProgressBar}"/>
 
         <phone:LongListSelector
             Margin="12,0,12,0"

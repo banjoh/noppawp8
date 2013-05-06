@@ -19,17 +19,23 @@
     <phone:PhoneApplicationPage.Resources>
         <!-- Misc. content -->
         <view:EnumerableIndexConverter x:Key="EnumerableIndexConverter" />
-        <view:DesignToolChecker x:Key="DesignToolChecker" />
     </phone:PhoneApplicationPage.Resources>
     
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
+        <ProgressBar IsIndeterminate="True" 
+            Grid.Row="0" 
+            Margin="0,0,0,16"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Stretch" 
+            Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"
+            x:Name="customIndeterminateProgressBar" Style="{StaticResource CustomIndeterminateProgressBar}"/>
+
         <!-- Runtime Pivot Control -->
         <phone:Pivot Title="{Binding Title}"
                      ItemsSource="{Binding Contents}"
                      SelectedItem="{Binding CurrentContent}"
-                     Foreground="{StaticResource NoppaPrimaryColorBrush}"
-                     Visibility="{Binding IsNotInDesignTool, Source={StaticResource DesignToolChecker}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                     Foreground="{StaticResource NoppaPrimaryColorBrush}">
             <phone:Pivot.ItemTemplate>
                 <DataTemplate>
                     <view:DataTemplateSelector 

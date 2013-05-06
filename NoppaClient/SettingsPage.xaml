@@ -20,6 +20,10 @@
         <vm:SettingsViewModel />
     </phone:PhoneApplicationPage.DataContext>
 
+    <phone:PhoneApplicationPage.Resources>
+        <v:ClearCacheCommand x:Key="ClearCacheCommand" />
+    </phone:PhoneApplicationPage.Resources>
+
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>
@@ -38,6 +42,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
           
             <toolkit:ListPicker
@@ -51,6 +56,12 @@
                 Name="updateTile"
                 Header="{Binding Path=LocalizedResources.UpdateTileLocalSettings, Source={StaticResource LocalizedStrings}}"
                 IsChecked="{Binding PrimaryTileIsActive, Mode=TwoWay}" />
+
+            <Button
+                Grid.Row="2"
+                Name="clearButton"
+                Content="{Binding Path=LocalizedResources.ClearCache, Source={StaticResource LocalizedStrings}}"
+                Command="{StaticResource ClearCacheCommand}"/>
         </Grid>
     </Grid>
 

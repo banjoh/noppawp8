@@ -124,11 +124,13 @@ namespace NoppaClient.ViewModels
             get { return AppResources.ApplicationTitle; }
         }
 
-        private bool _isDataLoaded = false;
-        public bool IsDataLoaded
+        private bool _isLoading = true;
+        private bool _isDepartmanentsLoading = true;
+        private bool _isMyCoursesLoading = true;
+        public bool IsLoading
         {
-            get { return _isDataLoaded; }
-            private set { SetProperty(ref _isDataLoaded, value); }
+            get { return _isLoading; }
+            private set { SetProperty(ref _isLoading, value); }
         }
 
         private bool _isDepartmentListEmpty = true;
@@ -158,11 +160,14 @@ namespace NoppaClient.ViewModels
         /// </summary>
         public async Task LoadDataAsync(PinnedCourses pinnedCourses)
         {
+            System.Diagnostics.Debug.WriteLine("Start loading");
+            IsLoading = true;
+            
             try
             {
-                LoadDepartmentGroupsAsync();
                 UpdateMyCoursesAsync(pinnedCourses);
-
+                LoadDepartmentGroupsAsync();
+                
                 var courses = await pinnedCourses.GetCodesAsync();
                 courses.CollectionChanged += (o, e) => UpdateMyCoursesAsync(pinnedCourses);
             }
@@ -170,12 +175,13 @@ namespace NoppaClient.ViewModels
             {
                 System.Diagnostics.Debug.WriteLine("LoadDataAsync: Caught exception: {0}", ex.Message);
             }
-
-            this.IsDataLoaded = true;
         }
 
         private async void LoadDepartmentGroupsAsync()
         {
+            _isDepartmanentsLoading = true;
+
+            System.Diagnostics.Debug.WriteLine("Start loading departments");
             try
             {
                 List<Organization> orgs = await NoppaAPI.GetAllOrganizations();
@@ -197,10 +203,17 @@ namespace NoppaClient.ViewModels
             {
                 System.Diagnostics.Debug.WriteLine("LoadDepartmentGroupsAsync: Caught exception: {0}", ex.Message);
             }
+            System.Diagnostics.Debug.WriteLine("Stop loading departments");
+
+            _isDepartmanentsLoading = false;
+            if (!_isMyCoursesLoading)
+                IsLoading = false;
         }
 
         private async void UpdateMyCoursesAsync(PinnedCourses pinnedCourses)
         {
+            _isMyCoursesLoading = true;
+
             try
             {
                 News = new NewsGroupCollection(DateTime.Today.AddMonths(-3));
@@ -266,6 +279,10 @@ namespace NoppaClient.ViewModels
             {
                 System.Diagnostics.Debug.WriteLine("LoadNewsAndEventsAsync: Caught exception: {0}", ex.Message);
             }
+
+            _isMyCoursesLoading = false;
+            if (!_isDepartmanentsLoading)
+                IsLoading = false;
         }
     }
 }

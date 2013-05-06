@@ -388,4 +388,7 @@ You can search by course name, part of the course name, course code or part of t
   <data name="NoppaSearchTitle" xml:space="preserve">
     <value>noppa search</value>
   </data>
+  <data name="ClearCache" xml:space="preserve">
+    <value>Clear cache</value>
+  </data>
 </root>

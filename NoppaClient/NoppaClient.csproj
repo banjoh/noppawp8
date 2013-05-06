@@ -146,6 +146,7 @@
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="View\AppBar.cs" />
     <Compile Include="View\BooleanToVisibilityConverter.cs" />
+    <Compile Include="View\ClearCacheCommand.cs" />
     <Compile Include="View\DateTimeToWeekdayConverter.cs" />
     <Compile Include="View\EmptyStringToVisibilityConverter.cs" />
     <Compile Include="View\EnumerableIndexConverter.cs" />

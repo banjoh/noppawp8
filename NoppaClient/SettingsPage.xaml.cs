@@ -5,6 +5,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
+using System.ComponentModel;
+using System.Windows.Data;
+using NoppaLib;
 
 namespace NoppaClient
 {
@@ -13,6 +16,10 @@ namespace NoppaClient
         public SettingsPage()
         {
             InitializeComponent();
+
+            var b = new Binding("IsNotEmpty");
+            b.Source = Cache.Instance;
+            clearButton.SetBinding(Button.IsEnabledProperty, b);
         }
     }
 }

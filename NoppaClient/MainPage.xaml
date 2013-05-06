@@ -99,9 +99,18 @@
             attributes to be drawn from the .resx file that matches the
             CurrentUICulture of the app at run time.
          -->
-
+        
+        <ProgressBar IsIndeterminate="True" 
+            Grid.Row="0"
+            Margin="0,0,0,16" 
+            VerticalAlignment="Top" 
+            HorizontalAlignment="Stretch" 
+            Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"
+            x:Name="customIndeterminateProgressBar"
+            Style="{StaticResource CustomIndeterminateProgressBar}"/>
+        
         <!--Panorama control-->
-        <phone:Panorama Margin="0,-1,0,1">
+        <phone:Panorama>
             <phone:Panorama.TitleTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}" 
