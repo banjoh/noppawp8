@@ -193,10 +193,9 @@ Noppa client for Windows Phone 8.
 &lt;LineBreak/&gt;
 &lt;/Paragraph&gt;
 &lt;Paragraph&gt;
-Developed during the spring of 2013 as a project for the
-course &lt;Run FontStyle="Italic"&gt;T-110.5130 Mobile Systems Programming&lt;/Run&gt; at 
-&lt;Hyperlink NavigateUri="http://www.aalto.fi/" TargetName="_blank"&gt;Aalto university&lt;/Hyperlink&gt; 
-by Aura Palmgren, Kari Palenius, Evans Mungai, Vesa Eloranta and Christoffer Ventus.
+Kehitetty keväällä 2013 projektina kurssille &lt;Run FontStyle="Italic"&gt;T-110.5130 Mobile Systems Programming&lt;/Run&gt; 
+&lt;Hyperlink NavigateUri="http://www.aalto.fi/" TargetName="_blank"&gt;Aalto-yliopistolla&lt;/Hyperlink&gt; 
+Aura Palmgren, Kari Palenius, Evans Mungai, Vesa Eloranta ja Christoffer Ventus.
 &lt;/Paragraph&gt;
 &lt;/Section&gt;</value>
     <comment>Try to keep the same formatting if possible. The outermost tag has to have the xmlns property set, or else the Xaml parser will not accept it.</comment>
@@ -210,7 +209,7 @@ by Aura Palmgren, Kari Palenius, Evans Mungai, Vesa Eloranta and Christoffer Ven
 &lt;Run FontWeight="Bold"&gt;search tips&lt;/Run&gt;
 &lt;/Paragraph&gt;
 &lt;Paragraph&gt;
-You can search by course name, part of the course name, course code or part of the course code.
+Voit hake kurssinimellä, kurrsinimen osalla, kurssikoodilla tai kurssikoodin osalla.
 &lt;/Paragraph&gt;
 &lt;Paragraph&gt;
 &lt;Run FontWeight="Bold"&gt;example searches&lt;/Run&gt;
