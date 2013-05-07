@@ -158,6 +158,11 @@ namespace NoppaClient
         // This code will not execute when the application is deactivated
         private void Application_Closing(object sender, ClosingEventArgs e)
         {
+            SavePersistantData();
+        }
+
+        public static void SavePersistantData()
+        {
             // Catch all exceptions. The application can do without persisting cache data
             try
             {
@@ -186,7 +191,7 @@ namespace NoppaClient
             }
             catch
             {
-                System.Diagnostics.Debug.WriteLine("Application_Closing: Error accessing the cache file in the IsolatedStorage");
+                System.Diagnostics.Debug.WriteLine("Error while saving persistant data: Error accessing the IsolatedStorage");
             }
         }
 
