@@ -87,7 +87,7 @@ namespace NoppaClient.ViewModels
 
     public class MainViewModel : BindableBase
     {
-        private ObservableCollection<EventGroup> _events;
+        private ObservableCollection<EventGroup> _events = new ObservableCollection<EventGroup>();
         public ObservableCollection<EventGroup> Events
         {
             get { return _events; }
@@ -104,7 +104,7 @@ namespace NoppaClient.ViewModels
             private set { SetProperty(ref _news, value); }
         }
 
-        private ObservableCollection<DepartmentGroup> _departments;
+        private ObservableCollection<DepartmentGroup> _departments = new ObservableCollection<DepartmentGroup>();
         public ObservableCollection<DepartmentGroup> Departments 
         {
             get { return _departments; }

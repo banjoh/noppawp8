@@ -42,7 +42,7 @@
         <Style TargetType="Button">
             <Setter Property="Background" Value="#1B66C9"/>
             <Setter Property="BorderBrush" Value="#1B66C9"/>
-            <Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
             <Setter Property="BorderThickness" Value="{StaticResource PhoneBorderThickness}"/>
             <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiBold}"/>
             <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMediumLarge}"/>
