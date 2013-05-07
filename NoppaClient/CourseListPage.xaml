@@ -46,7 +46,7 @@
               Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=invert}">
             <Grid Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=invert}">
                 <TextBlock
-                    Text="{Binding NoDepartmentCoursesTitle, Source={StaticResource LocalizedStrings}}"
+                    Text="{Binding Path=LocalizedResources.NoDepartmentCoursesTitle, Source={StaticResource LocalizedStrings}}"
                     Visibility="{Binding IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}"/>
             </Grid>
         </Grid>

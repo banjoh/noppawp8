@@ -45,12 +45,13 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
           
+            <!--
             <toolkit:ListPicker
                 Grid.Row="0"
                 Header="{Binding Path=LocalizedResources.LanguageTitle, Source={StaticResource LocalizedStrings}}"
                 ItemsSource="{Binding Languages}"
                 SelectedItem="{Binding Language, Mode=TwoWay}" />
-            
+            -->
             <toolkit:ToggleSwitch
                 Grid.Row="1"
                 Name="updateTile"
