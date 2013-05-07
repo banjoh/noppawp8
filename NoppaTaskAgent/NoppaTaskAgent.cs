@@ -139,7 +139,7 @@ namespace NoppaTaskAgent
                     {
                         Count = count,
                         // TODO: Adjust length of the text
-                        WideContent1 = news.Title.Substring(0, Math.Min(news.Title.Length, 33)),
+                        WideContent1 = news.Title.Substring(0, Math.Min(news.Title.Length, 26)),
                         WideContent2 = news.Content.Substring(0, Math.Min(news.Content.Length, 33)),
                         WideContent3 = news.Date.ToShortDateString() + " " + news.Date.ToShortTimeString()
                     };

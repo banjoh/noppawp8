@@ -264,4 +264,7 @@ Du kan söka enligt kursens namn, en del av kursens namn, kursens kod eller en d
   <data name="WednesdayTitle" xml:space="preserve">
     <value>onsdag</value>
   </data>
+  <data name="ClearCache" xml:space="preserve">
+    <value>töm cachen</value>
+  </data>
 </root>

@@ -387,4 +387,7 @@ Voit hake kurssinimellä, kurrsinimen osalla, kurssikoodilla tai kurssikoodin os
   <data name="NoSearchResultsTitle" xml:space="preserve">
     <value>ei tuloksia</value>
   </data>
+  <data name="ClearCache" xml:space="preserve">
+    <value>tyhjennä välimuisti</value>
+  </data>
 </root>
