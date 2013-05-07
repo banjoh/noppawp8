@@ -27,7 +27,7 @@ namespace NoppaClient.ViewModels
             Index = 2;
         }
 
-        public async Task LoadDataAsync(string id)
+        public override async Task<CourseContentViewModel> LoadDataAsync(string id)
         {
             List<CourseNews> news = await NoppaAPI.GetCourseNews(id);
             if (news != null)
@@ -43,6 +43,8 @@ namespace NoppaClient.ViewModels
                     NotifyPropertyChanged("CurrentNewsIndex");
                 }
             }
+
+            return this;
         }
     }
 }

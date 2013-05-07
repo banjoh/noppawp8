@@ -30,7 +30,7 @@ namespace NoppaClient.ViewModels
             Index = 5;
         }
 
-        public async Task LoadDataAsync(string id)
+        public override async Task<CourseContentViewModel> LoadDataAsync(string id)
         {
             Task<List<CourseExercise>> exercisesTask = NoppaAPI.GetCourseExercises(id);
             Task<List<CourseExerciseMaterial>> materialTask = NoppaAPI.GetCourseExerciseMaterial(id);
@@ -59,6 +59,8 @@ namespace NoppaClient.ViewModels
             HasExercises = exercises != null && exercises.Count > 0;
             HasExerciseMaterial = exerciseMaterial != null && exerciseMaterial.Count > 0;
             IsEmpty = !HasExercises && !HasExerciseMaterial;
+
+            return this;
         }
     }
 }

@@ -11,7 +11,7 @@ namespace NoppaClient.ViewModels
      * for instance Overview, Exercises and Lectures. Each of these pages can have
      * some additional text above and below the page.
      */
-    public class CourseContentViewModel : BindableBase
+    public abstract class CourseContentViewModel : BindableBase
     {
         // Title of the "sub-page"
         private string _title = "";
@@ -30,5 +30,7 @@ namespace NoppaClient.ViewModels
 
         private string _bottomText = "";
         public string BottomText { get { return _bottomText; } protected set { SetProperty(ref _bottomText, value); } }
+
+        public abstract Task<CourseContentViewModel> LoadDataAsync(string code);
     }
 }

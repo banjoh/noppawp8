@@ -1,11 +1,9 @@
-﻿using NoppaLib.DataModel;
+﻿using NoppaClient.Resources;
 using NoppaLib;
-using NoppaClient.Resources;
+using NoppaLib.DataModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.System;
@@ -169,68 +167,36 @@ namespace NoppaClient.ViewModels
             _toggleSecondaryTileCommand.NotifyCanExecuteChanged();
             UpdateToggleCommandText();
 
-            var tasks = new List<Task<CourseContentViewModel>>();
+            List<CourseContentViewModel> viewmodels = new List<CourseContentViewModel>()
+            {
+                new LecturesViewModel(),
+                new ExercisesViewModel(),
+                new ResultsViewModel(),
+                new AssignmentsViewModel(),
+                new EventsViewModel(navigationController)
+            };
 
-            /* Load Overview (already in the contents) */
-            var loadOverViewTask = OverviewModel.LoadDataAsync(_course);
+            List<Task<CourseContentViewModel>> tasks = new List<Task<CourseContentViewModel>>();
 
-            /* Load News (already in the contents) */
-            var loadNewsTask = NewsModel.LoadDataAsync(Code);
 
-            /* Load Lectures */
-            tasks.Add(Task.Run(async delegate()
-                {
-                    LecturesViewModel model = new LecturesViewModel();
-                    await model.LoadDataAsync(Code);
-                    return model as CourseContentViewModel;
-                })
+            await Task.WhenAll(
+                /* Load Overview (already in the contents) */
+                OverviewModel.LoadDataAsync(Code),
+                /* Load News (already in the contents) */
+                NewsModel.LoadDataAsync(Code)
             );
 
-            /* Load Exercises */
-            tasks.Add(Task.Run(async delegate() 
-                {
-                    ExercisesViewModel model = new ExercisesViewModel();
-                    await model.LoadDataAsync(Code);
-                    return model as CourseContentViewModel;
-                })
-            );
 
-            /* Load Results */
-            tasks.Add(Task.Run(async delegate() 
-                {
-                    ResultsViewModel model = new ResultsViewModel();
-                    await model.LoadDataAsync(Code);
-                    return model as CourseContentViewModel;
-                })
-            );
-
-            /* Load Assignments */
-            tasks.Add(Task.Run(async delegate() 
-                {
-                    AssignmentsViewModel model = new AssignmentsViewModel();
-                    await model.LoadDataAsync(Code);
-                    return model as CourseContentViewModel;
-                })
-            );
-
-            /* Load Events */
-            tasks.Add(Task.Run(async delegate()
-                {
-                    EventsViewModel model = new EventsViewModel(navigationController);
-                    await model.LoadDataAsync(Code);
-                    return model as CourseContentViewModel;
-                })
-            );
-
-            await Task.WhenAll(loadNewsTask, loadOverViewTask);
+            foreach (var vm in viewmodels)
+                tasks.Add(vm.LoadDataAsync(Code));
 
             /* Add items in the order they are finished. */
             while (tasks.Count > 0)
             {
                 var task = await Task.WhenAny(tasks);
                 tasks.Remove(task);
-
                 var content = await task;
+
                 if (!content.IsEmpty)
                 {
                     int index = _contents.Count;

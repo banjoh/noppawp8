@@ -42,9 +42,10 @@ namespace NoppaClient.ViewModels
             }
         }
 
-        public async Task LoadDataAsync(Course course)
+        public override async Task<CourseContentViewModel> LoadDataAsync(string id)
         {
-            CourseOverview overview = await NoppaAPI.GetCourseOverview(course.Id);
+            Course course = await NoppaAPI.GetCourse(id);
+            CourseOverview overview = await NoppaAPI.GetCourseOverview(id);
 
             if (overview != null)
             {
@@ -70,6 +71,8 @@ namespace NoppaClient.ViewModels
 
                 OodiUrl = overview.OodiUrl;
             }
+
+            return this;
         }
     }
 }

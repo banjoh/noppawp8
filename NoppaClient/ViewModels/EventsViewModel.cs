@@ -26,7 +26,7 @@ namespace NoppaClient.ViewModels
             Index = 8;
         }
 
-        public async Task LoadDataAsync(string id)
+        public override async Task<CourseContentViewModel> LoadDataAsync(string id)
         {
             List<CourseEvent> events = await NoppaAPI.GetCourseEvents(id);
             if (events != null)
@@ -34,6 +34,8 @@ namespace NoppaClient.ViewModels
                 Events = EventGroup.CreateEventGroups(events);
             }
             IsEmpty = events == null || events.Count == 0;
+
+            return this;
         }
     }
 }

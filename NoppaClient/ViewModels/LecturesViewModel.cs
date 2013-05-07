@@ -21,7 +21,7 @@ namespace NoppaClient.ViewModels
             Index = 4;
         }
 
-        public async Task LoadDataAsync(string id)
+        public override async Task<CourseContentViewModel> LoadDataAsync(string id)
         {
             List<CourseLecture> lectures = await NoppaAPI.GetCourseLectures(id);
             if (lectures != null)
@@ -32,6 +32,8 @@ namespace NoppaClient.ViewModels
                 }
             }
             IsEmpty = lectures == null || lectures.Count == 0;
+
+            return this;
         }
     }
 }
