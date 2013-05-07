@@ -90,7 +90,7 @@ namespace NoppaClient.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to add course tile.
+        ///   Looks up a localized string similar to pin course tile.
         /// </summary>
         public static string AddCourseTileLabel {
             get {
@@ -603,7 +603,7 @@ namespace NoppaClient.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to pin.
+        ///   Looks up a localized string similar to follow.
         /// </summary>
         public static string PinCourseTitle {
             get {
@@ -612,7 +612,7 @@ namespace NoppaClient.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to remove course tile.
+        ///   Looks up a localized string similar to unpin course tile.
         /// </summary>
         public static string RemoveCourseTileLabel {
             get {
@@ -778,7 +778,7 @@ namespace NoppaClient.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to unpin.
+        ///   Looks up a localized string similar to unfollow.
         /// </summary>
         public static string UnpinCourseTitle {
             get {

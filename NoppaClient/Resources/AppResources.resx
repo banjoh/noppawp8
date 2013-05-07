@@ -172,19 +172,19 @@
     <value>automatically update primary tile</value>
   </data>
   <data name="AddCourseTileLabel" xml:space="preserve">
-    <value>add course tile</value>
+    <value>pin course tile</value>
   </data>
   <data name="RemoveCourseTileLabel" xml:space="preserve">
-    <value>remove course tile</value>
+    <value>unpin course tile</value>
   </data>
   <data name="PinCourseTitle" xml:space="preserve">
-    <value>pin</value>
+    <value>follow</value>
   </data>
   <data name="SearchTitle" xml:space="preserve">
     <value>search</value>
   </data>
   <data name="UnpinCourseTitle" xml:space="preserve">
-    <value>unpin</value>
+    <value>unfollow</value>
   </data>
   <data name="AboutTextXaml" xml:space="preserve">
     <value>&lt;Section xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"&gt;
