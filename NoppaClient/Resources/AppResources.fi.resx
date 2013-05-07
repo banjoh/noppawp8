@@ -206,19 +206,19 @@ Aura Palmgren, Kari Palenius, Evans Mungai, Vesa Eloranta ja Christoffer Ventus.
   <data name="SearchHintTextXaml" xml:space="preserve">
     <value>&lt;Section xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"&gt;
 &lt;Paragraph&gt;
-&lt;Run FontWeight="Bold"&gt;search tips&lt;/Run&gt;
+&lt;Run FontWeight="Bold"&gt;hakuvinkit&lt;/Run&gt;
 &lt;/Paragraph&gt;
 &lt;Paragraph&gt;
 Voit hake kurssinimellä, kurrsinimen osalla, kurssikoodilla tai kurssikoodin osalla.
 &lt;/Paragraph&gt;
 &lt;Paragraph&gt;
-&lt;Run FontWeight="Bold"&gt;example searches&lt;/Run&gt;
+&lt;Run FontWeight="Bold"&gt;hakuesimerkkejä&lt;/Run&gt;
 &lt;/Paragraph&gt;
 &lt;Paragraph&gt;&amp;#9679; TU-53.1145&lt;/Paragraph&gt;
 &lt;Paragraph&gt;&amp;#9679; TU-53.1&lt;/Paragraph&gt;
 &lt;Paragraph&gt;&amp;#9679; TU-53&lt;/Paragraph&gt;
-&lt;Paragraph&gt;&amp;#9679; Leadership in product development organizations&lt;/Paragraph&gt;
-&lt;Paragraph&gt;&amp;#9679; Lead&lt;/Paragraph&gt;
+&lt;Paragraph&gt;&amp;#9679; Johtaminen tuotekehitysorganisaatiossa&lt;/Paragraph&gt;
+&lt;Paragraph&gt;&amp;#9679; Johtam&lt;/Paragraph&gt;
 &lt;/Section&gt;</value>
     <comment>Try to keep the same formatting if possible. The outermost tag has to have the xmlns property set, or else the Xaml parser will not accept it.</comment>
   </data>

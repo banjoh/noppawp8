@@ -193,10 +193,9 @@ Noppa client for Windows Phone 8.
 &lt;LineBreak/&gt;
 &lt;/Paragraph&gt;
 &lt;Paragraph&gt;
-Developed during the spring of 2013 as a project for the
-course &lt;Run FontStyle="Italic"&gt;T-110.5130 Mobile Systems Programming&lt;/Run&gt; at 
-&lt;Hyperlink NavigateUri="http://www.aalto.fi/" TargetName="_blank"&gt;Aalto university&lt;/Hyperlink&gt; 
-by Aura Palmgren, Kari Palenius, Evans Mungai, Vesa Eloranta and Christoffer Ventus.
+Utvecklad på våren 2013 som ett projekt för kursen &lt;Run FontStyle="Italic"&gt;T-110.5130 Mobile Systems Programming&lt;/Run&gt; på 
+&lt;Hyperlink NavigateUri="http://www.aalto.fi/" TargetName="_blank"&gt;Aalto universitetet&lt;/Hyperlink&gt; 
+av Aura Palmgren, Kari Palenius, Evans Mungai, Vesa Eloranta and Christoffer Ventus.
 &lt;/Paragraph&gt;
 &lt;/Section&gt;</value>
     <comment>Try to keep the same formatting if possible. The outermost tag has to have the xmlns property set, or else the Xaml parser will not accept it.</comment>
@@ -207,19 +206,19 @@ by Aura Palmgren, Kari Palenius, Evans Mungai, Vesa Eloranta and Christoffer Ven
   <data name="SearchHintTextXaml" xml:space="preserve">
     <value>&lt;Section xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"&gt;
 &lt;Paragraph&gt;
-&lt;Run FontWeight="Bold"&gt;search tips&lt;/Run&gt;
+&lt;Run FontWeight="Bold"&gt;söktips&lt;/Run&gt;
 &lt;/Paragraph&gt;
 &lt;Paragraph&gt;
-You can search by course name, part of the course name, course code or part of the course code.
+Du kan söka enligt kursens namn, en del av kursens namn, kursens kod eller en del av kursens kod. 
 &lt;/Paragraph&gt;
 &lt;Paragraph&gt;
-&lt;Run FontWeight="Bold"&gt;example searches&lt;/Run&gt;
+&lt;Run FontWeight="Bold"&gt;sökexempel&lt;/Run&gt;
 &lt;/Paragraph&gt;
 &lt;Paragraph&gt;&amp;#9679; TU-53.1145&lt;/Paragraph&gt;
 &lt;Paragraph&gt;&amp;#9679; TU-53.1&lt;/Paragraph&gt;
 &lt;Paragraph&gt;&amp;#9679; TU-53&lt;/Paragraph&gt;
-&lt;Paragraph&gt;&amp;#9679; Leadership in product development organizations&lt;/Paragraph&gt;
-&lt;Paragraph&gt;&amp;#9679; Lead&lt;/Paragraph&gt;
+&lt;Paragraph&gt;&amp;#9679; Ledarskap i organisationer&lt;/Paragraph&gt;
+&lt;Paragraph&gt;&amp;#9679; Ledarsk&lt;/Paragraph&gt;
 &lt;/Section&gt;</value>
     <comment>Try to keep the same formatting if possible. The outermost tag has to have the xmlns property set, or else the Xaml parser will not accept it.</comment>
   </data>
