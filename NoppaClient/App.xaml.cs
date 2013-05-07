@@ -302,7 +302,7 @@ namespace NoppaClient
                 //
                 // If a compiler error is hit then ResourceLanguage is missing from
                 // the resource file.
-                ChangeUILanguage(Settings.Language);
+                //ChangeUILanguage(Settings.Language);
                 RootFrame.Language = XmlLanguage.GetLanguage(AppResources.ResourceLanguage);
 
                 // Set the FlowDirection of all elements under the root frame based
