@@ -138,16 +138,16 @@
     <value>departments</value>
   </data>
   <data name="DepartmentTitle" xml:space="preserve">
-    <value>Department</value>
+    <value>department</value>
   </data>
   <data name="MyCoursesTitle" xml:space="preserve">
     <value>my courses</value>
   </data>
   <data name="OrganizationTitle" xml:space="preserve">
-    <value>Organization</value>
+    <value>organization</value>
   </data>
   <data name="SearchResultsPageTitle" xml:space="preserve">
-    <value>Course results for “{0}”</value>
+    <value>course results for “{0}”</value>
   </data>
   <data name="EnglishLanguage" xml:space="preserve">
     <value>english</value>
@@ -169,7 +169,7 @@
     <comment>This probably shouldn't be translated</comment>
   </data>
   <data name="UpdateTileLocalSettings" xml:space="preserve">
-    <value>Automatically update primary tile</value>
+    <value>automatically update primary tile</value>
   </data>
   <data name="AddCourseTileLabel" xml:space="preserve">
     <value>add course tile</value>
