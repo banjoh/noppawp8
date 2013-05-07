@@ -233,7 +233,6 @@ namespace NoppaClient.ViewModels
                 }
                 else
                 {
-                    App.SavePersistantData();
                     NoppaTiles.CreateOrUpdate(_course);
                 }
                 UpdateToggleCommandText();
