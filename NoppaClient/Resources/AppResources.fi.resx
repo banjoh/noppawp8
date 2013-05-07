@@ -169,7 +169,7 @@
     <comment>This probably shouldn't be translated</comment>
   </data>
   <data name="UpdateTileLocalSettings" xml:space="preserve">
-    <value>päivitä ohjelmatiiltä automaattisesti</value>
+    <value>päivitä tiiliä automaattisesti</value>
   </data>
   <data name="AddCourseTileLabel" xml:space="preserve">
     <value>lisää kurssitiili</value>

@@ -169,7 +169,7 @@
     <comment>This probably shouldn't be translated</comment>
   </data>
   <data name="UpdateTileLocalSettings" xml:space="preserve">
-    <value>automatically update primary tile</value>
+    <value>automatically update tiles</value>
   </data>
   <data name="AddCourseTileLabel" xml:space="preserve">
     <value>pin course tile</value>

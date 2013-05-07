@@ -787,7 +787,7 @@ namespace NoppaClient.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to automatically update primary tile.
+        ///   Looks up a localized string similar to automatically update tiles.
         /// </summary>
         public static string UpdateTileLocalSettings {
             get {

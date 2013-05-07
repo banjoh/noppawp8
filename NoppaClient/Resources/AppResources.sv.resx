@@ -169,7 +169,7 @@
     <comment>This probably shouldn't be translated</comment>
   </data>
   <data name="UpdateTileLocalSettings" xml:space="preserve">
-    <value>uppdatera huvudsakliga panelen automatiskt</value>
+    <value>uppdatera panelerna automatiskt</value>
   </data>
   <data name="AddCourseTileLabel" xml:space="preserve">
     <value>tillägg kurspanelens</value>
