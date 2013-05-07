@@ -364,7 +364,7 @@
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" Text="{Binding Deadline}" Style="{StaticResource NoppaTextSmallStyle}" Foreground="{StaticResource NoppaPrimaryColorBrush}" />
                 <TextBlock Grid.Row="1" Text="{Binding Title}"  Style="{StaticResource NoppaTextLargeStyle}"/>
-                <TextBlock Grid.Row="2" Text="{Binding Content}" Style="{StaticResource NoppaTextLargeStyle}"
+                <TextBlock Grid.Row="2" Text="{Binding Content}" Style="{StaticResource PhoneTextNormalStyle}" TextWrapping="Wrap"
                                Visibility="{Binding Content, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
                 <ItemsControl Grid.Row="3" ItemsSource="{Binding Material}">
                     <ItemsControl.ItemTemplate>
@@ -389,7 +389,7 @@
                                        Style="{StaticResource PhoneTextNormalStyle}"
                                        Visibility="{Binding Title, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
                                 <TextBlock Text="{Binding Content}"  
-                                       Style="{StaticResource NoppaTextLargeStyle}" 
+                                       Style="{StaticResource PhoneTextNormalStyle}" TextWrapping="Wrap"
                                        Visibility="{Binding Content, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
                             </StackPanel>
                         </DataTemplate>
