@@ -85,6 +85,7 @@
   <ItemGroup>
     <Compile Include="APIConfig.cs" />
     <Compile Include="Cache.cs" />
+    <Compile Include="NoppaAPI.cs" />
     <Compile Include="NoppaTiles.cs" />
     <Compile Include="DataModel\Course.cs" />
     <Compile Include="DataModel\DataModel.cs" />

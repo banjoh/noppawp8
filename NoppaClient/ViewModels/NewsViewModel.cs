@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using NoppaLib;
+
 namespace NoppaClient.ViewModels
 {
     public class NewsViewModel : CourseContentViewModel

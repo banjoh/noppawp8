@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Phone.Testing;
+
+using NoppaLib;
 using NoppaLib.DataModel;
 using NoppaClient;
 

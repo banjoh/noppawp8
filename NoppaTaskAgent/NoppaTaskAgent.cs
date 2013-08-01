@@ -55,7 +55,7 @@ namespace NoppaTaskAgent
                     Dictionary<string, Task<List<CourseNews>>> asyncOps = new Dictionary<string, Task<List<CourseNews>>>();
                     foreach (string code in codes)
                     {
-                        asyncOps.Add(code, GetCourseNewsAsync(code));
+                        asyncOps.Add(code, NoppaAPI.GetCourseNews(code));
                     }
                     
                     Task.WaitAll(asyncOps.Values.ToArray(), new TimeSpan(0, 0, 20));   // Wait for 20 seconds max. Might throw a timeout exception
@@ -117,11 +117,6 @@ namespace NoppaTaskAgent
             }
 
             return t.Result;
-        }
-
-        private Task<List<CourseNews>> GetCourseNewsAsync(string course_id)
-        {
-            return NoppaImpl.GetInstance().GetObject<List<CourseNews>>(Cache.PolicyLevel.BypassCache, "/courses/{0}/news?key={1}", course_id, APIConfigHolder.Key);
         }
 
         private void UpdatePrimaryTile(CourseNews news, int count)

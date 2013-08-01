@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
+using NoppaLib;
+
 namespace NoppaClient.ViewModels
 {
     public class EventViewModel : BindableBase

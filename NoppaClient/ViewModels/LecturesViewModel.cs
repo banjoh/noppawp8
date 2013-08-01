@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using System.Collections.ObjectModel;
+using NoppaLib;
 using NoppaLib.DataModel;
 using NoppaClient.Resources;
 

@@ -11,9 +11,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 using NoppaLib.DataModel;
-using NoppaLib;
 
-namespace NoppaClient
+namespace NoppaLib
 {
     public class NoppaAPI
     {

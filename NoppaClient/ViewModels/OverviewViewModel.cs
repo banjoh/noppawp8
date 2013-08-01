@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.System;
 
+using NoppaLib;
+
 namespace NoppaClient.ViewModels
 {
     public class OverviewItemViewModel
