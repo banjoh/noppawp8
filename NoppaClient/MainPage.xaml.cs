@@ -25,7 +25,9 @@ namespace NoppaClient
         {
             InitializeComponent();
 
-            ReloadDataAsync();
+            _viewModel = new MainViewModel(new PhoneNavigationController());
+            DataContext = _viewModel;
+
             _loadedLanguage = App.Settings.Language;
 
             var searchButton = (ApplicationBarIconButton)ApplicationBar.Buttons[0];
@@ -39,13 +41,9 @@ namespace NoppaClient
             AppBar.BindCommand(searchButton, _viewModel.ShowSearchCommand);
             AppBar.BindCommand(settingsMenu, _viewModel.ShowSettingsCommand);
             AppBar.BindCommand(aboutMenu, _viewModel.ShowAboutCommand);
-        }
 
-        private async void ReloadDataAsync()
-        {
-            _viewModel = new MainViewModel(new PhoneNavigationController());
-            DataContext = _viewModel;
-            await _viewModel.LoadDataAsync(App.PinnedCourses);
+            /* Load the first time */
+            _viewModel.LoadDataAsync();
         }
 
         // Load data for the ViewModel Items
@@ -55,7 +53,8 @@ namespace NoppaClient
             {
                 if (_loadedLanguage != App.Settings.Language)
                 {
-                    ReloadDataAsync();
+                    /* Reload because language changed */
+                    _viewModel.LoadDataAsync();
                     _loadedLanguage = App.Settings.Language;
                 }              
             }

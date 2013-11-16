@@ -120,44 +120,44 @@
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
-    <Compile Include="ViewModels\AdditionalPageViewModel.cs" />
-    <Compile Include="ViewModels\AssignmentsViewModel.cs" />
+    <Compile Include="ViewModels\CoursePage\AdditionalPageViewModel.cs" />
+    <Compile Include="ViewModels\CoursePage\AssignmentsViewModel.cs" />
     <Compile Include="ViewModels\BindableBase.cs" />
     <Compile Include="SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\EventsViewModel.cs" />
-    <Compile Include="ViewModels\CourseContentViewModel.cs" />
+    <Compile Include="ViewModels\CoursePage\EventsViewModel.cs" />
+    <Compile Include="ViewModels\CoursePage\CourseContentViewModel.cs" />
     <Compile Include="ViewModels\CourseListViewModel.cs" />
     <Compile Include="ViewModels\CourseViewModel.cs" />
-    <Compile Include="ViewModels\DelegateCommand.cs" />
+    <Compile Include="View\Commands\DelegateCommand.cs" />
     <Compile Include="ViewModels\DepartmentGroup.cs" />
     <Compile Include="ViewModels\EventGroup.cs" />
     <Compile Include="ViewModels\EventViewModel.cs" />
-    <Compile Include="ViewModels\ExercisesViewModel.cs" />
+    <Compile Include="ViewModels\CoursePage\ExercisesViewModel.cs" />
     <Compile Include="ViewModels\INavigationController.cs" />
-    <Compile Include="ViewModels\LecturesViewModel.cs" />
+    <Compile Include="ViewModels\CoursePage\LecturesViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ControllerUtil.cs" />
-    <Compile Include="ViewModels\NewsViewModel.cs" />
-    <Compile Include="ViewModels\OverviewViewModel.cs" />
-    <Compile Include="ViewModels\ResultsViewModel.cs" />
+    <Compile Include="ViewModels\CoursePage\NewsViewModel.cs" />
+    <Compile Include="ViewModels\CoursePage\OverviewViewModel.cs" />
+    <Compile Include="ViewModels\CoursePage\ResultsViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="View\AppBar.cs" />
-    <Compile Include="View\BooleanToVisibilityConverter.cs" />
-    <Compile Include="View\ClearCacheCommand.cs" />
-    <Compile Include="View\DateTimeToWeekdayConverter.cs" />
-    <Compile Include="View\EmptyStringToVisibilityConverter.cs" />
-    <Compile Include="View\EnumerableIndexConverter.cs" />
+    <Compile Include="View\Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="View\Commands\ClearCacheCommand.cs" />
+    <Compile Include="View\Converters\DateTimeToWeekdayConverter.cs" />
+    <Compile Include="View\Converters\EmptyStringToVisibilityConverter.cs" />
+    <Compile Include="View\Converters\EnumerableIndexConverter.cs" />
     <Compile Include="View\DataTemplateSelector.cs" />
-    <Compile Include="View\DesignModeChecker.cs" />
-    <Compile Include="View\EventTypeConverter.cs" />
-    <Compile Include="View\ItemClickCommand.cs" />
-    <Compile Include="View\OpenBrowserCommand.cs" />
-    <Compile Include="View\SearchCommand.cs" />
-    <Compile Include="View\StringToResourceConverter.cs" />
-    <Compile Include="View\StringToUpperConverter.cs" />
-    <Compile Include="View\TypeNameToDataTemplateConverter.cs" />
+    <Compile Include="View\Commands\DesignModeChecker.cs" />
+    <Compile Include="View\Converters\EventTypeConverter.cs" />
+    <Compile Include="View\Commands\ItemClickCommand.cs" />
+    <Compile Include="View\Commands\OpenBrowserCommand.cs" />
+    <Compile Include="View\Commands\SearchCommand.cs" />
+    <Compile Include="View\Converters\StringToResourceConverter.cs" />
+    <Compile Include="View\Converters\StringToUpperConverter.cs" />
+    <Compile Include="View\Converters\TypeNameToDataTemplateConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -297,6 +297,7 @@
       <Name>NoppaTaskAgent</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

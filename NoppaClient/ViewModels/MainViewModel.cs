@@ -146,26 +146,27 @@ namespace NoppaClient.ViewModels
         {
             _myCourses = new CourseListViewModel(navigationController);
 
-            DepartmentActivatedCommand = ControllerUtil.MakeShowDepartmentCommand(navigationController);
-            ShowSettingsCommand = ControllerUtil.MakeShowSettingsCommand(navigationController);
-            ShowAboutCommand = ControllerUtil.MakeShowAboutCommand(navigationController);
-            ShowSearchCommand = ControllerUtil.MakeShowCourseSearchCommand(navigationController);
-            ActivateCourseCommand = ControllerUtil.MakeShowCourseCommand(navigationController);
-            EventActivatedCommand = ControllerUtil.MakeShowCourseEventCommand(navigationController);
-            NewsActivatedCommand = ControllerUtil.MakeShowCourseNewsCommand(navigationController);
+            DepartmentActivatedCommand  = ControllerUtil.MakeShowDepartmentCommand(navigationController);
+            ShowSettingsCommand         = ControllerUtil.MakeShowSettingsCommand(navigationController);
+            ShowAboutCommand            = ControllerUtil.MakeShowAboutCommand(navigationController);
+            ShowSearchCommand           = ControllerUtil.MakeShowCourseSearchCommand(navigationController);
+            ActivateCourseCommand       = ControllerUtil.MakeShowCourseCommand(navigationController);
+            EventActivatedCommand       = ControllerUtil.MakeShowCourseEventCommand(navigationController);
+            NewsActivatedCommand        = ControllerUtil.MakeShowCourseNewsCommand(navigationController);
          }
 
         /// <summary>
         /// Creates and adds a few ItemViewModel objects into the Items collection.
         /// </summary>
-        public async Task LoadDataAsync(PinnedCourses pinnedCourses)
+        public async void LoadDataAsync()
         {
             System.Diagnostics.Debug.WriteLine("Start loading");
             IsLoading = true;
-            
+
+            var pinnedCourses = App.PinnedCourses;
+
             try
             {
-                UpdateMyCoursesAsync(pinnedCourses);
                 LoadDepartmentGroupsAsync();
                 
                 var courses = await pinnedCourses.GetCodesAsync();
@@ -229,20 +230,20 @@ namespace NoppaClient.ViewModels
                 foreach (var courseId in courses)
                 {
                     newsTasks.Add(Task.Run(async () =>
-                        {
-                            var courseTask = NoppaAPI.GetCourse(courseId);
-                            var newsTask = NoppaAPI.GetCourseNews(courseId);
-                            await Task.WhenAll(newsTask, courseTask);
+                    {
+                        var courseTask = NoppaAPI.GetCourse(courseId);
+                        var newsTask = NoppaAPI.GetCourseNews(courseId);
+                        await Task.WhenAll(newsTask, courseTask);
 
-                            var newsList = new List<CourseNewsViewModel>();
-                            var result = newsTask.Result;
-                            var course = courseTask.Result;
-                            for (int i = 0; i < result.Count; i++)
-                            {
-                                newsList.Add(new CourseNewsViewModel { News = result[i], Course = course, Index = i });
-                            }
-                            return newsList;
-                        }));
+                        var newsList = new List<CourseNewsViewModel>();
+                        var result = await newsTask;
+                        var course = await courseTask;
+                        for (int i = 0; i < result.Count; i++)
+                        {
+                            newsList.Add(new CourseNewsViewModel { News = result[i], Course = course, Index = i });
+                        }
+                        return newsList;
+                    }));
 
                     eventTasks.Add(NoppaAPI.GetCourseEvents(courseId));
                 }
@@ -253,7 +254,7 @@ namespace NoppaClient.ViewModels
                     {
                         var newsTask = await Task.WhenAny(newsTasks);
                         newsTasks.Remove(newsTask);
-                        var newsItems = newsTask.Result;
+                        var newsItems = await newsTask;
 
                         if (newsItems != null)
                             /* Each add now also sorts the list and updates UI. If there are LOTS of
