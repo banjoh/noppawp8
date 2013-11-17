@@ -38,7 +38,7 @@ namespace NoppaTaskAgent
         }
 
         // This method is called when a periodic or resource intensive task is invoked by the system
-        protected override void OnInvoke(ScheduledTask task)
+        protected override async void OnInvoke(ScheduledTask task)
         {
             System.Diagnostics.Debug.WriteLine("Noppa background agent started");
 
@@ -47,15 +47,15 @@ namespace NoppaTaskAgent
                 // Clear all tiles first
                 NoppaTiles.ClearAllTiles();
 
-                Collection<string> codes = GetCourseCodes();
+                List<Course> courses = await GetCourses();
                 
-                if (codes.Count > 0)
+                if (courses.Count > 0)
                 {
                     // Update tiles with data
                     Dictionary<string, Task<List<CourseNews>>> asyncOps = new Dictionary<string, Task<List<CourseNews>>>();
-                    foreach (string code in codes)
+                    foreach (var course in courses)
                     {
-                        asyncOps.Add(code, NoppaAPI.GetCourseNews(code));
+                        asyncOps.Add(course.Id, NoppaAPI.GetCourseNews(course.Id));
                     }
                     
                     Task.WaitAll(asyncOps.Values.ToArray(), new TimeSpan(0, 0, 20));   // Wait for 20 seconds max. Might throw a timeout exception
@@ -100,23 +100,25 @@ namespace NoppaTaskAgent
             NotifyComplete();
         }
 
-        private Collection<string> GetCourseCodes()
+        private async Task<List<Course>> GetCourses()
         {
-            Task<ObservableCollection<string>> t = new PinnedCourses().GetCodesAsync();
-            t.Wait();
+            var pinnedCourses = new PinnedCourses();
 
-            ObservableCollection<string> codes = t.Result;
+            List<Course> courses = await pinnedCourses.GetCoursesAsync();
 
             foreach (ShellTile tile in ShellTile.ActiveTiles)
             {
                 string code = NoppaTiles.GetCourseCode(tile.NavigationUri);
-                if (code != null && codes.Contains(code) == false)
+
+                var match = courses.Where(course => course.Id == code).ToList();
+                if (match.Count == 0)
                 {
-                    codes.Add(code);
+                    var newCourse = await NoppaAPI.GetCourse(code);
+                    pinnedCourses.Add(newCourse); // should add in courses also, as courses is reference to PinnedCourses._courses
                 }
             }
 
-            return t.Result;
+            return courses;
         }
 
         private void UpdatePrimaryTile(CourseNews news, int count)

@@ -160,7 +160,7 @@ namespace NoppaClient.ViewModels
             IsLoading = false;
         }
 
-        public async Task LoadDepartmentAsync(string departmentId)
+        public async void LoadDepartmentAsync(string departmentId)
         {
             IsLoading = true;
             _courses.Clear();
@@ -206,26 +206,20 @@ namespace NoppaClient.ViewModels
             IsLoading = false;
         }
 
-        public async Task LoadMyCoursesAsync(PinnedCourses pinnedCourses)
+        public async void LoadMyCoursesAsync()
         {
             IsLoading = true;
 
-            Courses.Clear();
-            var courses = await pinnedCourses.GetCodesAsync();
-
-            var tasks = new List<Task<Course>>();
-
-            foreach (string c in courses) {
-                tasks.Add(Task.Run(async () => await NoppaAPI.GetCourse(c) ));
-            }
-
-            while (tasks.Count > 0)
+            var courses = await App.PinnedCourses.GetCoursesAsync();
+            if (courses != null)
             {
-                var course = await Task.WhenAny(tasks);
-                tasks.Remove(course);
-
-                Courses.Add(await course);
+                Courses = new ObservableCollection<Course>(courses);
             }
+            else
+            {
+                Courses = new ObservableCollection<Course>();
+            }
+
             IsLoading = false;
         }
     }

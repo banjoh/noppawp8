@@ -41,9 +41,6 @@ namespace NoppaClient
             AppBar.BindCommand(searchButton, _viewModel.ShowSearchCommand);
             AppBar.BindCommand(settingsMenu, _viewModel.ShowSettingsCommand);
             AppBar.BindCommand(aboutMenu, _viewModel.ShowAboutCommand);
-
-            /* Load the first time */
-            _viewModel.LoadDataAsync();
         }
 
         // Load data for the ViewModel Items
@@ -51,12 +48,8 @@ namespace NoppaClient
         {
             try
             {
-                if (_loadedLanguage != App.Settings.Language)
-                {
-                    /* Reload because language changed */
-                    _viewModel.LoadDataAsync();
-                    _loadedLanguage = App.Settings.Language;
-                }              
+                _viewModel.LoadDataAsync();
+                _loadedLanguage = App.Settings.Language;
             }
             catch (Exception ex)
             {

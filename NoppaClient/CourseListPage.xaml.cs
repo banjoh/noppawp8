@@ -25,7 +25,7 @@ namespace NoppaClient
             InitializeComponent();
         }
 
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
@@ -44,11 +44,11 @@ namespace NoppaClient
                 {
                     case "department":
                         string id = NavigationContext.QueryString["id"];
-                        await _viewModel.LoadDepartmentAsync(id);
+                        _viewModel.LoadDepartmentAsync(id);
                         break;
 
                     default:
-                        await _viewModel.LoadMyCoursesAsync(App.PinnedCourses);
+                        _viewModel.LoadMyCoursesAsync();
                         break;
                 }
             }

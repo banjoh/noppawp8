@@ -49,7 +49,7 @@
             <StackPanel Margin="0,0,0,20">
                 <TextBlock Text="{Binding Title}" 
                            Style="{StaticResource NoppaTextLargeStyle}" />
-                <TextBlock Text="{Binding Course.LongName}" TextWrapping="Wrap"  Style="{StaticResource PhoneTextSubtleStyle}" />
+                <TextBlock Text="{Binding Course}" TextWrapping="Wrap"  Style="{StaticResource PhoneTextSubtleStyle}" />
             </StackPanel>
         </DataTemplate>
 

@@ -35,8 +35,7 @@ namespace NoppaLib
 
         public static void Update(string courseId, int newsCount)
         {
-            Course course = new Course();
-            course.Id = courseId;
+            Course course = new Course { Id = courseId };
             // TODO: Add additional information to this call to populate more interesting data
             var data = CreateTileData(course, newsCount);
 

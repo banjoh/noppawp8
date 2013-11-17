@@ -46,11 +46,10 @@ namespace NoppaClient
                 "end_date", courseEvent.EndDate));
         }
 
-        public void ShowCourseNews(CourseNewsViewModel news)
+        public void ShowCourseNews(CourseNews news)
         {
             _frame.Navigate(NoppaUtility.MakeUri("/CoursePage.xaml", 
-                "id", news.Course.Id, 
-                "news", news.Index));
+                "id", news.CourseId));
         }
 
         public void ShowCourseSearch()

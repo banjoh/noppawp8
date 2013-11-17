@@ -24,7 +24,7 @@ namespace NoppaClient.ViewModels
             _dteventDate = dteventDate;
         }
 
-        public static ObservableCollection<EventGroup> CreateEventGroups(IEnumerable<CourseEvent> items)
+        public static IEnumerable<EventGroup> CreateEventGroups(IEnumerable<CourseEvent> items)
         {
             var groups = new Dictionary<string, EventGroup>();
 
@@ -43,7 +43,7 @@ namespace NoppaClient.ViewModels
                 }
             }
 
-            return new ObservableCollection<EventGroup>(groups.Values.OrderBy(e => e.dtEventDate));
+            return groups.Values.OrderBy(e => e.dtEventDate);
         }
     }
 }

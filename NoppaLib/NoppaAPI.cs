@@ -72,59 +72,66 @@ namespace NoppaLib
 
         #region Course Content getters
 
-        public static async Task<CourseOverview> GetCourseOverview(string course_id)
+        public static Task<CourseOverview> GetCourseOverview(string course_id)
         {
-            return await NoppaImpl.GetInstance().GetObject<CourseOverview>(Cache.PolicyLevel.Short, "/courses/{0}/overview?key={1}", course_id, APIConfigHolder.Key);
+            return NoppaImpl.GetInstance().GetObject<CourseOverview>(Cache.PolicyLevel.Short, "/courses/{0}/overview?key={1}", course_id, APIConfigHolder.Key);
         }
 
-        public static async Task<CourseAdditionalPage> GetCourseAdditionalPages(string course_id)
+        public static Task<CourseAdditionalPage> GetCourseAdditionalPages(string course_id)
         {
-            return await NoppaImpl.GetInstance().GetObject<CourseAdditionalPage>(Cache.PolicyLevel.Short, "/courses/{0}/pages?key={1}", course_id, APIConfigHolder.Key);
+            return NoppaImpl.GetInstance().GetObject<CourseAdditionalPage>(Cache.PolicyLevel.Short, "/courses/{0}/pages?key={1}", course_id, APIConfigHolder.Key);
         }
 
         public static async Task<List<CourseNews>> GetCourseNews(string course_id)
         {
-            return await NoppaImpl.GetInstance().GetObject<List<CourseNews>>(Cache.PolicyLevel.BypassCache, "/courses/{0}/news?key={1}", course_id, APIConfigHolder.Key);
+            var list = await NoppaImpl.GetInstance().GetObject<List<CourseNews>>(Cache.PolicyLevel.BypassCache, "/courses/{0}/news?key={1}", course_id, APIConfigHolder.Key);
+
+            /* Idiotical hack to work around the fact that Noppa API does not
+             * include the course id in the result */
+            foreach (var news in list)
+                news.CourseId = course_id;
+
+            return list;
         }
 
-        public static async Task<List<CourseResult>> GetCourseResults(string course_id)
+        public static Task<List<CourseResult>> GetCourseResults(string course_id)
         {
-            return await NoppaImpl.GetInstance().GetObject<List<CourseResult>>(Cache.PolicyLevel.Short, "/courses/{0}/results?key={1}", course_id, APIConfigHolder.Key);
+            return NoppaImpl.GetInstance().GetObject<List<CourseResult>>(Cache.PolicyLevel.Short, "/courses/{0}/results?key={1}", course_id, APIConfigHolder.Key);
         }
 
-        public static async Task<List<CourseLecture>> GetCourseLectures(string course_id)
+        public static Task<List<CourseLecture>> GetCourseLectures(string course_id)
         {
-            return await NoppaImpl.GetInstance().GetObject<List<CourseLecture>>(Cache.PolicyLevel.Short, "/courses/{0}/lectures?key={1}", course_id, APIConfigHolder.Key);
+            return NoppaImpl.GetInstance().GetObject<List<CourseLecture>>(Cache.PolicyLevel.Short, "/courses/{0}/lectures?key={1}", course_id, APIConfigHolder.Key);
         }
 
-        public static async Task<List<CourseExercise>> GetCourseExercises(string course_id)
+        public static Task<List<CourseExercise>> GetCourseExercises(string course_id)
         {
-            return await NoppaImpl.GetInstance().GetObject<List<CourseExercise>>(Cache.PolicyLevel.Short, "/courses/{0}/exercises?key={1}", course_id, APIConfigHolder.Key);
+            return NoppaImpl.GetInstance().GetObject<List<CourseExercise>>(Cache.PolicyLevel.Short, "/courses/{0}/exercises?key={1}", course_id, APIConfigHolder.Key);
         }
 
-        public static async Task<List<CourseAssignment>> GetCourseAssignments(string course_id)
+        public static Task<List<CourseAssignment>> GetCourseAssignments(string course_id)
         {
-            return await NoppaImpl.GetInstance().GetObject<List<CourseAssignment>>(Cache.PolicyLevel.Short, "/courses/{0}/assignments?key={1}", course_id, APIConfigHolder.Key);
+            return NoppaImpl.GetInstance().GetObject<List<CourseAssignment>>(Cache.PolicyLevel.Short, "/courses/{0}/assignments?key={1}", course_id, APIConfigHolder.Key);
         }
 
-        public static async Task<List<CourseEvent>> GetCourseEvents(string course_id)
+        public static Task<List<CourseEvent>> GetCourseEvents(string course_id)
         {
-            return await NoppaImpl.GetInstance().GetObject<List<CourseEvent>>(Cache.PolicyLevel.BypassCache, "/courses/{0}/events?key={1}", course_id, APIConfigHolder.Key);
+            return NoppaImpl.GetInstance().GetObject<List<CourseEvent>>(Cache.PolicyLevel.BypassCache, "/courses/{0}/events?key={1}", course_id, APIConfigHolder.Key);
         }
 
-        public static async Task<List<CourseMaterial>> GetCourseMaterial(string course_id)
+        public static Task<List<CourseMaterial>> GetCourseMaterial(string course_id)
         {
-            return await NoppaImpl.GetInstance().GetObject<List<CourseMaterial>>(Cache.PolicyLevel.Short, "/courses/{0}/material?key={1}", course_id, APIConfigHolder.Key);
+            return NoppaImpl.GetInstance().GetObject<List<CourseMaterial>>(Cache.PolicyLevel.Short, "/courses/{0}/material?key={1}", course_id, APIConfigHolder.Key);
         }
 
-        public static async Task<List<CourseExerciseMaterial>> GetCourseExerciseMaterial(string course_id)
+        public static Task<List<CourseExerciseMaterial>> GetCourseExerciseMaterial(string course_id)
         {
-            return await NoppaImpl.GetInstance().GetObject<List<CourseExerciseMaterial>>(Cache.PolicyLevel.Short, "/courses/{0}/exercise_material?key={1}", course_id, APIConfigHolder.Key);
+            return NoppaImpl.GetInstance().GetObject<List<CourseExerciseMaterial>>(Cache.PolicyLevel.Short, "/courses/{0}/exercise_material?key={1}", course_id, APIConfigHolder.Key);
         }
 
-        public static async Task<List<CourseText>> GetCourseAdditionalTexts(string course_id)
+        public static Task<List<CourseText>> GetCourseAdditionalTexts(string course_id)
         {
-            return await NoppaImpl.GetInstance().GetObject<List<CourseText>>(Cache.PolicyLevel.Short, "/courses/{0}/texts?key={1}", course_id, APIConfigHolder.Key);
+            return NoppaImpl.GetInstance().GetObject<List<CourseText>>(Cache.PolicyLevel.Short, "/courses/{0}/texts?key={1}", course_id, APIConfigHolder.Key);
         }
 
         #endregion

@@ -1,10 +1,11 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
+using NoppaLib.DataModel;
+using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Collections.ObjectModel;
 using System.IO.IsolatedStorage;
 using System.Threading;
-using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace NoppaLib
 {
@@ -13,70 +14,60 @@ namespace NoppaLib
         public static readonly string CourseFile = "MyCourses.txt";
 
         private SemaphoreSlim _codesLock = new SemaphoreSlim(1, 1);
-        private ObservableCollection<string> _codes;
+        private List<Course> _courses;
 
-        public async Task AddAsync(string code)
+        public void Add(Course course)
         {
-            var codes = await GetCodesAsync();
-            if (!codes.Contains(code))
+            if (_courses != null)
+                _courses.Add(course);
+            else
             {
-                codes.Add(code);
+                _courses = new List<Course> { course }; 
             }
         }
 
-        public async Task RemoveAsync(string code)
+        public void Remove(Course course)
         {
-            var codes = await GetCodesAsync();
-            codes.Remove(code);
+            if (_courses != null)
+                _courses.Remove(course);
         }
 
-        public async Task<bool> ContainsAsync(string code)
+        public bool Contains(Course course)
         {
-            var codes = await GetCodesAsync();
-            return codes.Contains(code);
+            if (_courses != null)
+                return _courses.Contains(course);
+            else
+                return false;
         }
 
-        public async Task<ObservableCollection<string>> GetCodesAsync()
+        public async Task<List<Course>> GetCoursesAsync()
         {
             await _codesLock.WaitAsync();
-            if (_codes == null)
+            if (_courses == null)
             {
-                _codes = new ObservableCollection<string>();
                 await Task.Run(() =>
+                {
+                    try
                     {
-                        try
+                        using (var fileStorage = IsolatedStorageFile.GetUserStoreForApplication())
                         {
-                            using (var fileStorage = IsolatedStorageFile.GetUserStoreForApplication())
+                            if (fileStorage.FileExists(PinnedCourses.CourseFile))
                             {
-                                if (fileStorage.FileExists(PinnedCourses.CourseFile))
+                                using (var stream = new IsolatedStorageFileStream(PinnedCourses.CourseFile, FileMode.Open, FileAccess.Read, fileStorage))
                                 {
-                                    using (var stream = new IsolatedStorageFileStream(PinnedCourses.CourseFile, FileMode.Open, FileAccess.Read, fileStorage))
-                                    {
-                                        Deserialize(stream);
-                                    }
+                                    Deserialize(stream);
                                 }
                             }
                         }
-                        catch (Exception e)
-                        {
-                            System.Diagnostics.Debug.WriteLine("GetCodesAsync: Error accessing the course list file in the IsolatedStorage.\n{0}", e.StackTrace);
-                        }
-                    });  
-              /*
-#if DEBUG
-                if (_codes.Count == 0)
-                {
-                    // Add a few courses
-                    _codes.Add("t-106.4300");
-                    _codes.Add("t-110.5130");
-                    _codes.Add("mat-1.2600");
-                    _codes.Add("as-0.1103");
-                    _codes.Add("t-106.5150");
-                }
-#endif*/
+                    }
+                    catch (Exception e)
+                    {
+                        System.Diagnostics.Debug.WriteLine("GetCodesAsync: Error accessing the course list file in the IsolatedStorage.\n{0}", e.StackTrace);
+                    }
+                });  
             }
             _codesLock.Release();
-            return _codes;
+            return _courses;
         }
 
         public void Serialize(Stream s)
@@ -85,17 +76,10 @@ namespace NoppaLib
                 using (var writer = new StreamWriter(s))
                 {
                     // Save codes only if there is any
-                    if (_codes.Count > 0)
+                    if (_courses.Count > 0)
                     {
-                        string codes = "";
-
-                        foreach (string c in _codes)
-                        {
-                            codes += c + ";";
-                        }
-                        codes = codes.Substring(0, codes.Length - 1);
-
-                        writer.Write(codes);
+                        var serialized = JsonConvert.SerializeObject(_courses);
+                        writer.Write(serialized);
                     }
                 }
             }
@@ -111,14 +95,11 @@ namespace NoppaLib
             {
                 using (var reader = new StreamReader(s))
                 {
-                    string fileContent = reader.ReadToEnd();
-                    if (fileContent != "")
+                    string serialized = reader.ReadToEnd();
+                    
+                    if (serialized != null)
                     {
-                        string[] codes = fileContent.Split(';');
-                        foreach (string c in codes)
-                        {
-                            _codes.Add(c);
-                        }
+                        _courses = JsonConvert.DeserializeObject<List<Course>>(serialized);
                     }
                 }
             }

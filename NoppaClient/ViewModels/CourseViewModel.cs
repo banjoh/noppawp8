@@ -12,8 +12,8 @@ namespace NoppaClient.ViewModels
 {
     public class CourseViewModel : BindableBase
     {
+        private string _courseId;
         private Course _course = null;
-        private PinnedCourses _pinnedCourses;
 
         private string _title = "";
         public string Title { get { return _title; } set { SetProperty(ref _title, value); } }
@@ -26,9 +26,6 @@ namespace NoppaClient.ViewModels
 
         private bool _isLoading;
         public bool IsLoading { get { return _isLoading; } private set { SetProperty(ref _isLoading, value); } }
-
-        private string _code = "";
-        public string Code { get { return _code; } set { SetProperty(ref _code, value); } }
 
         public OverviewViewModel OverviewModel { get; private set; }
         public NewsViewModel NewsModel { get; private set; }
@@ -51,30 +48,30 @@ namespace NoppaClient.ViewModels
                     return;
                 }
 
-                PinCourseAsync(value.Value);
+                PinCourse(value.Value);
             }
         }
 
-        private async void PinCourseAsync(bool toggle)
+        private void PinCourse(bool toggle)
         {
             _isPinned = null;
             NotifyPropertyChanged("IsPinned");
             if (toggle)
             {
-                await App.PinnedCourses.AddAsync(_code);
+                App.PinnedCourses.Add(_course);
             }
             else
             {
-                await App.PinnedCourses.RemoveAsync(_code);
+                App.PinnedCourses.Remove(_course);
             }
             _isPinned = toggle;
             NotifyPropertyChanged("IsPinned");
             NotifyPropertyChanged("IsPinnedText");
         }
 
-        private async void SetPinnedStateAsync()
+        private void SetPinnedState()
         {
-            _isPinned = await _pinnedCourses.ContainsAsync(_code);
+            _isPinned = App.PinnedCourses.Contains(_course);
             NotifyPropertyChanged("IsPinned");
         }
 
@@ -132,18 +129,17 @@ namespace NoppaClient.ViewModels
 
         public CourseViewModel() { /* For design mode */ }
 
-        public CourseViewModel(string courseCode, PinnedCourses pinnedCourses)
+        public CourseViewModel(string courseId)
         {
-            Code = courseCode;
-            Title = AppResources.ApplicationTitle.ToUpper() + " " + Code.ToUpper();
-            _pinnedCourses = pinnedCourses;
+            _courseId = courseId;
+            Title = AppResources.ApplicationTitle.ToUpper() + " " + courseId.ToUpper();
 
             _toggleSecondaryTileCommand = new DelegateCommand(ToggleSecondaryTile, () => _course != null);
 
             _openNoppaPage = new DelegateCommand(async delegate { await Launcher.LaunchUriAsync(NoppaPageUri); }, () => NoppaPageUri != null);
             _openOodiPage = new DelegateCommand(async delegate { await Launcher.LaunchUriAsync(OodiPageUri); }, () => OodiPageUri != null);
 
-            NoppaPageUri = new Uri(String.Format("https://noppa.aalto.fi/noppa/kurssi/{0}/etusivu", courseCode));
+            NoppaPageUri = new Uri(String.Format("https://noppa.aalto.fi/noppa/kurssi/{0}/etusivu", courseId));
 
             // By default, always add these two items (which can be assigned to CurrentContent by the view)
             OverviewModel = new OverviewViewModel();
@@ -151,8 +147,6 @@ namespace NoppaClient.ViewModels
 
             Contents.Add(OverviewModel);
             Contents.Add(NewsModel);
-
-            SetPinnedStateAsync();
         }
 
         public async Task LoadContentAsync(INavigationController navigationController)
@@ -163,9 +157,11 @@ namespace NoppaClient.ViewModels
             }
 
             IsLoading = true;
-            _course = await NoppaAPI.GetCourse(Code);
+            _course = await NoppaAPI.GetCourse(_courseId);
             _toggleSecondaryTileCommand.NotifyCanExecuteChanged();
+
             UpdateToggleCommandText();
+            SetPinnedState();
 
             List<CourseContentViewModel> viewmodels = new List<CourseContentViewModel>()
             {
@@ -181,21 +177,21 @@ namespace NoppaClient.ViewModels
 
             await Task.WhenAll(
                 /* Load Overview (already in the contents) */
-                OverviewModel.LoadDataAsync(Code),
+                OverviewModel.LoadDataAsync(_courseId),
                 /* Load News (already in the contents) */
-                NewsModel.LoadDataAsync(Code)
+                NewsModel.LoadDataAsync(_courseId)
             );
 
 
             foreach (var vm in viewmodels)
-                tasks.Add(vm.LoadDataAsync(Code));
+                tasks.Add(vm.LoadDataAsync(_courseId));
 
             /* Add items in the order they are finished. */
             while (tasks.Count > 0)
             {
                 var task = await Task.WhenAny(tasks);
                 tasks.Remove(task);
-                var content = await task;
+                var content = task.Result;
 
                 if (!content.IsEmpty)
                 {

@@ -10,20 +10,17 @@ using System.Windows.Input;
 using System.Collections.Specialized;
 using System.Linq;
 
+
+
 namespace NoppaClient.ViewModels
 {
-    public class CourseNewsViewModel
+    public class NewsItem
     {
-        public CourseNews News { get; set; }
-        public Course Course { get; set; }
-        public int Index { get; set; }
-        public DateTime Date { get { return News.Date; } }
-        public string Title { get { return News.Title; } }
-        public string Content { get { return News.Content; } }
-        public List<Link> Links { get { return News.Links; } }
+        public string Title { get; set; }
+        public string Course { get; set; }
     }
 
-    public class NewsGroup : ObservableCollection<CourseNewsViewModel>
+    public class NewsGroup : ObservableCollection<NewsItem>
     {
         private string _newsDate;
         public string NewsDate { get { return _newsDate; } }
@@ -38,50 +35,34 @@ namespace NoppaClient.ViewModels
             _newsDate = newsDate;
             _dtnewsDate = dtnewsDate;
         }
-    }
 
-    public class NewsGroupCollection : ObservableCollection<NewsGroup>
-    {
-        public NewsGroupCollection() : this(DateTime.Today.AddYears(-1)) { }
-
-        public NewsGroupCollection(DateTime dateLimit) 
+        public static IEnumerable<NewsGroup> CreateNewsGroups(IEnumerable<CourseNews> courseNews, DateTime dateLimit)
         {
-            _dateLimit = dateLimit;
-        }
+            var groups = new Dictionary<string, NewsGroup>();
 
-        DateTime _dateLimit;
-
-        public void AddNewItems(List<CourseNewsViewModel> courseNews)
-        {
             foreach (var news in courseNews)
             {
-                if (news.Date.CompareTo(_dateLimit) < 0)
+                if (news.Date.CompareTo(dateLimit) < 0)
                 {
                     continue;
                 }
 
-                bool found = false;
-                foreach (NewsGroup item in Items)
+                var date = news.Date.ToShortDateString();
+                var item = new NewsItem { Title = news.Title, Course = news.CourseId };
+
+                if (groups.ContainsKey(date))
                 {
-                    if (item.NewsDate == news.Date.ToShortDateString())
-                    {
-                        found = true;
-                        item.Add(news);
-                        break;
-                    }
+                    groups[date].Add(item);
                 }
-                if (!found)
+                else
                 {
                     NewsGroup newItem = new NewsGroup(news.Date.ToShortDateString(), news.Date);
-                    newItem.Add(news);
-                    Add(newItem);
+                    newItem.Add(item);
+                    groups.Add(date, newItem);
                 }
             }
 
-            var sortedList = this.OrderByDescending(x => x.dtNewsDate).ToList();
-            this.Clear();
-            foreach (var sortedItem in sortedList)
-                this.Add(sortedItem);
+            return groups.Values.OrderByDescending(news => news.dtNewsDate);
         }
     }
 
@@ -97,8 +78,8 @@ namespace NoppaClient.ViewModels
         private CourseListViewModel _myCourses;
         public CourseListViewModel MyCourses { get { return _myCourses; } }
 
-        private NewsGroupCollection _news;
-        public NewsGroupCollection News
+        private ObservableCollection<NewsGroup> _news = new ObservableCollection<NewsGroup>();
+        public ObservableCollection<NewsGroup> News
         {
             get { return _news; }
             private set { SetProperty(ref _news, value); }
@@ -124,9 +105,9 @@ namespace NoppaClient.ViewModels
             get { return AppResources.ApplicationTitle; }
         }
 
-        private bool _isLoading = true;
-        private bool _isDepartmanentsLoading = true;
-        private bool _isMyCoursesLoading = true;
+        private int activeLoadingTasks = 0;
+
+        private bool _isLoading = false;
         public bool IsLoading
         {
             get { return _isLoading; }
@@ -158,19 +139,20 @@ namespace NoppaClient.ViewModels
         /// <summary>
         /// Creates and adds a few ItemViewModel objects into the Items collection.
         /// </summary>
-        public async void LoadDataAsync()
+        public void LoadDataAsync()
         {
             System.Diagnostics.Debug.WriteLine("Start loading");
             IsLoading = true;
-
-            var pinnedCourses = App.PinnedCourses;
+            activeLoadingTasks = 3;
 
             try
             {
                 LoadDepartmentGroupsAsync();
-                
-                var courses = await pinnedCourses.GetCodesAsync();
-                courses.CollectionChanged += (o, e) => UpdateMyCoursesAsync(pinnedCourses);
+
+                MyCourses.LoadMyCoursesAsync();
+
+                UpdateMyCourseNewsAsync();
+                UpdateMyCourseEventsAsync();
             }
             catch (Exception ex)
             {
@@ -178,11 +160,17 @@ namespace NoppaClient.ViewModels
             }
         }
 
+        private void OnLoadingFinished()
+        {
+            if (activeLoadingTasks == 0)
+            {
+                IsLoading = false;
+                System.Diagnostics.Debug.WriteLine("Stop loading");
+            }
+        }
+
         private async void LoadDepartmentGroupsAsync()
         {
-            _isDepartmanentsLoading = true;
-
-            System.Diagnostics.Debug.WriteLine("Start loading departments");
             try
             {
                 List<Organization> orgs = await NoppaAPI.GetAllOrganizations();
@@ -204,86 +192,85 @@ namespace NoppaClient.ViewModels
             {
                 System.Diagnostics.Debug.WriteLine("LoadDepartmentGroupsAsync: Caught exception: {0}", ex.Message);
             }
-            System.Diagnostics.Debug.WriteLine("Stop loading departments");
 
-            _isDepartmanentsLoading = false;
-            if (!_isMyCoursesLoading)
-                IsLoading = false;
+            activeLoadingTasks--;
+
+            OnLoadingFinished();
         }
 
-        private async void UpdateMyCoursesAsync(PinnedCourses pinnedCourses)
+        private async void UpdateMyCourseEventsAsync()
         {
-            _isMyCoursesLoading = true;
+            List<CourseEvent> events = new List<CourseEvent>();
+            var courses = await App.PinnedCourses.GetCoursesAsync();
 
-            try
-            {
-                News = new NewsGroupCollection(DateTime.Today.AddMonths(-3));
-                var courses = await pinnedCourses.GetCodesAsync();
-                await MyCourses.LoadMyCoursesAsync(pinnedCourses);
-
-                List<CourseEvent> events = new List<CourseEvent>();
-
-                /* For each course task to get list of news/events */
-                var newsTasks = new List<Task<List<CourseNewsViewModel>>>();
+            if (courses != null)
+            {   
                 var eventTasks = new List<Task<List<CourseEvent>>>();
 
-                foreach (var courseId in courses)
+                foreach (var course in courses)
                 {
-                    newsTasks.Add(Task.Run(async () =>
-                    {
-                        var courseTask = NoppaAPI.GetCourse(courseId);
-                        var newsTask = NoppaAPI.GetCourseNews(courseId);
-                        await Task.WhenAll(newsTask, courseTask);
+                    eventTasks.Add(NoppaAPI.GetCourseEvents(course.Id));
+                }
 
-                        var newsList = new List<CourseNewsViewModel>();
-                        var result = await newsTask;
-                        var course = await courseTask;
-                        for (int i = 0; i < result.Count; i++)
+                while (eventTasks.Count > 0)
+                {
+                    var eventTask = await Task.WhenAny(eventTasks);
+
+                    eventTasks.Remove(eventTask);
+                    var eventItem = eventTask.Result;
+
+                    if (eventItem != null)
+                    {
+                        var groups = EventGroup.CreateEventGroups(eventItem);
+                        foreach (var group in groups)
                         {
-                            newsList.Add(new CourseNewsViewModel { News = result[i], Course = course, Index = i });
+                            Events.Add(group);
                         }
-                        return newsList;
-                    }));
-
-                    eventTasks.Add(NoppaAPI.GetCourseEvents(courseId));
-                }
-
-                while (newsTasks.Count > 0 || eventTasks.Count > 0)
-                {
-                    if (newsTasks.Count > 0)
-                    {
-                        var newsTask = await Task.WhenAny(newsTasks);
-                        newsTasks.Remove(newsTask);
-                        var newsItems = await newsTask;
-
-                        if (newsItems != null)
-                            /* Each add now also sorts the list and updates UI. If there are LOTS of
-                             * news, this will hurt performance. However, at this point I favor immediate
-                             * response so well see how this goes. */
-                            News.AddNewItems(newsItems);
-                    }
-
-                    if (eventTasks.Count > 0)
-                    {
-                        var eventTask = await Task.WhenAny(eventTasks);
-                        eventTasks.Remove(eventTask);
-                        var eventItems = await eventTask;
-
-                        if (eventItems != null)
-                            events.AddRange(eventItems);
                     }
                 }
-
-                Events = EventGroup.CreateEventGroups(events);
             }
-            catch (Exception ex)
+
+            activeLoadingTasks--;
+
+            OnLoadingFinished();
+        }
+
+        private async void UpdateMyCourseNewsAsync()
+        {
+            /* For each course task to get list of news/events */
+            var newsTasks = new List<Task<List<CourseNews>>>();
+            var courses = await App.PinnedCourses.GetCoursesAsync();
+
+            if (courses != null)
             {
-                System.Diagnostics.Debug.WriteLine("LoadNewsAndEventsAsync: Caught exception: {0}", ex.Message);
+                var courseNews = new List<CourseNews>();
+
+                foreach (var course in courses)
+                {
+                    newsTasks.Add(NoppaAPI.GetCourseNews(course.Id));
+                }
+
+                while (newsTasks.Count > 0)
+                {
+                    var newsTask = await Task.WhenAny(newsTasks);
+
+                    newsTasks.Remove(newsTask);
+                    var newsItem = newsTask.Result;
+
+                    if (newsItem != null)
+                    {
+                        var groups = NewsGroup.CreateNewsGroups(newsItem, DateTime.Today.AddMonths(-3));
+                        foreach (var news in groups)
+                        {
+                            News.Add(news);
+                        }
+                    }
+                }
             }
 
-            _isMyCoursesLoading = false;
-            if (!_isDepartmanentsLoading)
-                IsLoading = false;
+            activeLoadingTasks--;
+
+            OnLoadingFinished();
         }
     }
 }

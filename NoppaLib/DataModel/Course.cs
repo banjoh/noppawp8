@@ -55,6 +55,8 @@ namespace NoppaLib.DataModel
         [JsonProperty("title")]                 public string Title { get; set; }
         [JsonProperty("content")]               public string Content { get; set; }
         [JsonProperty("link")]                  public List<Link> Links { get; set; }
+
+        public string CourseId { get; set; }
     }
 
     public class CourseResult

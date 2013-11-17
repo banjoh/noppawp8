@@ -32,7 +32,9 @@ namespace NoppaClient.ViewModels
             List<CourseEvent> events = await NoppaAPI.GetCourseEvents(id);
             if (events != null)
             {
-                Events = EventGroup.CreateEventGroups(events);
+                var eventGroups = EventGroup.CreateEventGroups(events);
+                foreach (var e in eventGroups)
+                    Events.Add(e);
             }
             IsEmpty = events == null || events.Count == 0;
 
