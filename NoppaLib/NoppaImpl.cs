@@ -11,10 +11,16 @@ using NoppaLib.DataModel;
 
 namespace NoppaLib
 {
+    public delegate void TimeoutHandler(object sender, EventArgs e);
+    public delegate void NoConnectionHandler(object sender, EventArgs e);
+
     public class NoppaImpl
     {
         private static readonly int _timeout = 35000; /* 5secs */
         private static Lazy<NoppaImpl> _instance = new Lazy<NoppaImpl>( () => new NoppaImpl() );
+
+        public event NoConnectionHandler NoInternetConnection;
+        public event TimeoutHandler TimeoutOccurred;
         
         public static NoppaImpl GetInstance()
         {
@@ -77,13 +83,44 @@ namespace NoppaLib
                     /* Timeout */
                     await timeoutTask;
                     System.Diagnostics.Debug.WriteLine("NoppaApiClient: Timed out ({0} ms)", _timeout);
+
+                    if (TimeoutOccurred != null)
+                        TimeoutOccurred(this, EventArgs.Empty);
+
                     return null;
                 }
             }
             catch (WebException webExc)
             {
                 /* Caught exception */
-                System.Diagnostics.Debug.WriteLine("NoppaApiClient: Caught exception: {0}", webExc.Message);
+
+                if (webExc.Status == WebExceptionStatus.ConnectFailure)
+                {
+                    System.Diagnostics.Debug.WriteLine("NoppaApiClient: Connection failed");
+
+                    if (NoInternetConnection != null)
+                        NoInternetConnection(this, EventArgs.Empty);
+                }
+                else if (webExc.Status == WebExceptionStatus.MessageLengthLimitExceeded)
+                {
+                    System.Diagnostics.Debug.WriteLine("NoppaApiClient: Too large response received");
+                }
+                else if (webExc.Status == WebExceptionStatus.SendFailure)
+                {
+                    System.Diagnostics.Debug.WriteLine("NoppaApiClient: Could not send request");
+                }
+                else if (webExc.Status == WebExceptionStatus.RequestCanceled ||
+                         webExc.Status == WebExceptionStatus.UnknownError)
+                {
+                    System.Diagnostics.Debug.WriteLine("NoppaApiClient: Unknown connection error");
+                }
+                else
+                {
+                    /* Other errors seem to be not supported on WP8. However, if new SDK
+                     * or something happens, at least log what error happened. */
+                    System.Diagnostics.Debug.WriteLine("NoppaApiClient: Unknown error: {0}", webExc.Message);
+                }
+
                 timeoutCancel.Cancel();
                 return null;
             }
