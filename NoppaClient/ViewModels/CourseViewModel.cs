@@ -15,8 +15,14 @@ namespace NoppaClient.ViewModels
         private string _courseId;
         private Course _course = null;
 
+        public string Code { get { return _course.Id; } }
+
         private string _title = "";
-        public string Title { get { return _title; } set { SetProperty(ref _title, value); } }
+        public string Title
+        {
+            get { return _title; }
+            set { SetProperty(ref _title, value); }
+        }
 
         private ObservableCollection<CourseContentViewModel> _contents = new ObservableCollection<CourseContentViewModel>();
         public ObservableCollection<CourseContentViewModel> Contents { get { return _contents; } }
@@ -32,55 +38,44 @@ namespace NoppaClient.ViewModels
 
         #region Pinned courses
 
+        private string _isPinnedText;
         public string IsPinnedText
         {
-            get { return IsPinned.HasValue && IsPinned.Value ? AppResources.UnpinCourseTitle : AppResources.PinCourseTitle; }
+            get { return _isPinnedText; }
+            set { SetProperty(ref _isPinnedText, value); }
         }
 
-        private bool? _isPinned = null;
-        public bool? IsPinned
+        private bool _isPinned;
+        public bool IsPinned
         {
             get { return _isPinned; }
-            set 
+            set
             {
-                if (_isPinned == null || !value.HasValue)
-                {
-                    return;
-                }
-
-                PinCourse(value.Value);
+                _isPinned = value;
+                SetPinCourseState(value);
             }
         }
 
-        private void PinCourse(bool toggle)
+        private void SetPinCourseState(bool value)
         {
-            _isPinned = null;
-            NotifyPropertyChanged("IsPinned");
-            if (toggle)
+            if (value)
             {
-                App.PinnedCourses.Add(_course);
+                App.Settings.PinnedCourses.Add(_course);
             }
             else
             {
-                App.PinnedCourses.Remove(_course);
+                App.Settings.PinnedCourses.Remove(_course);
             }
-            _isPinned = toggle;
-            NotifyPropertyChanged("IsPinned");
-            NotifyPropertyChanged("IsPinnedText");
+            IsPinnedText = value ? AppResources.UnpinCourseTitle : AppResources.PinCourseTitle;
         }
 
-        private void SetPinnedState()
-        {
-            _isPinned = App.PinnedCourses.Contains(_course);
-            NotifyPropertyChanged("IsPinned");
-        }
+        public ICommand TogglePinCourseCommand { get; set; }
 
         #endregion
 
         #region Secondary tile properties
 
-        private DelegateCommand _toggleSecondaryTileCommand;
-        public ICommand ToggleSecondaryTileCommand { get { return _toggleSecondaryTileCommand; } }
+        public ICommand ToggleSecondaryTileCommand { get; set; }
 
         private string _toggleSecondaryTileText = AppResources.AddCourseTileLabel;
         public string ToggleSecondaryTileText
@@ -132,10 +127,11 @@ namespace NoppaClient.ViewModels
         public CourseViewModel(string courseId)
         {
             _courseId = courseId;
+
             Title = AppResources.ApplicationTitle.ToUpper() + " " + courseId.ToUpper();
 
-            _toggleSecondaryTileCommand = new DelegateCommand(ToggleSecondaryTile, () => _course != null);
-
+            // Jump through hoops because you cannot bind commands directly to ApplicationBar
+            ToggleSecondaryTileCommand = new DelegateCommand(ToggleSecondaryTile, () => _course != null);
             _openNoppaPage = new DelegateCommand(async delegate { await Launcher.LaunchUriAsync(NoppaPageUri); }, () => NoppaPageUri != null);
             _openOodiPage = new DelegateCommand(async delegate { await Launcher.LaunchUriAsync(OodiPageUri); }, () => OodiPageUri != null);
 
@@ -158,11 +154,14 @@ namespace NoppaClient.ViewModels
 
             IsLoading = true;
             _course = await NoppaAPI.GetCourse(_courseId);
-            _toggleSecondaryTileCommand.NotifyCanExecuteChanged();
+            (ToggleSecondaryTileCommand as DelegateCommand).NotifyCanExecuteChanged();
+
+            bool coursePinned = App.Settings.PinnedCourses.Find(course => course.Id == _courseId) != null;
+            IsPinned = coursePinned;
+            IsPinnedText = coursePinned ? AppResources.UnpinCourseTitle : AppResources.PinCourseTitle;
 
             UpdateToggleCommandText();
-            SetPinnedState();
-
+            
             List<CourseContentViewModel> viewmodels = new List<CourseContentViewModel>()
             {
                 new LecturesViewModel(),
@@ -206,8 +205,7 @@ namespace NoppaClient.ViewModels
                             break;
                         }
                     }
-                    _contents.Insert(index, content);
-                    NotifyPropertyChanged("Contents");
+                    Contents.Insert(index, content);
                 }
             }
 

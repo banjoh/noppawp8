@@ -6,8 +6,6 @@ namespace NoppaClient.ViewModels
 {
     public class SettingsViewModel : BindableBase
     {
-        public Settings Settings { get { return App.Settings; } }
-
         private IEnumerable<LanguageOption> _languages;
         public IEnumerable<LanguageOption> Languages { get { return _languages; } }
 
@@ -18,24 +16,22 @@ namespace NoppaClient.ViewModels
             get { return _language; }
             set 
             {
-                if (Settings.SetValue(Settings.LanguageSettingKeyName, value.Language))
-                {
-                    _language = value;
+                _language = value;
 
-                    App.ChangeUILanguage(value.Language); // TODO Find a way to refresh ALL bindings (e.g. recreate all viewmodels)
-                    App.RootFrame.Language = XmlLanguage.GetLanguage(AppResources.ResourceLanguage);
+                App.Settings.Language = value.Language;
+                App.ChangeUILanguage(value.Language); // TODO Find a way to refresh ALL bindings (e.g. recreate all viewmodels)
+                App.RootFrame.Language = XmlLanguage.GetLanguage(AppResources.ResourceLanguage);
 
-                    NotifyPropertyChanged();
-                }
+                NotifyPropertyChanged();
             }
         }
 
         public bool PrimaryTileIsActive
         {
-            get { return Settings.PrimaryTileIsActive; }
+            get { return App.Settings.PrimaryTileIsActive; }
             set 
             {
-                Settings.PrimaryTileIsActive = value;
+                App.Settings.PrimaryTileIsActive = value;
                 NotifyPropertyChanged("PrimaryTileIsActive");
             }
         }
@@ -55,7 +51,7 @@ namespace NoppaClient.ViewModels
 
             if (!System.ComponentModel.DesignerProperties.IsInDesignTool)
             {
-                switch (Settings.Language)
+                switch (App.Settings.Language)
                 {
                     case NoppaLib.DataModel.Language.Finnish: _language = finnish; break;
                     case NoppaLib.DataModel.Language.Swedish: _language = swedish; break;

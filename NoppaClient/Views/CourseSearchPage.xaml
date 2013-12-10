@@ -1,0 +1,225 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="NoppaClient.CourseSearchPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:view="clr-namespace:NoppaClient.View"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True">
+
+    <phone:PhoneApplicationPage.Resources>
+        <view:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <Style x:Key="TextBoxStyle1" TargetType="TextBox">
+            <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilyNormal}"/>
+            <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMediumLarge}"/>
+            <Setter Property="Background" Value="{StaticResource PhoneTextBoxBrush}"/>
+            <Setter Property="Foreground" Value="{StaticResource PhoneTextBoxForegroundBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource PhoneTextBoxBrush}"/>
+            <Setter Property="SelectionBackground" Value="{StaticResource PhoneAccentColor}"/>
+            <Setter Property="SelectionForeground" Value="{StaticResource PhoneTextBoxSelectionForegroundBrush}"/>
+            <Setter Property="BorderThickness" Value="{StaticResource PhoneBorderThickness}"/>
+            <Setter Property="Padding" Value="2"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Grid Background="Transparent">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="MouseOver"/>
+                                    <VisualState x:Name="Disabled">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="MainBorder">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="MainBorder">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PhoneDisabledBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentElement">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PhoneDisabledBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="ReadOnly">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Storyboard.TargetName="MainBorder">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Collapsed</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Storyboard.TargetName="ReadonlyBorder">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Visible</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="ReadonlyBorder">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PhoneTextBoxBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="ReadonlyBorder">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PhoneTextBoxBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentElement">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PhoneTextBoxReadOnlyBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="FocusStates">
+                                    <VisualState x:Name="Focused">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="MainBorder">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PhoneTextBoxEditBackgroundBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="MainBorder">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource NoppaPrimaryColorBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Unfocused"/>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Border x:Name="MainBorder" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Margin="{StaticResource PhoneTouchTargetOverhang}"/>
+                            <Border x:Name="ReadonlyBorder" BorderBrush="{StaticResource PhoneDisabledBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="Transparent" Margin="{StaticResource PhoneTouchTargetOverhang}" Visibility="Collapsed"/>
+                            <Border BorderBrush="Transparent" BorderThickness="{TemplateBinding BorderThickness}" Background="Transparent" Margin="{StaticResource PhoneTouchTargetOverhang}">
+                                <ContentControl x:Name="ContentElement" BorderThickness="0" HorizontalContentAlignment="Stretch" Margin="{StaticResource PhoneTextBoxInnerMargin}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="Stretch"/>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <DataTemplate x:Key="DepartmentItemTemplate">
+            <StackPanel Margin="0,-2,0,20">
+                <TextBlock Text="{Binding Name}" Style="{StaticResource NoppaTextLargeStyle}" />
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="DepartmentGroupHeaderTemplate">
+            <Border Background="Transparent" Padding="0,10,0,0">
+                <TextBlock Text="{Binding Organization}" 
+                       Foreground="{StaticResource PhoneSubtleBrush}" 
+                       Style="{StaticResource PhoneTextNormalStyle}"
+                       FontFamily="{StaticResource PhoneFontFamilySemiLight}" />
+            </Border>
+        </DataTemplate>
+
+        <Style x:Key="DepartmentJumpListStyle" TargetType="phone:LongListSelector">
+            <Setter Property="LayoutMode" Value="List" />
+            <Setter Property="ItemTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Organization}" 
+                                   FontFamily="{StaticResource PhoneFontFamilySemiBold}" FontSize="36" TextWrapping="Wrap" Padding="10,10,10,30"
+                                   Foreground="{Binding Converter={StaticResource ForegroundConverter}}" />
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </phone:PhoneApplicationPage.Resources>
+
+    <phone:Pivot>
+
+        <phone:PivotItem>
+            <!--LayoutRoot is the root grid where all page content is placed-->
+            <Grid x:Name="LayoutRoot" Background="Transparent">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <ProgressBar IsIndeterminate="True" 
+                    Grid.Row="0" 
+                    Margin="0,0,0,16" 
+                    VerticalAlignment="Top" 
+                    HorizontalAlignment="Stretch" 
+                    Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    x:Name="customIndeterminateProgressBar"
+                    Style="{StaticResource CustomIndeterminateProgressBar}"/>
+
+                <!--TitlePanel contains the name of the application and page title-->
+                <StackPanel Grid.Row="0" Margin="12,17,12,0">
+                    <TextBlock
+                        Text="{Binding Path=LocalizedResources.NoppaSearchTitle, Source={StaticResource LocalizedStrings},Converter={StaticResource StringToUpperConverter}}"
+                        Foreground="{StaticResource NoppaPrimaryColorBrush}"
+                        Style="{StaticResource PhoneTextNormalStyle}"
+                        FontWeight="SemiBold" />
+                    <TextBox
+                        x:Name="SearchBox"
+                        AcceptsReturn="False"
+                        Margin="0,5,0,0"
+                        InputScope="Search"
+                        SelectionBackground="{StaticResource NoppaPrimaryColorBrush}" 
+                        Text="" HorizontalAlignment="Stretch" 
+                        view:SearchCommand.Command="{Binding SearchCommand}" 
+                        view:SearchCommand.Parameter="{Binding Text, ElementName=SearchBox}"
+                        Style="{StaticResource TextBoxStyle1}" />
+                </StackPanel>
+
+                <phone:LongListSelector
+                    Margin="12,0,12,0"
+                    Grid.Row="1"
+                    view:ItemClickCommand.Command="{Binding CourseList.ActivateCourseCommand}"
+                    ItemTemplate="{StaticResource CourseItemTemplate}"
+                    ItemsSource="{Binding CourseList.Courses}"/>
+
+                <RichTextBox
+                    Margin="12,0,12,0"
+                    Grid.Row="1"
+                    VerticalAlignment="Top"
+                    IsReadOnly="True"
+                    Visibility="{Binding IsSearchHintVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    Xaml="{Binding Path=LocalizedResources.SearchHintTextXaml, Source={StaticResource LocalizedStrings}}"/>
+
+                <Grid
+                    HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1"
+                    Visibility="{Binding IsSearchHintVisible, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=invert}">
+                    <Grid Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=invert}">
+                        <TextBlock
+                            Text="{Binding Path=LocalizedResources.NoSearchResultsTitle, Source={StaticResource LocalizedStrings}}"
+                            Visibility="{Binding CourseList.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </phone:PivotItem>
+
+        <phone:PivotItem>
+            <!--Single line list with text wrapping and grouping -->
+            <phone:LongListSelector
+                    x:Name="DepartmentList"
+                    Margin="0,0,-22,0"
+                    JumpListStyle="{StaticResource DepartmentJumpListStyle}"
+                    ItemTemplate="{StaticResource DepartmentItemTemplate}"
+                    GroupHeaderTemplate="{StaticResource DepartmentGroupHeaderTemplate}"
+                    LayoutMode="List"
+                    IsGroupingEnabled="True"
+                    Background="Transparent"
+                    HideEmptyGroups="True"                    
+                    view:ItemClickCommand.Command="{Binding DepartmentList.DepartmentActivatedCommand}"
+                    ItemsSource="{Binding DepartmentList.Departments}" >
+                <phone:LongListSelector.ListHeader>
+                    <TextBlock Text="{Binding Path=LocalizedResources.DepartmentsTitle, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PanoramaItemListHeaderStyle}"/>
+                </phone:LongListSelector.ListHeader>
+            </phone:LongListSelector>
+        </phone:PivotItem>
+    </phone:Pivot>
+
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True">
+            <shell:ApplicationBarIconButton Text="by code" IconUri="Assets/sort.code.png" />
+            <shell:ApplicationBarIconButton Text="by name" IconUri="Assets/sort.name.png" />
+            <!-- <shell:ApplicationBarIconButton Text="by department" IconUri="Assets/sort.department.png" /> -->
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+</phone:PhoneApplicationPage>

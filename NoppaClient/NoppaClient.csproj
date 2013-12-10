@@ -89,27 +89,31 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AboutPage.xaml.cs">
+    <Compile Include="ViewModels\CourseFilter.cs" />
+    <Compile Include="ViewModels\CourseSearchViewModel.cs" />
+    <Compile Include="ViewModels\DepartmentListViewModel.cs" />
+    <Compile Include="Views\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CourseListPage.xaml.cs">
+    <Compile Include="BackgroundAgentController.cs" />
+    <Compile Include="Views\CourseListPage.xaml.cs">
       <DependentUpon>CourseListPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CoursePage.xaml.cs">
+    <Compile Include="Views\CoursePage.xaml.cs">
       <DependentUpon>CoursePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CourseSearchPage.xaml.cs">
+    <Compile Include="Views\CourseSearchPage.xaml.cs">
       <DependentUpon>CourseSearchPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Detail.cs" />
-    <Compile Include="EventPage.xaml.cs">
+    <Compile Include="Views\EventPage.xaml.cs">
       <DependentUpon>EventPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="LocalizedStrings.cs" />
-    <Compile Include="MainPage.xaml.cs">
+    <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="PhoneNavigationController.cs" />
@@ -123,14 +127,14 @@
     <Compile Include="ViewModels\CoursePage\AdditionalPageViewModel.cs" />
     <Compile Include="ViewModels\CoursePage\AssignmentsViewModel.cs" />
     <Compile Include="ViewModels\BindableBase.cs" />
-    <Compile Include="SettingsPage.xaml.cs">
+    <Compile Include="Views\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\CoursePage\EventsViewModel.cs" />
     <Compile Include="ViewModels\CoursePage\CourseContentViewModel.cs" />
     <Compile Include="ViewModels\CourseListViewModel.cs" />
     <Compile Include="ViewModels\CourseViewModel.cs" />
-    <Compile Include="View\Commands\DelegateCommand.cs" />
+    <Compile Include="Views\Commands\DelegateCommand.cs" />
     <Compile Include="ViewModels\DepartmentGroup.cs" />
     <Compile Include="ViewModels\EventGroup.cs" />
     <Compile Include="ViewModels\EventViewModel.cs" />
@@ -143,48 +147,48 @@
     <Compile Include="ViewModels\CoursePage\OverviewViewModel.cs" />
     <Compile Include="ViewModels\CoursePage\ResultsViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
-    <Compile Include="View\AppBar.cs" />
-    <Compile Include="View\Converters\BooleanToVisibilityConverter.cs" />
-    <Compile Include="View\Commands\ClearCacheCommand.cs" />
-    <Compile Include="View\Converters\DateTimeToWeekdayConverter.cs" />
-    <Compile Include="View\Converters\EmptyStringToVisibilityConverter.cs" />
-    <Compile Include="View\Converters\EnumerableIndexConverter.cs" />
-    <Compile Include="View\DataTemplateSelector.cs" />
-    <Compile Include="View\Commands\DesignModeChecker.cs" />
-    <Compile Include="View\Converters\EventTypeConverter.cs" />
-    <Compile Include="View\Commands\ItemClickCommand.cs" />
-    <Compile Include="View\Commands\OpenBrowserCommand.cs" />
-    <Compile Include="View\Commands\SearchCommand.cs" />
-    <Compile Include="View\Converters\StringToResourceConverter.cs" />
-    <Compile Include="View\Converters\StringToUpperConverter.cs" />
-    <Compile Include="View\Converters\TypeNameToDataTemplateConverter.cs" />
+    <Compile Include="Views\AppBar.cs" />
+    <Compile Include="Views\Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Views\Commands\ClearCacheCommand.cs" />
+    <Compile Include="Views\Converters\DateTimeToWeekdayConverter.cs" />
+    <Compile Include="Views\Converters\EmptyStringToVisibilityConverter.cs" />
+    <Compile Include="Views\Converters\EnumerableIndexConverter.cs" />
+    <Compile Include="Views\DataTemplateSelector.cs" />
+    <Compile Include="Views\Commands\DesignModeChecker.cs" />
+    <Compile Include="Views\Converters\EventTypeConverter.cs" />
+    <Compile Include="Views\Commands\ItemClickCommand.cs" />
+    <Compile Include="Views\Commands\OpenBrowserCommand.cs" />
+    <Compile Include="Views\Commands\SearchCommand.cs" />
+    <Compile Include="Views\Converters\StringToResourceConverter.cs" />
+    <Compile Include="Views\Converters\StringToUpperConverter.cs" />
+    <Compile Include="Views\Converters\TypeNameToDataTemplateConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
-    <Page Include="AboutPage.xaml">
+    <Page Include="Views\AboutPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="CourseListPage.xaml">
+    <Page Include="Views\CourseListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="CoursePage.xaml">
+    <Page Include="Views\CoursePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="CourseSearchPage.xaml">
+    <Page Include="Views\CourseSearchPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="EventPage.xaml">
+    <Page Include="Views\EventPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainPage.xaml">
+    <Page Include="Views\MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -204,7 +208,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </DesignData>
-    <Page Include="SettingsPage.xaml">
+    <Page Include="Views\SettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

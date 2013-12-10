@@ -22,18 +22,15 @@ namespace NoppaClient.ViewModels
 
     public class NewsGroup : ObservableCollection<NewsItem>
     {
-        private string _newsDate;
-        public string NewsDate { get { return _newsDate; } }
-        private DateTime _dtnewsDate;
-        public DateTime dtNewsDate { get { return _dtnewsDate; } }
+        private DateTime _newsDate;
+        public DateTime NewsDate { get { return _newsDate; } }
 
         public NewsGroup() { }
 
-        public NewsGroup(string newsDate, DateTime dtnewsDate)
+        public NewsGroup(DateTime dtnewsDate)
             : base()
         {
-            _newsDate = newsDate;
-            _dtnewsDate = dtnewsDate;
+            _newsDate = dtnewsDate;
         }
 
         public static IEnumerable<NewsGroup> CreateNewsGroups(IEnumerable<CourseNews> courseNews, DateTime dateLimit)
@@ -56,13 +53,13 @@ namespace NoppaClient.ViewModels
                 }
                 else
                 {
-                    NewsGroup newItem = new NewsGroup(news.Date.ToShortDateString(), news.Date);
+                    NewsGroup newItem = new NewsGroup(news.Date);
                     newItem.Add(item);
                     groups.Add(date, newItem);
                 }
             }
 
-            return groups.Values.OrderByDescending(news => news.dtNewsDate);
+            return groups.Values.OrderByDescending(news => news.NewsDate);
         }
     }
 
@@ -75,9 +72,6 @@ namespace NoppaClient.ViewModels
             private set { SetProperty(ref _events, value); }
         }
 
-        private CourseListViewModel _myCourses;
-        public CourseListViewModel MyCourses { get { return _myCourses; } }
-
         private ObservableCollection<NewsGroup> _news = new ObservableCollection<NewsGroup>();
         public ObservableCollection<NewsGroup> News
         {
@@ -85,14 +79,13 @@ namespace NoppaClient.ViewModels
             private set { SetProperty(ref _news, value); }
         }
 
-        private ObservableCollection<DepartmentGroup> _departments = new ObservableCollection<DepartmentGroup>();
-        public ObservableCollection<DepartmentGroup> Departments 
+        private ObservableCollection<Course> _courses = new ObservableCollection<Course>();
+        public ObservableCollection<Course> Courses
         {
-            get { return _departments; }
-            private set { SetProperty(ref _departments, value); }
+            get { return _courses; }
+            private set { SetProperty(ref _courses, value); }
         }
 
-        public ICommand DepartmentActivatedCommand { get; private set; }
         public ICommand ShowSettingsCommand { get; private set; }
         public ICommand ShowAboutCommand { get; private set; }
         public ICommand ShowSearchCommand { get; private set; }
@@ -125,9 +118,6 @@ namespace NoppaClient.ViewModels
 
         public MainViewModel(INavigationController navigationController)
         {
-            _myCourses = new CourseListViewModel(navigationController);
-
-            DepartmentActivatedCommand  = ControllerUtil.MakeShowDepartmentCommand(navigationController);
             ShowSettingsCommand         = ControllerUtil.MakeShowSettingsCommand(navigationController);
             ShowAboutCommand            = ControllerUtil.MakeShowAboutCommand(navigationController);
             ShowSearchCommand           = ControllerUtil.MakeShowCourseSearchCommand(navigationController);
@@ -143,13 +133,11 @@ namespace NoppaClient.ViewModels
         {
             System.Diagnostics.Debug.WriteLine("Start loading");
             IsLoading = true;
-            activeLoadingTasks = 3;
+            activeLoadingTasks = 2;
 
             try
             {
-                LoadDepartmentGroupsAsync();
-
-                MyCourses.LoadMyCoursesAsync();
+                Courses = new ObservableCollection<Course>(App.Settings.PinnedCourses);
 
                 UpdateMyCourseNewsAsync();
                 UpdateMyCourseEventsAsync();
@@ -169,39 +157,10 @@ namespace NoppaClient.ViewModels
             }
         }
 
-        private async void LoadDepartmentGroupsAsync()
-        {
-            try
-            {
-                List<Organization> orgs = await NoppaAPI.GetAllOrganizations();
-                List<Department> depts = await NoppaAPI.GetDepartments();
-
-                if (depts != null && orgs != null)
-                {
-                    var orgMap = new Dictionary<string, Organization>();
-                    foreach (var org in orgs)
-                    {
-                        orgMap.Add(org.Id, org);
-                    }
-
-                    Departments = DepartmentGroup.CreateDepartmentGroups(orgMap, depts);
-                    IsDepartmentListEmpty = Departments.Count == 0;
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine("LoadDepartmentGroupsAsync: Caught exception: {0}", ex.Message);
-            }
-
-            activeLoadingTasks--;
-
-            OnLoadingFinished();
-        }
-
         private async void UpdateMyCourseEventsAsync()
         {
             List<CourseEvent> events = new List<CourseEvent>();
-            var courses = await App.PinnedCourses.GetCoursesAsync();
+            var courses = App.Settings.PinnedCourses;
 
             if (courses != null)
             {   
@@ -239,7 +198,7 @@ namespace NoppaClient.ViewModels
         {
             /* For each course task to get list of news/events */
             var newsTasks = new List<Task<List<CourseNews>>>();
-            var courses = await App.PinnedCourses.GetCoursesAsync();
+            var courses = App.Settings.PinnedCourses;
 
             if (courses != null)
             {

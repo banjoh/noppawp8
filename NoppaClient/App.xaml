@@ -180,7 +180,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
+
         <Style x:Key="PanoramaItemNoHeaderStyle" TargetType="phone:PanoramaItem">
             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
             <Setter Property="VerticalContentAlignment" Value="Stretch"/>
@@ -189,16 +189,15 @@
                     <ControlTemplate TargetType="phone:PanoramaItem">
                         <Grid Background="{TemplateBinding Background}" Margin="12,0,0,0">
                             <Grid.RowDefinitions>
-                                <!-- <RowDefinition Height="auto"/> -->
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <!-- Remove comment to see what the old title looked like
+                            <!-- // Remove comment to see what the old title looked like
                             <ContentControl x:Name="header" CharacterSpacing="-35" ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}" FontSize="66" FontFamily="{StaticResource PhoneFontFamilySemiLight}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="12,-2,0,38">
                                 <ContentControl.RenderTransform>
                                     <TranslateTransform x:Name="headerTransform"/>
                                 </ContentControl.RenderTransform>
                             </ContentControl> 
-                            -->
+                            // -->
                             <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" Grid.Row="1" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                         </Grid>
                     </ControlTemplate>

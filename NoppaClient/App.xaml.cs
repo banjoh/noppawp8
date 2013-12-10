@@ -24,27 +24,7 @@ namespace NoppaClient
 
         public static Settings Settings
         {
-            get
-            {
-                if (_settings == null)
-                {
-                    _settings = new Settings();
-                }
-
-                return _settings;
-            }
-        }
-
-        public static PinnedCourses PinnedCourses
-        {
-            get
-            {
-                if (_pinnedCourses == null)
-                {
-                    _pinnedCourses = new PinnedCourses();
-                }
-                return _pinnedCourses;
-            }
+            get { return _settings; }
         }
 
         public static void ChangeUILanguage(Language lang)
@@ -134,6 +114,8 @@ namespace NoppaClient
                         }
                     }
                 }
+
+                _settings = Settings.LoadFromStorage();
             }
             catch
             {
@@ -178,17 +160,9 @@ namespace NoppaClient
                     {
                         Cache.Serialize(stream);
                     }
-
-                    if (fileStorage.FileExists(PinnedCourses.CourseFile))
-                    {
-                        fileStorage.DeleteFile(PinnedCourses.CourseFile);
-                    }
-
-                    using (var stream = new IsolatedStorageFileStream(PinnedCourses.CourseFile, FileMode.OpenOrCreate, FileAccess.Write, fileStorage))
-                    {
-                        PinnedCourses.Serialize(stream);
-                    }
                 }
+
+                App.Settings.Save();
             }
             catch
             {

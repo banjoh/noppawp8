@@ -1,0 +1,86 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="NoppaClient.CoursePage"
+    x:Name="Root"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:view="clr-namespace:NoppaClient.View"
+    d:DataContext="{d:DesignData /SampleData/CourseViewModelSampleData.xaml}"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait"  Orientation="Portrait"
+    shell:SystemTray.IsVisible="True">
+
+    <phone:PhoneApplicationPage.Resources>
+        <!-- Misc. content -->
+        <view:EnumerableIndexConverter x:Key="EnumerableIndexConverter" />
+    </phone:PhoneApplicationPage.Resources>
+    
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <ProgressBar IsIndeterminate="True" 
+            Grid.Row="0" 
+            Margin="0,0,0,16"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Stretch" 
+            Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"
+            x:Name="customIndeterminateProgressBar" Style="{StaticResource CustomIndeterminateProgressBar}"/>
+
+        <!-- Runtime Pivot Control -->
+        <phone:Pivot Title="{Binding Title}"
+                     ItemsSource="{Binding Contents}"
+                     SelectedItem="{Binding CurrentContent}"
+                     Foreground="{StaticResource NoppaPrimaryColorBrush}">
+            <phone:Pivot.ItemTemplate>
+                <DataTemplate>
+                    <view:DataTemplateSelector 
+                        Content="{Binding}" 
+                        TemplateDictionary="{StaticResource ViewModelTemplates}" 
+                        HorizontalContentAlignment="Stretch" 
+                        VerticalContentAlignment="Stretch" />
+                </DataTemplate>
+            </phone:Pivot.ItemTemplate>
+            <phone:Pivot.HeaderTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <TextBlock TextWrapping="Wrap" Text="{Binding Title}" />
+                    </Grid>
+                </DataTemplate>
+            </phone:Pivot.HeaderTemplate>
+        </phone:Pivot>
+
+        <!-- 
+            Design time Pivot control, needed to trigger data template changes in design tool 
+            Look at CourseViewModelSampleData.xaml under SampleData/ to add and change the items
+            It's a little bit messy how it gets the correct template. Hopefully the indicies won't change.
+        -->
+        <!--
+        <phone:Pivot Title="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}" Visibility="{Binding IsInDesignTool, Source={StaticResource DesignToolChecker}, Converter={StaticResource BooleanToVisibilityConverter}}" Foreground="{StaticResource NoppaPrimaryColorBrush}">
+            <phone:PivotItem Header="overview" Content="{Binding Contents,Converter={StaticResource EnumerableIndexConverter},ConverterParameter=0}" ContentTemplate="{Binding Source={StaticResource ViewModelTemplates},Path=Values[7]}" />
+            <phone:PivotItem Header="news" Content="{Binding Contents,Converter={StaticResource EnumerableIndexConverter},ConverterParameter=1}" ContentTemplate="{Binding Source={StaticResource ViewModelTemplates},Path=Values[6]}" />
+            <phone:PivotItem Header="lectures" Content="{Binding Contents,Converter={StaticResource EnumerableIndexConverter},ConverterParameter=2}" ContentTemplate="{Binding Source={StaticResource ViewModelTemplates},Path=Values[5]}" />
+            <phone:PivotItem Header="exercises" Content="{Binding Contents,Converter={StaticResource EnumerableIndexConverter},ConverterParameter=3}" ContentTemplate="{Binding Source={StaticResource ViewModelTemplates},Path=Values[4]}" />
+            <phone:PivotItem Header="results" Content="{Binding Contents,Converter={StaticResource EnumerableIndexConverter},ConverterParameter=4}" ContentTemplate="{Binding Source={StaticResource ViewModelTemplates},Path=Values[3]}" />
+            <phone:PivotItem Header="assignments" Content="{Binding Contents,Converter={StaticResource EnumerableIndexConverter},ConverterParameter=5}" ContentTemplate="{Binding Source={StaticResource ViewModelTemplates},Path=Values[2]}" />
+            <phone:PivotItem Header="additional page" Content="{Binding Contents,Converter={StaticResource EnumerableIndexConverter},ConverterParameter=6}" ContentTemplate="{Binding Source={StaticResource ViewModelTemplates},Path=Values[1]}" />
+            <phone:PivotItem Header="events" Content="{Binding Contents,Converter={StaticResource EnumerableIndexConverter},ConverterParameter=7}" ContentTemplate="{Binding Source={StaticResource ViewModelTemplates},Path=Values[0]}" />
+        </phone:Pivot> 
+        -->
+    </Grid>
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar Mode="Default"  Opacity="1.0" IsMenuEnabled="True" IsVisible="True">
+            <shell:ApplicationBarIconButton x:Name="OpenWebOodi" IconUri = "/Assets/oodi.png" Text="oodi" />
+            <shell:ApplicationBarIconButton x:Name="PinFavoriteButton" IconUri = "/Assets/star.empty.png" Text="follow" />
+            <shell:ApplicationBarIconButton x:Name="OpenWebNoppa" IconUri = "/Assets/noppa.png" Text="noppa" />
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem x:Name="ToggleTileMenuItem" Text="add course tile" />
+            </shell:ApplicationBar.MenuItems>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
+</phone:PhoneApplicationPage>

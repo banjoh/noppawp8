@@ -28,13 +28,13 @@ namespace NoppaClient
 
         public void ShowDepartment(DepartmentProxy department)
         {
-            _frame.Navigate(NoppaUtility.MakeUri("/CourseListPage.xaml", "content", "department", "id", department.Id));
+            _frame.Navigate(NoppaUtility.MakeUri("/Views/CourseListPage.xaml", "content", "department", "id", department.Id));
         }
 
         public void ShowCourseEvent(CourseEvent courseEvent)
         {
             // Pass the whole event as navigation parameters
-            _frame.Navigate(NoppaUtility.MakeUri("/EventPage.xaml",
+            _frame.Navigate(NoppaUtility.MakeUri("/Views/EventPage.xaml",
                 "course_id",  courseEvent.CourseId,
                 "type", courseEvent.Type,
                 "title", courseEvent.Title,
@@ -48,33 +48,33 @@ namespace NoppaClient
 
         public void ShowCourseNews(CourseNews news)
         {
-            _frame.Navigate(NoppaUtility.MakeUri("/CoursePage.xaml", 
+            _frame.Navigate(NoppaUtility.MakeUri("/Views/CoursePage.xaml", 
                 "id", news.CourseId));
         }
 
         public void ShowCourseSearch()
         {
-            _frame.Navigate(NoppaUtility.MakeUri("/CourseSearchPage.xaml"));
+            _frame.Navigate(NoppaUtility.MakeUri("/Views/CourseSearchPage.xaml"));
         }
 
         public void ShowSettings()
         {
-            _frame.Navigate(NoppaUtility.MakeUri("/SettingsPage.xaml"));
+            _frame.Navigate(NoppaUtility.MakeUri("/Views/SettingsPage.xaml"));
         }
 
         public void ShowHome()
         {
-            _frame.Navigate(NoppaUtility.MakeUri("/MainPage.xaml"));
+            _frame.Navigate(NoppaUtility.MakeUri("/Views/MainPage.xaml"));
         }
 
         public void ShowAbout()
         {
-            _frame.Navigate(NoppaUtility.MakeUri("/AboutPage.xaml"));
+            _frame.Navigate(NoppaUtility.MakeUri("/Views/AboutPage.xaml"));
         }
 
         public static Uri MakeCoursePageUri(Course course)
         {
-            return NoppaUtility.MakeUri("/CoursePage.xaml", "id", course.Id);
+            return NoppaUtility.MakeUri("/Views/CoursePage.xaml", "id", course.Id);
         }
     }
 }

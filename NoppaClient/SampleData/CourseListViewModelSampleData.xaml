@@ -14,4 +14,24 @@
         <dm:Course Name="Extremes of Random Phenomena P" Id="Mat-1.3610 " />
         <dm:Course Name="Laser Physics P" Id="Tfy-125.4433 " />
     </vm:CourseListViewModel.Courses>
+
+    <vm:CourseListViewModel.Departments>
+        <vm:DepartmentGroup Organization="School of Assorted Magicks">
+            <vm:DepartmentProxy Name="Department of Spirit Conjuring" Id="conj" />
+            <vm:DepartmentProxy Name="Department of Illusion and Charms" Id="illusion" />
+            <vm:DepartmentProxy Name="Department of Black Arts" Id="black" />
+        </vm:DepartmentGroup>
+
+        <vm:DepartmentGroup Organization="School of Arcane Alchemy">
+            <vm:DepartmentProxy Name="Department of Transmutation" Id="trans" />
+            <vm:DepartmentProxy Name="Department of Good and Bad Air" Id="air" />
+            <vm:DepartmentProxy Name="Department of Love Potions" Id="potions" />
+        </vm:DepartmentGroup>
+
+        <vm:DepartmentGroup Organization="School of Witchcraft">
+            <vm:DepartmentProxy Name="Department of Flying on Broomsticks" Id="broom" />
+            <vm:DepartmentProxy Name="Department of Cauldron Maintenance" Id="cauldron" />
+            <vm:DepartmentProxy Name="Department of Familiar Pacts" Id="familiar" />
+        </vm:DepartmentGroup>
+    </vm:CourseListViewModel.Departments>
 </vm:CourseListViewModel>
