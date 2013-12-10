@@ -146,7 +146,7 @@ namespace NoppaClient.View
             var state = GetPropertyValue<bool?>(obj, property);
             if (state.HasValue)
             {
-                button.IsEnabled = state.Value;
+                button.IsEnabled = true;
                 button.IconUri = state.Value ? trueUri : falseUri;
             }
             else

@@ -51,7 +51,7 @@ namespace NoppaClient.ViewModels
             get { return _isPinned; }
             set
             {
-                _isPinned = value;
+                SetProperty(ref _isPinned, value);
                 SetPinCourseState(value);
             }
         }
@@ -60,7 +60,8 @@ namespace NoppaClient.ViewModels
         {
             if (value)
             {
-                App.Settings.PinnedCourses.Add(_course);
+                if (App.Settings.PinnedCourses.Find(course => course.Id == _courseId) == null)
+                    App.Settings.PinnedCourses.Add(_course);
             }
             else
             {
