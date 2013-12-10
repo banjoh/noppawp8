@@ -155,6 +155,13 @@ namespace NoppaClient.ViewModels
 
             IsLoading = true;
             _course = await NoppaAPI.GetCourse(_courseId);
+
+            if (_course == null)
+            {
+                System.Diagnostics.Debug.WriteLine("CourseViewModel: Couldn't find course!");
+                return;
+            }
+
             (ToggleSecondaryTileCommand as DelegateCommand).NotifyCanExecuteChanged();
 
             bool coursePinned = App.Settings.PinnedCourses.Find(course => course.Id == _courseId) != null;
